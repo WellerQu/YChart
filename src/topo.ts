@@ -25,10 +25,11 @@ export default (container: HTMLDivElement, updated?: SubscriberFn) => {
   // update
   return (data: TopoData): void => {
 
-    create(composed.createServiceNode({ title: "redisService", type: "Java", avgRT: "204.92ms", rpm: "10.4rpm", instances: "1/1", color: "#a9d86e", tag: "service-node" }));
+    // create(composed.createServiceNode({ title: "redisService", type: "Java", avgRT: "204.92ms", rpm: "10.4rpm", instances: "1/1", color: "#a9d86e", tag: "service-node" }));
     // create(composed.createServerNode({ title: "server 1", instances: "2/1", color: "#fab421", tag: "server-node" }));
-    create(composed.createArrowLine({ x1: 100, y1: 100, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line0" }));
-    create(composed.createArrowLine({ x1: 100, y1: 300, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line1" }));
+    // create(composed.createArrowLine({ x1: 100, y1: 100, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line0" }));
+    // create(composed.createArrowLine({ x1: 100, y1: 300, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line1" }));
+    create(composed.createImageNode({ URL: "user.png", title: "用户", tag: "user-node", }))
 
     patch(data);
   }

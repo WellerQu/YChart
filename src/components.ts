@@ -131,8 +131,8 @@ export namespace component {
     ) => {
       const { title, URL, tag } = option;
       const createNode = compose<VNode>(
-        createText({ content: title, y: 64 }),
-        createImage({ URL }),
+        createText({ content: title, x: 25, y: 70, tag: "title" }),
+        createImage({ URL, width: 50, height: 50 }),
         createGroup
       );
 

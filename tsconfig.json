@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "module": "es6",
+    "target": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "lib": [
+      "dom",
+      "es2015",
+    ],
+    "types": [],
+    "typeRoots": [
+      "./typings",
+    ],
+  },
+  "include": [
+    "src/**/*",
+    "example/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+  ]
+}

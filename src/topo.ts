@@ -2,14 +2,15 @@ import toNode from "../node_modules/snabbdom/tovnode";
 import { SubscriberFn, TopoData, Stage } from "../typings/defines";
 
 import compose from "./compose";
-import { log, event, layout, style } from "./middlewares";
+import { log } from "./middlewares/log";
+import { event } from "./middlewares/event";
+import { layout } from "./middlewares/layout";
+import { style } from "./middlewares/style";
 
 import applyMiddlewares from "./applyMiddlewares";
 import createStage from "./createStage";
 
-import { component } from "./components";
-
-const { composed, createLine } = component;
+import { createImageNode } from "./components/createImageNode";
 
 // Entrance, start from here
 export default (container: HTMLDivElement, updated?: SubscriberFn) => {
@@ -29,7 +30,7 @@ export default (container: HTMLDivElement, updated?: SubscriberFn) => {
     // create(composed.createServerNode({ title: "server 1", instances: "2/1", color: "#fab421", tag: "server-node" }));
     // create(composed.createArrowLine({ x1: 100, y1: 100, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line0" }));
     // create(composed.createArrowLine({ x1: 100, y1: 300, x2: 500, y2: 300, strokeColor: "#2693ff", strokeWidth: 1, x: 100, y: 100, fill: "#2693ff", tag: "link-line1" }));
-    create(composed.createImageNode({ URL: "user.png", title: "用户", tag: "user-node", }))
+    create(createImageNode({ URL: "user.png", title: "用户", tag: "user-node", }))
 
     patch(data);
   }

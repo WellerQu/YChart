@@ -7,7 +7,7 @@ import classes from "../node_modules/snabbdom/modules/class";
 import eventlistener from "../node_modules/snabbdom/modules/eventlisteners";
 
 import { Stage, SubscriberFn, StrategyFn } from "../typings/defines";
-import { component } from "./components";
+import { component } from "./components/components";
 
 const createSvg = component.createSvg;
 

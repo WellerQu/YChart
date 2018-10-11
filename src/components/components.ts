@@ -1,19 +1,14 @@
-import { VNode } from "../node_modules/snabbdom/vnode";
-import { h } from "../node_modules/snabbdom/h";
+import { VNode } from "../../node_modules/snabbdom/vnode";
+import { h } from "../../node_modules/snabbdom/h";
 
 import {
   TextOption,
   ImageOption,
   GroupOption,
-  ImageNodeOption,
-  ServerNodeOption,
-  ServiceNodeOption,
   LineOption,
   CircleOption,
   ArrowOption,
-} from "../typings/defines";
-
-import compose from "./compose";
+} from "../../typings/defines";
 
 export namespace component {
   export const createSvg = (option?: any): VNode => {
@@ -112,69 +107,4 @@ export namespace component {
 
     return pardentNode;
   };
-
-  export namespace composed {
-    export const createArrowLine = (option: LineOption & ArrowOption) => (parentNode: VNode) => {
-      const createNode = compose<VNode>(
-        createArrow({ x: option.x, y: option.y, fill: option.fill, tag: option.tag, }),
-        createLine({ x1: option.x1, y1: option.y1, x2: option.x2, y2: option.y2, strokeColor: option.strokeColor, strokeWidth: option.strokeWidth, tag: option.tag, }),
-        createGroup,
-      );
-
-      parentNode.children.push(createNode({ className: option.tag}));
-
-      return parentNode;
-    }
-
-    export const createImageNode = (option: ImageNodeOption) => (
-      parentNode: VNode
-    ) => {
-      const { title, URL, tag } = option;
-      const createNode = compose<VNode>(
-        createText({ content: title, x: 25, y: 70, tag: "title" }),
-        createImage({ URL, width: 50, height: 50 }),
-        createGroup
-      );
-
-      parentNode.children.push(createNode({ className: tag }));
-
-      return parentNode;
-    };
-
-    export const createServerNode = (option: ServerNodeOption) => (
-      parentNode: VNode
-    ) => {
-      const createNode = compose<VNode>(
-        createText({ content: option.title, y: 70, }),
-        createText({ content: option.instances, y: 24, }),
-        createCircle({ cx: 35, cy: 35, radius: 22, fill: "white", }),
-        createCircle({ cx: 35, cy: 35, radius: 35, fill: option.color, }),
-        createGroup,
-      );
-      
-      parentNode.children.push(createNode({ className: option.tag }));
-
-      return parentNode;
-    };
-
-    export const createServiceNode = (option: ServiceNodeOption) => (
-      parentNode: VNode
-    ) => {
-      const createNode = compose<VNode>(
-        createText({ content: option.title, x: 35, y: 90, tag: "title" }),
-        createText({ content: option.rpm, x: 82, y: 48, tag: "rpm" }),
-        createText({ content: option.avgRT, x: 82, y: 36, tag: "avgRT" }),
-        createText({ content: option.instances, x: 35, y: 35, tag: "instances" }),
-        createText({ content: option.type, x: 0, y: 60, tag: "type" }),
-        createCircle({ cx: 0, cy: 55, radius: 15,  fill: "#338cff", tag: "type" }),
-        createCircle({ cx: 35, cy: 35, radius: 22, fill: "white", }),
-        createCircle({ cx: 35, cy: 35, radius: 35, fill: option.color, tag: "health" }),
-        createGroup,
-      );
-
-      parentNode.children.push(createNode({ className: option.tag }));
-
-      return parentNode;
-    };
-  }
 }

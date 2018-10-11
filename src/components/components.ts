@@ -20,7 +20,8 @@ export namespace component {
       "g",
       {
         class: { [option.className]: true, group: true },
-        ns: "http://www.w3.org/2000/svg"
+        style: { transform: `translate(${option.x || 0}px, ${option.y || 0}px)`, },
+        ns: "http://www.w3.org/2000/svg",
       },
       []
     );

@@ -6,12 +6,13 @@ import { component } from "./components";
 
 import compose from "../compose";
 
-const { createArrow, createLine, createGroup } = component;
+const { createText, createArrow, createLine, createGroup } = component;
 
 export const createArrowLine = (option: LineOption & ArrowOption) => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(
+    createText({ content: "", }),
     createArrow({
       x: option.x,
       y: option.y,

@@ -1,4 +1,3 @@
-import { h } from "../node_modules/snabbdom/h";
 import { VNode } from "../node_modules/snabbdom/vnode";
 import { init } from "../node_modules/snabbdom/snabbdom";
 import attributes from "../node_modules/snabbdom/modules/attributes";

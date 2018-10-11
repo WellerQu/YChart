@@ -5,6 +5,7 @@ declare type PatchFn = (userState?: any) => void;
 declare type SubscriberFn = (userState?: any) => void;
 declare type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
 declare type CreateStageFn = (initNode: VNode) => Stage;
+declare type UpdateFn = (data: TopoData) => void;
 
 declare interface Stage {
   getStageNode: () => VNode,
@@ -76,7 +77,31 @@ declare interface ArrowOption {
   tag?: string,
 }
 
+interface Node {
+  id: string,
+  name: string,
+  times: number,
+  type: string,
+  smallType: string | null,
+  instances: number,
+  activeInstances: number,
+  elapsedTime: number,
+  rpm: number,
+  epm: number,
+  health: string | null,
+  totalCount: number,
+  errorTotalCount: number,
+  crossApp: boolean,
+}
+
+interface Line {
+  source: string,
+  target: string,
+  elapsedTime: number,
+  rpm: number,
+}
 
 declare interface TopoData {
-
+  nodes: Node[],
+  links: Line[],
 }

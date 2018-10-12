@@ -7,6 +7,7 @@ export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any
 export type CreateStageFn = (initNode: VNode) => Stage;
 export type UpdateFn = (data: TopoData) => void;
 
+
 declare interface Stage {
   getStageNode: () => VNode;
   create: (strategy: StrategyFn) => VNode;

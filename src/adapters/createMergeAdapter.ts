@@ -1,20 +1,11 @@
-import { TopoData, Node, Line, } from '../../typings/defines';
+import { TopoData, Node, Line,  } from '../../typings/defines';
+import { NODE_TYPE, } from '../NODE_TYPE';
 
 import compose from '../compose';
 
-enum NodeType {
-  USER = 'USER',
-  SERVER = 'SERVER ',
-  DATABASE = 'DATABASE',
-  NOSQL = 'NOSQL',
-  HTTP = 'HTTP',
-  RPC = 'RPC',
-  MQ = 'MQ'
-};
-
 const mergeUsers = (data: TopoData): TopoData => {
-  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NodeType.USER);
-  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NodeType.USER);
+  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NODE_TYPE.USER);
+  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NODE_TYPE.USER);
 
   const othersLines: Line[] = data.links.filter((item: Line) => nodes.every((node: Node) => node.id !== item.source));
   const lines: Line[] = data.links.filter((item: Line) => nodes.some((node: Node) => node.id === item.source));
@@ -34,8 +25,8 @@ const mergeUsers = (data: TopoData): TopoData => {
 };
 
 const mergeHTTPOrRPC = (data: TopoData): TopoData => {
-  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NodeType.HTTP && item.type !== NodeType.RPC);
-  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NodeType.HTTP || item.type === NodeType.RPC);
+  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NODE_TYPE.HTTP && item.type !== NODE_TYPE.RPC);
+  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NODE_TYPE.HTTP || item.type === NODE_TYPE.RPC);
 
   const othersLines: Line[] = data.links.filter((item: Line) => nodes.every((node: Node) => node.id !== item.target));
   const lines: Line[] = data.links.filter((item: Line) => nodes.some((node: Node) => node.id === item.target));

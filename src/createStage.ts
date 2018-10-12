@@ -1,20 +1,18 @@
-import { VNode } from "../node_modules/snabbdom/vnode";
-import { init } from "../node_modules/snabbdom/snabbdom";
-import attributes from "../node_modules/snabbdom/modules/attributes";
-import style from "../node_modules/snabbdom/modules/style";
-import classes from "../node_modules/snabbdom/modules/class";
-import eventlistener from "../node_modules/snabbdom/modules/eventlisteners";
+import { VNode } from '../node_modules/snabbdom/vnode';
+import { init } from '../node_modules/snabbdom/snabbdom';
+import attributes from '../node_modules/snabbdom/modules/attributes';
+import style from '../node_modules/snabbdom/modules/style';
+import classes from '../node_modules/snabbdom/modules/class';
+import eventlistener from '../node_modules/snabbdom/modules/eventlisteners';
 
-import { Stage, SubscriberFn, StrategyFn } from "../typings/defines";
-import { component } from "./components/components";
-
-const createSvg = component.createSvg;
+import { Stage, SubscriberFn, StrategyFn } from '../typings/defines';
+import { createSvg } from './components/components';
 
 const vPatch = init([
   classes,
   style,
   attributes,
-  eventlistener,
+  eventlistener
 ]);
 
 function createStage(initNode: VNode): Stage {
@@ -29,7 +27,7 @@ function createStage(initNode: VNode): Stage {
   function subscribe(handler: SubscriberFn): () => void {
     subscribers.push(handler);
 
-    return () => subscribers = subscribers.filter(fn => fn !== handler);
+    return () => { subscribers = subscribers.filter(fn => fn !== handler) };
   }
 
   function getStageNode(): VNode {
@@ -49,8 +47,8 @@ function createStage(initNode: VNode): Stage {
     getStageNode,
     create,
     subscribe,
-    patch,
-  }
+    patch
+  };
 }
 
 export default createStage;

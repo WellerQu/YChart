@@ -1,5 +1,5 @@
-import { Stage, PatchFn, TopoData } from "../../typings/defines";
-import { h } from "../../node_modules/snabbdom/h";
+import { Stage, PatchFn, TopoData } from '../../typings/defines';
+import { h } from '../../node_modules/snabbdom/h';
 
 const styleSheet = `
 /* <![CDATA[ */
@@ -27,8 +27,8 @@ g text.type {
 
 export const style = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   stage.getStageNode().children.push(
-    h("style", {ns: "http://www.w3.org/2000/svg"}, styleSheet)
+    h('style', { ns: 'http://www.w3.org/2000/svg' }, styleSheet)
   );
 
   next(userState);
-}
+};

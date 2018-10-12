@@ -27,7 +27,7 @@ function createStage(initNode: VNode): Stage {
   function subscribe(handler: SubscriberFn): () => void {
     subscribers.push(handler);
 
-    return () => { subscribers = subscribers.filter(fn => fn !== handler) };
+    return () => subscribers = subscribers.filter(fn => fn !== handler);
   }
 
   function getStageNode(): VNode {

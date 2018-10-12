@@ -92,6 +92,7 @@ declare interface Node {
   totalCount: number;
   errorTotalCount: number;
   crossApp: boolean;
+  showName?: string,
 }
 
 declare interface Line {

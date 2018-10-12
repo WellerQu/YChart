@@ -10,7 +10,15 @@ import { style } from './middlewares/style';
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
 
-import createMergeNodeAdapter from './adapters/createMergeNodeAdapter';
+import createMergeAdapter from './adapters/createMergeAdapter';
+import createFixAdapter from './adapters/createFixAdapter';
+import clone from './clone';
+
+const formatDataAdapter = compose<TopoData>(
+  createFixAdapter,
+  createMergeAdapter,
+  clone,
+);
 
 // Entrance, start from here
 export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => {
@@ -27,7 +35,7 @@ export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => 
 
   // update
   return (data: TopoData): void => {
-    const formattedData: TopoData = createMergeNodeAdapter(data);
+    const formattedData: TopoData = formatDataAdapter(data);
 
     formattedData.nodes.forEach((item: Node) => {
 

@@ -13,6 +13,23 @@ enum NodeType {
 };
 
 const mergeUsers = (data: TopoData): TopoData => {
+  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NodeType.USER);
+  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NodeType.USER);
+
+  const othersLines: Line[] = data.links.filter((item: Line) => nodes.every((node: Node) => node.id !== item.source));
+  const lines: Line[] = data.links.filter((item: Line) => nodes.some((node: Node) => node.id === item.source));
+
+  const [ head, ...tails ] = nodes;
+
+  const mergedNodes = [head];
+  lines.filter((item: Line) => tails.some((node: Node) => node.id === item.source))
+    .forEach((item: Line) => (item.source = head.id, item));
+
+  data.nodes = othersNodes.concat(mergedNodes);
+  data.links = othersLines.concat(lines);
+
+  // console.log(data.nodes, data.links);
+
   return data;
 };
 
@@ -56,6 +73,8 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
 };
 
 export default compose<TopoData>(
+  (data: TopoData) => (console.log(data), data),
   mergeUsers,
   mergeHTTPOrRPC,
+  (data: TopoData) => (console.log(data), data),
 );

@@ -17,18 +17,26 @@ import createMergeAdapter from './adapters/createMergeAdapter';
 import createFixAdapter from './adapters/createFixAdapter';
 import clone from './clone';
 
-import { createImageNode } from './components/createImageNode';
+import createImageNode from './components/createImageNode';
 import createImageNodeOption from './adapters/createImageNodeOption';
+
+import createServiceNode from './components/createServiceNode';
+import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
+
+const formatDataAdapter = compose<TopoData>(
+  createFixAdapter,
+  createMergeAdapter,
+  clone,
+);
 
 const imageNode = compose<StrategyFn>(
   createImageNode,
   createImageNodeOption,
 );
 
-const formatDataAdapter = compose<TopoData>(
-  createFixAdapter,
-  createMergeAdapter,
-  clone,
+const serviceNode = compose<StrategyFn>(
+  createServiceNode,
+  createServiceNodeAdapter,
 );
 
 // Entrance, start from here
@@ -42,14 +50,15 @@ export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => 
 
   updated && subscribe(updated);
 
-  patch();
-
-  // update
+  // Expose update method
   return (data: TopoData): void => {
     const formattedData: TopoData = formatDataAdapter(data);
 
     formattedData.nodes.forEach((item: Node) => {
-      if (item.type === NODE_TYPE.USER) {
+      if (item.type === NODE_TYPE.SERVER) {
+        create(serviceNode(item));
+      }
+      else {
         create(imageNode(item));
       }
     });

@@ -3,23 +3,23 @@ import { h } from '../../node_modules/snabbdom/h';
 
 const styleSheet = `
 /* <![CDATA[ */
-g {
+g.group {
   font-family: Verdana,arial,x-locale-body,sans-serif;
   letter-spacing: -.3996px;
   font-size: 12px;
 }
 
-g text.instances {
+g.group text.instances {
   text-anchor: middle;  /* 文本水平居中 */
   dominant-baseline: middle; /* 文本垂直居中 */
   font-size: 16px;
 }
 
-g text.title, g text.type {
+g.group text.title, g text.type {
   text-anchor: middle;  /* 文本水平居中 */
 }
 
-g text.type {
+g.group text.type {
   fill: white;
 }
 /* ]]> */

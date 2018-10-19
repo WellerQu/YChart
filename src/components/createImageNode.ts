@@ -4,7 +4,7 @@ import { ImageNodeOption } from '../../typings/defines';
 import compose from '../compose';
 import { createText, createImage, createGroup } from './components';
 
-export const createImageNode = (option: ImageNodeOption) => (
+const createImageNode = (option: ImageNodeOption) => (
   parentNode: VNode
 ) => {
   const { title, URL, tag } = option;
@@ -18,3 +18,5 @@ export const createImageNode = (option: ImageNodeOption) => (
 
   return parentNode;
 };
+
+export default createImageNode;

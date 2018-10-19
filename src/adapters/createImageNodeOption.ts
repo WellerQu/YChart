@@ -5,5 +5,5 @@ export default function createImageNodeOption(node: Node): ImageNodeOption {
     URL: `${node.showIcon.toLowerCase()}.png`,
     title: node.showName,
     tag: node.id,
-  }
+  };
 }

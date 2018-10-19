@@ -64,8 +64,6 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
 };
 
 export default compose<TopoData>(
-  (data: TopoData) => (console.log(data), data),
   mergeUsers,
   mergeHTTPOrRPC,
-  (data: TopoData) => (console.log(data), data),
 );

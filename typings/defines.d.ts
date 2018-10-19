@@ -7,7 +7,6 @@ export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any
 export type CreateStageFn = (initNode: VNode) => Stage;
 export type UpdateFn = (data: TopoData) => void;
 
-
 declare interface Stage {
   getStageNode: () => VNode;
   create: (strategy: StrategyFn) => VNode;
@@ -48,17 +47,15 @@ declare interface ImageNodeOption {
   tag?: string;
 }
 
-declare interface ServerNodeOption {
+declare interface ServiceNodeOption {
   title: string;
   instances: string;
   color: string;
-  tag?: string;
-}
-
-declare interface ServiceNodeOption extends ServerNodeOption {
   type: string;
-  avgRT: string;
-  rpm: string;
+  avgRT: number;
+  rpm: number;
+  epm: number;
+  tag?: string;
 }
 
 declare interface LineOption {

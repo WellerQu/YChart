@@ -17,7 +17,5 @@ const createFixAdapter = (data: TopoData): TopoData => {
 };
 
 export default compose<TopoData>(
-  (data: TopoData): TopoData => (console.log(data), data),
   createFixAdapter,
-  (data: TopoData): TopoData => (console.log(data), data),
 );

@@ -1,6 +1,6 @@
 export enum NODE_TYPE {
   USER = 'USER',
-  SERVER = 'SERVER ',
+  SERVER = 'SERVER',
   DATABASE = 'DATABASE',
   NOSQL = 'NOSQL',
   HTTP = 'HTTP',

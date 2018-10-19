@@ -21,7 +21,7 @@ const createServiceNode = (option: ServiceNodeOption) => (
     createGroup
   );
 
-  parentNode.children.push(createNode({ className: option.tag }));
+  parentNode.children.push(createNode({ className: option.tag, id: option.id }));
 
   return parentNode;
 };

@@ -1,23 +1,25 @@
 import { VNode } from '../../node_modules/snabbdom/vnode';
 
-import { LineOption, ArrowOption } from '../../typings/defines';
+import { ArrowLineOption } from '../../typings/defines';
 
 import compose from '../compose';
 
 import { createText, createArrow, createLine, createGroup } from './components';
 
-export const createArrowLine = (option: LineOption & ArrowOption) => (
+const createArrowLine = (option: ArrowLineOption) => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(
-    createText({ content: '' }),
+    createText({ content: option.text || '' }),
     createArrow({
+      id: option.id,
       x: option.x,
       y: option.y,
       fill: option.fill,
       tag: option.tag
     }),
     createLine({
+      id: option.id,
       x1: option.x1,
       y1: option.y1,
       x2: option.x2,
@@ -29,7 +31,9 @@ export const createArrowLine = (option: LineOption & ArrowOption) => (
     createGroup
   );
 
-  parentNode.children.push(createNode({ className: option.tag }));
+  parentNode.children.push(createNode({ className: option.tag, id: option.id }));
 
   return parentNode;
 };
+
+export default createArrowLine;

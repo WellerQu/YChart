@@ -20,7 +20,8 @@ export const createGroup = (option: GroupOption): VNode => {
     {
       class: { [option.className]: true, group: true },
       style: { transform: `translate(${option.x || 0}px, ${option.y || 0}px)` },
-      ns: 'http://www.w3.org/2000/svg'
+      ns: 'http://www.w3.org/2000/svg',
+      key: option.id,
     },
     []
   );
@@ -86,7 +87,7 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
         fill: 'none',
         stroke: option.strokeColor,
         'stroke-width': option.strokeWidth,
-        id: option.tag
+        id: option.id,
       },
       class: { [option.tag]: !!option.tag },
       ns: 'http://www.w3.org/2000/svg'
@@ -100,7 +101,7 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
   pardentNode.children.push(
     h('circle', { attrs: { cx: 0, cy: 0, r: 5, fill: option.fill }, ns: 'http://www.w3.org/2000/svg' }, [
       h('animateMotion', { attrs: { dur: '4s', repeatCount: 'indefinite' }, ns: 'http://www.w3.org/2000/svg' }, [
-        h('mpath', { attrs: { 'xlink:href': `#${option.tag}` }, ns: 'http://www.w3.org/2000/svg' })
+        h('mpath', { attrs: { 'xlink:href': `#${option.id}` }, ns: 'http://www.w3.org/2000/svg' })
       ])
     ])
   );

@@ -9,6 +9,10 @@ g.group {
   font-size: 12px;
 }
 
+g.group.line:hover > path {
+  stroke-width: 2px;
+}
+
 g.group text.instances {
   text-anchor: middle;  /* 文本水平居中 */
   dominant-baseline: middle; /* 文本垂直居中 */

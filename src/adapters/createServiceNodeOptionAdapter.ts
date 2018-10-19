@@ -5,10 +5,11 @@ export default function createServiceNodeOption(node: Node): ServiceNodeOption {
     title: node.showName,
     instances: `${node.activeInstances}/${node.instances}`,
     color: 'red',
-    tag: node.id,
+    tag: `${node.type}-node`,
     type: node.type,
     avgRT: 0,
     rpm: node.rpm,
     epm: node.epm,
+    id: node.id,
   };
 }

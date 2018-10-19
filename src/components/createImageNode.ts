@@ -14,7 +14,7 @@ const createImageNode = (option: ImageNodeOption) => (
     createGroup
   );
 
-  parentNode.children.push(createNode({ className: tag }));
+  parentNode.children.push(createNode({ className: tag, id: option.id }));
 
   return parentNode;
 };

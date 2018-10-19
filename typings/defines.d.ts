@@ -6,6 +6,7 @@ export type SubscriberFn = (userState?: any) => void;
 export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
 export type CreateStageFn = (initNode: VNode) => Stage;
 export type UpdateFn = (data: TopoData) => void;
+export type ArrowLineOption = LineOption & ArrowOption;
 
 declare interface Stage {
   getStageNode: () => VNode;
@@ -39,12 +40,14 @@ declare interface CircleOption extends PositionOption {
 
 declare interface GroupOption extends PositionOption {
   className: string;
+  id?: string;
 }
 
 declare interface ImageNodeOption {
   URL: string;
   title: string;
   tag?: string;
+  id?: string;
 }
 
 declare interface ServiceNodeOption {
@@ -56,9 +59,11 @@ declare interface ServiceNodeOption {
   rpm: number;
   epm: number;
   tag?: string;
+  id?: string;
 }
 
 declare interface LineOption {
+  id: string,
   x1: number;
   y1: number;
   x2: number;
@@ -66,9 +71,11 @@ declare interface LineOption {
   strokeColor: string;
   strokeWidth: number;
   tag?: string;
+  text?: string,
 }
 
 declare interface ArrowOption {
+  id: string,
   x: number;
   y: number;
   fill: string;

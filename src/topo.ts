@@ -23,6 +23,9 @@ import createImageNodeOption from './adapters/createImageNodeOption';
 import createServiceNode from './components/createServiceNode';
 import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
 
+import createArrowLine from './components/createArrowLine';
+import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
+
 const formatDataAdapter = compose<TopoData>(
   createFixAdapter,
   createMergeAdapter,
@@ -39,9 +42,15 @@ const serviceNode = compose<StrategyFn>(
   createServiceNodeAdapter,
 );
 
+const arrowLine = compose<StrategyFn>(
+  createArrowLine,
+  createArrowLineOption,
+)
+
 // Entrance, start from here
 export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, event, layout, style);
+  const containerWidth = container.offsetWidth;
+  const enhancer = applyMiddlewares(log, event, layout(containerWidth), style);
   const createStageAt = compose<Stage>(
     enhancer(createStage),
     toNode
@@ -64,6 +73,7 @@ export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => 
     });
 
     formattedData.links.forEach((item: Line) => {
+      create(arrowLine(item));
     });
 
     patch(formattedData);

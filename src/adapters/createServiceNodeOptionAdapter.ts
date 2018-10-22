@@ -5,7 +5,7 @@ export default function createServiceNodeOption(node: Node): ServiceNodeOption {
     title: node.showName,
     instances: `${node.activeInstances}/${node.instances}`,
     color: 'red',
-    tag: `${node.type} ${node.id} node`,
+    className: `${node.type} node`,
     type: node.type,
     avgRT: 0,
     rpm: node.rpm,

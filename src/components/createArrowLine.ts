@@ -13,10 +13,9 @@ const createArrowLine = (option: ArrowLineOption) => (
     createText({ content: option.text || '' }),
     createArrow({
       id: option.id,
-      x: option.x,
-      y: option.y,
+      x: option.x1,
+      y: option.y1,
       fill: option.fill,
-      tag: option.tag
     }),
     createLine({
       id: option.id,
@@ -26,12 +25,11 @@ const createArrowLine = (option: ArrowLineOption) => (
       y2: option.y2,
       strokeColor: option.strokeColor,
       strokeWidth: option.strokeWidth,
-      tag: option.tag
     }),
     createGroup
   );
 
-  parentNode.children.push(createNode({ className: option.tag, id: option.id }));
+  parentNode.children.push(createNode({ className: option.className, id: option.id }));
 
   return parentNode;
 };

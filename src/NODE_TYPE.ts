@@ -1,4 +1,5 @@
 export enum NODE_TYPE {
+  LINE = 'line',
   USER = 'USER',
   SERVER = 'SERVER',
   DATABASE = 'DATABASE',

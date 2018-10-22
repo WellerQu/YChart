@@ -18,7 +18,7 @@ declare interface Stage {
 declare interface PositionOption {
   x?: number;
   y?: number;
-  tag?: string;
+  className?: string;
 }
 
 declare interface TextOption extends PositionOption {
@@ -39,14 +39,13 @@ declare interface CircleOption extends PositionOption {
 }
 
 declare interface GroupOption extends PositionOption {
-  className: string;
   id?: string;
 }
 
 declare interface ImageNodeOption {
   URL: string;
   title: string;
-  tag?: string;
+  className?: string;
   id?: string;
 }
 
@@ -58,8 +57,8 @@ declare interface ServiceNodeOption {
   avgRT: number;
   rpm: number;
   epm: number;
-  tag?: string;
   id?: string;
+  className?: string;
 }
 
 declare interface LineOption {
@@ -70,8 +69,8 @@ declare interface LineOption {
   y2: number;
   strokeColor: string;
   strokeWidth: number;
-  tag?: string;
-  text?: string,
+  text?: string;
+  className?: string;
 }
 
 declare interface ArrowOption {
@@ -79,7 +78,7 @@ declare interface ArrowOption {
   x: number;
   y: number;
   fill: string;
-  tag?: string;
+  className?: string;
 }
 
 declare interface Node {

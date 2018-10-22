@@ -1,4 +1,3 @@
-import { VNode } from '../node_modules/snabbdom/vnode';
 import toNode from '../node_modules/snabbdom/tovnode';
 import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Stage, Node, Line } from '../typings/defines';
 
@@ -6,7 +5,7 @@ import { NODE_TYPE } from './NODE_TYPE';
 
 import compose from './compose';
 import { log } from './middlewares/log';
-import { event } from './middlewares/event';
+import { interaction } from './middlewares/interaction';
 import { layout } from './middlewares/layout';
 import { style } from './middlewares/style';
 import { grid } from './middlewares/grid';
@@ -50,7 +49,7 @@ const arrowLine = compose<StrategyFn>(
 
 // Entrance, start from here
 export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, event, layout, style, grid);
+  const enhancer = applyMiddlewares(log, interaction, layout, style, );
   const createStageAt = compose<Stage>(
     enhancer(createStage),
     toNode

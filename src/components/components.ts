@@ -127,7 +127,6 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
         fill: 'none',
         stroke: option.strokeColor,
         'stroke-width': option.strokeWidth,
-        id: option.id
       },
       ns: 'http://www.w3.org/2000/svg',
     })
@@ -141,26 +140,27 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
     h(
       'circle',
       {
-        attrs: { cx: 0, cy: 0, r: 5, fill: option.fill },
+        attrs: { cx: 0, cy: 0, r: 5, fill: option.fill, id: `C${option.id}` },
+        ns: 'http://www.w3.org/2000/svg'
+      },
+      []
+    )
+  );
+  pardentNode.children.push(
+    h(
+      'animateMotion',
+      {
+        attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}` },
         ns: 'http://www.w3.org/2000/svg'
       },
       [
-        // h(
-        //   'animateMotion',
-        //   {
-        //     attrs: { dur: '4s', repeatCount: 'indefinite' },
-        //     ns: 'http://www.w3.org/2000/svg'
-        //   },
-        //   [
-        //     h('mpath', {
-        //       attrs: { 'xlink:href': `#${option.id}` },
-        //       ns: 'http://www.w3.org/2000/svg'
-        //     })
-        //   ]
-        // )
+        // h('mpath', {
+        //   attrs: { 'xlink:href': `#P${option.id}` },
+        //   ns: 'http://www.w3.org/2000/svg'
+        // })
       ]
     )
-  );
+  )
 
   return pardentNode;
 };

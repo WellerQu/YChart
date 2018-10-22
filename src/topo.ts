@@ -49,7 +49,7 @@ const arrowLine = compose<StrategyFn>(
 
 // Entrance, start from here
 export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, interaction, layout, style, );
+  const enhancer = applyMiddlewares(log, layout, interaction, style, );
   const createStageAt = compose<Stage>(
     enhancer(createStage),
     toNode
@@ -57,11 +57,15 @@ export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => 
   const { create, subscribe, patch } = createStageAt(container);
 
   updated && subscribe(updated);
+  // subscribe((userState?: any) => {
+  //   updated && updated(userState);
+  // });
 
   // Expose update method
   return (data: TopoData): void => {
     const formattedData: TopoData = formatDataAdapter(data);
 
+    // map every node to strategy function which return a VNode
     formattedData.nodes.forEach((item: Node) => {
       if (item.type === NODE_TYPE.SERVER) {
         create(serviceNode(item));
@@ -71,6 +75,7 @@ export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => 
       }
     });
 
+    // map every line to strategy function which return a VNode
     formattedData.links.forEach((item: Line) => {
       create(arrowLine(item));
     });

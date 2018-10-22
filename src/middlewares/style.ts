@@ -7,6 +7,7 @@ g.group {
   font-family: Verdana,arial,x-locale-body,sans-serif;
   letter-spacing: -.3996px;
   font-size: 12px;
+  cursor: pointer;
 }
 
 g.group.line:hover > path {

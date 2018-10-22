@@ -25,6 +25,7 @@ g.group text.title, g text.type {
 
 g.group text.type {
   fill: white;
+  font-size: 7px;
 }
 /* ]]> */
 `;

@@ -1,8 +1,7 @@
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
-
-import compose from '../compose';
+import { setupEventHandler } from '../utils';
 
 interface SVGAnimateMotionElement extends Element {
   beginElement(): void;
@@ -41,18 +40,6 @@ const handleMouseOut = (event: MouseEvent): MouseEvent => {
 
   return event;
 };
-
-const setupEventHandler = (handler: (event: MouseEvent) => MouseEvent) => (eventName: string) => (vnode: VNode) => {
-  if (!vnode.data.on) {
-    vnode.data.on = {};
-  }
-
-  if (vnode.data.on[eventName]) {
-    vnode.data.on[eventName] = compose<void>(vnode.data.on.mouseenter, handler);
-  } else {
-    vnode.data.on[eventName] = handler;
-  }
-}
 
 const setupMouseEnter = setupEventHandler(handleMouseEnter)('mouseenter');
 const setupMouseOut = setupEventHandler(handleMouseOut)('mouseout');

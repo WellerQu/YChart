@@ -4,15 +4,21 @@ export type StrategyFn = (parent: VNode) => VNode;
 export type PatchFn = (userState?: any) => void;
 export type SubscriberFn = (userState?: any) => void;
 export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
-export type CreateStageFn = (initNode: VNode) => Stage;
+export type CreateStageFn = (container: HTMLElement) => Stage;
 export type UpdateFn = (data: TopoData) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
 
 declare interface Stage {
   getStageNode: () => VNode;
+  getContainer: () => HTMLElement;
   create: (strategy: StrategyFn) => VNode;
   subscribe: (handler: SubscriberFn) => void;
   patch: PatchFn;
+}
+
+declare interface SvgOption {
+  width: number | string;
+  height: number | string;
 }
 
 declare interface PositionOption {

@@ -130,11 +130,21 @@ export const layout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData
   const placeLineGroup = linkLine(allElements);
   const placedLineGroup = placeLineGroup(lineGroup);
 
-  // 无论图多复杂多大, 一定会在一屏内显示完整
-  const maxHeight = max(userGroup.length, serverGroup.length, otherGroup.length) * CELL_SIZE;
-  const maxWidth = CELL_SIZE * 3;
+  // 无论图多复杂多大, 初始化时一定会在一屏内显示完整
+  // const ref = stage.getContainer();
+  // const containerWidth = ref.parentElement.offsetWidth;
+  // const containerHeight = ref.parentElement.offsetHeight;
+  // const maxHeight = max(userGroup.length, serverGroup.length, otherGroup.length) * CELL_SIZE;
+  // const maxWidth = CELL_SIZE * 3;
+  // const viewBoxWidth = maxHeight > maxWidth ? maxWidth * maxHeight / containerHeight : maxWidth;
+  // const viewBoxHeight = maxWidth > maxHeight ? maxHeight * maxWidth / containerWidth : maxHeight;
 
-  root.data.attrs.viewBox = `0, 0, ${maxWidth}, ${maxHeight}`;
+  // if (maxHeight > maxWidth) {
+  //   root.data.attrs.viewBox = `${(viewBoxWidth - containerWidth) / -2}, 0, ${viewBoxWidth}, ${viewBoxHeight}`;
+  // } else {
+  //   root.data.attrs.viewBox = `0, ${(viewBoxHeight - containerHeight) / -2}, ${viewBoxWidth}, ${viewBoxHeight}`;
+  // }
+
   root.children = [...restGroup, ...placedLineGroup, ...placedUserGroup.map(n => n.vnode), ...placedServiceGroup.map(n => n.vnode), ...placedOtherGroup.map(n => n.vnode)];
 
   next(userState);

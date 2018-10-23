@@ -7,7 +7,8 @@ import {
   GroupOption,
   LineOption,
   CircleOption,
-  ArrowOption
+  ArrowOption,
+  SvgOption
 } from '../../typings/defines';
 
 type ClassName = {
@@ -26,15 +27,15 @@ const parseClassName = (classNames: string): ClassName => {
   }, {});
 };
 
-export const createSvg = (option?: any): VNode => {
+export const createSvg = (option: SvgOption): VNode => {
   return h(
     'svg',
     {
       attrs: {
-        width: '100%',
-        height: '100%',
-        viewBox: '0, 0, 800, 400',
-        preserveAspectRatio: 'xMidYMid meet'
+        width: option.width,
+        height: option.height,
+        viewBox: `0, 0, ${option.width}, ${option.height}`,
+        // preserveAspectRatio: 'xMidYMid meet'
       }
     },
     []

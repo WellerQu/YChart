@@ -5,8 +5,8 @@ import { Stage, MiddlewareFn, CreateStageFn, PatchFn } from '../typings/defines'
 
 const applyMiddlewares = (...middlewares: MiddlewareFn[]) => (
   createStage: CreateStageFn
-) => (initNode: VNode): Stage => {
-  const stage = createStage(initNode)
+) => (container: HTMLElement): Stage => {
+  const stage = createStage(container)
   let patch: PatchFn = (): never => {
     throw new Error('Early to call')
   }

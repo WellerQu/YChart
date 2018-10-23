@@ -8,6 +8,7 @@ g.group {
   letter-spacing: -.3996px;
   font-size: 12px;
   cursor: pointer;
+  user-select: none;
 }
 
 g.group.line:hover > path {

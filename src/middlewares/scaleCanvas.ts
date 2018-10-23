@@ -2,6 +2,8 @@ import { Stage, PatchFn, TopoData } from '../../typings/defines';
 import { setupEventHandler, throttle, clamp } from '../utils';
 
 const notNegative = clamp(1, Number.MAX_SAFE_INTEGER);
+const widthClamp = clamp(320, 2420);
+const heightClamp = clamp(160, 1210);
 
 const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   let svgElement = event.target as HTMLElement;
@@ -20,13 +22,13 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   const initializeWidth = svgElement.parentElement.offsetWidth;
 
   if (event.deltaY > 0) {
-    const actualWidth = notNegative(width - diffWidth);
-    const actualHeight = notNegative(height - diffHeight);
+    const actualWidth = widthClamp(width - diffWidth);
+    const actualHeight = heightClamp(height - diffHeight);
     const ratio = actualWidth /initializeWidth  - 1;
     svgElement.setAttribute('viewBox', `${-ratio * originX}, ${-ratio * originY}, ${actualWidth}, ${actualHeight}`);
   } else if (event.deltaY < 0) {
-    const actualWidth = notNegative(width + diffWidth);
-    const actualHeight = notNegative(height + diffHeight);
+    const actualWidth = widthClamp(width + diffWidth);
+    const actualHeight = heightClamp(height + diffHeight);
     const ratio = actualWidth /initializeWidth  - 1;
     svgElement.setAttribute('viewBox', `${-(ratio) * originX}, ${-ratio * originY}, ${actualWidth}, ${actualHeight}`);
   }

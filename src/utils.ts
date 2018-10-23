@@ -39,3 +39,5 @@ export const lerp = (source: Position, target: Position) => ({
   x: (target.x - source.x) * .01,
   y: (target.y - source.y) * .01,
 });
+
+export const parseViewBoxValue = (value: string): number[] => value.split(',').map(n => +n);

@@ -1,7 +1,6 @@
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp } from '../utils';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue } from '../utils';
 
-const notNegative = clamp(1, Number.MAX_SAFE_INTEGER);
 const widthClamp = clamp(320, 2420);
 const heightClamp = clamp(160, 1210);
 
@@ -11,7 +10,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
     svgElement = svgElement.parentElement;
   }
 
-  const [x, y, width, height] = svgElement.getAttribute('viewBox').split(',').map((n: string) => +n);
+  const [x, y, width, height] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
   const ratio = width / height;
   const diffWidth = 20;
   const diffHeight = diffWidth / ratio; 
@@ -24,13 +23,15 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   if (event.deltaY > 0) {
     const actualWidth = widthClamp(width - diffWidth);
     const actualHeight = heightClamp(height - diffHeight);
-    const ratio = actualWidth /initializeWidth  - 1;
+    const ratio = actualWidth / initializeWidth  - 1;
+
     svgElement.setAttribute('viewBox', `${-ratio * originX}, ${-ratio * originY}, ${actualWidth}, ${actualHeight}`);
   } else if (event.deltaY < 0) {
     const actualWidth = widthClamp(width + diffWidth);
     const actualHeight = heightClamp(height + diffHeight);
-    const ratio = actualWidth /initializeWidth  - 1;
-    svgElement.setAttribute('viewBox', `${-(ratio) * originX}, ${-ratio * originY}, ${actualWidth}, ${actualHeight}`);
+    const ratio = actualWidth / initializeWidth  - 1;
+
+    svgElement.setAttribute('viewBox', `${-ratio * originX}, ${-ratio * originY}, ${actualWidth}, ${actualHeight}`);
   }
 
   return event;

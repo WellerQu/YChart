@@ -35,7 +35,7 @@ export const createSvg = (option: SvgOption): VNode => {
         width: option.width,
         height: option.height,
         viewBox: `0, 0, ${option.width}, ${option.height}`,
-        // preserveAspectRatio: 'xMidYMid meet'
+        // preserveAspectRatio: 'xMidYMid meet',
       }
     },
     []

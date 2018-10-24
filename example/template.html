@@ -22,14 +22,19 @@
     <div id="app"></div>
   </div>
   <div id="flag" style="position: absolute; left: 0; top: 0; background: red; color: white;"></div>
+  <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
   <script>
-      /*
-      document.body.addEventListener('click', function(event) {
-        console.log(event)
+      //*
+      document.body.addEventListener('dblclick', function(event) {
         document.querySelector('#flag').style.left = event.clientX + 'px';
         document.querySelector('#flag').style.top = event.clientY + 'px';
         document.querySelector('#flag').innerHTML = event.clientX - 320 + ',' + event.clientY;
-      }) 
+      });
+      document.body.addEventListener('mousemove', function(event) {
+        document.querySelector('#follow').style.left = event.clientX + 20 + 'px';
+        document.querySelector('#follow').style.top = event.clientY + 20 + 'px';
+        document.querySelector('#follow').innerHTML = event.clientX - 320 + ',' + event.clientY;
+      });
       //*/
   </script>
 </body>

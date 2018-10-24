@@ -1,6 +1,6 @@
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, Position, parseViewBoxValue, } from '../utils';
+import { setupEventHandler, Position, parseViewBoxValue, clamp } from '../utils';
 
 import compose from '../compose';
 
@@ -8,7 +8,7 @@ import compose from '../compose';
 export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   const root = stage.getStageNode();
 
-  let isMouseDown = false;
+  let isMouseDown: boolean = false;
   let sourcePosition: Position = { x: 0, y: 0 };
   let targetPosition: Position = { x: 0, y: 0 };
   let startViewBox: string = '';
@@ -50,11 +50,17 @@ export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: Topo
 
     const [x1, y1] = parseViewBoxValue(startViewBox);
     const [x2, y2, width, height] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
-    const ratio = (width / 800);
-    let actualX = x1 + (diffX * -ratio);
-    let actualY = y1 + (diffY * -ratio);
+    const containerWidth = svgElement.parentElement.offsetWidth;
+    const ratio = -(width / containerWidth);
 
-    svgElement.setAttribute('viewBox', `${actualX}, ${actualY}, ${width}, ${height}`);
+    const xClamp = clamp(-width, width);
+    const yClamp = clamp(-height, height);
+
+    let newX = x1 + (diffX * ratio);
+    let newY = y1 + (diffY * ratio);
+
+    // svgElement.setAttribute('viewBox', `${xClamp(newX)}, ${yClamp(newY)}, ${width}, ${height}`);
+    svgElement.setAttribute('viewBox', `${newX}, ${newY}, ${width}, ${height}`);
 
     return event;
   };

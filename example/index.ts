@@ -1,7 +1,16 @@
 import render from '../src/topo'
-import { TopoData } from '../typings/defines'
+import { TopoData, Line, Node } from '../typings/defines'
 
-const update = render(document.querySelector('#app'), (userState?: any) => {
+const eventOption = {
+  'nodeClick': (event: MouseEvent, data: Node): void => { console.log(event, data); },
+  'lineClick': (event: MouseEvent, data: Line): void => { console.log(event, data); },
+  'nodeMouseOver': (event: MouseEvent, data: Node): void => { console.log(event, data); },
+  'nodeMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
+  'lineMouseOver': (event: MouseEvent, data: Line): void => { console.log(event, data); },
+  'lineMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
+}
+
+const update = render(document.querySelector('#app'), eventOption, (userState?: any) => {
   console.log('updated successfully', userState)
 })
 
@@ -681,7 +690,6 @@ const data: TopoData = {
     }
   ]
 }
-
 
 update(data)
 

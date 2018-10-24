@@ -1,4 +1,4 @@
-import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line } from '../typings/defines';
+import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption } from '../typings/defines';
 
 import { NODE_TYPE } from './NODE_TYPE';
 
@@ -10,6 +10,8 @@ import { style } from './middlewares/style';
 import { grid } from './middlewares/grid';
 import { scaleCanvas } from './middlewares/scaleCanvas';
 import { moveCanvas } from './middlewares/moveCanvas';
+import { moveNode } from './middlewares/moveNode';
+import { event } from './middlewares/event';
 
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
@@ -49,15 +51,14 @@ const arrowLine = compose<StrategyFn>(
 );
 
 // Entrance, start from here
-export default (container: HTMLDivElement, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, layout, interaction, style, scaleCanvas, moveCanvas);
+export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn => {
+  const enhancer = applyMiddlewares(log, layout, interaction, style, scaleCanvas, moveCanvas, moveNode, event(eventOption));
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch } = createStageAt(container);
 
   updated && subscribe(updated);
-  // subscribe((userState?: any) => {
-  //   updated && updated(userState);
-  // });
+
+  patch();
 
   // Expose update method
   return (data: TopoData): void => {

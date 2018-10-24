@@ -1,16 +1,14 @@
 import { VNode } from '../node_modules/snabbdom/vnode';
 import compose from './compose';
+import { EventHandler, Position } from '../typings/defines';
 
-export type EventHandler = (event: MouseEvent) => MouseEvent;
-export type Position = { x: number, y: number };
-
-export const setupEventHandler = (handler: (event: MouseEvent) => MouseEvent) => (eventName: string) => (vnode: VNode) => {
+export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode) => {
   if (!vnode.data.on) {
     vnode.data.on = {};
   }
 
   if (vnode.data.on[eventName]) {
-    vnode.data.on[eventName] = compose<void>(vnode.data.on.mouseenter, handler);
+    vnode.data.on[eventName] = compose<void>(vnode.data.on[eventName], handler);
   } else {
     vnode.data.on[eventName] = handler;
   }

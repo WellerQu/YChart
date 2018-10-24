@@ -7,6 +7,13 @@ export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any
 export type CreateStageFn = (container: HTMLElement) => Stage;
 export type UpdateFn = (data: TopoData) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
+export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
+export type EventHandler = (event: MouseEvent) => MouseEvent;
+export type Position = { x: number, y: number };
+
+declare interface EventOption {
+  [T: string]: TopoEventHandler;
+}
 
 declare interface Stage {
   getStageNode: () => VNode;

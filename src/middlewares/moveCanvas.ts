@@ -1,6 +1,6 @@
 import { VNode } from '../../node_modules/snabbdom/vnode';
-import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, Position, parseViewBoxValue, clamp } from '../utils';
+import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
+import { setupEventHandler, parseViewBoxValue, clamp } from '../utils';
 
 import compose from '../compose';
 

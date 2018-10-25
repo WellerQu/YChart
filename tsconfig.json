@@ -8,7 +8,8 @@
     "module": "es6",
     "target": "es6",
     "jsx": "react",
-    "allowJs": true,
+    "declarationDir": "./typings",
+    "declaration": true,
     "lib": [
       "dom",
       "es2015",

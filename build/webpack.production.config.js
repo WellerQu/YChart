@@ -1,7 +1,7 @@
-const merge = require("webpack-merge");
+const merge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
-const baseConfig = require("./webpack.base.config");
+const baseConfig = require('./webpack.base.config');
 
 module.exports = merge(baseConfig, {
   devtool: false,

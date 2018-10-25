@@ -4,8 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    example: path.resolve(__dirname, "../example/index.ts"),
-    lib: path.resolve(__dirname, "../src/topo.ts"),
+    example: path.resolve(__dirname, '../example/index.ts'),
+    lib: path.resolve(__dirname, '../src/topo.ts'),
   },
   module: {
     rules: [
@@ -22,19 +22,19 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, "../dist")], {
+    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
       root: process.cwd(),
     }),
     new HtmlWebpackPlugin({
-      title: "Demo 0",
-      template: path.resolve(__dirname, "../example/template.html"),
+      title: 'Demo 0',
+      template: path.resolve(__dirname, '../example/template.html'),
     }),
   ],
   resolve: {
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: ['.tsx', '.ts', '.js']
   },
   output: {
-    filename: "[name].[hash].js",
-    path: path.resolve(__dirname, "../dist")
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, '../dist')
   },
 };

@@ -105,7 +105,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
 
           if (source === currentElementID) {
             // update start position
-            const point = bezierCurvePoint(x, y, x2, y2);
+            // const point = bezierCurvePoint(x, y, x2, y2);
 
             circle.setAttribute('cx', x);
             circle.setAttribute('cy', y);
@@ -117,7 +117,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
 
           if (target === currentElementID) {
             // update end position
-            const point = bezierCurvePoint(x1, y1, x, y);
+            // const point = bezierCurvePoint(x1, y1, x, y);
 
             // path.setAttribute('d', `M${x1},${y1} Q${point.x},${point.y} ${x},${y}`);
             path.setAttribute('d', `M${x1},${y1} L${x},${y}`);

@@ -37,7 +37,7 @@ const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
       x: CELL_SIZE * columnIndex + space,
       y: CELL_SIZE * rowIndex + space,
       id: item.data.attrs.id,
-    }
+    };
   });
 };
 

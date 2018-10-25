@@ -10,7 +10,7 @@ const HEALTH_COLOR: HealthColor = {
   [HEALTH.HEALTHY]: '#a9d86e',
   [HEALTH.NORMAL]: '#86cae4',
   [HEALTH.INTOLERANCE]: '#f58210',
-}
+};
 
 export default function createServiceNodeOption(node: Node): ServiceNodeOption {
   return { 

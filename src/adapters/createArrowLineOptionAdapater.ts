@@ -1,6 +1,6 @@
 import { ArrowLineOption, Line } from '../../typings/defines';
 
-const lineColor = '#2693ff'
+const lineColor = '#2693ff';
 
 export default function createArrowLineOption(line: Line): ArrowLineOption {
   const id = `${line.source}-${line.target}`;

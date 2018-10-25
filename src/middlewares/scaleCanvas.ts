@@ -35,8 +35,6 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
     const newX = newWidth * x / width;
     const newY = newHeight * y / height;
 
-    console.log(newOffsetX, newOffsetY);
-
     svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
   } else if (event.deltaY < 0) {
     // to smaller
@@ -49,13 +47,11 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
     const newOffsetX = newWidth * offsetX / initializeWidth;
     const newOffsetY = newHeight * offsetY / initializeHeight;
 
-    console.log(newOffsetX, newOffsetY);
-
     svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
   }
 
   return event;
-}
+};
 
 const setupMousewheel = setupEventHandler(throttle(handleMousewheel, 20))('mousewheel');
 

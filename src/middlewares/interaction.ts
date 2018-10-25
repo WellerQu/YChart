@@ -45,7 +45,7 @@ const setupMouseOut = setupEventHandler(handleMouseOut)('mouseout');
 
 // Example for middleware that show how to add an interaction
 export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  console.log('TODO: add interaction');
+  console.log('TODO: add interaction'); // eslint-disable-line
 
   const root = stage.getStageNode();
   const children = root.children;

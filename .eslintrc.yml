@@ -24,4 +24,12 @@ rules:
   quotes:
     - warn
     - single
+  no-console:
+    - warn
+  no-unreachable:
+    - error
+  semi:
+    - warn
+    - always
+    - omitLastInOneLineBlock: true
   'typescript/class-name-casing': 'error'

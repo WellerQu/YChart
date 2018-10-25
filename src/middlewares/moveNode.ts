@@ -30,10 +30,10 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
     [+RegExp.$1, +RegExp.$2],
     [+RegExp.$5, +RegExp.$6],
   ];
-}
+};
 
 export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  console.log('DOING: moveNode');
+  console.log('DOING: moveNode'); // eslint-disable-line
 
   const root = stage.getStageNode();
 
@@ -105,12 +105,12 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
             // 更改起始位置
             circle.setAttribute('cx', x);
             circle.setAttribute('cy', y);
-            path.setAttribute('d', `M${x},${y} Q${0},${0} ${x2},${y2}`)
+            path.setAttribute('d', `M${x},${y} Q${0},${0} ${x2},${y2}`);
             return;
           }
 
           if (target === currentElementID) {
-            path.setAttribute('d', `M${x1},${y1} Q${0},${0} ${x},${y}`)
+            path.setAttribute('d', `M${x1},${y1} Q${0},${0} ${x},${y}`);
             // 更改结束位置
             return;
           }

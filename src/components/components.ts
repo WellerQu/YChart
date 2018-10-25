@@ -13,7 +13,7 @@ import {
 
 type ClassName = {
   [key: string]: boolean;
-}
+};
 
 const parseClassName = (classNames: string): ClassName => {
   if (!classNames) 
@@ -161,7 +161,7 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
         // })
       ]
     )
-  )
+  );
 
   return pardentNode;
 };

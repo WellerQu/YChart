@@ -6,7 +6,7 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "module": "es6",
-    "target": "es6",
+    "target": "es5",
     "jsx": "react",
     "declarationDir": "./typings",
     "declaration": true,

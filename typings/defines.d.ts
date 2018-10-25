@@ -17,7 +17,6 @@ declare interface EventOption {
 
 declare interface Stage {
   getStageNode: () => VNode;
-  getContainer: () => HTMLElement;
   create: (strategy: StrategyFn) => VNode;
   subscribe: (handler: SubscriberFn) => void;
   patch: PatchFn;

@@ -2,6 +2,7 @@ import { Stage, PatchFn, TopoData, EventOption, TopoEventHandler, } from '../../
 import { setupEventHandler } from '../utils';
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
+import { NODE_TYPE } from '../NODE_TYPE';
 
 const handlerHelper = (
   handleNodeEvent: TopoEventHandler,
@@ -16,7 +17,7 @@ const handlerHelper = (
     element = element.parentElement;
   }
 
-  if (element.classList.contains('node')) {
+  if (element.classList.contains(NODE_TYPE.NODE)) {
     const node = data
       ? data.nodes.find(n => n.id === element.getAttribute('id'))
       : null;

@@ -9,7 +9,6 @@ interface SVGAnimateMotionElement extends Element {
 }
 
 const handleMouseEnter = (event: MouseEvent): MouseEvent => {
-  console.log('enter', event.target);
   // target is SVGGElement
   const gElement = event.target as SVGGElement;
   if (!gElement.querySelector)
@@ -46,6 +45,8 @@ const setupMouseOut = setupEventHandler(handleMouseOut)('mouseout');
 
 // Example for middleware that show how to add an interaction
 export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+  console.log('TODO: add interaction');
+
   const root = stage.getStageNode();
   const children = root.children;
 

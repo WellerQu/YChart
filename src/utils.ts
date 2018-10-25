@@ -29,6 +29,20 @@ export const throttle = (handler: EventHandler, gapTime: number) => {
   }
 };
 
+export function memory<T>(fn: (...args: any[]) => T, resolver?: (...args: any[]) => string)  {
+  const memories = new Map<string, T>();
+
+  return (...args: any[]): T => {
+    const key: string = resolver ? resolver(...args) : args[0];
+    const result: T = memories.get(key);
+
+    if (!result)
+      return memories.set(key, fn(...args)).get(key)
+    
+    return result;
+  }
+}
+
 export const clamp = (min: number, max: number) => (value: number) => {
   return value < min ? min : value > max ? max : value;
 };
@@ -39,3 +53,32 @@ export const lerp = (source: Position, target: Position) => ({
 });
 
 export const parseViewBoxValue = (value: string): number[] => value.split(',').map(n => +n);
+
+export const parseTranslate = (value: string): ( Position | never) => {
+  const regExp = /^translate\((\d+(\.\d+)?)px,\s*(\d+(\.\d+)?)px\)$/igm;
+  if (!regExp.test(value))
+    throw new Error(`can NOT convert to Position: ${value}`);
+  
+  return {
+    x: +RegExp.$1,
+    y: +RegExp.$3,
+  }
+}
+
+export const toViewBox = (x: number, y: number, width: number, height: number): string => `${x},${y},${width},${height}`;
+
+export function toTranslate(x: number, y: number): string;
+export function toTranslate(position: Position): string;
+export function toTranslate(...args: any[]): string {
+  if (args.length > 1) {
+    const [ x, y ] = args;
+    return `translate(${x}px, ${y}px)`;
+  }
+  
+  if (args.length === 1) {
+    const { x, y } = args[0];
+    return `translate(${x}px, ${y}px)`;
+  }
+
+  return `translate(${0}px, ${0}px)`;
+}

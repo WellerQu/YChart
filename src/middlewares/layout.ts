@@ -3,6 +3,7 @@ import { Stage, PatchFn, TopoData, } from '../../typings/defines';
 import { NODE_SIZE, CELL_SIZE } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';
 import compose from '../compose';
+import { toTranslate } from '../utils';
 
 interface KeyInfo {
   vnode: VNode;
@@ -10,8 +11,6 @@ interface KeyInfo {
   y: number;
   id: number | string | boolean;
 }
-
-const transformPoistion = (x: number, y: number) => ({ transform: `translate(${x}px, ${y}px)`, });
 
 const max = (...nums: number[]): number => {
   const [ head, ...tail ] = nums;
@@ -30,7 +29,9 @@ const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
         ...item,
         data: {
           ...item.data,
-          style: transformPoistion(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space),
+          style: {
+            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space),
+          }
         }
       },
       x: CELL_SIZE * columnIndex + space,

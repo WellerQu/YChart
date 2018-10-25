@@ -1,5 +1,6 @@
 import { ServiceNodeOption, Node } from '../../typings/defines';
 import { HEALTH } from '../HEALTH';
+import { NODE_TYPE } from '../NODE_TYPE';
 
 interface HealthColor {
   [key: string]: string;
@@ -16,7 +17,7 @@ export default function createServiceNodeOption(node: Node): ServiceNodeOption {
     title: node.showName,
     instances: `${node.activeInstances}/${node.instances}`,
     color: HEALTH_COLOR[node.health],
-    className: `${node.type} node`,
+    className: `${node.type} ${NODE_TYPE.NODE}`,
     type: node.type,
     avgRT: node.elapsedTime,
     rpm: node.rpm,

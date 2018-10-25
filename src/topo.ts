@@ -52,7 +52,7 @@ const arrowLine = compose<StrategyFn>(
 
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, layout, interaction, style, scaleCanvas, moveCanvas, moveNode, event(eventOption));
+  const enhancer = applyMiddlewares(log, layout, interaction, style, scaleCanvas, moveCanvas, moveNode, event(eventOption), grid, );
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch } = createStageAt(container);
 

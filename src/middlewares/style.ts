@@ -9,6 +9,8 @@ g.group {
   font-size: 12px;
   cursor: pointer;
   user-select: none;
+
+  will-change: z-index, transform;
 }
 
 g.group.line:hover > path {

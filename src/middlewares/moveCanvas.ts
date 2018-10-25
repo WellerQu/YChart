@@ -30,12 +30,13 @@ export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: Topo
   };
 
   const handleMouseMove = (event: MouseEvent): MouseEvent => {
-    const target = event.target as HTMLElement;
-    if (target.nodeName.toUpperCase() !== 'SVG') 
-      return event;
-
     if (!isMouseDown)
       return event;
+
+    const target = event.target as HTMLElement;
+    if (target.nodeName.toUpperCase() !== 'SVG') {
+      return event;
+    }
 
     targetPosition.x = event.pageX;
     targetPosition.y = event.pageY;
@@ -83,7 +84,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: Topo
     setupEventHandler(handleMouseDown)('mousedown'),
     setupEventHandler(handleMouseMove)('mousemove'),
     setupEventHandler(handleMouseUp)('mouseup'),
-    setupEventHandler(handleMouseUp)('mouseout'),
+    // setupEventHandler(handleMouseUp)('mouseout'),
   );
 
   setupDragMoveHandler(root);

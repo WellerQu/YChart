@@ -1,13 +1,10 @@
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp, parseViewBoxValue, } from '../utils';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, } from '../utils';
 import { h } from '../../node_modules/snabbdom/h';
 
 // limit range
 const widthClamp = clamp(320, 2420);
 const heightClamp = clamp(160, 1210);
-
-// 转换为ViewBox的字符串值
-const transformViewBox = (x: number, y: number, width: number, height: number): string => `${x},${y},${width},${height}`;
 
 const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   let svgElement = event.target as HTMLElement;
@@ -28,7 +25,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   const initializeHeight = svgElement.parentElement.offsetHeight;
 
   if (event.deltaY > 0) {
-    // 放大
+    // to bigger
     const newWidth = widthClamp(width - diffWidth);
     const newHeight = heightClamp(height - diffHeight);
 
@@ -40,9 +37,9 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
 
     console.log(newOffsetX, newOffsetY);
 
-    svgElement.setAttribute('viewBox', transformViewBox(newX, newY, newWidth, newHeight));
+    svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
   } else if (event.deltaY < 0) {
-    // 缩小
+    // to smaller
     const newWidth = widthClamp(width + diffWidth);
     const newHeight = heightClamp(height + diffHeight);
 
@@ -54,7 +51,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
 
     console.log(newOffsetX, newOffsetY);
 
-    svgElement.setAttribute('viewBox', transformViewBox(newX, newY, newWidth, newHeight));
+    svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
   }
 
   return event;

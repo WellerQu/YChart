@@ -40,10 +40,6 @@ function createStage(container: HTMLElement): Stage {
     return currentNode;
   }
 
-  function getContainer(): HTMLElement {
-    return container;
-  }
-
   function patch(userState?: any): VNode {
     previousNode = vPatch(previousNode, currentNode);
     currentNode = createSvg(svgOption);
@@ -55,7 +51,6 @@ function createStage(container: HTMLElement): Stage {
 
   return {
     getStageNode,
-    getContainer,
     create,
     subscribe,
     patch

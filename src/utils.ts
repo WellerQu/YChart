@@ -26,7 +26,7 @@ export const throttle = (handler: EventHandler, gapTime: number) => {
     }
 
     return event;
-  }
+  };
 };
 
 export function memory<T>(fn: (...args: any[]) => T, resolver?: (...args: any[]) => string)  {
@@ -37,33 +37,28 @@ export function memory<T>(fn: (...args: any[]) => T, resolver?: (...args: any[])
     const result: T = memories.get(key);
 
     if (!result)
-      return memories.set(key, fn(...args)).get(key)
+      return memories.set(key, fn(...args)).get(key);
     
     return result;
-  }
+  };
 }
 
 export const clamp = (min: number, max: number) => (value: number) => {
   return value < min ? min : value > max ? max : value;
 };
 
-export const lerp = (source: Position, target: Position) => ({
-  x: (target.x - source.x) * .01,
-  y: (target.y - source.y) * .01,
-});
-
 export const parseViewBoxValue = (value: string): number[] => value.split(',').map(n => +n);
 
 export const parseTranslate = (value: string): ( Position | never) => {
-  const regExp = /^translate\((\d+(\.\d+)?)px,\s*(\d+(\.\d+)?)px\)$/igm;
+  const regExp = /^translate\((-?\d+(\.\d+)?)px,\s*(-?\d+(\.\d+)?)px\)$/igm;
   if (!regExp.test(value))
     throw new Error(`can NOT convert to Position: ${value}`);
   
   return {
     x: +RegExp.$1,
     y: +RegExp.$3,
-  }
-}
+  };
+};
 
 export const toViewBox = (x: number, y: number, width: number, height: number): string => `${x},${y},${width},${height}`;
 
@@ -81,4 +76,38 @@ export function toTranslate(...args: any[]): string {
   }
 
   return `translate(${0}px, ${0}px)`;
+}
+
+export function bezierCurvePoint(x1: number, y1: number, x2: number, y2: number): Position {
+  if (x1 === x2) {
+    return {
+      x: x1- 100,
+      y: (y2 - y1) / 2 + y1,
+    };
+  } 
+
+  if (y1 === y2) {
+    return {
+      x: (x2 - x1)/ 2 + x1,
+      y: y1 - 100,
+    };
+  } 
+  
+  // 已知一阶Bézier曲线的起始点P1(x1, y1)和终止点P2(x2, y2), 求控制点P
+  // 设P1,P2所在线段中心点为P3(centerX, centerY)
+  // 则有
+  const centerX = (x2 - x1) / 2 + x1;
+  const centerY = (y2 - y1) / 2 + y1;
+  // 设直线方程L1, L2相互垂直, P1,P2,P3都是L1上的点, 且L1,L2相交于P3
+  // 那么L1的斜率有
+  const k1 = (y2 - y1) / (x2 - x1);
+  // 由两线垂直则斜率互为倒数, 可知L2的斜率
+  const k2 = 1 / k1;
+  // 已知直线方程为Ax + By + C = 0, 那么另一条垂线的方程为k2*x + b - k2 * a = y
+  // 所以代入P3则有k2 * x + centerY - k2 * centerX = y
+  // 设x为一个任意值x1 + 50, 则有y = k2 * (x1 + 50) + centerY - k2 * centerX
+  const x = x1 + (x2 - x1) / 2;
+  const y = k2 * x + centerY - k2 * centerX; 
+
+  return { x, y };
 }

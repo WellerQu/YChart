@@ -9,12 +9,31 @@ g.group {
   font-size: 12px;
   cursor: pointer;
   user-select: none;
+  transition: transform .1s;
 
-  will-change: z-index, transform;
+  will-change: z-index, transform, opacity;
+}
+
+g.group.line path {
+  transition: d .1s;
+}
+
+g.group.line circle {
+  transition: cx,cy .1s;
 }
 
 g.group.line:hover > path {
   stroke-width: 2px;
+  stroke: #61b0ff;
+}
+
+g.group.node:active > circle.health,
+g.group.node:active > image {
+  /*
+  transform: scale(1.2);
+  transform-origin: 50px 59px;
+  */
+  opacity: .8;
 }
 
 g.group text.instances {

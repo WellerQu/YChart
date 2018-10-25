@@ -3,7 +3,7 @@ import { Stage, PatchFn, TopoData, } from '../../typings/defines';
 import { NODE_SIZE, CELL_SIZE } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';
 import compose from '../compose';
-import { toTranslate } from '../utils';
+import { toTranslate, bezierCurvePoint } from '../utils';
 
 interface KeyInfo {
   vnode: VNode;
@@ -61,14 +61,17 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     if (!circle)
       return item;
 
-    const x1 = s.x + NODE_SIZE / 2 + 20;
+    const x1 = s.x + NODE_SIZE / 2;
     const y1 = s.y + NODE_SIZE / 2;
     const x2 = t.x + NODE_SIZE / 2;
     const y2 = t.y + NODE_SIZE / 2;
 
     circle.data.attrs.cx = x1;
     circle.data.attrs.cy = y1;
-    path.data.attrs.d = `M${x1}, ${y1} Q${(x2 - x1) / 2 + x1}, ${(y2 - y1) / 2} ${x2}, ${y2}`;
+
+    // const { x, y } = bezierCurvePoint(x1, y1, x2, y2);
+    // path.data.attrs.d = `M${x1}, ${y1} Q${x}, ${y} ${x2}, ${y2}`;
+    path.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
 
     return {
       ...item,

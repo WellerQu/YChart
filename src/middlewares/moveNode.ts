@@ -1,5 +1,5 @@
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, } from '../utils';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, bezierCurvePoint, } from '../utils';
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
@@ -22,13 +22,15 @@ const findGroup = (event: Event): HTMLElement => {
 };
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
-  const regExp: RegExp = /^M(\d+(?:.\d+)?),\s*(\d+(?:.\d+)?)\s*Q(\d+(?:.\d+)?),\s*(\d+(?:.\d+)?)\s+(\d+(?:.\d+)?),\s*(\d+(?:.\d+)?)$/igm;
+  // const regExp: RegExp = /^M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*Q(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s+(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)$/igm;
+  const regExp: RegExp = /M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*L(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)/igm;
   if (!regExp.test(value))
     throw new Error(`can NOT convert to path d: ${value}`);
 
   return [
     [+RegExp.$1, +RegExp.$2],
-    [+RegExp.$5, +RegExp.$6],
+    [+RegExp.$3, +RegExp.$4],
+    // [+RegExp.$5, +RegExp.$6],
   ];
 };
 
@@ -98,20 +100,28 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
           const circle = item.querySelector('circle');
 
           const [[x1, y1], [x2, y2]] = parsePathD(path.getAttribute('d'));
-          const x = NODE_SIZE / 2 + 20 + newX;
-          const y = NODE_SIZE / 2 + newY;
+          const x = NODE_SIZE  / 2 + newX;
+          const y = NODE_SIZE  / 2 + newY;
 
           if (source === currentElementID) {
-            // 更改起始位置
+            // update start position
+            const point = bezierCurvePoint(x, y, x2, y2);
+
             circle.setAttribute('cx', x);
             circle.setAttribute('cy', y);
-            path.setAttribute('d', `M${x},${y} Q${0},${0} ${x2},${y2}`);
+            // path.setAttribute('d', `M${x},${y} Q${point.x},${point.y} ${x2},${y2}`);
+            path.setAttribute('d', `M${x},${y} L${x2},${y2}`);
+
             return;
           }
 
           if (target === currentElementID) {
-            path.setAttribute('d', `M${x1},${y1} Q${0},${0} ${x},${y}`);
-            // 更改结束位置
+            // update end position
+            const point = bezierCurvePoint(x1, y1, x, y);
+
+            // path.setAttribute('d', `M${x1},${y1} Q${point.x},${point.y} ${x},${y}`);
+            path.setAttribute('d', `M${x1},${y1} L${x},${y}`);
+
             return;
           }
         });

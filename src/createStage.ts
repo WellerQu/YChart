@@ -1,10 +1,18 @@
-import toNode from '../node_modules/snabbdom/tovnode';
-import { VNode } from '../node_modules/snabbdom/vnode';
-import { init } from '../node_modules/snabbdom/snabbdom';
-import attributes from '../node_modules/snabbdom/modules/attributes';
-import style from '../node_modules/snabbdom/modules/style';
-import classes from '../node_modules/snabbdom/modules/class';
-import eventlistener from '../node_modules/snabbdom/modules/eventlisteners';
+/// <reference path="../node_modules/snabbdom/tovnode.d.ts" />
+/// <reference path="../node_modules/snabbdom/vnode.d.ts" />
+/// <reference path="../node_modules/snabbdom/snabbdom.d.ts" />
+/// <reference path="../node_modules/snabbdom/modules/attributes.d.ts" />
+/// <reference path="../node_modules/snabbdom/modules/style.d.ts" />
+/// <reference path="../node_modules/snabbdom/modules/class.d.ts" />
+/// <reference path="../node_modules/snabbdom/modules/eventlisteners.d.ts" />
+
+import toNode from 'snabbdom/tovnode';
+import { VNode } from 'snabbdom/vnode';
+import { init } from 'snabbdom/snabbdom';
+import attributes from 'snabbdom/modules/attributes';
+import style from 'snabbdom/modules/style';
+import classes from 'snabbdom/modules/class';
+import eventlistener from 'snabbdom/modules/eventlisteners';
 
 import { Stage, SubscriberFn, StrategyFn, SvgOption } from '../typings/defines';
 import { createSvg } from './components/components';

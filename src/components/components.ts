@@ -1,5 +1,8 @@
-import { VNode } from '../../node_modules/snabbdom/vnode';
-import { h } from '../../node_modules/snabbdom/h';
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+/// <reference path="../../node_modules/snabbdom/h.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+import { h } from 'snabbdom/h';
 
 import {
   TextOption,

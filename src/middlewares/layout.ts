@@ -1,4 +1,7 @@
-import { VNode } from '../../node_modules/snabbdom/vnode';
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+
 import { Stage, PatchFn, TopoData, } from '../../typings/defines';
 import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';

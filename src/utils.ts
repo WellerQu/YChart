@@ -1,4 +1,7 @@
-import { VNode } from '../node_modules/snabbdom/vnode';
+/// <reference path="../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+
 import compose from './compose';
 import { EventHandler, Position } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH } from './constants';

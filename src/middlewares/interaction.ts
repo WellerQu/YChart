@@ -1,5 +1,8 @@
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
 import { setupEventHandler } from '../utils';
 

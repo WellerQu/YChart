@@ -1,4 +1,6 @@
-import { VNode } from '../../node_modules/snabbdom/vnode';
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
 import { NODE_SIZE } from '../constants';
 import { ImageNodeOption } from '../../typings/defines';
 

@@ -1,5 +1,7 @@
+/// <reference path="../../node_modules/snabbdom/h.d.ts" />
+
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { h } from '../../node_modules/snabbdom/h';
+import { h } from 'snabbdom/h';
 
 const styleSheet = `
 /* <![CDATA[ */

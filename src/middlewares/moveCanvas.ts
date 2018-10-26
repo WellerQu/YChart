@@ -1,4 +1,7 @@
-import { VNode } from '../../node_modules/snabbdom/vnode';
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
 import { setupEventHandler, parseViewBoxValue, } from '../utils';
 

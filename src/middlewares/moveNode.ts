@@ -1,7 +1,10 @@
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
+import { VNode } from 'snabbdom/vnode';
+
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
 import compose from '../compose';
-import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
 import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
 

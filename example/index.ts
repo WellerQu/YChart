@@ -1,4 +1,4 @@
-import render from '../src/topo';
+import render from '../src/ychart-topo';
 import { TopoData, } from '../typings/defines';
 
 const eventOption = {

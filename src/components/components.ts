@@ -10,6 +10,7 @@ import {
   ArrowOption,
   SvgOption
 } from '../../typings/defines';
+import { toArrowD } from '../utils';
 
 type ClassName = {
   [key: string]: boolean;
@@ -129,6 +130,7 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
         stroke: option.strokeColor,
         'stroke-width': option.strokeWidth,
       },
+      class: { 'link-line': true, },
       ns: 'http://www.w3.org/2000/svg',
     })
   );
@@ -137,16 +139,19 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
 };
 
 export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
-  pardentNode.children.push(
-    h(
-      'circle',
-      {
-        attrs: { cx: 0, cy: 0, r: 5, fill: option.fill, id: `C${option.id}` },
-        ns: 'http://www.w3.org/2000/svg'
-      },
-      []
-    )
-  );
+  const { x, y, width, height } = option;
+
+  pardentNode.children.push(h('path', {
+    attrs: {
+      d: toArrowD(x, y, width, height),
+      fill: option.fill,
+      transform: 'rotate(90, 0 0)',
+    },
+    class: { arrow: true },
+    // style: { transform: 'rotate(0deg)', 'transform-origin': '0 0 0' },
+    ns: 'http://www.w3.org/2000/svg'
+  }));
+
   pardentNode.children.push(
     h(
       'animateMotion',

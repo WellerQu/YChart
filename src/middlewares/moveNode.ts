@@ -1,5 +1,5 @@
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, bezierCurvePoint, } from '../utils';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, bezierCurvePoint, toArrowD, } from '../utils';
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
@@ -33,6 +33,8 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
     // [+RegExp.$5, +RegExp.$6],
   ];
 };
+
+// const updateArrowPosition = (arrow: SVGPathElement) => (x1: number, y1: number, x2: number, y2: number) =>
 
 export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   console.log('DOING: moveNode'); // eslint-disable-line
@@ -96,31 +98,44 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
         })
         .forEach((item: SVGGElement) => {
           const [source, target] = item.id.split('-');
-          const path = item.querySelector('path') as SVGPathElement;
-          const circle = item.querySelector('circle');
 
-          const [[x1, y1], [x2, y2]] = parsePathD(path.getAttribute('d'));
+          const paths = item.querySelectorAll('path');
+          const line = paths[0];
+          const arrow = paths[1];
+
+          const [[x1, y1], [x2, y2]] = parsePathD(line.getAttribute('d'));
           const x = NODE_SIZE  / 2 + newX;
           const y = NODE_SIZE  / 2 + newY;
 
+          // update arrow
+          // if (x1 === x2) {
+          //   arrow.setAttribute('d', toArrowD(x1, y1 + 30));
+          //   arrow.setAttribute('transform', `rotate(180, ${x1} ${y1 + 30 + 10 / 2})`);
+          // } else if (y1 === y2) {
+          //   arrow.setAttribute('d', toArrowD(x1 + 30, y1));
+          //   arrow.setAttribute('transform', `rotate(90, ${x1 + 30} ${y1})`);
+          // } else {
+          //   const k = (y2 - y1) / (x2 - x1);
+          //   const b = y2 - k * x2;
+          //   const arrowX = x1 + 30;
+          //   const arrowY = k * arrowX + b;
+      
+          //   arrow.setAttribute('d', toArrowD(arrowX, arrowY));
+          //   arrow.setAttribute('transform', `rotate(${Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90}, ${arrowX} ${arrowY})`);
+          // }
+
           if (source === currentElementID) {
             // update start position
-            // const point = bezierCurvePoint(x, y, x2, y2);
 
-            circle.setAttribute('cx', x);
-            circle.setAttribute('cy', y);
-            // path.setAttribute('d', `M${x},${y} Q${point.x},${point.y} ${x2},${y2}`);
-            path.setAttribute('d', `M${x},${y} L${x2},${y2}`);
+            line.setAttribute('d', `M${x},${y} L${x2},${y2}`);
 
             return;
           }
 
           if (target === currentElementID) {
             // update end position
-            // const point = bezierCurvePoint(x1, y1, x, y);
 
-            // path.setAttribute('d', `M${x1},${y1} Q${point.x},${point.y} ${x},${y}`);
-            path.setAttribute('d', `M${x1},${y1} L${x},${y}`);
+            line.setAttribute('d', `M${x1},${y1} L${x},${y}`);
 
             return;
           }

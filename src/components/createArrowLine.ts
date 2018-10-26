@@ -12,9 +12,9 @@ const createArrowLine = (option: ArrowLineOption) => (
   const createNode = compose<VNode>(
     createText({ content: option.text || '' }),
     createArrow({
+      x: 0,
+      y: 0,
       id: option.id,
-      x: option.x1,
-      y: option.y1,
       fill: option.fill,
     }),
     createLine({

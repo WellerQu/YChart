@@ -22,17 +22,13 @@ g.group.line circle {
   transition: cx,cy .1s;
 }
 
-g.group.line:hover > path {
+g.group.line:hover > path.link-line {
   stroke-width: 2px;
   stroke: #61b0ff;
 }
 
-g.group.node:active > circle.health,
-g.group.node:active > image {
-  /*
-  transform: scale(1.2);
-  transform-origin: 50px 59px;
-  */
+g.group.node:active > circle.health
+, g.group.line:active > path.link-line {
   opacity: .8;
 }
 

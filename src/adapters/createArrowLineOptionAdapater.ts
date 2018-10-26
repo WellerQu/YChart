@@ -5,7 +5,7 @@ const lineColor = '#2693ff';
 export default function createArrowLineOption(line: Line): ArrowLineOption {
   const id = `${line.source}-${line.target}`;
 
-  return {  
+  return {
     x: 0,
     y: 0,
     fill: lineColor,

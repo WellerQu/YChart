@@ -87,8 +87,10 @@ declare interface LineOption {
 
 declare interface ArrowOption {
   id: string,
-  x: number;
-  y: number;
+  x: number,
+  y: number,
+  height?: number,
+  width?: number,
   fill: string;
   className?: string;
 }

@@ -1,6 +1,7 @@
 import { VNode } from '../node_modules/snabbdom/vnode';
 import compose from './compose';
 import { EventHandler, Position } from '../typings/defines';
+import { ARROW_HEIGHT, ARROW_WIDTH } from './constants';
 
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode) => {
   if (!vnode.data.on) {
@@ -111,3 +112,15 @@ export function bezierCurvePoint(x1: number, y1: number, x2: number, y2: number)
 
   return { x, y };
 }
+
+export const toArrowD = (x: number, y: number, width = ARROW_WIDTH, height = ARROW_HEIGHT): string => {
+  return `M${x}, ${y - height / 2} L${x + width / 2}, ${y + height / 2} L${x - width / 2},${y + height / 2} Z`;
+};
+
+
+export const max = (...nums: number[]): number => {
+  const [ head, ...tail ] = nums;
+  const _max = (x: number) => (y: number) => x > y ? x : y;
+  const getResult = compose<number>(...tail.map((n: number) => _max(n)));
+  return getResult(head);
+};

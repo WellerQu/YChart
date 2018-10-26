@@ -145,10 +145,9 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
     attrs: {
       d: toArrowD(x, y, width, height),
       fill: option.fill,
-      transform: 'rotate(90, 0 0)',
+      transform: 'rotate(0, 0 0)',
     },
     class: { arrow: true },
-    // style: { transform: 'rotate(0deg)', 'transform-origin': '0 0 0' },
     ns: 'http://www.w3.org/2000/svg'
   }));
 

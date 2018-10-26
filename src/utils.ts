@@ -114,7 +114,7 @@ export function bezierCurvePoint(x1: number, y1: number, x2: number, y2: number)
 }
 
 export const toArrowD = (x: number, y: number, width = ARROW_WIDTH, height = ARROW_HEIGHT): string => {
-  return `M${x}, ${y - height / 2} L${x + width / 2}, ${y + height / 2} L${x - width / 2},${y + height / 2} Z`;
+  return `M${x},${y - height / 2} L${x - width / 2},${y + height / 2} L${x + width / 2},${y + height / 2} Z`;
 };
 
 

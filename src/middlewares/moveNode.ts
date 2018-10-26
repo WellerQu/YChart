@@ -3,7 +3,7 @@ import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, bezi
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
-import { NODE_SIZE } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET, ARROW_HEIGHT } from '../constants';
 
 const findGroup = (event: Event): HTMLElement => {
   let element = event.target as HTMLElement;
@@ -107,37 +107,45 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
           const x = NODE_SIZE  / 2 + newX;
           const y = NODE_SIZE  / 2 + newY;
 
-          // update arrow
-          // if (x1 === x2) {
-          //   arrow.setAttribute('d', toArrowD(x1, y1 + 30));
-          //   arrow.setAttribute('transform', `rotate(180, ${x1} ${y1 + 30 + 10 / 2})`);
-          // } else if (y1 === y2) {
-          //   arrow.setAttribute('d', toArrowD(x1 + 30, y1));
-          //   arrow.setAttribute('transform', `rotate(90, ${x1 + 30} ${y1})`);
-          // } else {
-          //   const k = (y2 - y1) / (x2 - x1);
-          //   const b = y2 - k * x2;
-          //   const arrowX = x1 + 30;
-          //   const arrowY = k * arrowX + b;
-      
-          //   arrow.setAttribute('d', toArrowD(arrowX, arrowY));
-          //   arrow.setAttribute('transform', `rotate(${Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90}, ${arrowX} ${arrowY})`);
-          // }
 
+          let startX: number, startY: number, endX: number, endY: number;
           if (source === currentElementID) {
             // update start position
+            startX = x;
+            startY = y;
+            endX = x2;
+            endY = y2;
 
             line.setAttribute('d', `M${x},${y} L${x2},${y2}`);
+          } else if (target === currentElementID) {
+            // update end position
+            startX = x1;
+            startY = y1;
+            endX = x;
+            endY = y;
 
-            return;
+            arrow.setAttribute('d', toArrowD(x1, y1));
+            line.setAttribute('d', `M${x1},${y1} L${x},${y}`);
           }
 
-          if (target === currentElementID) {
-            // update end position
+          if (startX) {
+            // update arrow
+            const lA = endY - startY;
+            const lB = endX - startX;
+            const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
 
-            line.setAttribute('d', `M${x1},${y1} L${x},${y}`);
+            const lc = ARROW_OFFSET;
+            const la = lc * lA / lC;
+            const lb = lc * lB / lC;
 
-            return;
+            const arrowX = lb + startX;
+            const arrowY = la + startY;
+
+            arrow.setAttribute('d', toArrowD(arrowX, arrowY));
+
+            // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
+            const a = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI + 90; // 阿尔法a
+            arrow.setAttribute('transform', `rotate(${a}, ${arrowX} ${arrowY})`);
           }
         });
     }

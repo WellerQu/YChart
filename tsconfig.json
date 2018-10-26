@@ -5,7 +5,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
-    "module": "es6",
+    "module": "CommonJS",
     "target": "es5",
     "jsx": "react",
     "declarationDir": "./typings",

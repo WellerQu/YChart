@@ -61,25 +61,23 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     const x2 = t.x + NODE_SIZE / 2;
     const y2 = t.y + NODE_SIZE / 2;
 
-    if (x1 === x2) {
-      arrow.data.attrs.d = toArrowD(x1, y1 + ARROW_OFFSET);
-      arrow.data.attrs.transform = `rotate(${180 * (y2 > y1 ? 1 : -1)}, ${x1} ${y1 + ARROW_OFFSET + ARROW_HEIGHT / 2})`;
-    } else if (y1 === y2) {
-      arrow.data.attrs.d = toArrowD(x1 + ARROW_OFFSET, y1);
-      arrow.data.attrs.transform = `rotate(${90 * (x2 > x1 ? 1 : -1)}, ${x1 + ARROW_OFFSET} ${y1})`;
-    } else {
-      // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
-      let a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90; // 阿尔法a
-      const k = (y2 - y1) / (x2 - x1);
-      const b = y2 - k * x2;
-      // const arrowX = (x1 + ARROW_OFFSET * Math.cos(180 - a));
-      // const arrowY = (y1 + ARROW_OFFSET * Math.sin(180 - a));
-      const arrowX = x1 + ARROW_OFFSET;
-      const arrowY = k * arrowX + b;
+    // update arrow
+    const lA = y2 - y1;
+    const lB = x2 - x1;
+    const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
 
-      arrow.data.attrs.d = toArrowD(arrowX, arrowY);
-      arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
-    }
+    const lc = ARROW_OFFSET;
+    const la = lc * lA / lC;
+    const lb = lc * lB / lC;
+
+    const arrowX = lb + x1;
+    const arrowY = la + y1;
+
+    arrow.data.attrs.d = toArrowD(arrowX, arrowY);
+
+    // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
+    const a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90; // 阿尔法a
+    arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
 
     line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
 

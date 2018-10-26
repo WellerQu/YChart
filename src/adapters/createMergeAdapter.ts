@@ -12,7 +12,7 @@ const mergeUsers = (data: TopoData): TopoData => {
 
   const [ head, ...tails ] = nodes;
 
-  const mergedNodes = [head];
+  const mergedNodes = head ? [head] : [];
   lines.filter((item: Line) => tails.some((node: Node) => node.id === item.source))
     .forEach((item: Line) => (item.source = head.id, item));
 

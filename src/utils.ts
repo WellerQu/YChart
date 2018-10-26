@@ -79,40 +79,6 @@ export function toTranslate(...args: any[]): string {
   return `translate(${0}px, ${0}px)`;
 }
 
-export function bezierCurvePoint(x1: number, y1: number, x2: number, y2: number): Position {
-  if (x1 === x2) {
-    return {
-      x: x1- 100,
-      y: (y2 - y1) / 2 + y1,
-    };
-  } 
-
-  if (y1 === y2) {
-    return {
-      x: (x2 - x1)/ 2 + x1,
-      y: y1 - 100,
-    };
-  } 
-  
-  // 已知一阶Bézier曲线的起始点P1(x1, y1)和终止点P2(x2, y2), 求控制点P
-  // 设P1,P2所在线段中心点为P3(centerX, centerY)
-  // 则有
-  const centerX = (x2 - x1) / 2 + x1;
-  const centerY = (y2 - y1) / 2 + y1;
-  // 设直线方程L1, L2相互垂直, P1,P2,P3都是L1上的点, 且L1,L2相交于P3
-  // 那么L1的斜率有
-  const k1 = (y2 - y1) / (x2 - x1);
-  // 由两线垂直则斜率互为倒数, 可知L2的斜率
-  const k2 = 1 / k1;
-  // 已知直线方程为Ax + By + C = 0, 那么另一条垂线的方程为k2*x + b - k2 * a = y
-  // 所以代入P3则有k2 * x + centerY - k2 * centerX = y
-  // 设x为一个任意值x1 + 50, 则有y = k2 * (x1 + 50) + centerY - k2 * centerX
-  const x = x1 + (x2 - x1) / 2;
-  const y = k2 * x + centerY - k2 * centerX; 
-
-  return { x, y };
-}
-
 export const toArrowD = (x: number, y: number, width = ARROW_WIDTH, height = ARROW_HEIGHT): string => {
   return `M${x},${y - height / 2} L${x - width / 2},${y + height / 2} L${x + width / 2},${y + height / 2} Z`;
 };

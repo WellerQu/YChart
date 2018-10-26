@@ -1,5 +1,5 @@
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, bezierCurvePoint, toArrowD, } from '../utils';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';

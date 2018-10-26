@@ -3,7 +3,7 @@ import { Stage, PatchFn, TopoData, } from '../../typings/defines';
 import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, ARROW_HEIGHT } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';
 import compose from '../compose';
-import { toTranslate, bezierCurvePoint, toArrowD } from '../utils';
+import { toTranslate, toArrowD } from '../utils';
 
 // 布局用的关键信息
 interface KeyInfo {

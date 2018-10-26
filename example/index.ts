@@ -1,5 +1,5 @@
-import render from '../src/topo'
-import { TopoData, Line, Node } from '../typings/defines'
+import render from '../src/topo';
+import { TopoData, Line, Node } from '../typings/defines';
 
 const eventOption = {
   // 'nodeClick': (event: MouseEvent, data: Node): void => { console.log(event, data); },
@@ -11,7 +11,7 @@ const eventOption = {
 };
 
 const update = render(document.querySelector('#app'), eventOption, (userState?: any) => {
-  console.log('updated successfully', userState)
+  console.log('updated successfully', userState);
 });
 
 const data: TopoData = {
@@ -692,5 +692,3 @@ const data: TopoData = {
 };
 
 update(data);
-
-// setInterval(() => update({a: "Redis", symbol: "redis.png"}), 3000);

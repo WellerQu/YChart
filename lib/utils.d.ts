@@ -1,4 +1,4 @@
-import { VNode } from '../node_modules/snabbdom/vnode';
+import { VNode } from 'snabbdom/vnode';
 import { EventHandler, Position } from '../typings/defines';
 export declare const setupEventHandler: (handler: EventHandler) => (eventName: string) => (vnode: VNode) => VNode;
 export declare const throttle: (handler: EventHandler, gapTime: number) => (event: MouseEvent) => MouseEvent;

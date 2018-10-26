@@ -1,6 +1,5 @@
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
 import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, } from '../utils';
-import { h } from '../../node_modules/snabbdom/h';
 
 // limit range
 const widthClamp = clamp(320, 2420);
@@ -18,19 +17,10 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   const diffWidth = 20;
   const diffHeight = diffWidth * height / width;
 
-  const offsetX = event.clientX - svgElement.parentElement.offsetLeft;
-  const offsetY = event.clientY - svgElement.parentElement.offsetTop;
-
-  const initializeWidth = svgElement.parentElement.offsetWidth;
-  const initializeHeight = svgElement.parentElement.offsetHeight;
-
   if (event.deltaY > 0) {
     // to bigger
     const newWidth = widthClamp(width - diffWidth);
     const newHeight = heightClamp(height - diffHeight);
-
-    const newOffsetX = newWidth * offsetX / initializeWidth;
-    const newOffsetY = newHeight * offsetY / initializeHeight;
 
     const newX = newWidth * x / width;
     const newY = newHeight * y / height;
@@ -43,9 +33,6 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
 
     const newX = newWidth * x / width;
     const newY = newHeight * y / height;
-
-    const newOffsetX = newWidth * offsetX / initializeWidth;
-    const newOffsetY = newHeight * offsetY / initializeHeight;
 
     svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
   }

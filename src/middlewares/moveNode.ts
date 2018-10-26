@@ -3,7 +3,7 @@ import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toAr
 import compose from '../compose';
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { NODE_TYPE } from '../NODE_TYPE';
-import { NODE_SIZE, ARROW_OFFSET, ARROW_HEIGHT } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
 
 const findGroup = (event: Event): HTMLElement => {
   let element = event.target as HTMLElement;
@@ -76,7 +76,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
       const diffX = event.pageX - sourcePosition.x;
       const diffY = event.pageY - sourcePosition.y;
 
-      const [x2, y2, width] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
+      const [,, width] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
       const containerWidth = svgElement.parentElement.offsetWidth;
       const ratio = (width / containerWidth);
       const newX = targetPosition.x + diffX * ratio;

@@ -1,22 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": false,
     "removeComments": true,
-    "module": "es6",
-    "target": "es5",
-    "jsx": "react",
-    "declarationDir": "./typings",
+    "target": "ES5",
     "declaration": true,
     "lib": [
       "dom",
       "es2015",
-    ],
-    "types": [],
-    "typeRoots": [
-      "./typings",
+      "es2015.core"
     ],
   },
   "include": [

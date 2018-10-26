@@ -1,8 +1,7 @@
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { Stage, PatchFn, TopoData, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, ARROW_HEIGHT } from '../constants';
+import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';
-import compose from '../compose';
 import { toTranslate, toArrowD } from '../utils';
 
 // 布局用的关键信息

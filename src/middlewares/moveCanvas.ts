@@ -1,6 +1,6 @@
 import { VNode } from '../../node_modules/snabbdom/vnode';
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseViewBoxValue, clamp } from '../utils';
+import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
@@ -50,12 +50,9 @@ export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: Topo
     }
 
     const [x1, y1] = parseViewBoxValue(startViewBox);
-    const [x2, y2, width, height] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
+    const [,, width, height] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
     const containerWidth = svgElement.parentElement.offsetWidth;
     const ratio = -(width / containerWidth);
-
-    const xClamp = clamp(-width, width);
-    const yClamp = clamp(-height, height);
 
     let newX = x1 + (diffX * ratio);
     let newY = y1 + (diffY * ratio);

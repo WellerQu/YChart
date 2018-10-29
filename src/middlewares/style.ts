@@ -11,12 +11,37 @@ g.group {
   font-size: 12px;
   cursor: pointer;
   user-select: none;
-  transition: transform .1s;
 
   will-change: z-index, transform, opacity;
 }
 
-g.group.line path {
+g.group.node {
+  transition: transform .1s;
+}
+
+g.group.node:active > circle.health
+, g.group.line:active > path.link-line {
+  opacity: .8;
+}
+
+g.group.node text.instances
+, g.group.line text.line-desc {
+  text-anchor: middle;  /* 文本水平居中 */
+  dominant-baseline: middle; /* 文本垂直居中 */
+  font-size: 16px;
+}
+
+g.group.node text.title
+, g.group.node text.type {
+  text-anchor: middle;  /* 文本水平居中 */
+}
+
+g.group.node text.type {
+  fill: white;
+  font-size: 7px;
+}
+
+g.group.line path.link-line {
   transition: d .1s;
 }
 
@@ -29,25 +54,20 @@ g.group.line:hover > path.link-line {
   stroke: #61b0ff;
 }
 
-g.group.node:active > circle.health
-, g.group.line:active > path.link-line {
-  opacity: .8;
+g.group.line:hover > text.line-desc {
+  stroke-opacity: 0;
+  font-size: 14px;
 }
 
-g.group text.instances {
-  text-anchor: middle;  /* 文本水平居中 */
-  dominant-baseline: middle; /* 文本垂直居中 */
-  font-size: 16px;
+g.group.line text.line-desc {
+  stroke: hsl(0, 0%, 100%);
+  stroke-width: 2px;
+  stroke-opacity: .5;
+  fill: #000;
+  fill-opacity: 1;
+  font-size: 10px;
 }
 
-g.group text.title, g text.type {
-  text-anchor: middle;  /* 文本水平居中 */
-}
-
-g.group text.type {
-  fill: white;
-  font-size: 7px;
-}
 /* ]]> */
 `;
 

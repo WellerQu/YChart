@@ -15,7 +15,6 @@ interface KeyInfo {
   id: number | string | boolean;
 }
 
-
 const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
   const space = (CELL_SIZE - NODE_SIZE) / 2;
 
@@ -43,10 +42,10 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     const id = item.data.attrs['id'] as string;
     if (!id.split) return item;
 
-    const [source, target] = id.split('-');
+    const [source, ...target] = id.split('-');
 
     const s = nodePool.find(n => n.id === source);
-    const t = nodePool.find(n => n.id === target);
+    const t = nodePool.find(n => n.id === target.join('-'));
 
     if (!s || !t)
       return item;
@@ -56,6 +55,9 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
       return item;
     const arrow: VNode = item.children[1] as VNode;
     if (!arrow)
+      return item;
+    const text: VNode = item.children[3] as VNode;
+    if (!text)
       return item;
 
     const x1 = s.x + NODE_SIZE / 2;
@@ -81,6 +83,11 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     const a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90; // 阿尔法a
     arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
 
+    // update text position
+    text.data.attrs.x = (x2 - x1) / 2 + x1;
+    text.data.attrs.y = (y2 - y1) / 2 + y1;
+
+    // link line
     line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
 
     return {
@@ -88,7 +95,6 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     };
   });
 };
-
 
 const placeUserGroup = placeNode(0);
 const placeServerGroup = placeNode(1);
@@ -144,7 +150,13 @@ export const layout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData
   const placeLineGroup = linkLine(allElements);
   const placedLineGroup = placeLineGroup(lineGroup);
 
-  root.children = [...restGroup, ...placedLineGroup, ...placedUserGroup.map(n => n.vnode), ...placedServiceGroup.map(n => n.vnode), ...placedOtherGroup.map(n => n.vnode)];
+  root.children = [
+    ...restGroup, 
+    ...placedLineGroup, 
+    ...placedUserGroup.map(n => n.vnode), 
+    ...placedServiceGroup.map(n => n.vnode), 
+    ...placedOtherGroup.map(n => n.vnode),
+  ];
 
   next(userState);
 };

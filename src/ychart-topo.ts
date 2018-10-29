@@ -1,4 +1,4 @@
-import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption } from '../typings/defines';
+import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption, SvgOption } from '../typings/defines';
 
 import { NODE_TYPE } from './NODE_TYPE';
 
@@ -28,10 +28,19 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 
 import createArrowLine from './components/createArrowLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
+import { createSvg } from './components/components';
 
 const formatDataAdapter = compose<TopoData>(
   createFixAdapter,
   createMergeAdapter,
+  (data: TopoData) => {
+    if (!data.nodes)
+      data.nodes = [];
+    if (!data.links)
+      data.links = [];
+    
+    return data;
+  },
   clone,
 );
 
@@ -52,24 +61,29 @@ const arrowLine = compose<StrategyFn>(
 
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn => {
-  const enhancer = applyMiddlewares(log, layout, interaction, style, scaleCanvas, moveCanvas, moveNode, event(eventOption), grid, );
+  const enhancer = applyMiddlewares(log, layout, interaction, style, 
+    scaleCanvas, moveCanvas, moveNode, event(eventOption), grid, );
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch } = createStageAt(container);
+  const { create, subscribe, patch, getStageNode } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
   // Expose update method
-  return (data: TopoData): void => {
+  return (data: TopoData, option?: SvgOption): void => {
+    const root = getStageNode();
+    if (option) {
+      root.data.attrs  = createSvg(option).data.attrs;
+    }
+
     const formattedData: TopoData = formatDataAdapter(data);
 
     // map every node to strategy function which return a VNode
     formattedData.nodes.forEach((item: Node) => {
       if (item.type === NODE_TYPE.SERVER) {
         create(serviceNode(item));
-      }
-      else {
+      } else {
         create(imageNode(item));
       }
     });

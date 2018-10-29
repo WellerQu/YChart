@@ -1,4 +1,4 @@
-import { TopoData, Node, Line,  } from '../../typings/defines';
+import { TopoData, Node, Line, TierNode,  } from '../../typings/defines';
 import { NODE_TYPE, } from '../NODE_TYPE';
 
 import compose from '../compose';
@@ -19,17 +19,21 @@ const mergeUsers = (data: TopoData): TopoData => {
   data.nodes = othersNodes.concat(mergedNodes);
   data.links = othersLines.concat(lines);
 
-  // console.log(data.nodes, data.links);
-
   return data;
 };
 
 const mergeHTTPOrRPC = (data: TopoData): TopoData => {
-  const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NODE_TYPE.HTTP && item.type !== NODE_TYPE.RPC);
-  const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NODE_TYPE.HTTP || item.type === NODE_TYPE.RPC);
+  const othersNodes: Node[] = data.nodes.filter((item: Node) => 
+    item.type !== NODE_TYPE.HTTP && item.type !== NODE_TYPE.RPC);
+  const nodes: Node[] = data.nodes.filter((item: Node) => 
+    item.type === NODE_TYPE.HTTP || item.type === NODE_TYPE.RPC);
 
-  const othersLines: Line[] = data.links.filter((item: Line) => nodes.every((node: Node) => node.id !== item.target));
-  const lines: Line[] = data.links.filter((item: Line) => nodes.some((node: Node) => node.id === item.target));
+  const othersLines: Line[] = data.links.filter((item: Line) =>
+    nodes.every((node: Node) => node.id !== item.target)
+  );
+  const lines: Line[] = data.links.filter((item: Line) =>
+    nodes.some((node: Node) => node.id === item.target)
+  );
 
   const mergedNodeMap: Map<string, Node[]> = new Map<string, Node[]>();
   const mergedLines: Line[] = [];
@@ -39,16 +43,26 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
     const relatedLineSources = relatedLines.map((line: Line) => line.source);
     const key = `${node.type}_${relatedLineSources.join('_')}`;
 
-    if (key === `${node.type}_`)
-      return;
+    if (key === `${node.type}_`) return;
 
     if (!mergedNodeMap.has(key)) {
       mergedNodeMap.set(key, []);
       mergedLines.splice(0, 0, ...relatedLines);
     }
 
-    mergedNodeMap.get(key).push(node);
+    mergedNodeMap.get(key).push(node); 
     mergedNodeMap.get(key)[0].showName = `remote (${mergedNodeMap.get(key).length * relatedLineSources.length})`;
+
+    if (!mergedNodeMap.get(key)[0].tiers) {
+      mergedNodeMap.get(key)[0].tiers = relatedLines.map<TierNode>((line: Line) => {
+        const tier = othersNodes.find((n: Node) => n.id === line.source);
+        return {
+          tierName: tier.name,
+          name: node.name,
+          elapsedTime: line.elapsedTime,
+        };
+      });
+    }
   });
 
   const mergedNodes: Node[] = Array.from(mergedNodeMap.values())
@@ -57,8 +71,6 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
 
   data.nodes = othersNodes.concat(mergedNodes);
   data.links = othersLines.concat(mergedLines);
-
-  // console.log(data.nodes, data.links);
 
   return data;
 };

@@ -25,7 +25,6 @@ const findGroup = (event: Event): HTMLElement => {
 };
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
-  // const regExp: RegExp = /^M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*Q(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s+(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)$/igm;
   const regExp: RegExp = /M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*L(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)/igm;
   if (!regExp.test(value))
     throw new Error(`can NOT convert to path d: ${value}`);
@@ -95,21 +94,21 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
           if (!item.classList.contains(NODE_TYPE.LINE))
             return false;
 
-          const [source, target] = item.id.split('-');
+          const [source, ...target] = item.id.split('-');
 
-          return source === currentElementID || target === currentElementID;
+          return source === currentElementID || target.join('-') === currentElementID;
         })
         .forEach((item: SVGGElement) => {
-          const [source, target] = item.id.split('-');
+          const [source, ...target] = item.id.split('-');
 
           const paths = item.querySelectorAll('path');
           const line = paths[0];
           const arrow = paths[1];
+          const text = item.querySelector('text.line-desc');
 
           const [[x1, y1], [x2, y2]] = parsePathD(line.getAttribute('d'));
           const x = NODE_SIZE  / 2 + newX;
           const y = NODE_SIZE  / 2 + newY;
-
 
           let startX: number, startY: number, endX: number, endY: number;
           if (source === currentElementID) {
@@ -120,7 +119,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
             endY = y2;
 
             line.setAttribute('d', `M${x},${y} L${x2},${y2}`);
-          } else if (target === currentElementID) {
+          } else if (target.join('-') === currentElementID) {
             // update end position
             startX = x1;
             startY = y1;
@@ -149,6 +148,10 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
             // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
             const a = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI + 90; // 阿尔法a
             arrow.setAttribute('transform', `rotate(${a}, ${arrowX} ${arrowY})`);
+
+            // update text
+            text.setAttribute('x', (endX - startX) / 2 + startX);
+            text.setAttribute('y', (endY - startY) / 2 + startY);
           }
         });
     }

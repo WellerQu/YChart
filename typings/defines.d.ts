@@ -7,10 +7,10 @@ export type PatchFn = (userState?: any) => void;
 export type SubscriberFn = (userState?: any) => void;
 export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
 export type CreateStageFn = (container: HTMLElement) => Stage;
-export type UpdateFn = (data: TopoData) => void;
+export type UpdateFn = (data: TopoData, option?: SvgOption) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
-export type EventHandler = (event: MouseEvent) => MouseEvent;
+export type EventHandler = (event: Event) => Event;
 export type Position = { x: number, y: number };
 
 declare interface EventOption {
@@ -112,8 +112,18 @@ declare interface Node {
   totalCount: number;
   errorTotalCount: number;
   crossApp: boolean;
+  /**
+   * 调用这个节点的Tier的集合
+   */
+  tiers?: TierNode[];
   showName?: string;
   showIcon?: string;
+}
+
+declare interface TierNode {
+  tierName: string;
+  elapsedTime: number;
+  name: string;
 }
 
 declare interface Line {

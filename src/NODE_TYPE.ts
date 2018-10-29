@@ -9,3 +9,10 @@ export enum NODE_TYPE {
   RPC = 'RPC',
   MQ = 'MQ',
 }
+
+export enum DATABASE_TYPE {
+  KAFKA_PRODUCER = 'kafkaProducer',
+  KAFKA_CONSUMER = 'kafkaConsumer',
+  REDIS = 'redis',
+  MYSQL = 'mysql',
+}

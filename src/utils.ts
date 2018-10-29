@@ -6,7 +6,40 @@ import compose from './compose';
 import { EventHandler, Position } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH } from './constants';
 
-export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode) => {
+export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
+  // click事件需要特殊处理, 否则服无法区分是拖拽还是点击
+  // 判定标注: 
+  // 1. 如果按下鼠标后抬起鼠标时的位置x轴或y轴超过3个像素的位移认为是拖拽, 否则是点击
+  // 2. 如果按下鼠标后抬起鼠标时的时间间隔超过100毫秒认为是拖拽, 否则是点击
+  if (eventName === 'click') {
+    const OFFSET = 3;
+    const startPosition: Position = { x: 0, y: 0 };
+    let startTime: number = 0;
+
+    const setupClickHandler = compose<VNode>(
+      setupEventHandler((event: Event) => {
+        const mouseEvent = event as MouseEvent;
+        startPosition.x = mouseEvent.clientX;
+        startPosition.y = mouseEvent.clientY;
+        startTime = +new Date;
+        return event;
+      })('mousedown'),
+      setupEventHandler((event: Event) => {
+        const mouseEvent = event as MouseEvent;
+        const now = +new Date;
+        if (Math.abs(mouseEvent.clientX - startPosition.x) < OFFSET 
+          && Math.abs(mouseEvent.clientY - startPosition.y) < OFFSET 
+          && now - startTime < 100) {
+          return handler(event);
+        }
+
+        return event;
+      })('mouseup'),
+    );
+
+    return setupClickHandler(vnode);
+  }
+
   if (!vnode.data.on) {
     vnode.data.on = {};
   }
@@ -22,7 +55,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
 
 export const throttle = (handler: EventHandler, gapTime: number) => {
   let lastTime: number = 0;
-  return function(event: MouseEvent): MouseEvent {
+  return function(event: Event): Event {
     let nowTime = +new Date;
     if (nowTime - lastTime > gapTime) {
       lastTime = nowTime;
@@ -64,7 +97,8 @@ export const parseTranslate = (value: string): ( Position | never) => {
   };
 };
 
-export const toViewBox = (x: number, y: number, width: number, height: number): string => `${x},${y},${width},${height}`;
+export const toViewBox = (x: number, y: number, width: number, height: number): string => 
+  `${x},${y},${width},${height}`;
 
 export function toTranslate(x: number, y: number): string;
 export function toTranslate(position: Position): string;
@@ -93,3 +127,5 @@ export const max = (...nums: number[]): number => {
   const getResult = compose<number>(...tail.map((n: number) => _max(n)));
   return getResult(head);
 };
+
+export const imagePath = (iconName: string) => `/static/images/${iconName}.png`;

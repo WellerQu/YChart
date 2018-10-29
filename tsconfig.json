@@ -5,7 +5,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "strictNullChecks": false,
-    "removeComments": true,
+    "removeComments": false,
     "target": "ES5",
     "declaration": true,
     "lib": [

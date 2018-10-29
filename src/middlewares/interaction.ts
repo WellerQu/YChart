@@ -43,8 +43,8 @@ const handleMouseOut = (event: MouseEvent): MouseEvent => {
   return event;
 };
 
-const setupMouseEnter = setupEventHandler(handleMouseEnter)('mouseenter');
-const setupMouseOut = setupEventHandler(handleMouseOut)('mouseout');
+const setupMouseEnterHandler = setupEventHandler(handleMouseEnter)('mouseenter');
+const setupMouseOutHandler = setupEventHandler(handleMouseOut)('mouseout');
 
 // Example for middleware that show how to add an interaction
 export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
@@ -61,10 +61,10 @@ export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: Top
     if (!node.data.class[NODE_TYPE.LINE])
       return;
 
-    setupMouseEnter(node);
-    setupMouseOut(node);
+    setupMouseEnterHandler(node);
+    setupMouseOutHandler(node);
   });
-  
+
   next(userState);
 };
 

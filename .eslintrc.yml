@@ -32,4 +32,7 @@ rules:
     - warn
     - always
     - omitLastInOneLineBlock: true
+  max-len:
+    - warn
+    - code: 120
   'typescript/class-name-casing': 'error'

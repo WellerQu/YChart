@@ -25,7 +25,7 @@ const handlerHelper = (
       ? data.nodes.find(n => n.id === element.getAttribute('id'))
       : null;
     handleNodeEvent && handleNodeEvent(event, node);
-  } else if (element.classList.contains('line')) {
+  } else if (element.classList.contains(NODE_TYPE.LINE)) {
     const line = data
       ? data.links.find(
         n => `${n.source}-${n.target}` === element.getAttribute('id')

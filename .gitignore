@@ -64,6 +64,7 @@ bower_components
 build/Release
 dist
 es
+commonjs
 
 # Dependency directories
 node_modules/

@@ -4,14 +4,14 @@
   "description": "",
   "private": true,
   "module": "es/ychart-topo.js",
-  "main": "lib/ychart-topo.js",
-  "typings": "lib/ychart-topo.d.ts",
+  "main": "commonjs/ychart-topo.js",
+  "typings": "commonjs/ychart-topo.d.ts",
   "scripts": {
     "build": "webpack --mode production --config ./build/webpack.production.config.js",
     "dev": "webpack-dev-server --mode development --config ./build/webpack.development.config.js",
     "lint": "eslint ./src/**/*.ts ./test/**/*.ts --fix",
     "compile-es": "rm -rf es && tsc --outDir es --module es6 --moduleResolution node",
-    "compile-commonjs": "rm -rf lib && tsc --outDir lib",
+    "compile-commonjs": "rm -rf commonjs && tsc --outDir commonjs",
     "compile": "npm run lint && npm run compile-es && npm run compile-commonjs"
   },
   "author": "",

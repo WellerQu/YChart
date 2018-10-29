@@ -41,6 +41,15 @@ g.group.node text.type {
   font-size: 7px;
 }
 
+g.group.node text.avgRT
+, g.group.node text.rpm
+, g.group.node text.epm {
+  font-size: 10px;
+  stroke: hsl(0, 0%, 100%);
+  stroke-opacity: .2;
+  stroke-width: 2px;
+}
+
 g.group.line path.link-line {
   transition: d .1s;
 }

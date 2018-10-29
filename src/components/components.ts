@@ -127,8 +127,7 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
   parentNode.children.push(
     h('path', {
       attrs: {
-        d: `M${option.x1},${option.y1} Q${(option.x2 - option.x1) / 2 +
-          option.x1},${option.y1 + 50} ${option.x2},${option.y2}`,
+        d: `M${option.x1},${option.y1} L${option.x2},${option.y2}`,
         fill: 'none',
         stroke: option.strokeColor,
         'stroke-width': option.strokeWidth,

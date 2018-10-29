@@ -7,7 +7,6 @@ import { log } from './middlewares/log';
 import { interaction } from './middlewares/interaction';
 import { layout } from './middlewares/layout';
 import { style } from './middlewares/style';
-import { grid } from './middlewares/grid';
 import { scaleCanvas } from './middlewares/scaleCanvas';
 import { moveCanvas } from './middlewares/moveCanvas';
 import { moveNode } from './middlewares/moveNode';
@@ -62,7 +61,7 @@ const arrowLine = compose<StrategyFn>(
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn => {
   const enhancer = applyMiddlewares(log, layout, interaction, style, 
-    scaleCanvas, moveCanvas, moveNode, event(eventOption), grid, );
+    scaleCanvas, moveCanvas, moveNode, event(eventOption),);
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, getStageNode } = createStageAt(container);
 

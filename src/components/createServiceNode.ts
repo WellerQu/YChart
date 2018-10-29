@@ -19,6 +19,7 @@ const createServiceNode = (option: ServiceNodeOption) => (
     createCircle({ cx: 0 + 15, cy: 55 + 24, radius: 15, fill: '#338cff', className: 'type' }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 22, fill: 'white' }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 35, fill: option.color, className: 'health' }),
+    createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 35, fill: 'white' }),
     createGroup
   );
 

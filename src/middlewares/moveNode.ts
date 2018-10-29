@@ -39,8 +39,6 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
 // const updateArrowPosition = (arrow: SVGPathElement) => (x1: number, y1: number, x2: number, y2: number) =>
 
 export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  console.log('DOING: moveNode'); // eslint-disable-line
-
   const root = stage.getStageNode();
 
   let isMouseDown: boolean = false;

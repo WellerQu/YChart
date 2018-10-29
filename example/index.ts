@@ -83,8 +83,8 @@ const data: TopoData = {
 
 update(data);
 
-const btn = document.querySelector('button#fullscreen');
-btn.addEventListener('click', () => {
+const btnFullscreen = document.querySelector('button#fullscreen');
+btnFullscreen.addEventListener('click', () => {
   if (!getFullscreenElement()) {
     launchFullscreen(document.querySelector('svg'));
     update(data, { width: window.screen.availWidth, height: window.screen.availHeight });
@@ -92,6 +92,12 @@ btn.addEventListener('click', () => {
     exitFullscreen();
     update(data, { width: 800, height: 400 });
   }
+});
+
+const btnUpdate = document.querySelector('button#update');
+btnUpdate.addEventListener('click', () => {
+  data.nodes[0].instances = Math.random() * 10 >> 0;
+  update(data);
 });
 
 function launchFullscreen(element: any) {

@@ -12,8 +12,10 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
   // 1. 如果按下鼠标后抬起鼠标时的位置x轴或y轴超过3个像素的位移认为是拖拽, 否则是点击
   // 2. 如果按下鼠标后抬起鼠标时的时间间隔超过100毫秒认为是拖拽, 否则是点击
   if (eventName === 'click') {
-    const OFFSET = 3;
+    const OFFSET = 10;
+    const GAP = 200;
     const startPosition: Position = { x: 0, y: 0 };
+
     let startTime: number = 0;
 
     const setupClickHandler = compose<VNode>(
@@ -29,7 +31,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
         const now = +new Date;
         if (Math.abs(mouseEvent.clientX - startPosition.x) < OFFSET 
           && Math.abs(mouseEvent.clientY - startPosition.y) < OFFSET 
-          && now - startTime < 100) {
+          && now - startTime < GAP) {
           return handler(event);
         }
 
@@ -55,6 +57,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
 
 export const throttle = (handler: EventHandler, gapTime: number) => {
   let lastTime: number = 0;
+
   return function(event: Event): Event {
     let nowTime = +new Date;
     if (nowTime - lastTime > gapTime) {

@@ -10,7 +10,7 @@ const eventOption = {
   // 'lineMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
 };
 
-const update = render(document.querySelector('#app'), eventOption, (userState?: any) => {
+const update = render(document.querySelector('#topo'), eventOption, (userState?: any) => {
   console.log('updated successfully', userState);
 });
 
@@ -25,12 +25,15 @@ const data: TopoData = {
       'instances':2,
       'activeInstances':2,
       'elapsedTime':43.46,
-      'rpm':12.39,
-      'epm':1.35,
-      'health':'HEALTHY',
+      'rpm': undefined,
+      'epm': undefined,
+      'health': null,
       'totalCount':1363,
       'errorTotalCount':149,
-      'crossApp':false
+      'error': 123,
+      'crossApp':false,
+      'apdex':'SLOW',
+      'callCount': 1,
     },
     {  
       'id':'821931823954018304USER',
@@ -41,12 +44,15 @@ const data: TopoData = {
       'instances':0,
       'activeInstances':0,
       'elapsedTime':0,
-      'rpm':0,
-      'epm':0,
+      'rpm': undefined,
+      'epm': undefined,
       'health':null,
       'totalCount':0,
       'errorTotalCount':0,
-      'crossApp':false
+      'error': null,
+      'crossApp':false,
+      'apdex':'SLOW',
+      'callCount': 1,
     },
     {  
       'id':'jdbc:mysql://172.16.32.98:3306/kepler_management?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
@@ -62,7 +68,10 @@ const data: TopoData = {
       'health':null,
       'totalCount':0,
       'errorTotalCount':0,
-      'crossApp':false
+      'error': null,
+      'crossApp':false,
+      'apdex':'ERROR',
+      'callCount': 1,
     }
   ],
   'links':[  
@@ -86,11 +95,11 @@ update(data);
 const btnFullscreen = document.querySelector('button#fullscreen');
 btnFullscreen.addEventListener('click', () => {
   if (!getFullscreenElement()) {
-    launchFullscreen(document.querySelector('svg'));
     update(data, { width: window.screen.availWidth, height: window.screen.availHeight });
-  }else {
-    exitFullscreen();
+    launchFullscreen(document.querySelector('svg#topo'));
+  } else {
     update(data, { width: 800, height: 400 });
+    exitFullscreen();
   }
 });
 

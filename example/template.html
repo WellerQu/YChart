@@ -10,21 +10,31 @@
       margin: 0;
     }
 
-    .container {
+    .container, .control {
       margin: 0 auto;
       box-sizing: border-box;
-      border: solid 1px red;
+      /* border: solid 1px red; */
+      padding: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container" style="width: 800px; height: 400px;">
-    <div id="app"></div>
+  <div class="control">
+    <div id="flag" style="position: absolute; left: 0; top: 0; background: red; color: white;"></div>
+    <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
+    <button id="fullscreen">Topo Fullscreen</button>
+    <button id="update">Update Topo data</button>
   </div>
-  <div id="flag" style="position: absolute; left: 0; top: 0; background: red; color: white;"></div>
-  <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
-  <button id="fullscreen">Fullscreen</button>
-  <button id="update">Update</button>
+  <div class="container" style="width: 800px; height: 400px;">
+    <div id="topo"></div>
+  </div>
+  <div class="control">
+    <button>Callstack Fullscreen</button>
+    <button>Update Callstack data</button>
+  </div>
+  <div class="container">
+    <div id="callstack"></div>
+  </div>
   <script>
       /*
       document.body.addEventListener('dblclick', function(event) {

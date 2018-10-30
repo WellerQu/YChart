@@ -41,7 +41,7 @@ g.group.node text.type {
   font-size: 7px;
 }
 
-g.group.node text.avgRT
+g.group.node text.elapsedTime
 , g.group.node text.rpm
 , g.group.node text.epm {
   font-size: 10px;

@@ -68,9 +68,11 @@ declare interface ServiceNodeOption {
   instances: string;
   color: string;
   type: string;
-  avgRT: number;
+  elapsedTime: number;
   rpm: number;
   epm: number;
+  callCount: number;
+  errorCount: number;
   id?: string;
   className?: string;
 }
@@ -116,8 +118,17 @@ declare interface Node {
    * 调用这个节点的Tier的集合
    */
   tiers?: TierNode[];
+  /**
+   * 展示用的名字
+   */
   showName?: string;
+  /**
+   * 展示用的图标
+   */
   showIcon?: string;
+  apdex?: string;
+  callCount?: number;
+  error?: number;
 }
 
 declare interface TierNode {
@@ -136,4 +147,8 @@ declare interface Line {
 declare interface TopoData {
   nodes: Node[];
   links: Line[];
+}
+
+declare interface CallstackData {
+
 }

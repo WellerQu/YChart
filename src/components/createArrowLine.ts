@@ -1,12 +1,12 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
-import { ArrowLineOption, ComponentFn, StrategyFn } from '../../typings/defines';
+import { ArrowLineOption, ComponentFn, StrategyFn, } from '../../typings/defines';
 
 import compose from '../compose';
 
-import { createText, createArrow, createLine, createGroup } from './components';
+import { createText, createArrow, createLine, createGroup, } from './components';
 
 const createArrowLine: ComponentFn<ArrowLineOption> = (option: ArrowLineOption): StrategyFn => (
   parentNode: VNode

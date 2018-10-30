@@ -1,6 +1,6 @@
 /// <reference path="../node_modules/snabbdom/vnode.d.ts" >
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
 export type StrategyFn = (parent: VNode) => VNode;
 export type ComponentFn<T> = (option: T) => StrategyFn;
@@ -108,12 +108,22 @@ declare interface ArrowOption {
   className?: string;
 }
 
+declare interface RuleOption {
+  className?: string;
+  min: number;
+  max: number;
+  step: number;
+  color?: string;
+}
+
 declare interface CallstackOption {
   id: string;
   text: string;
   width: number;
+  paddingLeft: number;
   color: string;
   className?: string;
+  parentPaddingLeft: number;
 }
 
 // --- 以下为业务数据 ---
@@ -170,6 +180,8 @@ declare interface TopoData {
 
 declare interface CallstackData {
   stackName: string;
+  offsetTime: number;
   duration: number;
   children?: CallstackData[];
+  parentOffsetTime?: number;
 }

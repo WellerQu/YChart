@@ -1,10 +1,10 @@
-import { VNode } from '../../node_modules/snabbdom/vnode';
+import { VNode, } from '../../node_modules/snabbdom/vnode';
 
-import { ServiceNodeOption, ComponentFn, StrategyFn } from '../../typings/defines';
+import { ServiceNodeOption, ComponentFn, StrategyFn, } from '../../typings/defines';
 
 import compose from '../compose';
 
-import { createText, createCircle, createGroup } from './components';
+import { createText, createCircle, createGroup, } from './components';
 
 const identity = (a: any) => a;
 const isNumber = (a: any) => typeof a === 'number';

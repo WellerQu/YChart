@@ -14,7 +14,7 @@
       margin: 0 auto;
       box-sizing: border-box;
       /* border: solid 1px red; */
-      padding: 10px;
+      margin: 10px;
     }
   </style>
 </head>
@@ -22,15 +22,15 @@
   <div class="control">
     <div id="flag" style="position: absolute; left: 0; top: 0; background: red; color: white;"></div>
     <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
-    <button id="update">Update Topo data</button>
+    <button id="updateTopoData">Update Topo data</button>
   </div>
-  <div class="container" style="width: 800px; height: 400px;">
+  <div class="container" style="height: 400px;">
     <div id="topo"></div>
   </div>
   <div class="control">
-    <button>Update Callstack data</button>
+    <button id="updateCallstackData">Update Callstack data</button>
   </div>
-  <div class="container">
+  <div class="container" style="height: 400px;">
     <div id="callstack"></div>
   </div>
   <script>

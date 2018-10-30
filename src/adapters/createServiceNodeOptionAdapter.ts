@@ -1,6 +1,6 @@
-import { ServiceNodeOption, Node } from '../../typings/defines';
-import { HEALTH, APDEX } from '../HEALTH';
-import { NODE_TYPE } from '../NODE_TYPE';
+import { ServiceNodeOption, Node, } from '../../typings/defines';
+import { HEALTH, APDEX, } from '../HEALTH';
+import { NODE_TYPE, } from '../NODE_TYPE';
 
 interface DataColor {
   [key: string]: string;
@@ -9,17 +9,17 @@ interface DataColor {
 const HEALTH_COLOR: DataColor = {
   [HEALTH.HEALTHY]: '#a9d86e',
   [HEALTH.NORMAL]: '#86cae4',
-  [HEALTH.INTOLERANCE]: '#f58210'
+  [HEALTH.INTOLERANCE]: '#f58210',
 };
 
 const APDEX_COLOR: DataColor = {
   [APDEX.ERROR]: '#f38228',
   [APDEX.NORMAL]: '#aad774',
   [APDEX.SLOW]: '#88cae3',
-  [APDEX.VERY_SLOW]: '#fab237'
+  [APDEX.VERY_SLOW]: '#fab237',
 };
 
-export default function createServiceNodeOption(node: Node): ServiceNodeOption {
+export default function createServiceNodeOption (node: Node): ServiceNodeOption {
   return { 
     title: node.showName,
     instances: `${node.activeInstances}/${node.instances}`,
@@ -31,6 +31,6 @@ export default function createServiceNodeOption(node: Node): ServiceNodeOption {
     epm: node.epm,
     callCount: node.callCount,
     errorCount: node.errorTotalCount || node.error,
-    id: node.id
+    id: node.id,
   };
 }

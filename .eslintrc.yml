@@ -40,4 +40,13 @@ rules:
     -
       arrays: always
       objects: always
+      imports: always
+  arrow-spacing:
+    - warn
+    -
+      before: true
+      after: true
+  space-before-function-paren:
+    - warn
+    - always
   'typescript/class-name-casing': 'error'

@@ -1,4 +1,4 @@
-import { ArrowLineOption, Line } from '../../typings/defines';
+import { ArrowLineOption, Line, } from '../../typings/defines';
 
 const lineColor = '#2693ff';
 
@@ -17,6 +17,6 @@ export default function createArrowLineOption(line: Line): ArrowLineOption {
     strokeWidth: 1,
     id,
     className: 'line',
-    text: `${line.elapsedTime} ms`
+    text: `${line.elapsedTime} ms`,
   };
 }

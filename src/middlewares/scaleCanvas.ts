@@ -1,5 +1,5 @@
-import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox } from '../utils';
+import { Stage, PatchFn, TopoData, } from '../../typings/defines';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, } from '../utils';
 
 // limit range
 const widthClamp = clamp(320, 2420);

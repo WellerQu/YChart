@@ -1,5 +1,5 @@
-import { TopoData, Node, Line, TierNode  } from '../../typings/defines';
-import { NODE_TYPE } from '../NODE_TYPE';
+import { TopoData, Node, Line, TierNode,  } from '../../typings/defines';
+import { NODE_TYPE, } from '../NODE_TYPE';
 
 import compose from '../compose';
 
@@ -59,7 +59,7 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
         return {
           tierName: tier.name,
           name: node.name,
-          elapsedTime: line.elapsedTime
+          elapsedTime: line.elapsedTime,
         };
       });
     }

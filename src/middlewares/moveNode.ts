@@ -1,12 +1,12 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD } from '../utils';
+import { Stage, PatchFn, TopoData, Position, } from '../../typings/defines';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
 import compose from '../compose';
-import { NODE_TYPE } from '../NODE_TYPE';
-import { NODE_SIZE, ARROW_OFFSET } from '../constants';
+import { NODE_TYPE, } from '../NODE_TYPE';
+import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
 
 const findGroup = (event: Event): HTMLElement => {
   let element = event.target as HTMLElement;
@@ -42,8 +42,8 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
   const root = stage.getStageNode();
 
   let isMouseDown: boolean = false;
-  let sourcePosition: Position = { x: 0, y: 0 };
-  let targetPosition: Position = { x: 0, y: 0 };
+  let sourcePosition: Position = { x: 0, y: 0, };
+  let targetPosition: Position = { x: 0, y: 0, };
   let targetElement: HTMLElement = null;
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {

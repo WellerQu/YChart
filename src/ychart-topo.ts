@@ -1,33 +1,33 @@
-import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption, SvgOption } from '../typings/defines';
+import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption, SvgOption, } from '../typings/defines';
 
-import { NODE_TYPE } from './NODE_TYPE';
+import { NODE_TYPE, } from './NODE_TYPE';
 
 import compose from './compose';
-import { log } from './middlewares/log';
-import { interaction } from './middlewares/interaction';
-import { layout } from './middlewares/layout';
-import { style } from './middlewares/style';
-import { scaleCanvas } from './middlewares/scaleCanvas';
-import { moveCanvas } from './middlewares/moveCanvas';
-import { moveNode } from './middlewares/moveNode';
-import { event } from './middlewares/event';
+import { log, } from './middlewares/log';
+import { interaction, } from './middlewares/interaction';
+import { nodeLayout, } from './middlewares/nodeLayout';
+import { topoStyle, } from './middlewares/topoStyle';
+import { scaleCanvas, } from './middlewares/scaleCanvas';
+import { moveCanvas, } from './middlewares/moveCanvas';
+import { moveNode, } from './middlewares/moveNode';
+import { event, } from './middlewares/event';
 
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
 
-import createMergeAdapter from './adapters/createMergeAdapter';
-import createFixAdapter from './adapters/createFixAdapter';
+import createMergeAdapter from './adapters/createMergeNodeAdapter';
+import createFixAdapter from './adapters/createFixNodeAdapter';
 import clone from './clone';
 
 import createImageNode from './components/createImageNode';
-import createImageNodeOption from './adapters/createImageNodeOption';
+import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
 
 import createServiceNode from './components/createServiceNode';
 import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
 
 import createArrowLine from './components/createArrowLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
-import { createSvg } from './components/components';
+import { createSvg, } from './components/components';
 
 const formatDataAdapter = compose<TopoData>(
   createFixAdapter,
@@ -61,7 +61,7 @@ const arrowLine = compose<StrategyFn>(
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn<TopoData> => {
   const elementID = container.id;
-  const enhancer = applyMiddlewares(log, layout, interaction, style, 
+  const enhancer = applyMiddlewares(log, nodeLayout, interaction, topoStyle, 
     scaleCanvas, moveCanvas, moveNode, event(eventOption),);
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, getStageNode, } = createStageAt(container);

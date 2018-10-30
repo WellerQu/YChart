@@ -1,6 +1,6 @@
 import ychartTopo from '../src/ychart-topo';
 import ychartCallstack from '../src/ychart-callstack';
-import { TopoData, CallstackData } from '../typings/defines';
+import { TopoData, CallstackData, } from '../typings/defines';
 
 const eventOption = {
   // 'nodeClick': (event: MouseEvent, data: Node): void => { console.log(event, data); },
@@ -96,7 +96,7 @@ useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
 
 updateTopo(topoData);
 
-const btnUpdate = document.querySelector('button#update');
+const btnUpdate = document.querySelector('button#updateTopoData');
 btnUpdate.addEventListener('click', () => {
   topoData.nodes[0].instances = Math.random() * 10 >> 0;
   updateTopo(topoData);
@@ -104,25 +104,30 @@ btnUpdate.addEventListener('click', () => {
 
 const callstackData: CallstackData = {
   stackName: 'root stack service',
-  duration: 8000, // ms
+  duration: 800, // ms
+  offsetTime: 0,
   children: [
     {
       stackName: 'serv 0',
       duration: 300,
+      offsetTime: 100,
       children: [
         {
           stackName: 'serv 01',
-          duration: 240,
+          duration: 2,
+          offsetTime: 100,
         },
         {
           stackName: 'serv 02',
           duration: 300,
+          offsetTime: 100,
         },
       ],
     },
     {
       stackName: 'serv 1',
-      duration: 8000,
+      duration: 700,
+      offsetTime: 100,
     },
   ],
 };
@@ -130,3 +135,11 @@ const callstackData: CallstackData = {
 const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
 
 updateCallstack(callstackData);
+
+const btnUpdateCallstack = document.querySelector('button#updateCallstackData');
+btnUpdateCallstack.addEventListener('click', () => {
+  callstackData.duration = 900;
+  callstackData.children[0].duration = 500;
+
+  updateCallstack(callstackData);
+});

@@ -1,9 +1,9 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseViewBoxValue } from '../utils';
+import { Stage, PatchFn, TopoData, Position, } from '../../typings/defines';
+import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
@@ -12,8 +12,8 @@ export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: Topo
   const root = stage.getStageNode();
 
   let isMouseDown: boolean = false;
-  let sourcePosition: Position = { x: 0, y: 0 };
-  let targetPosition: Position = { x: 0, y: 0 };
+  let sourcePosition: Position = { x: 0, y: 0, };
+  let targetPosition: Position = { x: 0, y: 0, };
   let startViewBox: string = '';
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {

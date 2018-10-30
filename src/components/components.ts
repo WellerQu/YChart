@@ -1,8 +1,8 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 /// <reference path="../../node_modules/snabbdom/h.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
-import { h } from 'snabbdom/h';
+import { VNode, } from 'snabbdom/vnode';
+import { h, } from 'snabbdom/h';
 
 import {
   TextOption,
@@ -14,9 +14,9 @@ import {
   SvgOption,
   RectOption,
   ComponentFn,
-  StrategyFn
+  StrategyFn,
 } from '../../typings/defines';
-import { toArrowD } from '../utils';
+import { toArrowD, } from '../utils';
 
 type ClassName = {
   [key: string]: boolean;
@@ -191,3 +191,4 @@ export const createRect: ComponentFn<RectOption> = (option: RectOption): Strateg
   
   return parentNode;
 };
+

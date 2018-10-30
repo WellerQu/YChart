@@ -1,6 +1,6 @@
-import { TopoData, Node, Line } from '../../typings/defines';
+import { TopoData, Node, Line, } from '../../typings/defines';
 import compose from '../compose';
-import { NODE_TYPE, DATABASE_TYPE } from '../NODE_TYPE';
+import { NODE_TYPE, DATABASE_TYPE, } from '../NODE_TYPE';
 
 const createFixAdapter = (data: TopoData): TopoData => {
   data.nodes = data.nodes.map((node: Node) => {

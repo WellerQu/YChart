@@ -1,11 +1,11 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
-import { NODE_SIZE } from '../constants';
-import { ImageNodeOption, ComponentFn, StrategyFn } from '../../typings/defines';
+import { VNode, } from 'snabbdom/vnode';
+import { NODE_SIZE, } from '../constants';
+import { ImageNodeOption, ComponentFn, StrategyFn, } from '../../typings/defines';
 
 import compose from '../compose';
-import { createText, createImage, createGroup } from './components';
+import { createText, createImage, createGroup, } from './components';
 
 const IMAGE_SIZE = 50; // both width and height
 

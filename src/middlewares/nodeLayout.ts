@@ -1,11 +1,11 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET } from '../constants';
-import { NODE_TYPE } from '../NODE_TYPE';
-import { toTranslate, toArrowD } from '../utils';
+import { Stage, PatchFn, TopoData, } from '../../typings/defines';
+import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, } from '../constants';
+import { NODE_TYPE, } from '../NODE_TYPE';
+import { toTranslate, toArrowD, } from '../utils';
 
 // 布局用的关键信息
 interface KeyInfo {
@@ -26,13 +26,13 @@ const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
         data: {
           ...item.data,
           style: {
-            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space)
-          }
-        }
+            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space),
+          },
+        },
       },
       x: CELL_SIZE * columnIndex + space,
       y: CELL_SIZE * rowIndex + space,
-      id: item.data.attrs.id
+      id: item.data.attrs.id,
     };
   });
 };
@@ -91,7 +91,7 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
 
     return {
-      ...item
+      ...item,
     };
   });
 };
@@ -101,7 +101,7 @@ const placeServerGroup = placeNode(1);
 const placeOtherGroup = placeNode(2);
 
 // Example for middleware that show how to layout all elements
-export const layout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const nodeLayout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   // 按类型分组: 分成USER组, Server组, 其他(DATABASE/RPC/HTTP)组, Line组
   const root = stage.getStageNode();
   const nodes: (string | VNode)[] = stage.getStageNode().children;

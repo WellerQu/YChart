@@ -1,10 +1,10 @@
 /// <reference path="../node_modules/snabbdom/vnode.d.ts" />
 
-import { VNode } from 'snabbdom/vnode';
+import { VNode, } from 'snabbdom/vnode';
 
 import compose from './compose';
-import { EventHandler, Position } from '../typings/defines';
-import { ARROW_HEIGHT, ARROW_WIDTH } from './constants';
+import { EventHandler, Position, } from '../typings/defines';
+import { ARROW_HEIGHT, ARROW_WIDTH, } from './constants';
 
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
   // click事件需要特殊处理, 否则服无法区分是拖拽还是点击
@@ -14,7 +14,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
   if (eventName === 'click') {
     const OFFSET = 10;
     const GAP = 200;
-    const startPosition: Position = { x: 0, y: 0 };
+    const startPosition: Position = { x: 0, y: 0, };
 
     let startTime: number = 0;
 
@@ -58,7 +58,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
 export const throttle = (handler: EventHandler, gapTime: number) => {
   let lastTime: number = 0;
 
-  return function(event: Event): Event {
+  return function (event: Event): Event {
     let nowTime = +new Date;
     if (nowTime - lastTime > gapTime) {
       lastTime = nowTime;
@@ -69,7 +69,7 @@ export const throttle = (handler: EventHandler, gapTime: number) => {
   };
 };
 
-export function memory<T>(fn: (...args: any[]) => T, resolver?: (...args: any[]) => string)  {
+export function memory<T> (fn: (...args: any[]) => T, resolver?: (...args: any[]) => string)  {
   const memories = new Map<string, T>();
 
   return (...args: any[]): T => {
@@ -105,14 +105,14 @@ export const toViewBox = (x: number, y: number, width: number, height: number): 
 
 export function toTranslate(x: number, y: number): string;
 export function toTranslate(position: Position): string;
-export function toTranslate(...args: any[]): string {
+export function toTranslate (...args: any[]): string {
   if (args.length > 1) {
-    const [ x, y ] = args;
+    const [ x, y, ] = args;
     return `translate(${x}px, ${y}px)`;
   }
   
   if (args.length === 1) {
-    const { x, y } = args[0];
+    const { x, y, } = args[0];
     return `translate(${x}px, ${y}px)`;
   }
 
@@ -125,6 +125,9 @@ export const toArrowD = (x: number, y: number, width = ARROW_WIDTH, height = ARR
 
 
 export const max = (...nums: number[]): number => {
+  if (!nums) return 0;
+  if (nums.length === 1) return nums[0];
+
   const [ head, ...tail ] = nums;
   const _max = (x: number) => (y: number) => x > y ? x : y;
   const getResult = compose<number>(...tail.map((n: number) => _max(n)));

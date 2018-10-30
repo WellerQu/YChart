@@ -1,5 +1,5 @@
-import { TopoData, Node, Line, TierNode,  } from '../../typings/defines';
-import { NODE_TYPE, } from '../NODE_TYPE';
+import { TopoData, Node, Line, TierNode  } from '../../typings/defines';
+import { NODE_TYPE } from '../NODE_TYPE';
 
 import compose from '../compose';
 
@@ -12,7 +12,7 @@ const mergeUsers = (data: TopoData): TopoData => {
 
   const [ head, ...tails ] = nodes;
 
-  const mergedNodes = head ? [head] : [];
+  const mergedNodes = head ? [head,] : [];
   lines.filter((item: Line) => tails.some((node: Node) => node.id === item.source))
     .forEach((item: Line) => (item.source = head.id, item));
 
@@ -59,7 +59,7 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
         return {
           tierName: tier.name,
           name: node.name,
-          elapsedTime: line.elapsedTime,
+          elapsedTime: line.elapsedTime
         };
       });
     }

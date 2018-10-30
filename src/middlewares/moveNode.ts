@@ -3,10 +3,10 @@
 import { VNode } from 'snabbdom/vnode';
 
 import { Stage, PatchFn, TopoData, Position } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE } from '../NODE_TYPE';
-import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET } from '../constants';
 
 const findGroup = (event: Event): HTMLElement => {
   let element = event.target as HTMLElement;
@@ -30,8 +30,8 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
     throw new Error(`can NOT convert to path d: ${value}`);
 
   return [
-    [+RegExp.$1, +RegExp.$2],
-    [+RegExp.$3, +RegExp.$4],
+    [+RegExp.$1, +RegExp.$2,],
+    [+RegExp.$3, +RegExp.$4,],
     // [+RegExp.$5, +RegExp.$6],
   ];
 };
@@ -76,7 +76,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
       const diffX = event.pageX - sourcePosition.x;
       const diffY = event.pageY - sourcePosition.y;
 
-      const [,, width] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
+      const [,, width,] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
       const containerWidth = svgElement.parentElement.offsetWidth;
       const ratio = (width / containerWidth);
       const newX = targetPosition.x + diffX * ratio;
@@ -104,7 +104,7 @@ export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoDa
           const arrow = paths[1];
           const text = item.querySelector('text.line-desc');
 
-          const [[x1, y1], [x2, y2]] = parsePathD(line.getAttribute('d'));
+          const [[x1, y1,], [x2, y2,],] = parsePathD(line.getAttribute('d'));
           const x = NODE_SIZE  / 2 + newX;
           const y = NODE_SIZE  / 2 + newY;
 

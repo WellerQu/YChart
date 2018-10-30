@@ -1,5 +1,5 @@
 import { Stage, PatchFn, TopoData } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, } from '../utils';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox } from '../utils';
 
 // limit range
 const widthClamp = clamp(320, 2420);
@@ -12,7 +12,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   }
 
   const viewBox = svgElement.getAttribute('viewBox');
-  const [x, y, width, height] = parseViewBoxValue(viewBox);
+  const [x, y, width, height,] = parseViewBoxValue(viewBox);
 
   const diffWidth = 20;
   const diffHeight = diffWidth * height / width;

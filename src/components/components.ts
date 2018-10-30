@@ -11,7 +11,10 @@ import {
   LineOption,
   CircleOption,
   ArrowOption,
-  SvgOption
+  SvgOption,
+  RectOption,
+  ComponentFn,
+  StrategyFn
 } from '../../typings/defines';
 import { toArrowD } from '../utils';
 
@@ -40,7 +43,7 @@ export const createSvg = (option: SvgOption): VNode => {
         height: option.height,
         viewBox: `0, 0, ${option.width}, ${option.height}`,
         // preserveAspectRatio: 'xMidYMid meet',
-      }
+      },
     },
     []
   );
@@ -52,8 +55,8 @@ export const createGroup = (option: GroupOption): VNode => {
   return h(
     'g',
     {
-      class: { ...classObject, group: true },
-      style: { transform: `translate(${option.x || 0}px, ${option.y || 0}px)` },
+      class: { ...classObject, group: true, },
+      style: { transform: `translate(${option.x || 0}px, ${option.y || 0}px)`, },
       ns: 'http://www.w3.org/2000/svg',
       key: option.id,
       attrs: {
@@ -64,7 +67,7 @@ export const createGroup = (option: GroupOption): VNode => {
   );
 };
 
-export const createImage = (option: ImageOption) => (parentNode: VNode) => {
+export const createImage: ComponentFn<ImageOption> = (option: ImageOption): StrategyFn => (parentNode: VNode) => {
   const width = option.width || 50;
   const height = option.height || 50;
   const classObject = parseClassName(option.className);
@@ -78,7 +81,7 @@ export const createImage = (option: ImageOption) => (parentNode: VNode) => {
         x: option.x,
         y: option.y,
       },
-      class: { ...classObject },
+      class: { ...classObject, },
       ns: 'http://www.w3.org/2000/svg',
     })
   );
@@ -86,15 +89,15 @@ export const createImage = (option: ImageOption) => (parentNode: VNode) => {
   return parentNode;
 };
 
-export const createText = (option: TextOption) => (parentNode: VNode) => {
+export const createText: ComponentFn<TextOption> = (option: TextOption): StrategyFn => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 
   parentNode.children.push(
     h(
       'text',
       {
-        attrs: { x: option.x, y: option.y },
-        class: { ...classObject },
+        attrs: { x: option.x, y: option.y, },
+        class: { ...classObject, },
         ns: 'http://www.w3.org/2000/svg',
       },
       option.content
@@ -104,7 +107,7 @@ export const createText = (option: TextOption) => (parentNode: VNode) => {
   return parentNode;
 };
 
-export const createCircle = (option: CircleOption) => (parentNode: VNode) => {
+export const createCircle: ComponentFn<CircleOption> = (option: CircleOption): StrategyFn => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 
   parentNode.children.push(
@@ -113,9 +116,9 @@ export const createCircle = (option: CircleOption) => (parentNode: VNode) => {
         cx: option.cx,
         cy: option.cy,
         r: option.radius,
-        fill: option.fill
+        fill: option.fill,
       },
-      class: { ...classObject },
+      class: { ...classObject, },
       ns: 'http://www.w3.org/2000/svg',
     })
   );
@@ -123,7 +126,7 @@ export const createCircle = (option: CircleOption) => (parentNode: VNode) => {
   return parentNode;
 };
 
-export const createLine = (option: LineOption) => (parentNode: VNode) => {
+export const createLine: ComponentFn<LineOption> = (option: LineOption): StrategyFn => (parentNode: VNode) => {
   parentNode.children.push(
     h('path', {
       attrs: {
@@ -140,8 +143,8 @@ export const createLine = (option: LineOption) => (parentNode: VNode) => {
   return parentNode;
 };
 
-export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
-  const { x, y, width, height } = option;
+export const createArrow: ComponentFn<ArrowOption> = (option: ArrowOption): StrategyFn => (pardentNode: VNode) => {
+  const { x, y, width, height, } = option;
 
   pardentNode.children.push(h('path', {
     attrs: {
@@ -149,16 +152,16 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
       fill: option.fill,
       transform: 'rotate(0, 0 0)',
     },
-    class: { arrow: true },
-    ns: 'http://www.w3.org/2000/svg'
+    class: { arrow: true, },
+    ns: 'http://www.w3.org/2000/svg',
   }));
 
   pardentNode.children.push(
     h(
       'animateMotion',
       {
-        attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}` },
-        ns: 'http://www.w3.org/2000/svg'
+        attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}`, },
+        ns: 'http://www.w3.org/2000/svg',
       },
       [
         // h('mpath', {
@@ -170,4 +173,21 @@ export const createArrow = (option: ArrowOption) => (pardentNode: VNode) => {
   );
 
   return pardentNode;
+};
+
+export const createRect: ComponentFn<RectOption> = (option: RectOption): StrategyFn => (parentNode: VNode) => {
+  const { className, ...others } = option;
+  const classObject = parseClassName(className);
+
+  parentNode.children.push(
+    h('rect', {
+      attrs: {
+        ...others,
+      },
+      class: classObject,
+      ns: 'http://www.w3.org/2000/svg',
+    })
+  );
+  
+  return parentNode;
 };

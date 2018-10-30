@@ -7,6 +7,6 @@ export default function createImageNodeOption(node: Node): ImageNodeOption {
     URL: imagePath(node.showIcon.toLowerCase()),
     title: node.showName,
     className: `${node.type} ${NODE_TYPE.NODE}`,
-    id: node.id,
+    id: node.id
   };
 }

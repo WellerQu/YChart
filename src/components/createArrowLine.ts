@@ -2,13 +2,13 @@
 
 import { VNode } from 'snabbdom/vnode';
 
-import { ArrowLineOption } from '../../typings/defines';
+import { ArrowLineOption, ComponentFn, StrategyFn } from '../../typings/defines';
 
 import compose from '../compose';
 
 import { createText, createArrow, createLine, createGroup } from './components';
 
-const createArrowLine = (option: ArrowLineOption) => (
+const createArrowLine: ComponentFn<ArrowLineOption> = (option: ArrowLineOption): StrategyFn => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(createText({
@@ -20,7 +20,7 @@ const createArrowLine = (option: ArrowLineOption) => (
     x: 0,
     y: 0,
     id: option.id,
-    fill: option.fill
+    fill: option.fill,
   }), createLine({
     id: option.id,
     x1: option.x1,
@@ -28,10 +28,10 @@ const createArrowLine = (option: ArrowLineOption) => (
     x2: option.x2,
     y2: option.y2,
     strokeColor: option.strokeColor,
-    strokeWidth: option.strokeWidth
+    strokeWidth: option.strokeWidth,
   }), createGroup);
 
-  parentNode.children.push(createNode({ className: option.className, id: option.id }));
+  parentNode.children.push(createNode({ className: option.className, id: option.id, }));
 
   return parentNode;
 };

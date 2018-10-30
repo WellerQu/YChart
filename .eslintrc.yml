@@ -35,4 +35,9 @@ rules:
   max-len:
     - warn
     - code: 120
+  comma-dangle:
+    - warn
+    -
+      arrays: always
+      objects: always
   'typescript/class-name-casing': 'error'

@@ -1,5 +1,6 @@
-import render from '../src/ychart-topo';
-import { TopoData, } from '../typings/defines';
+import ychartTopo from '../src/ychart-topo';
+import ychartCallstack from '../src/ychart-callstack';
+import { TopoData, CallstackData } from '../typings/defines';
 
 const eventOption = {
   // 'nodeClick': (event: MouseEvent, data: Node): void => { console.log(event, data); },
@@ -10,11 +11,11 @@ const eventOption = {
   // 'lineMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
 };
 
-const update = render(document.querySelector('#topo'), eventOption, (userState?: any) => {
-  console.log('updated successfully', userState);
+const updateTopo = ychartTopo(document.querySelector('#topo'), eventOption, (userState?: any) => {
+  console.log('updated successfully', userState); // eslint-disable-line
 });
 
-const data: TopoData = {
+const topoData: TopoData = {
   'nodes':[  
     {  
       'id':'821931823954018304',
@@ -55,8 +56,10 @@ const data: TopoData = {
       'callCount': 1,
     },
     {  
-      'id':'jdbc:mysql://172.16.32.98:3306/kepler_management?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
-      'name':'jdbc:mysql://172.16.32.98:3306/kepler_management?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
+      'id':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
+useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
+      'name':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
+useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
       'times':0,
       'type':'DATABASE',
       'smallType':'mysql',
@@ -72,69 +75,58 @@ const data: TopoData = {
       'crossApp':false,
       'apdex':'ERROR',
       'callCount': 1,
-    }
+    },
   ],
   'links':[  
     {  
       'source':'821931823954018304USER',
       'target':'821931823954018304',
       'elapsedTime':44.53,
-      'rpm':0
+      'rpm':0,
     },
     {  
       'source':'821931823954018304',
-      'target':'jdbc:mysql://172.16.32.98:3306/kepler_management?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
+      'target':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
+useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
       'elapsedTime':1,
-      'rpm':0
-    }
-  ]
+      'rpm':0,
+    },
+  ],
 };
 
-update(data);
-
-const btnFullscreen = document.querySelector('button#fullscreen');
-btnFullscreen.addEventListener('click', () => {
-  if (!getFullscreenElement()) {
-    update(data, { width: window.screen.availWidth, height: window.screen.availHeight });
-    launchFullscreen(document.querySelector('svg#topo'));
-  } else {
-    update(data, { width: 800, height: 400 });
-    exitFullscreen();
-  }
-});
+updateTopo(topoData);
 
 const btnUpdate = document.querySelector('button#update');
 btnUpdate.addEventListener('click', () => {
-  data.nodes[0].instances = Math.random() * 10 >> 0;
-  update(data);
+  topoData.nodes[0].instances = Math.random() * 10 >> 0;
+  updateTopo(topoData);
 });
 
-function launchFullscreen(element: any) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullScreen();
-  }
-}
+const callstackData: CallstackData = {
+  stackName: 'root stack service',
+  duration: 8000, // ms
+  children: [
+    {
+      stackName: 'serv 0',
+      duration: 300,
+      children: [
+        {
+          stackName: 'serv 01',
+          duration: 240,
+        },
+        {
+          stackName: 'serv 02',
+          duration: 300,
+        },
+      ],
+    },
+    {
+      stackName: 'serv 1',
+      duration: 8000,
+    },
+  ],
+};
 
-function exitFullscreen() {
-  const document = window.document as any;
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
-}
+const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
 
-function getFullscreenElement() {
-  const document = window.document as any;
-  return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-}
+updateCallstack(callstackData);

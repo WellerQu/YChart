@@ -59,12 +59,12 @@ const arrowLine = compose<StrategyFn>(
 );
 
 // Entrance, start from here
-export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn => {
+export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn<TopoData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(log, layout, interaction, style, 
     scaleCanvas, moveCanvas, moveNode, event(eventOption),);
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, getStageNode } = createStageAt(container);
+  const { create, subscribe, patch, getStageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
@@ -78,7 +78,7 @@ export default (container: HTMLDivElement, eventOption?: EventOption, updated?: 
     if (option) {
       root.data.attrs  = {
         ...root.data.attrs,
-        ...createSvg(option).data.attrs
+        ...createSvg(option).data.attrs,
       };
     }
 

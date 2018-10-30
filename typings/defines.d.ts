@@ -3,11 +3,12 @@
 import { VNode } from 'snabbdom/vnode';
 
 export type StrategyFn = (parent: VNode) => VNode;
+export type ComponentFn<T> = (option: T) => StrategyFn;
 export type PatchFn = (userState?: any) => void;
 export type SubscriberFn = (userState?: any) => void;
 export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
 export type CreateStageFn = (container: HTMLElement) => Stage;
-export type UpdateFn = (data: TopoData, option?: SvgOption) => void;
+export type UpdateFn<T> = (data: T, option?: SvgOption) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
 export type EventHandler = (event: Event) => Event;
@@ -52,6 +53,14 @@ declare interface CircleOption extends PositionOption {
   fill?: string;
 }
 
+declare interface RectOption extends PositionOption {
+  height: number;
+  width: number;
+  stroke?: string;
+  strokeWidth: number;
+  fill?: string;
+}
+
 declare interface GroupOption extends PositionOption {
   id?: string;
 }
@@ -90,14 +99,24 @@ declare interface LineOption {
 }
 
 declare interface ArrowOption {
-  id: string,
-  x: number,
-  y: number,
-  height?: number,
-  width?: number,
+  id: string;
+  x: number;
+  y: number;
+  height?: number;
+  width?: number;
   fill: string;
   className?: string;
 }
+
+declare interface CallstackOption {
+  id: string;
+  text: string;
+  width: number;
+  color: string;
+  className?: string;
+}
+
+// --- 以下为业务数据 ---
 
 declare interface Node {
   id: string;
@@ -150,5 +169,7 @@ declare interface TopoData {
 }
 
 declare interface CallstackData {
-
+  stackName: string;
+  duration: number;
+  children?: CallstackData[];
 }

@@ -2,8 +2,8 @@
 
 import { VNode } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET, } from '../constants';
+import { Stage, PatchFn, TopoData } from '../../typings/defines';
+import { NODE_SIZE, CELL_SIZE, ARROW_OFFSET } from '../constants';
 import { NODE_TYPE } from '../NODE_TYPE';
 import { toTranslate, toArrowD } from '../utils';
 
@@ -26,13 +26,13 @@ const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
         data: {
           ...item.data,
           style: {
-            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space),
+            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space)
           }
         }
       },
       x: CELL_SIZE * columnIndex + space,
       y: CELL_SIZE * rowIndex + space,
-      id: item.data.attrs.id,
+      id: item.data.attrs.id
     };
   });
 };
@@ -91,7 +91,7 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
 
     return {
-      ...item,
+      ...item
     };
   });
 };
@@ -146,7 +146,7 @@ export const layout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData
   const placedOtherGroup = placeOtherGroup(otherGroup);
 
   // 摆放线段
-  const allElements = [...placedUserGroup, ...placedServiceGroup, ...placedOtherGroup];
+  const allElements = [...placedUserGroup, ...placedServiceGroup, ...placedOtherGroup,];
   const placeLineGroup = linkLine(allElements);
   const placedLineGroup = placeLineGroup(lineGroup);
 

@@ -84,6 +84,7 @@ export default (container: HTMLElement, updated?: SubscriberFn): UpdateFn<Callst
     flattenData.forEach((item: CallstackData, index: number) => {
       item.maxDuration = maxWidth;
       item.avaliableWidth = avaliableWidth;
+      create(callstack(item)); 
       if (index > 0)
         create(createCallLine({
           id: `${item.stackName}-${item.parentStackName || ''}`,
@@ -96,7 +97,6 @@ export default (container: HTMLElement, updated?: SubscriberFn): UpdateFn<Callst
           strokeWidth: 1,
           className: 'callline',
         }));
-      create(callstack(item)); 
     });
 
     patch(flattenData);

@@ -9,12 +9,12 @@ const createCallLine: ComponentFn<LineOption> = (option: LineOption): StrategyFn
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(
-    // createArrow({
-    //   x: option.x2,
-    //   y: option.y2,
-    //   id: option.id,
-    //   fill: option.strokeColor,
-    // }),
+    createArrow({
+      x: option.x2,
+      y: option.y2,
+      id: option.id,
+      fill: option.strokeColor,
+    }),
     createLine(option),
     createGroup
   );

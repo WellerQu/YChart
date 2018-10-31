@@ -27,17 +27,19 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 import createArrowLine from './components/createArrowLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
 
+const emptyPadding = (data: TopoData) => {
+  if (!data.nodes)
+    data.nodes = [];
+  if (!data.links)
+    data.links = [];
+    
+  return data;
+};
+
 const formatDataAdapter = compose<TopoData>(
   createFixAdapter,
   createMergeAdapter,
-  (data: TopoData) => {
-    if (!data.nodes)
-      data.nodes = [];
-    if (!data.links)
-      data.links = [];
-    
-    return data;
-  },
+  emptyPadding,
   clone,
 );
 
@@ -59,8 +61,15 @@ const arrowLine = compose<StrategyFn>(
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn<TopoData> => {
   const elementID = container.id;
-  const enhancer = applyMiddlewares(log, nodeLayout, topoStyle, 
-    scaleCanvas, moveCanvas, moveNode, event(eventOption),);
+  const enhancer = applyMiddlewares(
+    log, 
+    nodeLayout, 
+    topoStyle, 
+    scaleCanvas, 
+    moveCanvas, 
+    moveNode, 
+    event(eventOption),
+  );
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, size, } = createStageAt(container);
 

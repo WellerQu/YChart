@@ -4,7 +4,6 @@ import { NODE_TYPE, } from './NODE_TYPE';
 
 import compose from './compose';
 import { log, } from './middlewares/log';
-import { interaction, } from './middlewares/interaction';
 import { nodeLayout, } from './middlewares/nodeLayout';
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/scaleCanvas';
@@ -60,7 +59,7 @@ const arrowLine = compose<StrategyFn>(
 // Entrance, start from here
 export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn<TopoData> => {
   const elementID = container.id;
-  const enhancer = applyMiddlewares(log, nodeLayout, interaction, topoStyle, 
+  const enhancer = applyMiddlewares(log, nodeLayout, topoStyle, 
     scaleCanvas, moveCanvas, moveNode, event(eventOption),);
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, size, } = createStageAt(container);

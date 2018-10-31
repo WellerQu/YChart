@@ -50,7 +50,7 @@ const setupMouseOutHandler = setupEventHandler(handleMouseOut)('mouseout');
 export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   console.log('TODO: add interaction'); // eslint-disable-line
 
-  const root = stage.getStageNode();
+  const root = stage.stageNode();
   const children = root.children;
 
   children.forEach((item: VNode) => {

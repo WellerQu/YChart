@@ -9,7 +9,7 @@ import compose from '../compose';
 
 // 添加拖拽移动画布功能
 export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  const root = stage.getStageNode();
+  const root = stage.stageNode();
 
   let isMouseDown: boolean = false;
   let sourcePosition: Position = { x: 0, y: 0, };

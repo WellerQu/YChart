@@ -14,7 +14,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, SubscriberFn, StrategyFn, SvgOption, } from '../typings/defines';
+import { Stage, SubscriberFn, StrategyFn, SvgOption, Size, } from '../typings/defines';
 import { createSvg, } from './components/components';
 
 const vPatch = init([
@@ -44,7 +44,7 @@ function createStage (container: HTMLElement): Stage {
     return () => subscribers = subscribers.filter(fn => fn !== handler);
   }
 
-  function getStageNode (): VNode {
+  function stageNode (): VNode {
     return currentNode;
   }
 
@@ -57,8 +57,20 @@ function createStage (container: HTMLElement): Stage {
     return previousNode;
   }
 
+  function size (size?: Size) {
+    const root = stageNode();
+
+    if (size) {
+      root.data.attrs.width = size.width;
+      root.data.attrs.height = size.height;
+    }
+
+    return root;
+  }
+
   return {
-    getStageNode,
+    stageNode,
+    size,
     create,
     subscribe,
     patch,

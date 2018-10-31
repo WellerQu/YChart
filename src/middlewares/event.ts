@@ -38,7 +38,7 @@ const handlerHelper = (
 };
 
 export const event = (options: EventOption ) => (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  const root = stage.getStageNode();
+  const root = stage.stageNode();
 
   const handleClick = handlerHelper(options['nodeClick'], options['lineClick'], userState);
   const handleMouseOver = handlerHelper(options['nodeMouseOver'], options['lineMouseOver'], userState);

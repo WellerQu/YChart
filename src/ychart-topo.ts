@@ -27,7 +27,6 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 
 import createArrowLine from './components/createArrowLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
-import { createSvg, } from './components/components';
 
 const formatDataAdapter = compose<TopoData>(
   createFixAdapter,
@@ -64,7 +63,7 @@ export default (container: HTMLDivElement, eventOption?: EventOption, updated?: 
   const enhancer = applyMiddlewares(log, nodeLayout, interaction, topoStyle, 
     scaleCanvas, moveCanvas, moveNode, event(eventOption),);
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, getStageNode, } = createStageAt(container);
+  const { create, subscribe, patch, size, } = createStageAt(container);
 
   updated && subscribe(updated);
 
@@ -72,15 +71,8 @@ export default (container: HTMLDivElement, eventOption?: EventOption, updated?: 
 
   // Expose update method
   return (data: TopoData, option?: SvgOption): void => {
-    const root = getStageNode();
+    const root = size(option);
     root.data.attrs.id = elementID;
-
-    if (option) {
-      root.data.attrs  = {
-        ...root.data.attrs,
-        ...createSvg(option).data.attrs,
-      };
-    }
 
     const formattedData: TopoData = formatDataAdapter(data);
 

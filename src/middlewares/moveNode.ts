@@ -39,7 +39,7 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
 // const updateArrowPosition = (arrow: SVGPathElement) => (x1: number, y1: number, x2: number, y2: number) =>
 
 export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  const root = stage.getStageNode();
+  const root = stage.stageNode();
 
   let isMouseDown: boolean = false;
   let sourcePosition: Position = { x: 0, y: 0, };

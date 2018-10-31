@@ -16,7 +16,7 @@ const predicate = (className: string) => (item: VNode) => {
 
 // 调用栈布局
 export const callstackLayout = (stage: Stage) => (next: PatchFn) => (userState?: CallstackData[]) => {
-  const nodes: (string | VNode)[] = stage.getStageNode().children;
+  const nodes: (string | VNode)[] = stage.stageNode().children;
   const positionMap = new Map<string, Position>();
 
   const stackGroups = nodes.filter(predicate(CALL_STACK_CLASS));

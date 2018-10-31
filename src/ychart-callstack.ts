@@ -11,7 +11,6 @@ import { callstackColourful,} from './middlewares/callstackColourful';
 import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
 import compose from './compose';
 import { max, } from './utils';
-import { createSvg, } from './components/components';
 import { createRule, } from './components/createRule';
 import clone from './clone';
 import { RULE_STEP, } from './constants';
@@ -41,20 +40,13 @@ export default (container: HTMLElement, updated?: SubscriberFn): UpdateFn<Callst
   const elementID = container.id;
   const enhancer = applyMiddlewares(callstackColourful, callstackLayout, callstackStyle);
   const createStageAt = enhancer(createStage);
-  const { getStageNode, create, patch, subscribe, } = createStageAt(container);
+  const { create, patch, subscribe, size, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   return (data: CallstackData, option?: SvgOption) => {
-    const root = getStageNode();
+    const root = size(option);
     root.data.attrs.id = elementID;
-
-    if (option) {
-      root.data.attrs  = {
-        ...root.data.attrs,
-        ...createSvg(option).data.attrs,
-      };
-    }
 
     const flattenData = flatten(data);
     const maxDuration = max(...flattenData.map(n => n.duration));

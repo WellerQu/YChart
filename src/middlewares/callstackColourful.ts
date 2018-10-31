@@ -13,7 +13,7 @@ const CALL_STACK_CLASS = 'callstack', CALL_LINE_CLASS = 'callline';
 
 // 调用栈着色
 export const callstackColourful = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  const nodes: (string | VNode)[] = stage.getStageNode().children;
+  const nodes: (string | VNode)[] = stage.stageNode().children;
 
   const stackGroups = nodes.filter(predicate(CALL_STACK_CLASS));
   const lineGroups = nodes.filter(predicate(CALL_LINE_CLASS));

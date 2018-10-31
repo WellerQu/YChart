@@ -44,7 +44,7 @@ const setupMousewheel = setupEventHandler(throttle(handleMousewheel, 20))('mouse
 
 // Scale stage
 export const scaleCanvas = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  const root = stage.getStageNode();
+  const root = stage.stageNode();
 
   setupMousewheel(root);
 

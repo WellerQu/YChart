@@ -103,8 +103,8 @@ const placeOtherGroup = placeNode(2);
 // Example for middleware that show how to layout all elements
 export const nodeLayout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
   // 按类型分组: 分成USER组, Server组, 其他(DATABASE/RPC/HTTP)组, Line组
-  const root = stage.getStageNode();
-  const nodes: (string | VNode)[] = stage.getStageNode().children;
+  const root = stage.stageNode();
+  const nodes: (string | VNode)[] = stage.stageNode().children;
   const userGroup: VNode[] = [];
   const serverGroup: VNode[] = [];
   const otherGroup: VNode[] = [];

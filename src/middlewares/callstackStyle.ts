@@ -32,7 +32,7 @@ text.calibration {
 `;
 
 export const callstackStyle = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
-  stage.getStageNode().children.push(
+  stage.stageNode().children.push(
     h('style', { ns: 'http://www.w3.org/2000/svg', }, styleSheet)
   );
 

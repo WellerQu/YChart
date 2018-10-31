@@ -13,21 +13,21 @@ export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
 export type EventHandler = (event: Event) => Event;
 export type Position = { x: number, y: number };
+export type Size = { width: number, height: number };
 
 declare interface EventOption {
   [T: string]: TopoEventHandler;
 }
 
 declare interface Stage {
-  getStageNode: () => VNode;
+  stageNode: () => VNode;
   create: (strategy: StrategyFn) => VNode;
   subscribe: (handler: SubscriberFn) => void;
   patch: PatchFn;
+  size: (szie: Size) => VNode;
 }
 
-declare interface SvgOption {
-  width: number | string;
-  height: number | string;
+declare interface SvgOption extends Size {
 }
 
 declare interface PositionOption {

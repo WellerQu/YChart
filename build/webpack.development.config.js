@@ -15,7 +15,7 @@ module.exports = merge(baseConfig, {
     port: 9000,
     compress: true,
     headers: {
-      'X-Webpack-Dev-Server': 'Demo'
-    }
-  }
+      'X-Webpack-Dev-Server': 'Demo',
+    },
+  },
 });

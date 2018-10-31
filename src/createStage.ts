@@ -7,24 +7,24 @@
 /// <reference path="../node_modules/snabbdom/modules/eventlisteners.d.ts" />
 
 import toNode from 'snabbdom/tovnode';
-import { VNode } from 'snabbdom/vnode';
-import { init } from 'snabbdom/snabbdom';
+import { VNode, } from 'snabbdom/vnode';
+import { init, } from 'snabbdom/snabbdom';
 import attributes from 'snabbdom/modules/attributes';
 import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, SubscriberFn, StrategyFn, SvgOption } from '../typings/defines';
-import { createSvg } from './components/components';
+import { Stage, SubscriberFn, StrategyFn, SvgOption, } from '../typings/defines';
+import { createSvg, } from './components/components';
 
 const vPatch = init([
   classes,
   style,
   attributes,
-  eventlistener
+  eventlistener,
 ]);
 
-function createStage(container: HTMLElement): Stage {
+function createStage (container: HTMLElement): Stage {
   const svgOption: SvgOption = {
     width: container.parentElement.offsetWidth,
     height: container.parentElement.offsetHeight,
@@ -34,21 +34,21 @@ function createStage(container: HTMLElement): Stage {
   let previousNode: VNode = toNode(container);
   let subscribers: SubscriberFn[] = [];
 
-  function create(strategy: StrategyFn): VNode {
+  function create (strategy: StrategyFn): VNode {
     return strategy(currentNode);
   }
 
-  function subscribe(handler: SubscriberFn): () => void {
+  function subscribe (handler: SubscriberFn): () => void {
     subscribers.push(handler);
 
     return () => subscribers = subscribers.filter(fn => fn !== handler);
   }
 
-  function getStageNode(): VNode {
+  function getStageNode (): VNode {
     return currentNode;
   }
 
-  function patch(userState?: any): VNode {
+  function patch (userState?: any): VNode {
     previousNode = vPatch(previousNode, currentNode);
     currentNode = createSvg(svgOption);
 
@@ -61,7 +61,7 @@ function createStage(container: HTMLElement): Stage {
     getStageNode,
     create,
     subscribe,
-    patch
+    patch,
   };
 }
 

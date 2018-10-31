@@ -6,15 +6,10 @@ import { createText, } from './components';
 import { RULE_PADDING, } from '../constants';
 
 export const createRule: ComponentFn<RuleOption> = (option: RuleOption):StrategyFn => (parentNode: VNode) => {
-  const parentWidth = parentNode.data.attrs.width as number;
-
-  if (isNaN(parentWidth)) 
-    throw new Error(`can NOT conver to Width Value: ${parentWidth}`);
-
   const texts: StrategyFn[] = [];
-  const availableWidth = parentWidth - 2 * RULE_PADDING;
-
   const actions: string[] = [];
+  const availableWidth = option.avaliableWidth - 2 * RULE_PADDING;
+
   let current = RULE_PADDING;
   let stepCount = 0;
 

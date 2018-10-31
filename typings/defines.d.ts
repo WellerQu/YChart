@@ -92,6 +92,7 @@ declare interface LineOption {
   y1: number;
   x2: number;
   y2: number;
+  L?: Position[];
   strokeColor: string;
   strokeWidth: number;
   text?: string;
@@ -114,6 +115,7 @@ declare interface RuleOption {
   max: number;
   step: number;
   color?: string;
+  avaliableWidth: number;
 }
 
 declare interface CallstackOption {
@@ -183,6 +185,7 @@ declare interface CallstackData {
   duration: number;
   children?: CallstackData[];
   parentOffsetTime?: number;
+  parentStackName?: string;
   maxDuration?: number;
   avaliableWidth?: number;
 }

@@ -29,10 +29,10 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
     item.type === NODE_TYPE.HTTP || item.type === NODE_TYPE.RPC);
 
   const othersLines: Line[] = data.links.filter((item: Line) =>
-    nodes.every((node: Node) => node.id !== item.target)
+    nodes.every((node: Node) => node.id !== item.target && node.id !== item.source)
   );
   const lines: Line[] = data.links.filter((item: Line) =>
-    nodes.some((node: Node) => node.id === item.target)
+    nodes.some((node: Node) => node.id === item.target || node.id === item.source)
   );
 
   const mergedNodeMap: Map<string, Node[]> = new Map<string, Node[]>();
@@ -53,16 +53,20 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
     mergedNodeMap.get(key).push(node); 
     mergedNodeMap.get(key)[0].showName = `remote (${mergedNodeMap.get(key).length * relatedLineSources.length})`;
 
-    if (!mergedNodeMap.get(key)[0].tiers) {
-      mergedNodeMap.get(key)[0].tiers = relatedLines.map<TierNode>((line: Line) => {
+    if (!mergedNodeMap.get(key)[0].tiers) 
+      mergedNodeMap.get(key)[0].tiers = [];
+ 
+    const tiers = mergedNodeMap.get(key)[0].tiers;
+    mergedNodeMap.get(key)[0].tiers = tiers.concat(
+      relatedLines.filter((line: Line) => othersNodes.find((n: Node) => n.id === line.source))
+        .map<TierNode>((line: Line) => {
         const tier = othersNodes.find((n: Node) => n.id === line.source);
         return {
           tierName: tier.name,
           name: node.name,
           elapsedTime: line.elapsedTime,
         };
-      });
-    }
+      }));
   });
 
   const mergedNodes: Node[] = Array.from(mergedNodeMap.values())

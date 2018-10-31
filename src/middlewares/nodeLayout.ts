@@ -56,7 +56,7 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     const arrow: VNode = item.children[1] as VNode;
     if (!arrow)
       return item;
-    const text: VNode = item.children[3] as VNode;
+    const text: VNode = item.children[2] as VNode;
     if (!text)
       return item;
 

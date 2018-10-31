@@ -5,3 +5,5 @@ export const ARROW_HEIGHT = 10;
 export const ARROW_WIDTH = 6;
 export const CALLSTACK_HEIGHT = 26;
 export const RULE_PADDING = 20; // 标尺左右补白
+export const RULE_HEIGHT = 45;
+export const RULE_STEP = 500;

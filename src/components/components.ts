@@ -3,6 +3,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom/h';
+import { Position, } from '../../typings/defines';
 
 import {
   TextOption,
@@ -127,10 +128,14 @@ export const createCircle: ComponentFn<CircleOption> = (option: CircleOption): S
 };
 
 export const createLine: ComponentFn<LineOption> = (option: LineOption): StrategyFn => (parentNode: VNode) => {
+  const { L = [], } = option;
+  const actions = L.map<string>((item: Position) => {
+    return `L${item.x},${item.y}`;
+  });
   parentNode.children.push(
     h('path', {
       attrs: {
-        d: `M${option.x1},${option.y1} L${option.x2},${option.y2}`,
+        d: `M${option.x1},${option.y1} ${actions.join(' ')} L${option.x2},${option.y2}`,
         fill: 'none',
         stroke: option.strokeColor,
         'stroke-width': option.strokeWidth,
@@ -156,21 +161,22 @@ export const createArrow: ComponentFn<ArrowOption> = (option: ArrowOption): Stra
     ns: 'http://www.w3.org/2000/svg',
   }));
 
-  pardentNode.children.push(
-    h(
-      'animateMotion',
-      {
-        attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}`, },
-        ns: 'http://www.w3.org/2000/svg',
-      },
-      [
-        // h('mpath', {
-        //   attrs: { 'xlink:href': `#P${option.id}` },
-        //   ns: 'http://www.w3.org/2000/svg'
-        // })
-      ]
-    )
-  );
+  // 动画应该由中间件提供
+  // pardentNode.children.push(
+  //   h(
+  //     'animateMotion',
+  //     {
+  //       attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}`, },
+  //       ns: 'http://www.w3.org/2000/svg',
+  //     },
+  //     [
+  //       // h('mpath', {
+  //       //   attrs: { 'xlink:href': `#P${option.id}` },
+  //       //   ns: 'http://www.w3.org/2000/svg'
+  //       // })
+  //     ]
+  //   )
+  // );
 
   return pardentNode;
 };

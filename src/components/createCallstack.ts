@@ -12,21 +12,22 @@ const createCallstack: ComponentFn<CallstackOption> = (option: CallstackOption):
   const textOption = {
     content: option.text || '',
     className: 'callstack-desc',
-    x: RULE_PADDING + 10, // RULE_PADDING + option.paddingLeft + option.parentPaddingLeft + 10,
+    x: RULE_PADDING + 10,
     y: 18,
   };
   const createNode = compose<VNode>(
     createText(textOption), 
     createText(textOption), 
     createRect({
-      x: RULE_PADDING, //RULE_PADDING + option.paddingLeft + option.parentPaddingLeft,
+      x: RULE_PADDING,
       height: CALLSTACK_HEIGHT,
       width: option.width,
       fill: option.color,
       stroke: option.color,
       strokeWidth: 1,
     }),
-    createGroup);
+    createGroup
+  );
 
   parentNode.children.push(createNode({ className: option.className, id: option.id, x: option.paddingLeft, }));
 

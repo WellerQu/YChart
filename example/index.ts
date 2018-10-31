@@ -15,84 +15,7 @@ const updateTopo = ychartTopo(document.querySelector('#topo'), eventOption, (use
   console.log('updated successfully', userState); // eslint-disable-line
 });
 
-const topoData: TopoData = {
-  'nodes':[  
-    {  
-      'id':'821931823954018304',
-      'name':'website',
-      'times':1363,
-      'type':'SERVER',
-      'smallType':null,
-      'instances':2,
-      'activeInstances':2,
-      'elapsedTime':43.46,
-      'rpm': undefined,
-      'epm': undefined,
-      'health': null,
-      'totalCount':1363,
-      'errorTotalCount':149,
-      'error': 123,
-      'crossApp':false,
-      'apdex':'SLOW',
-      'callCount': 1,
-    },
-    {  
-      'id':'821931823954018304USER',
-      'name':'用户',
-      'times':0,
-      'type':'USER',
-      'smallType':null,
-      'instances':0,
-      'activeInstances':0,
-      'elapsedTime':0,
-      'rpm': undefined,
-      'epm': undefined,
-      'health':null,
-      'totalCount':0,
-      'errorTotalCount':0,
-      'error': null,
-      'crossApp':false,
-      'apdex':'SLOW',
-      'callCount': 1,
-    },
-    {  
-      'id':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
-useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
-      'name':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
-useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
-      'times':0,
-      'type':'DATABASE',
-      'smallType':'mysql',
-      'instances':0,
-      'activeInstances':0,
-      'elapsedTime':0,
-      'rpm':0,
-      'epm':0,
-      'health':null,
-      'totalCount':0,
-      'errorTotalCount':0,
-      'error': null,
-      'crossApp':false,
-      'apdex':'ERROR',
-      'callCount': 1,
-    },
-  ],
-  'links':[  
-    {  
-      'source':'821931823954018304USER',
-      'target':'821931823954018304',
-      'elapsedTime':44.53,
-      'rpm':0,
-    },
-    {  
-      'source':'821931823954018304',
-      'target':'jdbc:mysql://172.16.32.98:3306/kepler_management?\
-useUnicode=true&characterEncoding=utf-8&useSSL=false&autoCommit=true',
-      'elapsedTime':1,
-      'rpm':0,
-    },
-  ],
-};
+const topoData: TopoData = {'nodes':[{'id':'823014587906535424','name':'pass_serv','times':2432,'type':'SERVER','smallType':null,'instances':1,'activeInstances':1,'elapsedTime':2.22,'rpm':40.72,'epm':0.02,'health':'HEALTHY','totalCount':2362,'errorTotalCount':1,'crossApp':false,},{'id':'823014587906535424USER','name':'用户','times':0,'type':'USER','smallType':null,'instances':0,'activeInstances':0,'elapsedTime':0,'rpm':0,'epm':0,'health':null,'totalCount':0,'errorTotalCount':0,'crossApp':false,},{'id':'dohko.message.sender.hualala.com:31722','name':'dohko.message.sender.hualala.com:31722','times':0,'type':'RPC','smallType':null,'instances':0,'activeInstances':0,'elapsedTime':0,'rpm':0,'epm':0,'health':null,'totalCount':0,'errorTotalCount':0,'crossApp':false,},{'id':'172.16.32.103:6379','name':'172.16.32.103:6379','times':0,'type':'DATABASE','smallType':'redis','instances':0,'activeInstances':0,'elapsedTime':0,'rpm':0,'epm':0,'health':null,'totalCount':0,'errorTotalCount':0,'crossApp':false,},{'id':'jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor','name':'jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor','times':0,'type':'DATABASE','smallType':'mysql','instances':0,'activeInstances':0,'elapsedTime':0,'rpm':0,'epm':0,'health':null,'totalCount':0,'errorTotalCount':0,'crossApp':false,},],'links':[{'source':'823014587906535424USER','target':'823014587906535424','elapsedTime':2.3,'rpm':0,},{'source':'823014587906535424','target':'823013988502745088','elapsedTime':0.14,'rpm':0,},{'source':'823014587906535424','target':'dohko.message.sender.hualala.com:31722','elapsedTime':0,'rpm':0,},{'source':'823014587906535424','target':'172.16.32.103:6379','elapsedTime':0.01,'rpm':0,},{'source':'823014587906535424','target':'jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor','elapsedTime':3.14,'rpm':0,},],};
 
 updateTopo(topoData);
 
@@ -114,12 +37,19 @@ const callstackData: CallstackData = {
       children: [
         {
           stackName: 'serv 01',
-          duration: 2,
+          duration: 100,
           offsetTime: 100,
+          children: [
+            {
+              stackName: 'serv 001',
+              duration: 10,
+              offsetTime: 100,
+            },
+          ],
         },
         {
           stackName: 'serv 02',
-          duration: 300,
+          duration: 3,
           offsetTime: 100,
         },
       ],

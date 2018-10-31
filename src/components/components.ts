@@ -176,12 +176,13 @@ export const createArrow: ComponentFn<ArrowOption> = (option: ArrowOption): Stra
 };
 
 export const createRect: ComponentFn<RectOption> = (option: RectOption): StrategyFn => (parentNode: VNode) => {
-  const { className, ...others } = option;
+  const { className, strokeWidth, ...others } = option;
   const classObject = parseClassName(className);
 
   parentNode.children.push(
     h('rect', {
       attrs: {
+        'stroke-width': strokeWidth,
         ...others,
       },
       class: classObject,

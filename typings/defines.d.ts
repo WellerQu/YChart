@@ -123,7 +123,6 @@ declare interface CallstackOption {
   paddingLeft: number;
   color: string;
   className?: string;
-  parentPaddingLeft: number;
 }
 
 // --- 以下为业务数据 ---
@@ -184,4 +183,6 @@ declare interface CallstackData {
   duration: number;
   children?: CallstackData[];
   parentOffsetTime?: number;
+  maxDuration?: number;
+  avaliableWidth?: number;
 }

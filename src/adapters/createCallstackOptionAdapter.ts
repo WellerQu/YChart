@@ -1,18 +1,20 @@
 import { CallstackOption, CallstackData,} from '../../typings/defines';
 import { RULE_PADDING, } from '../constants';
+import { clamp, } from '../utils';
 
-const createCallstackOptionAdapter = (stack: CallstackData, max: number, width: number): CallstackOption => {
+const widthClamp = clamp(2, Infinity);
 
-  const availableWidth = width - 2 * RULE_PADDING;
+const createCallstackOptionAdapter = (stack: CallstackData): CallstackOption => {
+  const avaliableWidth = stack.avaliableWidth - 2 * RULE_PADDING;
+  const max = stack.maxDuration;
 
   return {
     id: stack.stackName,
-    text: stack.stackName,
-    paddingLeft: stack.offsetTime * availableWidth / max,
-    width: stack.duration * availableWidth / max,
+    text: `${stack.stackName} (${stack.duration}ms)`,
+    paddingLeft: (stack.offsetTime + (stack.parentOffsetTime || 0)) * avaliableWidth / max,
+    width: widthClamp(stack.duration * avaliableWidth / max),
     color: 'red',
     className: 'callstack',
-    parentPaddingLeft: stack.parentOffsetTime ? stack.parentOffsetTime * availableWidth / max : 0,
   };
 };
 

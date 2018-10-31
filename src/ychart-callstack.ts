@@ -21,7 +21,7 @@ function flatten<T extends { children?: T[], parentOffsetTime?: number, offsetTi
   if (!node.children || node.children.length === 0) return stacks;
 
   return node.children.reduce<T[]>((arr: T[], item: T) => {
-    item.parentOffsetTime = node.offsetTime;
+    item.parentOffsetTime = node.offsetTime + node.parentOffsetTime || 0;
     return arr.concat(flatten<T>(item));
   }, stacks);
 };
@@ -59,7 +59,11 @@ export default (container: HTMLElement, updated?: SubscriberFn): UpdateFn<Callst
       step: 100,
     }));
 
-    flattenData.forEach((item: CallstackData) => create(callstack(item, maxDuration, root.data.attrs.width as number)));
-    patch(data);
+    flattenData.forEach((item: CallstackData) => {
+      item.maxDuration = maxDuration;
+      item.avaliableWidth = root.data.attrs.width as number;
+      create(callstack(item)); 
+    });
+    patch(flattenData);
   };
 };

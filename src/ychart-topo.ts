@@ -16,7 +16,7 @@ import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
 
 import createMergeAdapter from './adapters/createMergeNodeAdapter';
-import createFixAdapter from './adapters/createFixNodeAdapter';
+import createFixAdapter from './adapters/createFixTopoDataAdapter';
 import clone from './clone';
 
 import createImageNode from './components/createImageNode';

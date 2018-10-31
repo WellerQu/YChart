@@ -1,12 +1,12 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { Stage, PatchFn, TopoData, } from '../../typings/defines';
+import { Stage, PatchFn, CallstackData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
-import { toTranslate, } from '../utils';
+import { toTranslate, parseTranslate, } from '../utils';
 import { CALLSTACK_HEIGHT, } from '../constants';
 
 // 调用栈布局
-export const callstackLayout = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const callstackLayout = (stage: Stage) => (next: PatchFn) => (userState?: CallstackData[]) => {
   const nodes: (string | VNode)[] = stage.getStageNode().children;
 
   nodes.filter((item: (VNode|string)) => {
@@ -19,10 +19,11 @@ export const callstackLayout = (stage: Stage) => (next: PatchFn) => (userState?:
     
     return true;
   }).forEach((item: VNode, index: number) => {
+    const position = parseTranslate(item.data.style.transform);
     item.data = {
       ...item.data,
       style: {
-        transform: toTranslate(0, index * CALLSTACK_HEIGHT + 45),
+        transform: toTranslate(position.x, index * CALLSTACK_HEIGHT + 45),
       },
     };
   });

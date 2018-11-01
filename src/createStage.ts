@@ -57,7 +57,7 @@ function createStage (container: HTMLElement): Stage {
     return previousNode;
   }
 
-  function size (size?: Size) {
+  function size (size?: Size): Size {
     const root = stageNode();
 
     if (size) {
@@ -65,7 +65,10 @@ function createStage (container: HTMLElement): Stage {
       root.data.attrs.height = size.height;
     }
 
-    return root;
+    return {
+      width: root.data.attrs.width as number,
+      height: root.data.attrs.height as number,
+    };
   }
 
   return {

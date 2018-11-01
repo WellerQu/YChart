@@ -24,7 +24,7 @@ declare interface Stage {
   create: (strategy: Strategy) => VNode;
   subscribe: (handler: Subscriber) => void;
   patch: PatchBehavior;
-  size: (szie: Size) => VNode;
+  size: (size?: Size) => Size;
 }
 
 declare interface SvgOption extends Size {

@@ -46,15 +46,17 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     callstackStyle,
   );
   const createStageAt = enhancer(createStage);
-  const { create, patch, subscribe, size, } = createStageAt(container);
+  const { create, patch, subscribe, size, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
   return (data: CallstackData, option?: SvgOption) => {
-    const root = size(option);
+    const root = stageNode();
     root.data.attrs.id = elementID;
+
+    size(option);
 
     const flattenData = flatten(data);
     const maxDuration = max(...flattenData.map(n => n.duration));

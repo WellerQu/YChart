@@ -100,9 +100,14 @@ const placeUserGroup = placeNode(0);
 const placeServerGroup = placeNode(1);
 const placeOtherGroup = placeNode(2);
 
-// Example for middleware that show how to layout all elements
-export const nodeLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+// 拓扑图布局策略, 适用于4个(含)以下节点的简单布局策略
+export const nodeGroupLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+  // 没有数据, 部需要布局
   if (!userState)
+    return next(userState);
+
+  // 如果节点数量多余4个, 则不适用于本布局策略
+  if (userState.nodes.length > 4)
     return next(userState);
 
   // 按类型分组: 分成USER组, Server组, 其他(DATABASE/RPC/HTTP)组, Line组

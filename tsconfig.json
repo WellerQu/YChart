@@ -3,7 +3,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "strictNullChecks": false,
     "removeComments": false,
     "target": "ES5",

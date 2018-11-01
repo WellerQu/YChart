@@ -13,7 +13,7 @@
     .container, .control {
       margin: 0 auto;
       box-sizing: border-box;
-      /* border: solid 1px red; */
+      border: solid 1px red;
       margin: 10px;
     }
   </style>
@@ -24,7 +24,7 @@
     <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
     <button id="updateTopoData">Update Topo data</button>
   </div>
-  <div class="container" style="height: 400px;">
+  <div class="container" style="width: 800px; height: 600px;">
     <div id="topo"></div>
   </div>
   <div class="control">
@@ -38,12 +38,12 @@
       document.body.addEventListener('dblclick', function(event) {
         document.querySelector('#flag').style.left = event.clientX + 'px';
         document.querySelector('#flag').style.top = event.clientY + 'px';
-        document.querySelector('#flag').innerHTML = event.clientX - 320 + ',' + event.clientY;
+        document.querySelector('#flag').innerHTML = event.clientX + ',' + event.clientY;
       });
       document.body.addEventListener('mousemove', function(event) {
         document.querySelector('#follow').style.left = event.clientX + 20 + 'px';
         document.querySelector('#follow').style.top = event.clientY + 20 + 'px';
-        document.querySelector('#follow').innerHTML = event.clientX - 320 + ',' + event.clientY;
+        document.querySelector('#follow').innerHTML = event.clientX + ',' + event.clientY;
       });
       //*/
   </script>

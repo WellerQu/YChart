@@ -1,16 +1,25 @@
-import { Strategy, Subscriber, UpdateBehavior, TopoData, Node, Line, EventOption, SvgOption, } from '../typings/defines';
+import { 
+  Strategy, 
+  Subscriber, 
+  UpdateBehavior, 
+  TopoData, 
+  Node, 
+  Line, 
+  EventOption, 
+  SvgOption, 
+} from '../typings/defines';
 
 import { NODE_TYPE, } from './NODE_TYPE';
 
 import compose from './compose';
 import { log, } from './middlewares/log';
-import { nodeLayout, } from './middlewares/nodeLayout';
+import { nodeGroupLayout, } from './middlewares/nodeGroupLayout';
+import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
 import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
-// import { topoMotion, } from './middlewares/topoMotion'; // 动效暂未完成
 import { showLoading, } from './middlewares/showLoading';
 
 import applyMiddlewares from './applyMiddlewares';
@@ -71,7 +80,8 @@ export default (
     log, 
     showLoading,
     event(eventOption),
-    nodeLayout, 
+    nodeGroupLayout, 
+    nodeCircleLayout,
     scaleCanvas, 
     moveCanvas, 
     moveNode, 
@@ -79,7 +89,7 @@ export default (
     topoStyle, 
   );
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, size, } = createStageAt(container);
+  const { create, subscribe, patch, size, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
@@ -87,10 +97,16 @@ export default (
 
   // Expose update method
   return (data: TopoData, option?: SvgOption): void => {
-    const root = size(option);
+    const root = stageNode();
     root.data.attrs.id = elementID;
 
+    size(option);
+
     const formattedData: TopoData = formatDataAdapter(data);
+    // map every line to strategy function which return a VNode
+    formattedData.links.forEach((item: Line) => {
+      create(arrowLine(item));
+    });
 
     // map every node to strategy function which return a VNode
     formattedData.nodes.forEach((item: Node) => {
@@ -99,11 +115,6 @@ export default (
       } else {
         create(imageNode(item));
       }
-    });
-
-    // map every line to strategy function which return a VNode
-    formattedData.links.forEach((item: Line) => {
-      create(arrowLine(item));
     });
 
     patch(formattedData);

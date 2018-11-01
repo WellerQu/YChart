@@ -1,4 +1,4 @@
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_TYPE, } from '../NODE_TYPE';
 

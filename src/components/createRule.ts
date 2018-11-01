@@ -1,12 +1,12 @@
-import { ComponentFn, RuleOption, StrategyFn, } from '../../typings/defines';
+import { Component, RuleOption, Strategy, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
 import compose from '../compose';
 import { createText, } from './components';
 import { RULE_PADDING, } from '../constants';
 
-export const createRule: ComponentFn<RuleOption> = (option: RuleOption):StrategyFn => (parentNode: VNode) => {
-  const texts: StrategyFn[] = [];
+export const createRule: Component<RuleOption> = (option: RuleOption):Strategy => (parentNode: VNode) => {
+  const texts: Strategy[] = [];
   const actions: string[] = [];
   const availableWidth = option.avaliableWidth - 2 * RULE_PADDING;
 

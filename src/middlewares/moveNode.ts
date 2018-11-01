@@ -2,7 +2,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE, } from '../NODE_TYPE';
@@ -38,7 +38,7 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
 
 // const updateArrowPosition = (arrow: SVGPathElement) => (x1: number, y1: number, x2: number, y2: number) =>
 
-export const moveNode = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();
 
   let isMouseDown: boolean = false;

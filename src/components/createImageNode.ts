@@ -2,14 +2,14 @@
 
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, } from '../constants';
-import { ImageNodeOption, ComponentFn, StrategyFn, } from '../../typings/defines';
+import { ImageNodeOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';
 import { createText, createImage, createGroup, } from './components';
 
 const IMAGE_SIZE = 50; // both width and height
 
-const createImageNode: ComponentFn<ImageNodeOption> = (option: ImageNodeOption): StrategyFn => (parentNode: VNode) => {
+const createImageNode: Component<ImageNodeOption> = (option: ImageNodeOption): Strategy => (parentNode: VNode) => {
   const { title, URL, className, id, } = option;
 
   const createNode = compose<VNode>(

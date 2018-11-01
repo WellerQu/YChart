@@ -1,6 +1,6 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { Stage, PatchFn, CallstackData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, CallstackData, Position, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { toTranslate, parseTranslate, toArrowD, } from '../utils';
 import { CALLSTACK_HEIGHT, RULE_HEIGHT, RULE_PADDING, } from '../constants';
@@ -15,7 +15,7 @@ const predicate = (className: string) => (item: VNode) => {
 };
 
 // 调用栈布局
-export const callstackLayout = (stage: Stage) => (next: PatchFn) => (userState?: CallstackData[]) => {
+export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: CallstackData[]) => {
   const nodes: (string | VNode)[] = stage.stageNode().children;
   const positionMap = new Map<string, Position>();
 

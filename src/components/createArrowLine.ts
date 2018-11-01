@@ -2,13 +2,13 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { ArrowLineOption, ComponentFn, StrategyFn, } from '../../typings/defines';
+import { ArrowLineOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';
 
 import { createText, createArrow, createLine, createGroup, } from './components';
 
-const createArrowLine: ComponentFn<ArrowLineOption> = (option: ArrowLineOption): StrategyFn => (
+const createArrowLine: Component<ArrowLineOption> = (option: ArrowLineOption): Strategy => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(

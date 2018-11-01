@@ -1,4 +1,4 @@
-import { StrategyFn, SubscriberFn, UpdateFn, TopoData, Node, Line, EventOption, SvgOption, } from '../typings/defines';
+import { Strategy, Subscriber, UpdateBehavior, TopoData, Node, Line, EventOption, SvgOption, } from '../typings/defines';
 
 import { NODE_TYPE, } from './NODE_TYPE';
 
@@ -10,6 +10,7 @@ import { scaleCanvas, } from './middlewares/scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
 import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
+import { topoMotion, } from './middlewares/topoMotion';
 
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
@@ -43,23 +44,27 @@ const formatDataAdapter = compose<TopoData>(
   clone,
 );
 
-const imageNode = compose<StrategyFn>(
+const imageNode = compose<Strategy>(
   createImageNode,
   createImageNodeOption,
 );
 
-const serviceNode = compose<StrategyFn>(
+const serviceNode = compose<Strategy>(
   createServiceNode,
   createServiceNodeAdapter,
 );
 
-const arrowLine = compose<StrategyFn>(
+const arrowLine = compose<Strategy>(
   createArrowLine,
   createArrowLineOption,
 );
 
 // Entrance, start from here
-export default (container: HTMLDivElement, eventOption?: EventOption, updated?: SubscriberFn): UpdateFn<TopoData> => {
+export default (
+  container: HTMLDivElement,
+  eventOption?: EventOption, 
+  updated?: Subscriber
+): UpdateBehavior<TopoData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(
     log, 
@@ -69,6 +74,7 @@ export default (container: HTMLDivElement, eventOption?: EventOption, updated?: 
     moveCanvas, 
     moveNode, 
     event(eventOption),
+    topoMotion,
   );
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, size, } = createStageAt(container);

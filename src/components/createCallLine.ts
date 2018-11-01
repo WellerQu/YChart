@@ -1,11 +1,11 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { ComponentFn, StrategyFn, LineOption, } from '../../typings/defines';
+import { Component, Strategy, LineOption, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createGroup, createArrow, createLine, } from './components';
 
-const createCallLine: ComponentFn<LineOption> = (option: LineOption): StrategyFn => (
+const createCallLine: Component<LineOption> = (option: LineOption): Strategy => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(

@@ -2,7 +2,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, EventOption, TopoEventHandler, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, EventOption, TopoEventHandler, } from '../../typings/defines';
 import { setupEventHandler, } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE, } from '../NODE_TYPE';
@@ -37,7 +37,7 @@ const handlerHelper = (
   return event;
 };
 
-export const event = (options: EventOption ) => (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const event = (options: EventOption ) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();
 
   const handleClick = handlerHelper(options['nodeClick'], options['lineClick'], userState);

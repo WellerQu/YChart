@@ -1,4 +1,4 @@
-import { Stage, PatchFn, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, } from '../utils';
 
 // limit range
@@ -43,7 +43,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
 const setupMousewheel = setupEventHandler(throttle(handleMousewheel, 20))('mousewheel');
 
 // Scale stage
-export const scaleCanvas = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();
 
   setupMousewheel(root);

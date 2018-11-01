@@ -1,4 +1,4 @@
-import { UpdateFn, CallstackData, SubscriberFn, StrategyFn, SvgOption, } from '../typings/defines';
+import { UpdateBehavior, CallstackData, Subscriber, Strategy, SvgOption, } from '../typings/defines';
 import createStage from './createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
@@ -30,13 +30,13 @@ function flatten (node: CallstackData): CallstackData[] {
   }, stacks);
 };
 
-const callstack = compose<StrategyFn>(
+const callstack = compose<Strategy>(
   createCallstack,
   createCallstackOptionAdapter,
   clone
 );
 
-export default (container: HTMLElement, updated?: SubscriberFn): UpdateFn<CallstackData> => {
+export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<CallstackData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(callstackColourful, callstackLayout, callstackStyle);
   const createStageAt = enhancer(createStage);

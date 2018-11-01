@@ -2,7 +2,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { setupEventHandler, } from '../utils';
 
@@ -47,7 +47,7 @@ const setupMouseEnterHandler = setupEventHandler(handleMouseEnter)('mouseenter')
 const setupMouseOutHandler = setupEventHandler(handleMouseOut)('mouseout');
 
 // Example for middleware that show how to add an interaction
-export const interaction = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const interaction = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   console.log('TODO: add interaction'); // eslint-disable-line
 
   const root = stage.stageNode();

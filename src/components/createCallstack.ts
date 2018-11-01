@@ -1,19 +1,19 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
-import { CallstackOption, ComponentFn, StrategyFn, } from '../../typings/defines';
+import { CallstackOption, Component, Strategy, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createText, createGroup, createRect, } from './components';
 import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants';
 
-const createCallstack: ComponentFn<CallstackOption> = (option: CallstackOption): StrategyFn => (
+const createCallstack: Component<CallstackOption> = (option: CallstackOption): Strategy => (
   parentNode: VNode
 ) => {
   const textOption = {
     content: option.text || '',
     className: 'callstack-desc',
     x: RULE_PADDING + 10,
-    y: 18,
+    y: 8,
   };
   const createNode = compose<VNode>(
     createText(textOption), 

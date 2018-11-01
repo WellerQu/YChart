@@ -2,13 +2,13 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchFn, TopoData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
 import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
 // 添加拖拽移动画布功能
-export const moveCanvas = (stage: Stage) => (next: PatchFn) => (userState?: TopoData) => {
+export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();
 
   let isMouseDown: boolean = false;

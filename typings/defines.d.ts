@@ -2,13 +2,13 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-export type StrategyFn = (parent: VNode) => VNode;
-export type ComponentFn<T> = (option: T) => StrategyFn;
-export type PatchFn = (userState?: any) => void;
-export type SubscriberFn = (userState?: any) => void;
-export type MiddlewareFn = (stage: Stage) => (next: PatchFn) => (userState?: any) => void;
-export type CreateStageFn = (container: HTMLElement) => Stage;
-export type UpdateFn<T> = (data: T, option?: SvgOption) => void;
+export type Strategy = (parent: VNode) => VNode;
+export type Component<T> = (option: T) => Strategy;
+export type PatchBehavior = (userState?: any) => void;
+export type Subscriber = (userState?: any) => void;
+export type Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: any) => void;
+export type CreateStage = (container: HTMLElement) => Stage;
+export type UpdateBehavior<T> = (data: T, option?: SvgOption) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
 export type EventHandler = (event: Event) => Event;
@@ -21,9 +21,9 @@ declare interface EventOption {
 
 declare interface Stage {
   stageNode: () => VNode;
-  create: (strategy: StrategyFn) => VNode;
-  subscribe: (handler: SubscriberFn) => void;
-  patch: PatchFn;
+  create: (strategy: Strategy) => VNode;
+  subscribe: (handler: Subscriber) => void;
+  patch: PatchBehavior;
   size: (szie: Size) => VNode;
 }
 

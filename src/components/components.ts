@@ -14,8 +14,8 @@ import {
   ArrowOption,
   SvgOption,
   RectOption,
-  ComponentFn,
-  StrategyFn,
+  Component,
+  Strategy,
 } from '../../typings/defines';
 import { toArrowD, } from '../utils';
 
@@ -68,7 +68,7 @@ export const createGroup = (option: GroupOption): VNode => {
   );
 };
 
-export const createImage: ComponentFn<ImageOption> = (option: ImageOption): StrategyFn => (parentNode: VNode) => {
+export const createImage: Component<ImageOption> = (option: ImageOption): Strategy => (parentNode: VNode) => {
   const width = option.width || 50;
   const height = option.height || 50;
   const classObject = parseClassName(option.className);
@@ -90,7 +90,7 @@ export const createImage: ComponentFn<ImageOption> = (option: ImageOption): Stra
   return parentNode;
 };
 
-export const createText: ComponentFn<TextOption> = (option: TextOption): StrategyFn => (parentNode: VNode) => {
+export const createText: Component<TextOption> = (option: TextOption): Strategy => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 
   parentNode.children.push(
@@ -108,7 +108,7 @@ export const createText: ComponentFn<TextOption> = (option: TextOption): Strateg
   return parentNode;
 };
 
-export const createCircle: ComponentFn<CircleOption> = (option: CircleOption): StrategyFn => (parentNode: VNode) => {
+export const createCircle: Component<CircleOption> = (option: CircleOption): Strategy => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 
   parentNode.children.push(
@@ -127,11 +127,12 @@ export const createCircle: ComponentFn<CircleOption> = (option: CircleOption): S
   return parentNode;
 };
 
-export const createLine: ComponentFn<LineOption> = (option: LineOption): StrategyFn => (parentNode: VNode) => {
+export const createLine: Component<LineOption> = (option: LineOption): Strategy => (parentNode: VNode) => {
   const { L = [], } = option;
   const actions = L.map<string>((item: Position) => {
     return `L${item.x},${item.y}`;
   });
+
   parentNode.children.push(
     h('path', {
       attrs: {
@@ -148,7 +149,7 @@ export const createLine: ComponentFn<LineOption> = (option: LineOption): Strateg
   return parentNode;
 };
 
-export const createArrow: ComponentFn<ArrowOption> = (option: ArrowOption): StrategyFn => (pardentNode: VNode) => {
+export const createArrow: Component<ArrowOption> = (option: ArrowOption): Strategy => (pardentNode: VNode) => {
   const { x, y, width, height, } = option;
 
   pardentNode.children.push(h('path', {
@@ -161,27 +162,10 @@ export const createArrow: ComponentFn<ArrowOption> = (option: ArrowOption): Stra
     ns: 'http://www.w3.org/2000/svg',
   }));
 
-  // 动画应该由中间件提供
-  // pardentNode.children.push(
-  //   h(
-  //     'animateMotion',
-  //     {
-  //       attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}`, },
-  //       ns: 'http://www.w3.org/2000/svg',
-  //     },
-  //     [
-  //       // h('mpath', {
-  //       //   attrs: { 'xlink:href': `#P${option.id}` },
-  //       //   ns: 'http://www.w3.org/2000/svg'
-  //       // })
-  //     ]
-  //   )
-  // );
-
   return pardentNode;
 };
 
-export const createRect: ComponentFn<RectOption> = (option: RectOption): StrategyFn => (parentNode: VNode) => {
+export const createRect: Component<RectOption> = (option: RectOption): Strategy => (parentNode: VNode) => {
   const { className, strokeWidth, ...others } = option;
   const classObject = parseClassName(className);
 

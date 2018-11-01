@@ -1,6 +1,6 @@
 import { VNode, } from '../../node_modules/snabbdom/vnode';
 
-import { ServiceNodeOption, ComponentFn, StrategyFn, } from '../../typings/defines';
+import { ServiceNodeOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';
 
@@ -9,7 +9,7 @@ import { createText, createCircle, createGroup, } from './components';
 const identity = (a: any) => a;
 const isNumber = (a: any) => typeof a === 'number';
 
-const createServiceNode:ComponentFn<ServiceNodeOption> = (option: ServiceNodeOption): StrategyFn => (
+const createServiceNode:Component<ServiceNodeOption> = (option: ServiceNodeOption): Strategy => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(

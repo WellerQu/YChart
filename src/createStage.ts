@@ -14,7 +14,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, SubscriberFn, StrategyFn, SvgOption, Size, } from '../typings/defines';
+import { Stage, Subscriber, Strategy, SvgOption, Size, } from '../typings/defines';
 import { createSvg, } from './components/components';
 
 const vPatch = init([
@@ -32,13 +32,13 @@ function createStage (container: HTMLElement): Stage {
 
   let currentNode: VNode = createSvg(svgOption);
   let previousNode: VNode = toNode(container);
-  let subscribers: SubscriberFn[] = [];
+  let subscribers: Subscriber[] = [];
 
-  function create (strategy: StrategyFn): VNode {
+  function create (strategy: Strategy): VNode {
     return strategy(currentNode);
   }
 
-  function subscribe (handler: SubscriberFn): () => void {
+  function subscribe (handler: Subscriber): () => void {
     subscribers.push(handler);
 
     return () => subscribers = subscribers.filter(fn => fn !== handler);
@@ -52,7 +52,7 @@ function createStage (container: HTMLElement): Stage {
     previousNode = vPatch(previousNode, currentNode);
     currentNode = createSvg(svgOption);
 
-    subscribers.forEach((handler: SubscriberFn) => handler(userState));
+    subscribers.forEach((handler: Subscriber) => handler(userState));
 
     return previousNode;
   }

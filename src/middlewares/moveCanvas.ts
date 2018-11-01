@@ -9,6 +9,9 @@ import compose from '../compose';
 
 // 添加拖拽移动画布功能
 export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+  if (!userState)
+    return next(userState);
+
   const root = stage.stageNode();
 
   let isMouseDown: boolean = false;

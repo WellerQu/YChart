@@ -7,6 +7,7 @@ import applyMiddlewares from './applyMiddlewares';
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';
 import { callstackColourful,} from './middlewares/callstackColourful';
+import { showLoading, } from './middlewares/showLoading';
 
 import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
 import compose from './compose';
@@ -38,11 +39,18 @@ const callstack = compose<Strategy>(
 
 export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<CallstackData> => {
   const elementID = container.id;
-  const enhancer = applyMiddlewares(callstackColourful, callstackLayout, callstackStyle);
+  const enhancer = applyMiddlewares(
+    showLoading,
+    callstackColourful, 
+    callstackLayout, 
+    callstackStyle,
+  );
   const createStageAt = enhancer(createStage);
   const { create, patch, subscribe, size, } = createStageAt(container);
 
   updated && subscribe(updated);
+
+  patch();
 
   return (data: CallstackData, option?: SvgOption) => {
     const root = size(option);

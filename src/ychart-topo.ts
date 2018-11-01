@@ -11,6 +11,7 @@ import { moveCanvas, } from './middlewares/moveCanvas';
 import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
 import { topoMotion, } from './middlewares/topoMotion';
+import { showLoading, } from './middlewares/showLoading';
 
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
@@ -68,13 +69,14 @@ export default (
   const elementID = container.id;
   const enhancer = applyMiddlewares(
     log, 
+    showLoading,
+    event(eventOption),
     nodeLayout, 
-    topoStyle, 
     scaleCanvas, 
     moveCanvas, 
     moveNode, 
-    event(eventOption),
     topoMotion,
+    topoStyle, 
   );
   const createStageAt = enhancer(createStage);
   const { create, subscribe, patch, size, } = createStageAt(container);

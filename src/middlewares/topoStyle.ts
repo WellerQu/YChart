@@ -1,7 +1,5 @@
-/// <reference path="../../node_modules/snabbdom/h.d.ts" />
-
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-import { h, } from 'snabbdom/h';
+import { createStyle, } from '../components/components';
 
 const styleSheet = `
 /* <![CDATA[ */
@@ -81,9 +79,7 @@ g.group.line text.line-desc {
 `;
 
 export const topoStyle = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  stage.stageNode().children.push(
-    h('style', { ns: 'http://www.w3.org/2000/svg', }, styleSheet)
-  );
+  stage.create(createStyle(styleSheet));
 
   next(userState);
 };

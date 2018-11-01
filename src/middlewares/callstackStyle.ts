@@ -1,7 +1,5 @@
-/// <reference path="../../node_modules/snabbdom/h.d.ts" />
-
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-import { h, } from 'snabbdom/h';
+import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
+import { createStyle, } from '../components/components';
 
 const fontSize = '8px';
 const styleSheet = `
@@ -39,10 +37,8 @@ text.calibration {
 /* ]]> */
 `;
 
-export const callstackStyle = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  stage.stageNode().children.push(
-    h('style', { ns: 'http://www.w3.org/2000/svg', }, styleSheet)
-  );
+export const callstackStyle = (stage: Stage) => (next: PatchBehavior) => (userState?: CallstackData[]) => {
+  stage.create(createStyle(styleSheet));
 
   next(userState);
 };

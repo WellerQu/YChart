@@ -68,6 +68,11 @@ export const createGroup = (option: GroupOption): VNode => {
   );
 };
 
+export const createStyle: Component<string> = (styleSheet: string): Strategy => (parentNode: VNode) => {
+  parentNode.children.push(h('style', { ns: 'http://www.w3.org/2000/svg', }, styleSheet));
+  return parentNode;
+};
+
 export const createImage: Component<ImageOption> = (option: ImageOption): Strategy => (parentNode: VNode) => {
   const width = option.width || 50;
   const height = option.height || 50;

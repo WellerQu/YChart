@@ -1,4 +1,4 @@
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 
 const COLOURS = ['#99CCCC', '#FFCC99', '#FFCCCC', '#FF9999', '#996699', '#FFCCCC', '#CC9999', '#CCCC99', '#CCCCFF',];
@@ -12,7 +12,10 @@ const predicate = (className: string) => (item: VNode) => {
 const CALL_STACK_CLASS = 'callstack', CALL_LINE_CLASS = 'callline';
 
 // 调用栈着色
-export const callstackColourful = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+export const callstackColourful = (stage: Stage) => (next: PatchBehavior) => (userState?: CallstackData[]) => {
+  if (!userState)
+    return next(userState);
+
   const nodes: (string | VNode)[] = stage.stageNode().children;
 
   const stackGroups = nodes.filter(predicate(CALL_STACK_CLASS));

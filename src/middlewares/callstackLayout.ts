@@ -16,6 +16,9 @@ const predicate = (className: string) => (item: VNode) => {
 
 // 调用栈布局
 export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: CallstackData[]) => {
+  if (!userState)
+    return next(userState);
+
   const nodes: (string | VNode)[] = stage.stageNode().children;
   const positionMap = new Map<string, Position>();
 

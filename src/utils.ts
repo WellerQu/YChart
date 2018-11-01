@@ -123,7 +123,6 @@ export const toArrowD = (x: number, y: number, width = ARROW_WIDTH, height = ARR
   return `M${x},${y - height / 2} L${x - width / 2},${y + height / 2} L${x + width / 2},${y + height / 2} Z`;
 };
 
-
 export const max = (...nums: number[]): number => {
   if (!nums) return 0;
   if (nums.length === 1) return nums[0];

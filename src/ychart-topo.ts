@@ -10,7 +10,7 @@ import { scaleCanvas, } from './middlewares/scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
 import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
-import { topoMotion, } from './middlewares/topoMotion';
+// import { topoMotion, } from './middlewares/topoMotion'; // 动效暂未完成
 import { showLoading, } from './middlewares/showLoading';
 
 import applyMiddlewares from './applyMiddlewares';
@@ -75,7 +75,7 @@ export default (
     scaleCanvas, 
     moveCanvas, 
     moveNode, 
-    topoMotion,
+    // topoMotion,
     topoStyle, 
   );
   const createStageAt = enhancer(createStage);

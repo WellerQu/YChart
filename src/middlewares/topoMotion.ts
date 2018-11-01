@@ -1,24 +1,36 @@
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
+import { VNode, } from 'snabbdom/vnode';
+import { NODE_TYPE, } from '../NODE_TYPE';
+
+// const parsePath = (value: string): [Position, Position] => {
+//   const regExp = /M(\d+(\.\d+)?),(\d+(\.\d+)?) L(\d+(\.\d+)?),(\d+(\.\d+)?)/ig;
+//   if (!regExp.test(value))
+//     return null;
+
+//   return [
+//     { x: Number(RegExp.$1), y: Number(RegExp.$3), },
+//     { x: Number(RegExp.$5), y: Number(RegExp.$7), },
+//   ];
+// };
 
 // Motion for the Line in Topo
 export const topoMotion = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+  if (!userState)
+    return next(userState);
 
-  // 动画应该由中间件提供
-  // pardentNode.children.push(
-  //   h(
-  //     'animateMotion',
-  //     {
-  //       attrs: { dur: '3s', repeatCount: 'indefinite', 'xlink:href':`#C${option.id}`, },
-  //       ns: 'http://www.w3.org/2000/svg',
-  //     },
-  //     [
-  //       // h('mpath', {
-  //       //   attrs: { 'xlink:href': `#P${option.id}` },
-  //       //   ns: 'http://www.w3.org/2000/svg'
-  //       // })
-  //     ]
-  //   )
-  // );
+  const root = stage.stageNode();
+  const lineGroups = root.children.filter((item: VNode) => {
+    if (!(item as VNode).sel) return false;
+
+    return item.sel === 'g' && item.data.class[NODE_TYPE.LINE];
+  });
+
+  lineGroups.forEach((item: VNode) => {
+    item.data.hook = {
+      insert: (vnode: VNode) => {
+      },
+    };
+  });
+
   next(userState);
 };
-

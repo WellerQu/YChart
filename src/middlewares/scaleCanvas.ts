@@ -51,11 +51,5 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   setupMousewheel(root);
 
-  // 视域左上角定位元素 
-  // 开发模式开启协助开发
-  // root.children.push(
-  //  h('rect', { attrs:{ x: 0, y: 0, width: 10, height: 10, fill: 'red'}, ns: 'http://www.w3.org/2000/svg',})
-  // );
-
   next(userState);
 };

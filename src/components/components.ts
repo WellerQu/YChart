@@ -138,6 +138,7 @@ export const createLine: Component<LineOption> = (option: LineOption): Strategy 
   const actions = L.map<string>((item: Position) => {
     return `L${item.x},${item.y}`;
   });
+  const classObject = parseClassName(option.className);
 
   parentNode.children.push(
     h('path', {
@@ -148,7 +149,7 @@ export const createLine: Component<LineOption> = (option: LineOption): Strategy 
         'stroke-width': option.strokeWidth,
         id: `line${option.id}`,
       },
-      class: { 'link-line': true, },
+      class: { ...classObject, 'link-line': true, },
       ns: 'http://www.w3.org/2000/svg',
     })
   );
@@ -183,7 +184,7 @@ export const createRect: Component<RectOption> = (option: RectOption): Strategy 
         'stroke-width': strokeWidth,
         ...others,
       },
-      class: classObject,
+      class: { ...classObject, },
       ns: 'http://www.w3.org/2000/svg',
     })
   );

@@ -4,8 +4,9 @@ import { VNode, } from 'snabbdom/vnode';
 
 import compose from './compose';
 import { EventHandler, Position, } from '../typings/defines';
-import { ARROW_HEIGHT, ARROW_WIDTH, } from './constants';
+import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, } from './constants';
 import { NODE_TYPE, } from './NODE_TYPE';
+import clone from './clone';
 
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
   // click事件需要特殊处理, 否则服无法区分是拖拽还是点击
@@ -152,3 +153,48 @@ export const findGroup = (event: Event): HTMLElement => {
 
   return element;
 };
+
+export function updateLinePoistion (item: VNode, start: Position, end: Position): VNode;
+export function updateLinePoistion (item: VNode, start: Position, end: Position): VNode {
+  const line: VNode = item.children[0] as VNode;
+  const arrow: VNode = item.children[1] as VNode;
+  const text: VNode = item.children[2] as VNode;
+
+  const x1 = start.x + NODE_SIZE / 2;
+  const y1 = start.y + NODE_SIZE / 2;
+  const x2 = end.x + NODE_SIZE / 2;
+  const y2 = end.y + NODE_SIZE / 2;
+
+  // update arrow
+  if (arrow) {
+    const lA = y2 - y1;
+    const lB = x2 - x1;
+    const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
+
+    const lc = ARROW_OFFSET;
+    const la = (lc * lA) / lC;
+    const lb = (lc * lB) / lC;
+
+    const arrowX = lb + x1;
+    const arrowY = la + y1;
+
+    arrow.data.attrs.d = toArrowD(arrowX, arrowY);
+
+    // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
+    const a = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI + 90; // 阿尔法a
+    arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
+  }
+
+  // update text position
+  if (text) {
+    text.data.attrs.x = (x2 - x1) / 2 + x1;
+    text.data.attrs.y = (y2 - y1) / 2 + y1;
+  }
+
+  // link line
+  if (line) {
+    line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
+  }
+
+  return item;
+}

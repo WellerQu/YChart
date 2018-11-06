@@ -109,7 +109,7 @@ export default (
     scaleCanvas, 
     moveCanvas, 
     moveNode, 
-    // nodePositionMemory, // 暂停开发这个功能
+    nodePositionMemory, // 暂停开发这个功能
     // topoMotion,
     topoStyle, 
   );

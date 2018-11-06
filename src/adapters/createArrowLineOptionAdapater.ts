@@ -1,4 +1,5 @@
 import { ArrowLineOption, Line, } from '../../typings/defines';
+import { NODE_TYPE, } from '../NODE_TYPE';
 
 const lineColor = '#2693ff';
 
@@ -16,7 +17,7 @@ export default function createArrowLineOption (line: Line): ArrowLineOption {
     strokeColor: lineColor,
     strokeWidth: 1,
     id,
-    className: 'line',
+    className: NODE_TYPE.LINE,
     text: `${line.elapsedTime} ms`,
   };
 }

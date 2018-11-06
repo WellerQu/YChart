@@ -3,26 +3,10 @@
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, } from '../utils';
+import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
-
-const findGroup = (event: Event): HTMLElement => {
-  let element = event.target as HTMLElement;
-
-  if (!element.nodeName) 
-    return null;
-
-  while (element.nodeName.toUpperCase() !== 'G' && element.nodeName.toUpperCase() !== 'SVG') {
-    element = element.parentElement;
-  }
-
-  if (!element.classList.contains(NODE_TYPE.NODE)) 
-    return null;
-
-  return element;
-};
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
   const regExp: RegExp = /M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*L(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)/igm;
@@ -35,8 +19,6 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
     // [+RegExp.$5, +RegExp.$6],
   ];
 };
-
-// const updateArrowPosition = (arrow: SVGPathElement) => (x1: number, y1: number, x2: number, y2: number) =>
 
 export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
@@ -151,8 +133,10 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
             arrow.setAttribute('transform', `rotate(${a}, ${arrowX} ${arrowY})`);
 
             // update text
-            text.setAttribute('x', (endX - startX) / 2 + startX);
-            text.setAttribute('y', (endY - startY) / 2 + startY);
+            if (text) {
+              text.setAttribute('x', (endX - startX) / 2 + startX);
+              text.setAttribute('y', (endY - startY) / 2 + startY);
+            }
           }
         });
     }

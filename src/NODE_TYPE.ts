@@ -1,6 +1,7 @@
 export enum NODE_TYPE {
   LINE = 'line',
   NODE = 'node',
+  CROSS_APP = 'cross-app',
   USER = 'USER',
   SERVER = 'SERVER',
   DATABASE = 'DATABASE',

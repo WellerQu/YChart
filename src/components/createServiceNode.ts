@@ -1,9 +1,6 @@
 import { VNode, } from '../../node_modules/snabbdom/vnode';
-
 import { ServiceNodeOption, Component, Strategy, } from '../../typings/defines';
-
 import compose from '../compose';
-
 import { createText, createCircle, createGroup, } from './components';
 
 const identity = (a: any) => a;

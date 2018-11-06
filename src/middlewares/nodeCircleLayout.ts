@@ -1,9 +1,11 @@
 import { PatchBehavior, Stage, TopoData, Middleware, Position, Line, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_TYPE, } from '../NODE_TYPE';
-import { toTranslate, toArrowD, } from '../utils';
+import { toTranslate, toArrowD, clamp, } from '../utils';
 import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
 // import { CELL_SIZE, } from '../constants';
+
+const radianClamp = clamp(Math.PI / 4, Math.PI * 2);
 
 interface SortInfo {
   node: VNode;
@@ -55,10 +57,14 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
     otherGroup.push(node);
   }
 
-  if (serverGroup.length > 12) 
+  if (serverGroup.length > 12)
     return next(userState);
 
-  const size = stage.size();
+  // const size = stage.size();
+  const size = {
+    width: 900,
+    height: 450,
+  };
   const positionMap = new Map<string, Position>();
 
   // 圆环中心
@@ -72,7 +78,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
   o.y -= NODE_SIZE / 2;
 
   // 单位弧度, service节点均匀的分布在圆环上
-  let radian = 2 * Math.PI / serverGroup.length - Math.PI / 4;
+  let radian = 2 * Math.PI / serverGroup.length;
   const sortedService = serverGroup.map<SortInfo>((node: VNode): SortInfo => {
     return {
       node,
@@ -145,53 +151,51 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
     if (!id.split) return;
 
     const [source, ...target] = id.split('-');
-    if (!positionMap.has(source))
-      return;
-    if (!positionMap.has(target.join('-')))
-      return;
+    if (!positionMap.has(source)) return;
+    if (!positionMap.has(target.join('-'))) return;
 
     const start = positionMap.get(source);
     const end = positionMap.get(target.join('-'));
 
     const line: VNode = item.children[0] as VNode;
-    if (!line)
-      return;
     const arrow: VNode = item.children[1] as VNode;
-    if (!arrow)
-      return;
     const text: VNode = item.children[2] as VNode;
-    if (!text)
-      return;
 
     const x1 = start.x + NODE_SIZE / 2;
     const y1 = start.y + NODE_SIZE / 2;
     const x2 = end.x + NODE_SIZE / 2;
     const y2 = end.y + NODE_SIZE / 2;
-  
+
     // update arrow
-    const lA = y2 - y1;
-    const lB = x2 - x1;
-    const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
-  
-    const lc = ARROW_OFFSET;
-    const la = lc * lA / lC;
-    const lb = lc * lB / lC;
-  
-    const arrowX = lb + x1;
-    const arrowY = la + y1;
-  
-    arrow.data.attrs.d = toArrowD(arrowX, arrowY);
-  
-    // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
-    const a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90; // 阿尔法a
-    arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
-  
+    if (arrow) {
+      const lA = y2 - y1;
+      const lB = x2 - x1;
+      const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
+
+      const lc = ARROW_OFFSET;
+      const la = (lc * lA) / lC;
+      const lb = (lc * lB) / lC;
+
+      const arrowX = lb + x1;
+      const arrowY = la + y1;
+
+      arrow.data.attrs.d = toArrowD(arrowX, arrowY);
+
+      // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
+      const a = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI + 90; // 阿尔法a
+      arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
+    }
+
     // update text position
-    text.data.attrs.x = (x2 - x1) / 2 + x1;
-    text.data.attrs.y = (y2 - y1) / 2 + y1;
-  
+    if (text) {
+      text.data.attrs.x = (x2 - x1) / 2 + x1;
+      text.data.attrs.y = (y2 - y1) / 2 + y1;
+    }
+
     // link line
-    line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
+    if (line) {
+      line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
+    }
   });
 
   next(userState);

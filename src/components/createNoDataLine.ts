@@ -6,18 +6,12 @@ import { ArrowLineOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';
 
-import { createText, createArrow, createLine, createGroup, } from './components';
+import { createArrow, createLine, createGroup, } from './components';
 
-const createArrowLine: Component<ArrowLineOption> = (option: ArrowLineOption): Strategy => (
+const createNoDataLine: Component<ArrowLineOption> = (option: ArrowLineOption): Strategy => (
   parentNode: VNode
 ) => {
   const createNode = compose<VNode>(
-    createText({
-      content: option.text || '',
-      className: 'line-desc',
-      x: 0,
-      y: 0,
-    }),
     createArrow({
       x: 0,
       y: 0,
@@ -41,4 +35,4 @@ const createArrowLine: Component<ArrowLineOption> = (option: ArrowLineOption): S
   return parentNode;
 };
 
-export default createArrowLine;
+export default createNoDataLine;

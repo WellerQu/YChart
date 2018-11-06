@@ -44,51 +44,51 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
 
     const [source, ...target] = id.split('-');
 
-    const s = nodePool.find(n => n.id === source);
-    const t = nodePool.find(n => n.id === target.join('-'));
+    const start = nodePool.find(n => n.id === source);
+    const end = nodePool.find(n => n.id === target.join('-'));
 
-    if (!s || !t)
+    if (!start || !end)
       return item;
 
     const line: VNode = item.children[0] as VNode;
-    if (!line)
-      return item;
     const arrow: VNode = item.children[1] as VNode;
-    if (!arrow)
-      return item;
     const text: VNode = item.children[2] as VNode;
-    if (!text)
-      return item;
-
-    const x1 = s.x + NODE_SIZE / 2;
-    const y1 = s.y + NODE_SIZE / 2;
-    const x2 = t.x + NODE_SIZE / 2;
-    const y2 = t.y + NODE_SIZE / 2;
-
+  
+    const x1 = start.x + NODE_SIZE / 2;
+    const y1 = start.y + NODE_SIZE / 2;
+    const x2 = end.x + NODE_SIZE / 2;
+    const y2 = end.y + NODE_SIZE / 2;
+  
     // update arrow
-    const lA = y2 - y1;
-    const lB = x2 - x1;
-    const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
-
-    const lc = ARROW_OFFSET;
-    const la = lc * lA / lC;
-    const lb = lc * lB / lC;
-
-    const arrowX = lb + x1;
-    const arrowY = la + y1;
-
-    arrow.data.attrs.d = toArrowD(arrowX, arrowY);
-
-    // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
-    const a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + 90; // 阿尔法a
-    arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
-
+    if (arrow) {
+      const lA = y2 - y1;
+      const lB = x2 - x1;
+      const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
+  
+      const lc = ARROW_OFFSET;
+      const la = (lc * lA) / lC;
+      const lb = (lc * lB) / lC;
+  
+      const arrowX = lb + x1;
+      const arrowY = la + y1;
+  
+      arrow.data.attrs.d = toArrowD(arrowX, arrowY);
+  
+      // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
+      const a = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI + 90; // 阿尔法a
+      arrow.data.attrs.transform = `rotate(${a}, ${arrowX} ${arrowY})`;
+    }
+  
     // update text position
-    text.data.attrs.x = (x2 - x1) / 2 + x1;
-    text.data.attrs.y = (y2 - y1) / 2 + y1;
-
+    if (text) {
+      text.data.attrs.x = (x2 - x1) / 2 + x1;
+      text.data.attrs.y = (y2 - y1) / 2 + y1;
+    }
+  
     // link line
-    line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
+    if (line) {
+      line.data.attrs.d = `M${x1},${y1} L${x2},${y2}`;
+    }
 
     return {
       ...item,

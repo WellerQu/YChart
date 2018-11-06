@@ -5,6 +5,7 @@ import { VNode, } from 'snabbdom/vnode';
 import compose from './compose';
 import { EventHandler, Position, } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH, } from './constants';
+import { NODE_TYPE, } from './NODE_TYPE';
 
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
   // click事件需要特殊处理, 否则服无法区分是拖拽还是点击
@@ -134,3 +135,20 @@ export const max = (...nums: number[]): number => {
 };
 
 export const imagePath = (iconName: string) => `/static/images/${iconName}.png`;
+
+
+export const findGroup = (event: Event): HTMLElement => {
+  let element = event.target as HTMLElement;
+
+  if (!element.nodeName) 
+    return null;
+
+  while (element.nodeName.toUpperCase() !== 'G' && element.nodeName.toUpperCase() !== 'SVG') {
+    element = element.parentElement;
+  }
+
+  if (!element.classList.contains(NODE_TYPE.NODE)) 
+    return null;
+
+  return element;
+};

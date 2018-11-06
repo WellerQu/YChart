@@ -30,7 +30,8 @@ const parseClassName = (classNames: string): ClassName => {
   return classNames
     .split(' ')
     .reduce<ClassName>((classObject: ClassName, key: string) => {
-    classObject[key] = true;
+    if (key && key.trim())
+      classObject[key] = true;
     return classObject;
   }, {});
 };

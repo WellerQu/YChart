@@ -24,16 +24,19 @@ const createFixAdapter = (data: TopoData): TopoData => {
 
     // 处理自连接连线
     const firstLine = data.links.find((line: Line) => line.source === node.id && line.target === node.id);
-    if (firstLine)
+    if (firstLine) 
       node.showIcon = `${node.showIcon}_loop`;
 
     return node;
   });
 
   // 去掉没有对应节点的连线
+  // 去掉自连接的连线
   const nodeIDs = data.nodes.map((node: Node) => node.id);
   data.links = data.links.filter((line: Line) => {
     return ~nodeIDs.findIndex(n => n === line.source) && ~nodeIDs.findIndex(n => n === line.target);
+  }).filter((line: Line) => {
+    return line.source !== line.target;
   });
 
   return data;

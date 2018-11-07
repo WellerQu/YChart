@@ -1,9 +1,11 @@
+import { Store, } from '../typings/defines';
+
 interface StoreCell<T> {
   expire: number; // Timestamp
   value: T;
 }
 
-export default function createStore (storeName: string, max = 100, expire = 7 * 24 * 60 * 60 * 1E3) {
+export default function createStore (storeName: string, max = 100, expire = 7 * 24 * 60 * 60 * 1E3): Store  {
   const name = storeName;
   const store = window.localStorage;
 

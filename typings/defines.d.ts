@@ -20,6 +20,11 @@ declare interface EventOption {
   [T: string]: TopoEventHandler;
 }
 
+declare interface Store {
+  read<T>(key: string): T;
+  write<T>(key: string, value: T): T;
+}
+
 declare interface Stage {
   stageNode: () => VNode;
   create: (strategy: Strategy) => VNode;

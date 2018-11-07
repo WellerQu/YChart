@@ -7,7 +7,10 @@ import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
-// 添加拖拽移动画布功能
+/**
+ * 添加拖拽移动画布功能
+ * 注意此中间件务必添加在所有布局中间件之后
+ */ 
 export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);

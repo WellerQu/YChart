@@ -6,7 +6,7 @@ import {
   Node, 
   Line, 
   EventOption, 
-  SvgOption, 
+  ViewboxOption, 
 } from '../typings/defines';
 
 import { NODE_TYPE, } from './NODE_TYPE';
@@ -114,18 +114,18 @@ export default (
     topoStyle, 
   );
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, size, stageNode, } = createStageAt(container);
+  const { create, subscribe, patch, viewbox, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
   // Expose update method
-  return (data: TopoData, option?: SvgOption): void => {
+  return (data: TopoData, option?: ViewboxOption): void => {
     const root = stageNode();
     root.data.attrs.id = elementID;
 
-    size(option);
+    viewbox(option);
 
     const formattedData: TopoData = formatDataAdapter(data);
     // map every line to strategy function which return a VNode

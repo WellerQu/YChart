@@ -1,4 +1,4 @@
-import { UpdateBehavior, CallstackData, Subscriber, Strategy, SvgOption, } from '../typings/defines';
+import { UpdateBehavior, CallstackData, Subscriber, Strategy, ViewboxOption, } from '../typings/defines';
 import createStage from './createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
@@ -46,17 +46,17 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     callstackStyle,
   );
   const createStageAt = enhancer(createStage);
-  const { create, patch, subscribe, size, stageNode, } = createStageAt(container);
+  const { create, patch, subscribe, viewbox, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
-  return (data: CallstackData, option?: SvgOption) => {
+  return (data: CallstackData, option?: ViewboxOption) => {
     const root = stageNode();
     root.data.attrs.id = elementID;
 
-    size(option);
+    viewbox(option);
 
     const flattenData = flatten(data);
     const maxDuration = max(...flattenData.map(n => n.duration));

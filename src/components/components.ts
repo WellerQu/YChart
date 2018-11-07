@@ -12,7 +12,7 @@ import {
   LineOption,
   CircleOption,
   ArrowOption,
-  SvgOption,
+  ViewboxOption,
   RectOption,
   Component,
   Strategy,
@@ -36,14 +36,15 @@ const parseClassName = (classNames: string): ClassName => {
   }, {});
 };
 
-export const createSvg = (option: SvgOption): VNode => {
+export const createSvg = (option: ViewboxOption): VNode => {
+  const { x, y, width, height, } = option;
   return h(
     'svg',
     {
       attrs: {
         width: option.width,
         height: option.height,
-        viewBox: `0, 0, ${option.width}, ${option.height}`,
+        viewBox: [x, y, width, height,].join(','),
         // preserveAspectRatio: 'xMidYMid meet',
       },
     },

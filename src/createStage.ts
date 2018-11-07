@@ -14,7 +14,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, Subscriber, Strategy, SvgOption, Size, } from '../typings/defines';
+import { Stage, Subscriber, Strategy, ViewboxOption, Size, } from '../typings/defines';
 import { createSvg, } from './components/components';
 
 const vPatch = init([
@@ -25,12 +25,14 @@ const vPatch = init([
 ]);
 
 function createStage (container: HTMLElement): Stage {
-  const svgOption: SvgOption = {
+  const viewboxOption: ViewboxOption = {
+    x: 0,
+    y: 0,
     width: container.parentElement.offsetWidth,
     height: container.parentElement.offsetHeight,
   };
 
-  let currentNode: VNode = createSvg(svgOption);
+  let currentNode: VNode = createSvg(viewboxOption);
   let previousNode: VNode = toNode(container);
   let subscribers: Subscriber[] = [];
 
@@ -50,30 +52,35 @@ function createStage (container: HTMLElement): Stage {
 
   function patch (userState?: any): VNode {
     previousNode = vPatch(previousNode, currentNode);
-    currentNode = createSvg(svgOption);
+    currentNode = createSvg(viewboxOption);
 
     subscribers.forEach((handler: Subscriber) => handler(userState));
 
     return previousNode;
   }
 
-  function size (size?: Size): Size {
+  function viewbox (option?: ViewboxOption): Size {
     const root = stageNode();
 
-    if (size) {
-      root.data.attrs.width = size.width;
-      root.data.attrs.height = size.height;
+    if (option) {
+      const { x, y, width, height, } = option;
+
+      root.data.attrs.width = width;
+      root.data.attrs.height = height;
+      root.data.attrs.viewBox = [x, y, width, height,].join(',');
+
+      viewboxOption.x = x;
+      viewboxOption.y = y;
+      viewboxOption.width = width;
+      viewboxOption.height = height;
     }
 
-    return {
-      width: root.data.attrs.width as number,
-      height: root.data.attrs.height as number,
-    };
+    return viewboxOption;
   }
 
   return {
     stageNode,
-    size,
+    viewbox,
     create,
     subscribe,
     patch,

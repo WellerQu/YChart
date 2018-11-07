@@ -3,7 +3,7 @@ interface StoreCell<T> {
   value: T;
 }
 
-export default function createStore (storeName: string, max = 100) {
+export default function createStore (storeName: string, max = 100, expire = 7 * 24 * 60 * 60 * 1E3) {
   const name = storeName;
   const store = window.localStorage;
 
@@ -12,7 +12,7 @@ export default function createStore (storeName: string, max = 100) {
       return null;
 
     const keys = Object.keys(store);
-    if (keys.length > 100) {
+    if (keys.length > max) {
       const now = +new Date;
       keys.forEach((key: string) => {
         const cell = store.getItem(key);
@@ -30,7 +30,7 @@ export default function createStore (storeName: string, max = 100) {
 
     store.setItem(`${name}_${key}`, JSON.stringify({
       value,
-      expire: +new Date + 7 * 24 * 60 * 60 * 1E3,
+      expire: +new Date + expire,
     }));
 
     return value;

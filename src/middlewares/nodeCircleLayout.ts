@@ -58,17 +58,13 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
   if (serverGroup.length > 12)
     return next(userState);
 
-  // const size = stage.size();
-  const size = {
-    width: 900,
-    height: 450,
-  };
+  const size = stage.size();
   const positionMap = new Map<string, Position>();
 
   // 圆环中心
   const o: Position = { x: size.width / 2, y: size.height / 2,};
   // 圆环半径
-  const radius = 500;
+  const radius = size.height / 2;
 
   // 偏移圆心从而偏移圆环上的各个点
   // o.x += 200;
@@ -91,9 +87,8 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
     .map((item: VNode, index: number) => {
       const currentRadian: number = index * radian - Math.PI / 2;
       const c: Position = { x: 0, y: 0, }; // 初始化而已
-      const offset = 600;
 
-      c.x = Math.cos(currentRadian) * radius + o.x + offset;
+      c.x = Math.cos(currentRadian) * radius + o.x;
       c.y = Math.sin(currentRadian) * radius + o.y;
 
       item.data = {
@@ -111,9 +106,11 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
 
   radian = 2 * Math.PI / userGroup.length;
   const newUserNodes = userGroup.map((item: VNode) => {
-    const c: Position = { x: o.x, y: o.y, };
+    const c: Position = { x: 0, y: 0,};
 
-    c.x = 100;
+    c.x = o.x - (radius + NODE_SIZE);
+    c.y = o.y;
+
     item.data = {
       ...item.data,
       style: {
@@ -139,7 +136,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (next: PatchBehavi
     .map((item: VNode, index: number) => {
       const currentRadian: number = index * radian - Math.PI / 2;
       const c: Position = { x: 0, y: 0, }; // 初始化而已
-      const offset = 900;
+      const offset = radius + NODE_SIZE;
 
       c.x = Math.cos(currentRadian) * (radius) + o.x + offset;
       c.y = Math.sin(currentRadian) * (radius) + o.y;

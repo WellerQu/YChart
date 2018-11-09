@@ -3,7 +3,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom/h';
-import { Position, } from '../../typings/defines';
+import { Position, SVGOption, } from '../../typings/defines';
 
 import {
   TextOption,
@@ -12,7 +12,7 @@ import {
   LineOption,
   CircleOption,
   ArrowOption,
-  ViewboxOption,
+  Viewbox,
   RectOption,
   Component,
   Strategy,
@@ -36,15 +36,15 @@ const parseClassName = (classNames: string): ClassName => {
   }, {});
 };
 
-export const createSvg = (option: ViewboxOption): VNode => {
-  const { x, y, width, height, } = option;
+export const createSvg = (option: SVGOption): VNode => {
+  const { size, viewbox, } = option;
   return h(
     'svg',
     {
       attrs: {
-        width: option.width,
-        height: option.height,
-        viewBox: [x, y, width, height,].join(','),
+        width: size.width,
+        height: size.height,
+        viewBox: [viewbox.x, viewbox.y, viewbox.width, viewbox.height,].join(','),
         // preserveAspectRatio: 'xMidYMid meet',
       },
     },

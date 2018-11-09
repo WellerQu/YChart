@@ -1,4 +1,4 @@
-import { UpdateBehavior, CallstackData, Subscriber, Strategy, ViewboxOption, } from '../typings/defines';
+import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from '../typings/defines';
 import createStage from './createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
@@ -14,7 +14,7 @@ import compose from './compose';
 import { max, } from './utils';
 import { createRule, } from './components/createRule';
 import clone from './clone';
-import { RULE_STEP, } from './constants';
+import { RULE_STEP, CELL_SIZE, } from './constants';
 
 
 function flatten (node: CallstackData): CallstackData[] {
@@ -46,17 +46,18 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     callstackStyle,
   );
   const createStageAt = enhancer(createStage);
-  const { create, patch, subscribe, viewbox, stageNode, } = createStageAt(container);
+  const { create, patch, subscribe, viewbox, size, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
-  return (data: CallstackData, option?: ViewboxOption) => {
+  return (data: CallstackData, option?: Viewbox) => {
     const root = stageNode();
     root.data.attrs.id = elementID;
 
     viewbox(option);
+    size(option);
 
     const flattenData = flatten(data);
     const maxDuration = max(...flattenData.map(n => n.duration));

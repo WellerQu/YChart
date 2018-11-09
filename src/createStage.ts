@@ -14,7 +14,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, Subscriber, Strategy, ViewboxOption, Size, } from '../typings/defines';
+import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../typings/defines';
 import { createSvg, } from './components/components';
 
 const vPatch = init([
@@ -25,14 +25,21 @@ const vPatch = init([
 ]);
 
 function createStage (container: HTMLElement): Stage {
-  const viewboxOption: ViewboxOption = {
+  const viewboxOption: Viewbox = {
     x: 0,
     y: 0,
     width: container.parentElement.offsetWidth,
     height: container.parentElement.offsetHeight,
   };
+  const sizeOption: Size = {
+    width: container.parentElement.offsetWidth,
+    height: container.parentElement.offsetHeight,
+  };
 
-  let currentNode: VNode = createSvg(viewboxOption);
+  let currentNode: VNode = createSvg({
+    size: sizeOption,
+    viewbox: viewboxOption,
+  });
   let previousNode: VNode = toNode(container);
   let subscribers: Subscriber[] = [];
 
@@ -52,21 +59,22 @@ function createStage (container: HTMLElement): Stage {
 
   function patch (userState?: any): VNode {
     previousNode = vPatch(previousNode, currentNode);
-    currentNode = createSvg(viewboxOption);
+    currentNode = createSvg({
+      size: sizeOption,
+      viewbox: viewboxOption,
+    });
 
     subscribers.forEach((handler: Subscriber) => handler(userState));
 
     return previousNode;
   }
 
-  function viewbox (option?: ViewboxOption): Size {
+  function viewbox (option?: Viewbox): Viewbox {
     const root = stageNode();
 
     if (option) {
       const { x, y, width, height, } = option;
-
-      root.data.attrs.width = width;
-      root.data.attrs.height = height;
+    
       root.data.attrs.viewBox = [x, y, width, height,].join(',');
 
       viewboxOption.x = x;
@@ -78,9 +86,24 @@ function createStage (container: HTMLElement): Stage {
     return viewboxOption;
   }
 
+  function size (option?: Size): Size {
+    const root = stageNode();
+    if (option) {
+      const { width , height, } = option;
+      root.data.attrs.width = width;
+      root.data.attrs.height = height;
+
+      sizeOption.width = width;
+      sizeOption.height = height;
+    }
+
+    return sizeOption; 
+  }
+
   return {
     stageNode,
     viewbox,
+    size,
     create,
     subscribe,
     patch,

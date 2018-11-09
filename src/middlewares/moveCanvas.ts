@@ -7,6 +7,15 @@ import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
+const findSVGElement = (node: HTMLElement): boolean => {
+  if (node === null)
+    return false;
+  if (node.nodeName.toUpperCase() !== 'SVG')
+    return findSVGElement(node.parentElement);
+
+  return true;
+};
+
 /**
  * 添加拖拽移动画布功能
  * 注意此中间件务必添加在所有布局中间件之后
@@ -34,6 +43,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     startViewBox = target.getAttribute('viewBox');
 
     target.style.cursor = 'move';
+    Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'none');
 
     return event;
   };
@@ -42,7 +52,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     if (!isMouseDown)
       return event;
 
-    const target = event.target as HTMLElement;
+    let target = event.target as HTMLElement;
     if (target.nodeName.toUpperCase() !== 'SVG') {
       return event;
     }
@@ -53,44 +63,49 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     const diffX = targetPosition.x - sourcePosition.x;
     const diffY = targetPosition.y - sourcePosition.y;
 
-    let svgElement = event.target as HTMLElement;
-    while(svgElement.nodeName.toUpperCase() !== 'SVG') {
-      svgElement = svgElement.parentElement;
+    while(target.nodeName.toUpperCase() !== 'SVG') {
+      target = target.parentElement;
     }
 
     const [x1, y1,] = parseViewBoxValue(startViewBox);
-    const [,, width, height,] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
-    const containerWidth = svgElement.parentElement.offsetWidth;
+    const [,, width, height,] = parseViewBoxValue(target.getAttribute('viewBox'));
+    const containerWidth = target.parentElement.offsetWidth;
     const ratio = -(width / containerWidth);
 
     let newX = x1 + (diffX * ratio);
     let newY = y1 + (diffY * ratio);
 
-    // svgElement.setAttribute('viewBox', `${xClamp(newX)}, ${yClamp(newY)}, ${width}, ${height}`);
-    svgElement.setAttribute('viewBox', `${newX}, ${newY}, ${width}, ${height}`);
+    target.setAttribute('viewBox', `${newX}, ${newY}, ${width}, ${height}`);
 
     return event;
   };
 
   const handleMouseUp = (event: MouseEvent): MouseEvent => {
-    isMouseDown = false;
-
-    let svgElement = event.target as HTMLElement;
-    while(svgElement.nodeName.toUpperCase() !== 'SVG') {
-      svgElement = svgElement.parentElement;
+    let target = event.target as HTMLElement;
+    if (target.nodeName.toUpperCase() === 'SVG') {
+      isMouseDown = false;
+      target.style.cursor = 'default';
+      Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
     }
-    svgElement.style.cursor = 'default';
-
-    startViewBox = svgElement.getAttribute('viewBox');
 
     return event;
   };
+
+  // const handleMouseOut = (event: MouseEvent): MouseEvent => {
+  //   isMouseDown = false;
+
+  //   const target = event.target as HTMLElement;
+  //   target.style.cursor = 'default';
+  //   Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
+
+  //   return event;
+  // };
 
   const setupDragMoveHandler = compose<VNode>(
     setupEventHandler(handleMouseDown)('mousedown'),
     setupEventHandler(handleMouseMove)('mousemove'),
     setupEventHandler(handleMouseUp)('mouseup'),
-    // setupEventHandler(handleMouseUp)('mouseout'),
+    setupEventHandler(handleMouseUp)('mouseout'),
   );
 
   setupDragMoveHandler(root);

@@ -8,6 +8,7 @@ import compose from '../compose';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
 
+
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
   const regExp: RegExp = /M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*L(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)/igm;
   if (!regExp.test(value))
@@ -43,6 +44,11 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
     const position = parseTranslate(targetElement.style.transform);
     targetPosition.x = position.x;
     targetPosition.y = position.y;
+
+    // const svgElement = targetElement.parentElement;
+    // Array.from(svgElement.children)
+    //   .filter(n => n !== targetElement)
+    //   .forEach((node: HTMLElement) => (node.style.pointerEvents = 'none'));
 
     return event;
   };
@@ -113,7 +119,7 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
             line.setAttribute('d', `M${x1},${y1} L${x},${y}`);
           }
 
-          if (startX) {
+          if (startX && startY) {
             // update arrow
             const lA = endY - startY;
             const lB = endX - startX;
@@ -145,10 +151,26 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
   };
 
   const handleMouseUp = (event: MouseEvent): MouseEvent => {
+    // let target = event.target as HTMLElement;
+    // if (target.nodeName.toUpperCase() === 'SVG') {
     isMouseDown = false;
-    targetElement = null;
+    targetElement = null; 
+    // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
+    // }
+
     return event;
   };
+
+  // const handleMouseOut = (event: MouseEvent): MouseEvent => {
+  //   let target = event.target as HTMLElement;
+  //   if (target.nodeName.toUpperCase() === 'SVG') {
+  //     isMouseDown = false;
+  //     targetElement = null; 
+  //     Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
+  //   }
+
+  //   return event;
+  // };
 
   const setupDragMoveNodeHandler = compose<VNode>(
     setupEventHandler(handleMouseDown)('mousedown'),

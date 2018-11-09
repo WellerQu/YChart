@@ -165,6 +165,9 @@ export function updateLinePoistion (item: VNode, start: Position, end: Position)
   const x2 = end.x + NODE_SIZE / 2;
   const y2 = end.y + NODE_SIZE / 2;
 
+  if (y2 === y1 && x2 === x1)
+    return item;
+
   // update arrow
   if (arrow) {
     const lA = y2 - y1;

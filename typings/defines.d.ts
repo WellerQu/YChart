@@ -8,13 +8,18 @@ export type PatchBehavior = (userState?: any) => void;
 export type Subscriber = (userState?: any) => void;
 export type Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: any) => void;
 export type CreateStage = (container: HTMLElement) => Stage;
-export type UpdateBehavior<T> = (data: T, option?: ViewboxOption) => void;
+export type UpdateBehavior<T> = (data: T, option?: Viewbox) => void;
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
 export type EventHandler = (event: Event) => Event;
 export type Position = { x: number, y: number };
 export type Size = { width: number, height: number };
-export type ViewboxOption = Size & Position;
+export type Viewbox = Size & Position;
+
+declare interface SVGOption {
+  viewbox: Viewbox;
+  size: Size;
+}
 
 declare interface EventOption {
   [T: string]: TopoEventHandler;
@@ -30,7 +35,8 @@ declare interface Stage {
   create: (strategy: Strategy) => VNode;
   subscribe: (handler: Subscriber) => void;
   patch: PatchBehavior;
-  viewbox: (option?: ViewboxOption) => Size;
+  viewbox: (option?: Viewbox) => Viewbox;
+  size: (option?: Size) => Size;
 }
 
 declare interface PositionOption {

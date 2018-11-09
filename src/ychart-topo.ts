@@ -6,7 +6,7 @@ import {
   Node, 
   Line, 
   EventOption, 
-  ViewboxOption, 
+  Viewbox, 
 } from '../typings/defines';
 
 import { NODE_TYPE, } from './NODE_TYPE';
@@ -41,6 +41,7 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 import createArrowLine from './components/createArrowLine';
 import createNoDataLine from './components/createNoDataLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
+import { CELL_SIZE, } from './constants';
 
 const emptyPadding = (data: TopoData) => {
   if (!data.nodes)
@@ -101,31 +102,31 @@ export default (
 ): UpdateBehavior<TopoData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(
-    log, 
+    log,
     showLoading,
     event(eventOption),
-    nodeGroupLayout, 
+    nodeGroupLayout,
     nodeCircleLayout,
-    scaleCanvas, 
-    moveCanvas, 
-    moveNode, 
-    nodePositionMemory, // 暂停开发这个功能
-    // topoMotion,
-    topoStyle, 
+    nodePositionMemory,
+    scaleCanvas,
+    moveCanvas,
+    moveNode,
+    topoStyle,
   );
   const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, viewbox, stageNode, } = createStageAt(container);
+  const { create, subscribe, patch, viewbox, size, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 
   patch();
 
   // Expose update method
-  return (data: TopoData, option?: ViewboxOption): void => {
+  return (data: TopoData, option?: Viewbox): void => {
     const root = stageNode();
     root.data.attrs.id = elementID;
 
     viewbox(option);
+    size(option);
 
     const formattedData: TopoData = formatDataAdapter(data);
     // map every line to strategy function which return a VNode

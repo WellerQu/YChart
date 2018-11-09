@@ -137,21 +137,26 @@ export const max = (...nums: number[]): number => {
 
 export const imagePath = (iconName: string) => `/static/images/${iconName}.png`;
 
-
 export const findGroup = (event: Event): HTMLElement => {
-  let element = event.target as HTMLElement;
+  const findG = findElement('G');
+  const gElement = findG(event.target as HTMLElement);
+  
+  return (gElement && gElement.classList.contains(NODE_TYPE.NODE)) ? gElement : null;
+};
 
-  if (!element.nodeName) 
+export const findRoot = (event: Event): HTMLElement => {
+  const findSVG = findElement('SVG');
+  return findSVG(event.target as HTMLElement);
+};
+
+export const findElement = (tagName: string) => (element: HTMLElement): HTMLElement => {
+  if (!element)
     return null;
 
-  while (element.nodeName.toUpperCase() !== 'G' && element.nodeName.toUpperCase() !== 'SVG') {
-    element = element.parentElement;
-  }
+  if (tagName === element.nodeName.toUpperCase())
+    return element;
 
-  if (!element.classList.contains(NODE_TYPE.NODE)) 
-    return null;
-
-  return element;
+  return findElement(tagName)(element.parentElement);
 };
 
 export function updateLinePoistion (item: VNode, start: Position, end: Position): VNode;

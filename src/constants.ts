@@ -7,3 +7,4 @@ export const CALLSTACK_HEIGHT = 12;
 export const RULE_PADDING = 20; // 标尺左右补白
 export const RULE_HEIGHT = 45;
 export const RULE_STEP = 500;
+export const ID_COMBINER = '-to-';

@@ -41,6 +41,7 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 import createArrowLine from './components/createArrowLine';
 import createNoDataLine from './components/createNoDataLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
+import { showRelation, } from './middlewares/showRelation';
 
 const emptyPadding = (data: TopoData) => {
   if (!data)
@@ -106,6 +107,7 @@ export default (
   const enhancer = applyMiddlewares(
     log,
     showLoading,
+    showRelation,
     event(eventOption),
     nodeGroupLayout,
     nodeCircleLayout,

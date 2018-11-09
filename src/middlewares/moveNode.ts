@@ -6,7 +6,7 @@ import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE, } from '../NODE_TYPE';
-import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, } from '../constants';
 
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
@@ -83,12 +83,12 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
           if (!item.classList.contains(NODE_TYPE.LINE))
             return false;
 
-          const [source, ...target] = item.id.split('-');
+          const [source, target,] = item.id.split(ID_COMBINER);
 
-          return source === currentElementID || target.join('-') === currentElementID;
+          return source === currentElementID || target === currentElementID;
         })
         .forEach((item: SVGGElement) => {
-          const [source, ...target] = item.id.split('-');
+          const [source, target,] = item.id.split(ID_COMBINER);
 
           const paths = item.querySelectorAll('path');
           const line = paths[0];
@@ -108,7 +108,7 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
             endY = y2;
 
             line.setAttribute('d', `M${x},${y} L${x2},${y2}`);
-          } else if (target.join('-') === currentElementID) {
+          } else if (target === currentElementID) {
             // update end position
             startX = x1;
             startY = y1;

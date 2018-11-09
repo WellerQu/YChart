@@ -3,7 +3,7 @@
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, } from '../constants';
+import { NODE_SIZE, CELL_SIZE, ID_COMBINER, } from '../constants';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { toTranslate, updateLinePoistion, } from '../utils';
 
@@ -43,10 +43,10 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     const id = item.data.attrs['id'] as string;
     if (!id.split) return item;
 
-    const [source, ...target] = id.split('-');
+    const [source, target,] = id.split(ID_COMBINER);
 
     const start = nodePool.find(n => n.id === source);
-    const end = nodePool.find(n => n.id === target.join('-'));
+    const end = nodePool.find(n => n.id === target);
 
     if (!start || !end)
       return item;

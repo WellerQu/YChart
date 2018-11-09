@@ -5,6 +5,7 @@ import createStore from '../store';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import compose from '../compose';
+import { ID_COMBINER, } from '../constants';
 
 const store = createStore('TEMP_POSITION');
 
@@ -56,14 +57,14 @@ const restorePosition = (nodes: VNode[], store: Store): ( VNode| string )[] => {
   if (lineGroup.length > 0) {
     lineGroup.forEach((item: VNode) => {
       const id = item.data.attrs.id as string;
-      const [source, ...target] = id.split('-');
+      const [source, target,] = id.split(ID_COMBINER);
       if (!positionMap.has(source))
         return;
-      if (!positionMap.has(target.join('-')))
+      if (!positionMap.has(target))
         return;
 
       const start = positionMap.get(source);
-      const end = positionMap.get(target.join('-'));
+      const end = positionMap.get(target);
       updateLinePoistion(item, start, end);
     });
   }

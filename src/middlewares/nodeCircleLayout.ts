@@ -9,7 +9,7 @@ import {
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { toTranslate, toArrowD, updateLinePoistion, } from '../utils';
-import { NODE_SIZE, ARROW_OFFSET, } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, } from '../constants';
 
 interface SortInfo {
   node: VNode;
@@ -168,12 +168,12 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
     const id = item.data.attrs['id'] as string;
     if (!id.split) return item;
 
-    const [source, ...target] = id.split('-');
+    const [source, target,] = id.split(ID_COMBINER);
     if (!positionMap.has(source)) return item;
-    if (!positionMap.has(target.join('-'))) return item;
+    if (!positionMap.has(target)) return item;
 
     const start = positionMap.get(source);
-    const end = positionMap.get(target.join('-'));
+    const end = positionMap.get(target);
 
     // 更新线的起始与结束坐标
     return updateLinePoistion(item, start, end);

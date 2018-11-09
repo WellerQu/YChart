@@ -13,6 +13,10 @@ g.group {
   will-change: z-index, transform, opacity, d;
 }
 
+g.group.weak {
+  opacity: .2;
+}
+
 g.group.node {
   transition: transform .1s;
 }

@@ -1,10 +1,11 @@
 import { ArrowLineOption, Line, } from '../../typings/defines';
 import { NODE_TYPE, } from '../NODE_TYPE';
+import { ID_COMBINER, } from '../constants';
 
 const lineColor = '#2693ff';
 
 export default function createArrowLineOption (line: Line): ArrowLineOption {
-  const id = `${line.source}-${line.target}`;
+  const id = `${line.source}${ID_COMBINER}${line.target}`;
 
   return {
     x: 0,

@@ -43,7 +43,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     startViewBox = target.getAttribute('viewBox');
 
     target.style.cursor = 'move';
-    Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'none');
+    // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'none');
 
     return event;
   };
@@ -85,7 +85,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     if (target.nodeName.toUpperCase() === 'SVG') {
       isMouseDown = false;
       target.style.cursor = 'default';
-      Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
+      // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
     }
 
     return event;

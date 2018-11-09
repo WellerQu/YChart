@@ -12,17 +12,17 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        exclude: /node_modules/
+        use: ['style-loader', 'css-loader',],
+        exclude: /node_modules/,
       },
-    ]
+    ],
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
+    new CleanWebpackPlugin([path.resolve(__dirname, '../dist'),], {
       root: process.cwd(),
     }),
     new HtmlWebpackPlugin({
@@ -31,10 +31,10 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js',],
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(__dirname, '../dist'),
   },
 };

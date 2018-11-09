@@ -58,6 +58,7 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
   const root = stage.stageNode();
   const children = root.children as ( VNode | string )[];
 
+  // 绑定滚轮事件实现缩放
   setupMousewheel(root);
 
   if (children.length === 0)
@@ -89,12 +90,25 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   const graphWidth = maximumX - minimumX + NODE_SIZE;
   const graphHeight = maximumY - minimumY + NODE_SIZE;
-  if (graphWidth > graphHeight) {
-    const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
-    stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: graphWidth * size.height / size.width, });
-  } else if (graphWidth < graphHeight) {
-    const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
-    stage.viewbox({ x: offsetX, y: minimumY, width: graphHeight * size.width / size.height, height: graphHeight, });
+  const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
+  const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
+  const acceptWidth = graphHeight * size.width / size.height;
+  const acceptHeight = graphWidth * size.height / size.width;
+
+  // Example:
+  // stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: graphWidth * size.height / size.width, });
+  // stage.viewbox({ x: offsetX, y: minimumY, width: graphHeight * size.width / size.height, height: graphHeight, });
+
+  if (graphWidth > graphHeight && size.width <= size.height) {
+    stage.viewbox({x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+  } else if (graphWidth <= graphHeight && size.width > size.height) {
+    stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+  } else if (graphWidth <= graphHeight && size.width <= size.height) {
+    stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+  } else if (graphWidth > graphHeight && size.width > size.height) {
+    stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+  } else if (graphWidth === graphHeight && size.width === size.height) {
+    stage.viewbox({ x: minimumX, y: minimumY, width: graphWidth, height: graphWidth, });
   }
 
   next(userState);

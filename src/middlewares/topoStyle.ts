@@ -10,7 +10,7 @@ g.group {
   cursor: pointer;
   user-select: none;
 
-  will-change: z-index, transform, opacity;
+  will-change: z-index, transform, opacity, d;
 }
 
 g.group.node {
@@ -48,12 +48,9 @@ g.group.node text.elapsedTime
   stroke-width: 2px;
 }
 
-g.group.line path.link-line {
+g.group.line path {
   transition: d .1s;
-}
-
-g.group.line circle {
-  transition: cx,cy .1s;
+  pointer-events: none;
 }
 
 g.group.line:hover > path.link-line {

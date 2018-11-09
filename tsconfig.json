@@ -8,6 +8,8 @@
     "removeComments": false,
     "target": "ES5",
     "declaration": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "lib": [
       "dom",
       "es2015",

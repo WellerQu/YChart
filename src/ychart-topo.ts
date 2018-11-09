@@ -41,9 +41,11 @@ import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter'
 import createArrowLine from './components/createArrowLine';
 import createNoDataLine from './components/createNoDataLine';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
-import { CELL_SIZE, } from './constants';
 
 const emptyPadding = (data: TopoData) => {
+  if (!data)
+    return data = { nodes: [], links: [],};
+
   if (!data.nodes)
     data.nodes = [];
   if (!data.links)

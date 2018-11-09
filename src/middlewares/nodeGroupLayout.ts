@@ -64,6 +64,8 @@ export const nodeGroupLayout = (stage: Stage) => (next: PatchBehavior) => (userS
   // 没有数据, 部需要布局
   if (!userState)
     return next(userState);
+  if (userState.nodes.length === 0)
+    return next(userState);
 
   // 按类型分组: 分成USER组, Server组, 其他(DATABASE/RPC/HTTP)组, Line组
   const root = stage.stageNode();

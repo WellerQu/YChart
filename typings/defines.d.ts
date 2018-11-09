@@ -16,6 +16,11 @@ export type Position = { x: number, y: number };
 export type Size = { width: number, height: number };
 export type Viewbox = Size & Position;
 
+declare module '*.json' {
+  const value: any;
+  export default value;
+}
+
 declare interface SVGOption {
   viewbox: Viewbox;
   size: Size;

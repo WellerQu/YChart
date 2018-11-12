@@ -1,4 +1,4 @@
-import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, } from '../../typings/defines';
 import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePoistion, } from '../utils';
 
 import createStore from '../store';
@@ -9,7 +9,7 @@ import { ID_COMBINER, } from '../constants';
 
 const store = createStore('TEMP_POSITION');
 
-const restorePosition = (nodes: VNode[], store: Store): ( VNode| string )[] => {
+const restorePosition = (nodes: VNode[], store: Store, size: Size): ( VNode| string )[] => {
   const nodeGroup: VNode[] = [];
   const lineGroup: VNode[] = [];
   const restGroup: ( VNode | string )[] = [];
@@ -45,9 +45,17 @@ const restorePosition = (nodes: VNode[], store: Store): ( VNode| string )[] => {
       const id = item.data.attrs.id as string;
       let position = store.read<Position>(id);
       if (position) {
-        item.data.style.transform = toTranslate(position);
+        const pos = {
+          x: position.x * size.width,
+          y: position.y * size.height,
+        };
+        item.data.style.transform = toTranslate(pos);
       } else {
-        position = parseTranslate(item.data.style.transform as string);
+        const pos = parseTranslate(item.data.style.transform as string);
+        position = {
+          x: pos.x / size.width,
+          y: pos.y / size.height,
+        };
       }
 
       positionMap.set(id, position);
@@ -65,7 +73,13 @@ const restorePosition = (nodes: VNode[], store: Store): ( VNode| string )[] => {
 
       const start = positionMap.get(source);
       const end = positionMap.get(target);
-      updateLinePoistion(item, start, end);
+      updateLinePoistion(item, {
+        x: size.width * start.x,
+        y: size.height * start.y,
+      }, {
+        x: size.width * end.x,
+        y: size.height * end.y,
+      });
     });
   }
 
@@ -77,8 +91,10 @@ const restorePosition = (nodes: VNode[], store: Store): ( VNode| string )[] => {
 };
 
 export const nodePositionMemory: Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+  const size = stage.size();
   const root = stage.stageNode();
-  root.children = restorePosition(root.children as VNode[], store);
+
+  root.children = restorePosition(root.children as VNode[], store, size);
 
   let currentGElement: HTMLElement = null;
 
@@ -93,7 +109,11 @@ export const nodePositionMemory: Middleware = (stage: Stage) => (next: PatchBeha
  
     try {
       const pos = parseTranslate(currentGElement.style.transform);
-      store.write<Position>(currentGElement.id, pos);
+      // 换算成原点(0,0)的相对坐标
+      store.write<Position>(currentGElement.id, {
+        x: pos.x / size.width,
+        y: pos.y / size.height,
+      });
     } catch (error) {
       console.error(error); // eslint-disable-line
     }

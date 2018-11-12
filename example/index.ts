@@ -33,6 +33,11 @@ btnUpdate.addEventListener('click', () => {
   updateTopo(topoData, { x: 0, y: 0, width: 1600, height: 800, });
 });
 
+const btnFullscreen = document.querySelector('button#fullTopoData');
+btnFullscreen.addEventListener('click', () => {
+  
+});
+
 const callstackData: CallstackData = {
   stackName: 'root stack service',
   duration: 2260, // ms

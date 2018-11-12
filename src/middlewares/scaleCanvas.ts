@@ -101,14 +101,19 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   if (graphWidth > graphHeight && size.width <= size.height) {
     stage.viewbox({x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+    // stage.viewbox({x: 0, y: 0, width: graphWidth, height: acceptHeight, });
   } else if (graphWidth <= graphHeight && size.width > size.height) {
     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+    // stage.viewbox({ x: 0, y: 0, width: acceptWidth, height: graphHeight, });
   } else if (graphWidth <= graphHeight && size.width <= size.height) {
     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+    // stage.viewbox({ x: 0, y: 0, width: acceptWidth, height: graphHeight, });
   } else if (graphWidth > graphHeight && size.width > size.height) {
     stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+    // stage.viewbox({ x: 0, y: 0, width: graphWidth, height: acceptHeight, });
   } else if (graphWidth === graphHeight && size.width === size.height) {
     stage.viewbox({ x: minimumX, y: minimumY, width: graphWidth, height: graphWidth, });
+    // stage.viewbox({ x: 0, y: 0, width: graphWidth, height: graphWidth, });
   }
 
   next(userState);

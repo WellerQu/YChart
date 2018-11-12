@@ -1,4 +1,4 @@
-import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, Viewbox, } from '../../typings/defines';
 import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePoistion, } from '../utils';
 
 import createStore from '../store';
@@ -9,7 +9,8 @@ import { ID_COMBINER, } from '../constants';
 
 const store = createStore('TEMP_POSITION');
 
-const restorePosition = (nodes: VNode[], store: Store, size: Size): ( VNode| string )[] => {
+// 同步坐标
+const syncPosition = (nodes: VNode[], store: Store, viewbox: Viewbox, size: Size): ( VNode| string )[] => {
   const nodeGroup: VNode[] = [];
   const lineGroup: VNode[] = [];
   const restGroup: ( VNode | string )[] = [];
@@ -45,17 +46,15 @@ const restorePosition = (nodes: VNode[], store: Store, size: Size): ( VNode| str
       const id = item.data.attrs.id as string;
       let position = store.read<Position>(id);
       if (position) {
-        const pos = {
-          x: position.x * size.width,
-          y: position.y * size.height,
-        };
-        item.data.style.transform = toTranslate(pos);
+        item.data.style.transform = toTranslate(position);
       } else {
-        const pos = parseTranslate(item.data.style.transform as string);
-        position = {
-          x: pos.x / size.width,
-          y: pos.y / size.height,
-        };
+        position = parseTranslate(item.data.style.transform as string);
+        try {
+          store.write(id, position);
+        }
+        catch (error) {
+          console.error(error); // eslint-disable-line
+        }
       }
 
       positionMap.set(id, position);
@@ -73,13 +72,7 @@ const restorePosition = (nodes: VNode[], store: Store, size: Size): ( VNode| str
 
       const start = positionMap.get(source);
       const end = positionMap.get(target);
-      updateLinePoistion(item, {
-        x: size.width * start.x,
-        y: size.height * start.y,
-      }, {
-        x: size.width * end.x,
-        y: size.height * end.y,
-      });
+      updateLinePoistion(item, start, end);
     });
   }
 
@@ -92,11 +85,14 @@ const restorePosition = (nodes: VNode[], store: Store, size: Size): ( VNode| str
 
 export const nodePositionMemory: Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const size = stage.size();
+  if (!size.width || !size.height)
+    return next(userState);
+
+  const viewbox = stage.viewbox();
   const root = stage.stageNode();
-
-  root.children = restorePosition(root.children as VNode[], store, size);
-
   let currentGElement: HTMLElement = null;
+
+  root.children = syncPosition(root.children as VNode[], store, viewbox, size);
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {
     currentGElement  = findGroup(event);
@@ -109,11 +105,7 @@ export const nodePositionMemory: Middleware = (stage: Stage) => (next: PatchBeha
  
     try {
       const pos = parseTranslate(currentGElement.style.transform);
-      // 换算成原点(0,0)的相对坐标
-      store.write<Position>(currentGElement.id, {
-        x: pos.x / size.width,
-        y: pos.y / size.height,
-      });
+      store.write<Position>(currentGElement.id, pos);
     } catch (error) {
       console.error(error); // eslint-disable-line
     }

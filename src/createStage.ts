@@ -24,6 +24,15 @@ const vPatch = init([
   eventlistener,
 ]);
 
+const isNull = (value: any): boolean => {
+  if (value === null)
+    return true;
+  if (value === void 0)
+    return true;
+
+  return false;
+};
+
 function createStage (container: HTMLElement): Stage {
   const viewboxOption: Viewbox = {
     x: 0,
@@ -75,12 +84,12 @@ function createStage (container: HTMLElement): Stage {
     if (option) {
       const { x, y, width, height, } = option;
     
-      root.data.attrs.viewBox = [x, y, width, height,].join(',');
-
-      viewboxOption.x = x;
-      viewboxOption.y = y;
+      viewboxOption.x = isNull(x) ?  viewboxOption.x : x;
+      viewboxOption.y = isNull(y) ? viewboxOption.y : y;
       viewboxOption.width = width;
       viewboxOption.height = height;
+
+      root.data.attrs.viewBox = [viewboxOption.x, viewboxOption.y, viewboxOption.width, viewboxOption.height,].join(',');
     }
 
     return viewboxOption;

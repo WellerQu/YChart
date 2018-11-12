@@ -10,6 +10,7 @@ g.group
   letter-spacing: -.3996px;
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
 
   will-change: z-index, transform, opacity;
 }

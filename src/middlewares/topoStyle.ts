@@ -9,16 +9,13 @@ g.group {
   font-size: 12px;
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
 
   will-change: z-index, transform, opacity, d;
 }
 
 g.group.weak {
   opacity: .2;
-}
-
-g.group.node {
-  transition: transform .1s;
 }
 
 g.group.node:active > circle.health
@@ -31,16 +28,19 @@ g.group.node text.instances
   text-anchor: middle;  /* 文本水平居中 */
   dominant-baseline: middle; /* 文本垂直居中 */
   font-size: 16px;
+  pointer-events: none;
 }
 
 g.group.node text.title
 , g.group.node text.type {
   text-anchor: middle;  /* 文本水平居中 */
+  pointer-events: none;
 }
 
 g.group.node text.type {
   fill: white;
   font-size: 7px;
+  pointer-events: none;
 }
 
 g.group.node text.elapsedTime
@@ -53,7 +53,6 @@ g.group.node text.elapsedTime
 }
 
 g.group.line path {
-  transition: d .1s;
   pointer-events: none;
 }
 

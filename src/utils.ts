@@ -159,8 +159,8 @@ export const findElement = (tagName: string) => (element: HTMLElement): HTMLElem
   return findElement(tagName)(element.parentElement);
 };
 
-export function updateLinePoistion (item: VNode, start: Position, end: Position): VNode;
-export function updateLinePoistion (item: VNode, start: Position, end: Position): VNode {
+export function updateLinePosition (item: VNode, start: Position, end: Position): VNode;
+export function updateLinePosition (item: VNode, start: Position, end: Position): VNode {
   const line: VNode = item.children[0] as VNode;
   const arrow: VNode = item.children[1] as VNode;
   const text: VNode = item.children[2] as VNode;

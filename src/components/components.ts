@@ -12,7 +12,6 @@ import {
   LineOption,
   CircleOption,
   ArrowOption,
-  Viewbox,
   RectOption,
   Component,
   Strategy,

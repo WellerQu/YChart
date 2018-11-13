@@ -1,5 +1,5 @@
 import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, Viewbox, } from '../../typings/defines';
-import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePoistion, } from '../utils';
+import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePosition, } from '../utils';
 
 import createStore from '../store';
 import { VNode, } from 'snabbdom/vnode';
@@ -72,7 +72,7 @@ const syncPosition = (nodes: VNode[], store: Store, viewbox: Viewbox, size: Size
 
       const start = positionMap.get(source);
       const end = positionMap.get(target);
-      updateLinePoistion(item, start, end);
+      updateLinePosition(item, start, end);
     });
   }
 

@@ -201,5 +201,5 @@ declare interface CallstackData {
   parentOffsetTime?: number;
   parentStackName?: string;
   maxDuration?: number;
-  avaliableWidth?: number;
+  availableWidth?: number;
 }

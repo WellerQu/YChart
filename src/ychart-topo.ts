@@ -12,6 +12,8 @@ import {
 import { NODE_TYPE, } from './NODE_TYPE';
 
 import compose from './compose';
+import clone from './clone';
+
 import { log, } from './middlewares/log';
 import { nodeGroupLayout, } from './middlewares/nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
@@ -23,24 +25,23 @@ import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';
 
+import createMergeAdapter from './adapters/createMergeNodeAdapter';
+import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
+import createFixAdapter from './adapters/createFixTopoDataAdapter';
+import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
+import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
+
 import applyMiddlewares from './applyMiddlewares';
 import createStage from './createStage';
 
-import createMergeAdapter from './adapters/createMergeNodeAdapter';
-import createFixAdapter from './adapters/createFixTopoDataAdapter';
-import clone from './clone';
-
 import createImageNode from './components/createImageNode';
-import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
 
 import createServiceNode from './components/createServiceNode';
 import createCrossAppNode from './components/createCrossAppNode';
 import createNoDataNode from './components/createNoDataNode';
-import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
 
 import createArrowLine from './components/createArrowLine';
 import createNoDataLine from './components/createNoDataLine';
-import createArrowLineOption from './adapters/createArrowLineOptionAdapater';
 import { showRelation, } from './middlewares/showRelation';
 
 const emptyPadding = (data: TopoData) => {

@@ -3,6 +3,12 @@ import { NODE_TYPE, } from '../NODE_TYPE';
 
 import compose from '../compose';
 
+/**
+ * 合并TopoData实例中的Node实例集合, 将其中所有type标记为USER的Node实例合并成一个
+ * @memberof Adapters
+ * @param data TopoData实例
+ * @returns 合并完后的TopoData实例
+ */
 const mergeUsers = (data: TopoData): TopoData => {
   const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NODE_TYPE.USER);
   const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NODE_TYPE.USER);
@@ -22,6 +28,13 @@ const mergeUsers = (data: TopoData): TopoData => {
   return data;
 };
 
+/**
+ * 合并TopoData实例中的Node实例集合, 将其中所有type标记为HTTP或者RPC的Node实例合并成一个, 此合并函数中存在一个
+ * 合并策略, 请仔细阅读
+ * @memberof Adapters
+ * @param data TopoData实例
+ * @returns 合并完后的TopoData实例
+ */
 const mergeHTTPOrRPC = (data: TopoData): TopoData => {
   const othersNodes: Node[] = data.nodes.filter((item: Node) => 
     item.type !== NODE_TYPE.HTTP && item.type !== NODE_TYPE.RPC);

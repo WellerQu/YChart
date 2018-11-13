@@ -5,7 +5,7 @@ import { VNode, } from 'snabbdom/vnode';
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
 import { NODE_SIZE, CELL_SIZE, ID_COMBINER, } from '../constants';
 import { NODE_TYPE, } from '../NODE_TYPE';
-import { toTranslate, updateLinePoistion, } from '../utils';
+import { toTranslate, updateLinePosition, } from '../utils';
 
 // 布局用的关键信息
 interface KeyInfo {
@@ -51,7 +51,7 @@ const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
     if (!start || !end)
       return item;
 
-    return updateLinePoistion(item, start.position, end.position);
+    return updateLinePosition(item, start.position, end.position);
   });
 };
 

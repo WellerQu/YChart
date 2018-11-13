@@ -3,7 +3,13 @@ import compose from '../compose';
 import { NODE_TYPE, DATABASE_TYPE, } from '../NODE_TYPE';
 import { HEALTH, } from '../HEALTH';
 
-const createFixAdapter = (data: TopoData): TopoData => {
+/**
+   * 对TopoData实例进行修复
+   * @memberof Adapters
+   * @param data TopoData实例
+   * @returns TopoData实例
+   */
+function fixAdapter (data: TopoData): TopoData {
   // 补齐缺省的字段值
   data.nodes = data.nodes.map((node: Node) => {
     // 防御性判断
@@ -43,5 +49,5 @@ const createFixAdapter = (data: TopoData): TopoData => {
 };
 
 export default compose<TopoData>(
-  createFixAdapter,
+  fixAdapter,
 );

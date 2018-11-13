@@ -18,6 +18,12 @@ g.group.weak {
   opacity: .1;
 }
 
+g.group.node
+, g.group.line {
+  -webkit-transition: opacity 0.4s ease-out 0.5s;
+  transition: opacity 0.4s ease-out 0.5s;
+}
+
 g.group.node:active > circle.health
 , g.group.line:active > path.link-line {
   opacity: .8;

@@ -8,8 +8,8 @@ import {
 } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_TYPE, } from '../NODE_TYPE';
-import { toTranslate, toArrowD, updateLinePoistion, } from '../utils';
-import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, } from '../constants';
+import { toTranslate, updateLinePosition, } from '../utils';
+import { NODE_SIZE, ID_COMBINER, } from '../constants';
 
 interface SortInfo {
   node: VNode;
@@ -176,7 +176,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
     const end = positionMap.get(target);
 
     // 更新线的起始与结束坐标
-    return updateLinePoistion(item, start, end);
+    return updateLinePosition(item, start, end);
   });
 
   root.children = [

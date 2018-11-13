@@ -65,6 +65,7 @@ build/Release
 dist
 es
 commonjs
+doc
 
 # Dependency directories
 node_modules/

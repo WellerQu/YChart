@@ -2,9 +2,18 @@ import { ArrowLineOption, Line, } from '../../typings/defines';
 import { NODE_TYPE, } from '../NODE_TYPE';
 import { ID_COMBINER, } from '../constants';
 
+/**
+   * @ignore
+   */
 const lineColor = '#2693ff';
 
-export default function createArrowLineOption (line: Line): ArrowLineOption {
+/**
+   * 将 Line 实例对象转换为 ArrowLineOption 实例
+   * @memberof Adapters
+   * @param line Line 实例对象
+   * @returns ArrowLineOption 实例
+   */
+function createArrowLineOption (line: Line): ArrowLineOption {
   const id = `${line.source}${ID_COMBINER}${line.target}`;
 
   return {
@@ -22,3 +31,5 @@ export default function createArrowLineOption (line: Line): ArrowLineOption {
     text: `${line.elapsedTime} ms`,
   };
 }
+
+export default createArrowLineOption;

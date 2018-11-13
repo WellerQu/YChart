@@ -86,7 +86,7 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
 
     flattenData.forEach((item: CallstackData, index: number) => {
       item.maxDuration = maxWidth;
-      item.avaliableWidth = avaliableWidth;
+      item.availableWidth = avaliableWidth;
       create(callstack(item)); 
       if (index > 0)
         create(createCallLine({

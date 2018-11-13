@@ -20,7 +20,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   const diffWidth = 20;
   const diffHeight = diffWidth * height / width;
 
-  if (event.deltaY > 0) {
+  if (event.deltaY < 0) {
     // to bigger
     const newWidth = widthClamp(width - diffWidth);
     const newHeight = heightClamp(height - diffHeight);
@@ -29,7 +29,7 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
     const newY = newHeight * y / height;
 
     svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
-  } else if (event.deltaY < 0) {
+  } else if (event.deltaY > 0) {
     // to smaller
     const newWidth = widthClamp(width + diffWidth);
     const newHeight = heightClamp(height + diffHeight);

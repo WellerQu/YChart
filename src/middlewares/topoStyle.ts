@@ -15,7 +15,7 @@ g.group {
 }
 
 g.group.weak {
-  opacity: .2;
+  opacity: .1;
 }
 
 g.group.node:active > circle.health

@@ -146,18 +146,10 @@ declare interface CallstackOption {
 declare interface Node {
   id: string;
   name: string;
-  times: number;
   type: string;
   smallType: string | null;
   instances: number;
   activeInstances: number;
-  elapsedTime: number;
-  rpm: number;
-  epm: number;
-  health: string | null;
-  totalCount: number;
-  errorTotalCount: number;
-  crossApp: boolean;
   /**
    * 调用这个节点的Tier的集合
    */
@@ -171,8 +163,16 @@ declare interface Node {
    */
   showIcon?: string;
   apdex?: string;
+  health?: string;
   callCount?: number;
   error?: number;
+  elapsedTime?: number;
+  rpm?: number;
+  epm?: number;
+  times?: number;
+  totalCount?: number;
+  errorTotalCount?: number;
+  crossApp?: boolean;
 }
 
 declare interface TierNode {
@@ -185,7 +185,7 @@ declare interface Line {
   source: string;
   target: string;
   elapsedTime: number;
-  rpm: number;
+  rpm?: number;
 }
 
 declare interface TopoData {

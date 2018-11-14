@@ -13,7 +13,7 @@ function fixAdapter (data: TopoData): TopoData {
   // 补齐缺省的字段值
   data.nodes = data.nodes.map((node: Node) => {
     // 防御性判断
-    node.health = node.health || HEALTH.HEALTHY;
+    // node.health = node.health || HEALTH.HEALTHY;
     node.type = node.type || NODE_TYPE.SERVER;
     node.showName = node.showName || node.name;
     node.showIcon = node.smallType || node.type;

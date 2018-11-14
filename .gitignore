@@ -107,5 +107,8 @@ typings/
 # Serverless directories
 .serverless
 
+# Visual Code
+.vscode
+
 
 # End of https://www.gitignore.io/api/node,macos

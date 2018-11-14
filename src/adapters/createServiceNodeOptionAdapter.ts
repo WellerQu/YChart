@@ -13,6 +13,8 @@ interface Colours {
   [key: string]: string;
 };
 
+const MISSING_COLOUR = '#C881FF';
+
 /**
  * 健康度
  * @hidden
@@ -55,7 +57,7 @@ export default function createServiceNodeOption (node: Node): ServiceNodeOption 
   return { 
     title: node.showName,
     instances: `${node.activeInstances}/${node.instances}`,
-    color: HEALTH_COLOUR[node.health] || APDEX_COLOUR[node.apdex],
+    color: HEALTH_COLOUR[node.health] || APDEX_COLOUR[node.apdex] || MISSING_COLOUR,
     className: `${node.type} ${NODE_TYPE.NODE}`,
     type: node.type,
     elapsedTime: node.elapsedTime,

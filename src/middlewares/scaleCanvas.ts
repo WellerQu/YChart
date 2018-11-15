@@ -1,8 +1,11 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, parseTranslate, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_TYPE, } from '../NODE_TYPE';
-import { NODE_SIZE, } from '../constants';
+import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
 
 // limit range
 const widthClamp = clamp(320, 2420);

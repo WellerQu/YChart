@@ -1,6 +1,10 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 /// <reference path="../../node_modules/snabbdom/h.d.ts" />
 
+/**
+ * @module components
+ */
+
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom/h';
 import { Position, SVGOption, } from '../../typings/defines';
@@ -18,10 +22,18 @@ import {
 } from '../../typings/defines';
 import { toArrowD, } from '../utils';
 
-type ClassName = {
+/**
+ * snabbdom 需要的class样式数据结构
+ */
+interface ClassName {
   [key: string]: boolean;
 };
 
+/**
+ * 将以空格连接的类样式字符串解析为ClassName类型的对象实例
+ * @param classNames 样式名
+ * @returns
+ */
 const parseClassName = (classNames: string): ClassName => {
   if (!classNames) 
     return {};
@@ -35,6 +47,11 @@ const parseClassName = (classNames: string): ClassName => {
   }, {});
 };
 
+/**
+ * 创建一个SVG的VNode
+ * @param option SVG的配置项
+ * @returns
+ */
 export const createSvg = (option: SVGOption): VNode => {
   const { size, viewbox, } = option;
   return h(
@@ -51,6 +68,11 @@ export const createSvg = (option: SVGOption): VNode => {
   );
 };
 
+/**
+ * 创建一个SVGGElement的VNode
+ * @param option SVGGElement的配置项
+ * @returns
+ */
 export const createGroup = (option: GroupOption): VNode => {
   const classObject = parseClassName(option.className);
 
@@ -69,11 +91,21 @@ export const createGroup = (option: GroupOption): VNode => {
   );
 };
 
+/**
+ * 创建一个用于创建style的策略函数, 该函数将会创建一个VNode
+ * @param styleSheet 用于SVG的样式
+ * @returns
+ */
 export const createStyle: Component<string> = (styleSheet: string): Strategy => (parentNode: VNode) => {
   parentNode.children.push(h('style', { ns: 'http://www.w3.org/2000/svg', }, styleSheet));
   return parentNode;
 };
 
+/**
+ * 创建一个用于创建Image的策略函数, 该策略函数将会创建一个VNode
+ * @param option 图片配置
+ * @returns
+ */
 export const createImage: Component<ImageOption> = (option: ImageOption): Strategy => (parentNode: VNode) => {
   const width = option.width || 50;
   const height = option.height || 50;
@@ -96,6 +128,11 @@ export const createImage: Component<ImageOption> = (option: ImageOption): Strate
   return parentNode;
 };
 
+/**
+ * 创建一个用于创建文本Text的策略函数, 该策略函数将会创建一个VNode
+ * @param option 文本配置
+ * @returns
+ */
 export const createText: Component<TextOption> = (option: TextOption): Strategy => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 

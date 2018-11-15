@@ -1,3 +1,7 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 
 // Example for middleware that show how to log patch behavior

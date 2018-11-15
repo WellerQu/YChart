@@ -1,12 +1,16 @@
+/**
+ * @module adapters
+ */
+
 import { ImageNodeOption, Node, } from '../../typings/defines';
-import { NODE_TYPE, } from '../NODE_TYPE';
 import { imagePath, } from '../utils';
+import { NODE_TYPE, } from '../constants/constants';
 
 /**
  * 将Node实例转换为ImageNodeOption实例
- * @memberof Adapters
+ * @memberof adapters
  * @param node Node实例
- * @returns ImageNodeOption实例
+ * @returns
  */
 export default function createImageNodeOption (node: Node): ImageNodeOption {
   return {

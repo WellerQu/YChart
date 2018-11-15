@@ -1,10 +1,14 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module components
+ */
+
 import { CallstackOption, Component, Strategy, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createText, createGroup, createRect, } from './components';
-import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants';
+import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants/constants';
 
 const createCallstack: Component<CallstackOption> = (option: CallstackOption): Strategy => (
   parentNode: VNode

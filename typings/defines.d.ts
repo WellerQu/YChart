@@ -9,6 +9,10 @@ export type Subscriber = (userState?: any) => void;
 export type Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: any) => void;
 export type CreateStage = (container: HTMLElement) => Stage;
 export type UpdateBehavior<T> = (data: T, option?: Viewbox) => void;
+
+/**
+ * 带有三角箭头的线段配置项, 实际上就是LineOption和ArrowOption的交叉类型
+ */
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
 export type EventHandler = (event: Event) => Event;
@@ -129,7 +133,7 @@ declare interface RuleOption {
   max: number;
   step: number;
   color?: string;
-  avaliableWidth: number;
+  availableWidth: number;
 }
 
 declare interface CallstackOption {

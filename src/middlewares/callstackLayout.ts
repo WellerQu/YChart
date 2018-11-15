@@ -1,9 +1,13 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, CallstackData, Position, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { toTranslate, parseTranslate, toArrowD, } from '../utils';
-import { CALLSTACK_HEIGHT, RULE_HEIGHT, RULE_PADDING, } from '../constants';
+import { CALLSTACK_HEIGHT, RULE_HEIGHT, RULE_PADDING, } from '../constants/constants';
 
 const STACK_SPACE = 5;
 const CALL_STACK_CLASS = 'callstack', CALL_LINE_CLASS = 'callline';

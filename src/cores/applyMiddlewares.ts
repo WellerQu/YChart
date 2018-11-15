@@ -1,5 +1,9 @@
-import compose from './compose';
-import { Stage, Middleware, CreateStage, PatchBehavior, } from '../typings/defines';
+/**
+ * @module cores
+ */
+
+import compose from '../compose';
+import { Stage, Middleware, CreateStage, PatchBehavior, } from '../../typings/defines';
 
 const applyMiddlewares = (...middlewares: Middleware[]) => (
   createStage: CreateStage

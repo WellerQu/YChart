@@ -1,10 +1,13 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module middlewares
+ */
+
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, ID_COMBINER, } from '../constants';
-import { NODE_TYPE, } from '../NODE_TYPE';
+import { NODE_SIZE, CELL_SIZE, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 import { toTranslate, updateLinePosition, } from '../utils';
 
 // 布局用的关键信息

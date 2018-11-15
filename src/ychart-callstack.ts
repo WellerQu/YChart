@@ -1,8 +1,12 @@
+/**
+ * @module instances
+ */
+
 import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from '../typings/defines';
-import createStage from './createStage';
+import createStage from './cores/createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
-import applyMiddlewares from './applyMiddlewares';
+import applyMiddlewares from './cores/applyMiddlewares';
 
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';
@@ -14,7 +18,7 @@ import compose from './compose';
 import { max, } from './utils';
 import { createRule, } from './components/createRule';
 import clone from './clone';
-import { RULE_STEP, CELL_SIZE, } from './constants';
+import { RULE_STEP, } from './constants/constants';
 
 
 function flatten (node: CallstackData): CallstackData[] {
@@ -61,7 +65,7 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
 
     const flattenData = flatten(data);
     const maxDuration = max(...flattenData.map(n => n.duration));
-    const avaliableWidth = root.data.attrs.width as number;
+    const availableWidth = root.data.attrs.width as number;
 
     // 当最大长度与刻度步长无法取整时, 需要向下取一个最近的最小可取整值
     // 比如: 步长为50, 最大值为835 则需要改成 850
@@ -81,12 +85,12 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
       min: 0,
       max: maxWidth,
       step: RULE_STEP,
-      avaliableWidth,
+      availableWidth,
     }));
 
     flattenData.forEach((item: CallstackData, index: number) => {
       item.maxDuration = maxWidth;
-      item.availableWidth = avaliableWidth;
+      item.availableWidth = availableWidth;
       create(callstack(item)); 
       if (index > 0)
         create(createCallLine({

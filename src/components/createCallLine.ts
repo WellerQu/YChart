@@ -1,5 +1,9 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module components
+ */
+
 import { Component, Strategy, LineOption, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';

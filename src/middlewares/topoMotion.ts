@@ -1,6 +1,10 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_TYPE, } from '../NODE_TYPE';
+import { NODE_TYPE, } from '../constants/constants';
 
 // const parsePath = (value: string): [Position, Position] => {
 //   const regExp = /M(\d+(\.\d+)?),(\d+(\.\d+)?) L(\d+(\.\d+)?),(\d+(\.\d+)?)/ig;

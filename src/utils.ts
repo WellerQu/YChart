@@ -4,9 +4,7 @@ import { VNode, } from 'snabbdom/vnode';
 
 import compose from './compose';
 import { EventHandler, Position, } from '../typings/defines';
-import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, } from './constants';
-import { NODE_TYPE, } from './NODE_TYPE';
-import clone from './clone';
+import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, NODE_TYPE, } from './constants/constants';
 
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
   // click事件需要特殊处理, 否则服无法区分是拖拽还是点击

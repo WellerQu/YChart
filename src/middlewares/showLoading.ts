@@ -1,3 +1,7 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, } from '../../typings/defines';
 import { createText, createStyle, } from '../components/components';
 

@@ -1,11 +1,15 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module middlewares
+ */
+
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, EventOption, TopoEventHandler, } from '../../typings/defines';
 import { setupEventHandler, } from '../utils';
 import compose from '../compose';
-import { NODE_TYPE, } from '../NODE_TYPE';
+import { NODE_TYPE, } from '../constants/constants';
 
 const handlerHelper = (
   handleNodeEvent: TopoEventHandler,

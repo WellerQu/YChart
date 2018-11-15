@@ -1,13 +1,13 @@
+/**
+ * @module adapters
+ */
+
 import { ServiceNodeOption, Node, } from '../../typings/defines';
-import { HEALTH, APDEX, } from '../HEALTH';
-import { NODE_TYPE, } from '../NODE_TYPE';
+import { HEALTH, APDEX, NODE_TYPE, } from '../constants/constants';
 
 /**
  * Circle 颜色字典
  * @requires HEALTH
- * @desc 
- * HEALTH.HEALTHY #a9d86e
- * HEALTH.NORMAL #86cae4
  */
 interface Colours {
   [key: string]: string;
@@ -49,9 +49,9 @@ const APDEX_COLOUR: Colours = {
 
 /**
  * 将Node实例转换为ServiceNodeOption实例
- * @memberof Adapters
+ * @memberof adapters
  * @param node Node实例
- * @returns ServiceNodeOption实例
+ * @returns
  */
 export default function createServiceNodeOption (node: Node): ServiceNodeOption {
   return { 

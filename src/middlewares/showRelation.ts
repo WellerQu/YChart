@@ -1,10 +1,12 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { setupEventHandler, findGroup, findRoot, } from '../utils';
-import { NODE_TYPE, } from '../NODE_TYPE';
-import { ID_COMBINER, } from '../constants';
+import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 import compose from '../compose';
-import { stringify, } from 'querystring';
 
 type Child =  string | VNode;
 

@@ -1,12 +1,15 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module middlewares
+ */
+
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
 import compose from '../compose';
-import { NODE_TYPE, } from '../NODE_TYPE';
-import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, } from '../constants';
+import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {

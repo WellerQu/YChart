@@ -1,3 +1,7 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 

@@ -1,11 +1,14 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, Viewbox, } from '../../typings/defines';
 import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePosition, } from '../utils';
 
 import createStore from '../store';
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_TYPE, } from '../NODE_TYPE';
 import compose from '../compose';
-import { ID_COMBINER, } from '../constants';
+import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 
 const store = createStore('TEMP_POSITION');
 

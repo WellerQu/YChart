@@ -1,3 +1,7 @@
+/**
+ * @module middlewares
+ */
+
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { createStyle, } from '../components/components';
 

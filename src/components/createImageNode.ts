@@ -1,7 +1,11 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module components
+ */
+
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_SIZE, } from '../constants';
+import { NODE_SIZE, } from '../constants/constants';
 import { ImageNodeOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';

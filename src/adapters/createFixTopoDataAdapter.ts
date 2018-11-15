@@ -1,14 +1,17 @@
+/**
+ * @module adapters
+ */
+
 import { TopoData, Node, Line, } from '../../typings/defines';
 import compose from '../compose';
-import { NODE_TYPE, DATABASE_TYPE, } from '../NODE_TYPE';
-import { HEALTH, } from '../HEALTH';
+import { NODE_TYPE, DATABASE_TYPE, } from '../constants/constants';
 
 /**
-   * 对TopoData实例进行修复
-   * @memberof Adapters
-   * @param data TopoData实例
-   * @returns TopoData实例
-   */
+ * 对TopoData实例进行修复
+ * @memberof adapters
+ * @param data TopoData实例
+ * @returns
+ */
 function fixAdapter (data: TopoData): TopoData {
   // 补齐缺省的字段值
   data.nodes = data.nodes.map((node: Node) => {

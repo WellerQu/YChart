@@ -1,3 +1,7 @@
+/**
+ * @module instances
+ */
+
 import { 
   Strategy, 
   Subscriber, 
@@ -8,8 +12,6 @@ import {
   EventOption, 
   Viewbox, 
 } from '../typings/defines';
-
-import { NODE_TYPE, } from './NODE_TYPE';
 
 import compose from './compose';
 import clone from './clone';
@@ -31,8 +33,8 @@ import createFixAdapter from './adapters/createFixTopoDataAdapter';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
 import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
 
-import applyMiddlewares from './applyMiddlewares';
-import createStage from './createStage';
+import applyMiddlewares from './cores/applyMiddlewares';
+import createStage from './cores/createStage';
 
 import createImageNode from './components/createImageNode';
 
@@ -43,6 +45,7 @@ import createNoDataNode from './components/createNoDataNode';
 import createArrowLine from './components/createArrowLine';
 import createNoDataLine from './components/createNoDataLine';
 import { showRelation, } from './middlewares/showRelation';
+import { NODE_TYPE, } from './constants/constants';
 
 const emptyPadding = (data: TopoData) => {
   if (!data)

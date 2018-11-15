@@ -1,10 +1,14 @@
 /// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
 
+/**
+ * @module middlewares
+ */
+
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-import { NODE_TYPE, } from '../NODE_TYPE';
 import { setupEventHandler, } from '../utils';
+import { NODE_TYPE, } from '../constants/constants';
 
 interface SVGAnimateMotionElement extends Element {
   beginElement(): void;

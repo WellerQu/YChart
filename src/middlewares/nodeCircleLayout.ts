@@ -1,3 +1,7 @@
+/**
+ * @module middlewares
+ */
+
 import {
   PatchBehavior,
   Stage,
@@ -7,9 +11,8 @@ import {
   Line,
 } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_TYPE, } from '../NODE_TYPE';
 import { toTranslate, updateLinePosition, } from '../utils';
-import { NODE_SIZE, ID_COMBINER, } from '../constants';
+import { NODE_SIZE, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 
 interface SortInfo {
   node: VNode;

@@ -1,18 +1,21 @@
+/**
+ * @module adapters
+ */
+
 import { ArrowLineOption, Line, } from '../../typings/defines';
-import { NODE_TYPE, } from '../NODE_TYPE';
-import { ID_COMBINER, } from '../constants';
+import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 
 /**
-   * @ignore
-   */
+ * @ignore
+ */
 const lineColor = '#2693ff';
 
 /**
-   * 将 Line 实例对象转换为 ArrowLineOption 实例
-   * @memberof Adapters
-   * @param line Line 实例对象
-   * @returns ArrowLineOption 实例
-   */
+ * 将 Line 实例对象转换为 ArrowLineOption 实例
+ * @memberof adapters
+ * @param line Line 实例对象
+ * @returns
+ */
 function createArrowLineOption (line: Line): ArrowLineOption {
   const id = `${line.source}${ID_COMBINER}${line.target}`;
 

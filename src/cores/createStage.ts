@@ -1,10 +1,14 @@
-/// <reference path="../node_modules/snabbdom/tovnode.d.ts" />
-/// <reference path="../node_modules/snabbdom/vnode.d.ts" />
-/// <reference path="../node_modules/snabbdom/snabbdom.d.ts" />
-/// <reference path="../node_modules/snabbdom/modules/attributes.d.ts" />
-/// <reference path="../node_modules/snabbdom/modules/style.d.ts" />
-/// <reference path="../node_modules/snabbdom/modules/class.d.ts" />
-/// <reference path="../node_modules/snabbdom/modules/eventlisteners.d.ts" />
+/// <reference path="../../node_modules/snabbdom/tovnode.d.ts" />
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+/// <reference path="../../node_modules/snabbdom/snabbdom.d.ts" />
+/// <reference path="../../node_modules/snabbdom/modules/attributes.d.ts" />
+/// <reference path="../../node_modules/snabbdom/modules/style.d.ts" />
+/// <reference path="../../node_modules/snabbdom/modules/class.d.ts" />
+/// <reference path="../../node_modules/snabbdom/modules/eventlisteners.d.ts" />
+
+/**
+ * @module cores
+ */
 
 import toNode from 'snabbdom/tovnode';
 import { VNode, } from 'snabbdom/vnode';
@@ -14,8 +18,8 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../typings/defines';
-import { createSvg, } from './components/components';
+import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../../typings/defines';
+import { createSvg, } from '../components/components';
 
 const vPatch = init([
   classes,

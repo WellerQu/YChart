@@ -8,7 +8,7 @@ export type PatchBehavior = (userState?: any) => void;
 export type Subscriber = (userState?: any) => void;
 export type Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: any) => void;
 export type CreateStage = (container: HTMLElement) => Stage;
-export type UpdateBehavior<T> = (data: T, option?: Viewbox) => void;
+export type UpdateBehavior<T> = (data: T, option?: Viewbox, merged?: boolean) => void;
 
 /**
  * 带有三角箭头的线段配置项, 实际上就是LineOption和ArrowOption的交叉类型
@@ -101,6 +101,13 @@ declare interface ServiceNodeOption {
   callCount: number;
   errorCount: number;
   id?: string;
+  className?: string;
+}
+
+declare interface AppNodeOption {
+  id: string;
+  title: string;
+  type: string;
   className?: string;
 }
 

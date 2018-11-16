@@ -30,7 +30,7 @@ updateTopo(topoData);
 const btnUpdate = document.querySelector('button#updateTopoData');
 btnUpdate.addEventListener('click', () => {
   topoData.nodes[0].instances = (Math.random() * 10) >> 0;
-  updateTopo(topoData, { x: 0, y: 0, width: 1600, height: 800, });
+  updateTopo(topoData, null, false);
 });
 
 const btnFullscreen = document.querySelector('button#fullTopoData');

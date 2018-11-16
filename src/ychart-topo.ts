@@ -27,7 +27,8 @@ import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';
 
-import createMergeAdapter from './adapters/createMergeNodeAdapter';
+import createMergeAdapter, { mergeUsers, } from './adapters/createMergeNodeAdapter';
+import createAppNodeAdapter from './adapters/createAppNodeOptionAdapter';
 import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
 import createFixAdapter from './adapters/createFixTopoDataAdapter';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
@@ -39,11 +40,9 @@ import createStage from './cores/createStage';
 import createImageNode from './components/createImageNode';
 
 import createServiceNode from './components/createServiceNode';
-import createCrossAppNode from './components/createCrossAppNode';
-import createNoDataNode from './components/createNoDataNode';
+import createAppNode from './components/createAppNode';
 
 import createArrowLine from './components/createArrowLine';
-import createNoDataLine from './components/createNoDataLine';
 import { showRelation, } from './middlewares/showRelation';
 import { NODE_TYPE, } from './constants/constants';
 
@@ -59,12 +58,7 @@ const emptyPadding = (data: TopoData) => {
   return data;
 };
 
-const formatDataAdapter = compose<TopoData>(
-  createFixAdapter,
-  createMergeAdapter,
-  emptyPadding,
-  clone,
-);
+
 
 const imageNode = compose<Strategy>(
   createImageNode,
@@ -76,23 +70,13 @@ const serviceNode = compose<Strategy>(
   createServiceNodeAdapter,
 );
 
-const crossAppNode = compose<Strategy>(
-  createCrossAppNode,
-  createServiceNodeAdapter,
-);
-
-const noDataNode = compose<Strategy>(
-  createNoDataNode,
-  createServiceNodeAdapter,
+const appNode = compose<Strategy>(
+  createAppNode,
+  createAppNodeAdapter,
 );
 
 const arrowLine = compose<Strategy>(
   createArrowLine,
-  createArrowLineOption,
-);
-
-const noDataLine = compose<Strategy>(
-  createNoDataLine,
   createArrowLineOption,
 );
 
@@ -104,8 +88,8 @@ export default (
   eventOption?: EventOption, 
   // 更新后回调
   updated?: Subscriber,
-  // 不显示数据
-  isNoData = false,
+  // 显示为应用程序
+  showAsApp = false,
 ): UpdateBehavior<TopoData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(
@@ -129,25 +113,32 @@ export default (
   patch();
 
   // Expose update method
-  return (data: TopoData, option?: Viewbox): void => {
+  return (data: TopoData, option?: Viewbox, merged = true): void => {
     const root = stageNode();
     root.data.attrs.id = elementID;
 
     viewbox(option);
     size(option);
 
+    const formatDataAdapter = compose<TopoData>(
+      createFixAdapter,
+      merged ? createMergeAdapter : mergeUsers,
+      emptyPadding,
+      clone,
+    );
+
     const formattedData: TopoData = formatDataAdapter(data);
     // map every line to strategy function which return a VNode
     formattedData.links.forEach((item: Line) => {
-      create(isNoData ? noDataLine(item) : arrowLine(item));
+      create(arrowLine(item));
     });
 
     // map every node to strategy function which return a VNode
     formattedData.nodes.forEach((item: Node) => {
-      if (item.crossApp)
-        create(crossAppNode(item));
+      if (showAsApp || item.crossApp) 
+        create(appNode(item));
       else if (item.type === NODE_TYPE.SERVER) 
-        create(isNoData ? noDataNode(item) : serviceNode(item));
+        create(serviceNode(item));
       else 
         create(imageNode(item));
     });

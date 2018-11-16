@@ -21,7 +21,7 @@ const createServiceNode:Component<ServiceNodeOption> = (option: ServiceNodeOptio
     isNumber(option.callCount) ? createText({ content: `${option.callCount} calls`, x: 82 + 15, y: 48 + 24, className: 'rpm', }) : identity,
     isNumber(option.elapsedTime) ? createText({ content: `${option.elapsedTime} ms`, x: 82 + 15, y: 36 + 24, className: 'elapsedTime', }): identity,
     createText({ content: option.instances, x: 35 + 15, y: 37 + 24, className: 'instances', }),
-    createText({ content: option.type, x: 0 + 15, y: 59 + 24, className: 'type', }),
+    createText({ content: option.type, x: 0 + 15, y: 56.5 + 24, className: 'type', }),
     createCircle({ cx: 0 + 15, cy: 55 + 24, radius: 15, fill: '#338cff', className: 'type', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 22, fill: 'white', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 35, fill: option.color, className: 'health', }),

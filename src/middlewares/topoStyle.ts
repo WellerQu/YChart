@@ -50,7 +50,17 @@ g.group.node text.title
 g.group.node text.type {
   fill: white;
   font-size: 7px;
+  text-anchor: middle;  /* 文本水平居中 */
+  dominant-baseline: middle; /* 文本垂直居中 */
   pointer-events: none;
+}
+
+g.group.node.app text.type {
+  font-size: 10px;
+}
+
+g.group.node.app:active .response {
+  opacity: .6;
 }
 
 g.group.node text.elapsedTime

@@ -11,7 +11,7 @@ import { NODE_TYPE, DATABASE_TYPE, } from '../constants/constants';
  * @param data TopoData实例
  * @returns
  */
-const mergeUsers = (data: TopoData): TopoData => {
+export const mergeUsers = (data: TopoData): TopoData => {
   const othersNodes: Node[] = data.nodes.filter((item: Node) => item.type !== NODE_TYPE.USER);
   const nodes: Node[] = data.nodes.filter((item: Node) => item.type === NODE_TYPE.USER);
 
@@ -36,7 +36,7 @@ const mergeUsers = (data: TopoData): TopoData => {
  * @param data TopoData实例
  * @returns 合并完后的TopoData实例
  */
-const mergeHTTPOrRPC = (data: TopoData): TopoData => { 
+export const mergeHTTPOrRPC = (data: TopoData): TopoData => { 
   // 不需要处理的节点
   const othersNodes: Node[] = data.nodes.filter((item: Node) => 
     item.type !== NODE_TYPE.HTTP && item.type !== NODE_TYPE.RPC
@@ -115,7 +115,7 @@ const mergeHTTPOrRPC = (data: TopoData): TopoData => {
  * @pause
  * @returns 合并完后的TopoData实例
  */
-const mergeDatabases = (data: TopoData): TopoData => {
+export const mergeDatabases = (data: TopoData): TopoData => {
   const othersNodes: Node[] = data.nodes.filter((item: Node) => 
     item.type !== NODE_TYPE.DATABASE && item.smallType !== DATABASE_TYPE.MYSQL
   );

@@ -7,6 +7,12 @@ import { ServiceNodeOption, Component, Strategy, } from '../../typings/defines';
 import compose from '../compose';
 import { createText, createCircle, createGroup, } from './components';
 
+/**
+ * 复合组件 - 组合了圆环, 文本的组件, 类似于拓扑图的Service节点组件, 区别是不会显示实例数等信息. 
+ * 同样, 创建了一个用于穿件跨应用节点的策略函数, 该函数将会创建VNode
+ * @param option 跨应用节点配置
+ * @returns
+ */
 const createCrossAppNode:Component<ServiceNodeOption> = (option: ServiceNodeOption): Strategy => (
   parentNode: VNode
 ) => {

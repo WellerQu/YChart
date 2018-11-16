@@ -9,6 +9,11 @@ import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createGroup, createArrow, createLine, } from './components';
 
+/**
+ * 复合组件 - 组合了箭头, 折线的组件, 创建一个用于创建调用关系连线的策略函数, 该函数将创建一个VNode
+ * @param option 调用关系折线配置
+ * @returns
+ */
 const createCallLine: Component<LineOption> = (option: LineOption): Strategy => (
   parentNode: VNode
 ) => {

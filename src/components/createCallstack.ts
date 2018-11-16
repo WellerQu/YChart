@@ -10,6 +10,11 @@ import compose from '../compose';
 import { createText, createGroup, createRect, } from './components';
 import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants/constants';
 
+/**
+ * 复合组件 - 组合了文本, 矩形的组件, 创建一个用于创建调用栈的策略函数, 该函数将创建一个VNode
+ * @param option 调用栈配置
+ * @returns
+ */
 const createCallstack: Component<CallstackOption> = (option: CallstackOption): Strategy => (
   parentNode: VNode
 ) => {

@@ -13,6 +13,11 @@ import { createText, createImage, createGroup, } from './components';
 
 const IMAGE_SIZE = 50; // both width and height
 
+/**
+ * 复合组件 - 组合了图片和文本的组件, 创建了一个用于创建图像节点的策略函数, 该函数将创建一个VNode
+ * @param option 图像节点配置
+ * @returns
+ */
 const createImageNode: Component<ImageNodeOption> = (option: ImageNodeOption): Strategy => (parentNode: VNode) => {
   const { title, URL, className, id, } = option;
 

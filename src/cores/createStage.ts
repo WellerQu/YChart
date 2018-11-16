@@ -20,6 +20,7 @@ import eventlistener from 'snabbdom/modules/eventlisteners';
 
 import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../../typings/defines';
 import { createSvg, } from '../components/components';
+import { isNull, } from '../utils';
 
 const vPatch = init([
   classes,
@@ -27,15 +28,6 @@ const vPatch = init([
   attributes,
   eventlistener,
 ]);
-
-const isNull = (value: any): boolean => {
-  if (value === null)
-    return true;
-  if (value === void 0)
-    return true;
-
-  return false;
-};
 
 function createStage (container: HTMLElement): Stage {
   const viewboxOption: Viewbox = {

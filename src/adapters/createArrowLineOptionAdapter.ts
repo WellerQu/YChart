@@ -4,6 +4,7 @@
 
 import { ArrowLineOption, Line, } from '../../typings/defines';
 import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
+import { isNull, } from '../utils';
 
 /**
  * @ignore
@@ -31,7 +32,7 @@ function createArrowLineOption (line: Line): ArrowLineOption {
     strokeWidth: 1,
     id,
     className: NODE_TYPE.LINE,
-    text: `${line.elapsedTime} ms`,
+    text: isNull(line.elapsedTime) ? void 0 : `${line.elapsedTime} ms`,
   };
 }
 

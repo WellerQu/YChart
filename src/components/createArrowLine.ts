@@ -9,6 +9,11 @@ import { ArrowLineOption, Component, Strategy, } from '../../typings/defines';
 import compose from '../compose';
 import { createText, createArrow, createLine, createGroup, } from './components';
 
+/**
+ * 复合组件 - 组合了箭头, 文本, 线段的组件, 创建了一个用于穿件复合组件的策略函数, 该函数将会创建一个VNode
+ * @param option 线段配置
+ * @returns
+ */
 const createArrowLine: Component<ArrowLineOption> = (option: ArrowLineOption): Strategy => (
   parentNode: VNode
 ) => {

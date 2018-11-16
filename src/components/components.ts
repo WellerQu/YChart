@@ -151,6 +151,11 @@ export const createText: Component<TextOption> = (option: TextOption): Strategy 
   return parentNode;
 };
 
+/**
+ * 创建一个用于穿件圆环的策略函数, 该函数将会创建一个VNode
+ * @param option 圆环配置
+ * @returns
+ */
 export const createCircle: Component<CircleOption> = (option: CircleOption): Strategy => (parentNode: VNode) => {
   const classObject = parseClassName(option.className);
 
@@ -170,6 +175,11 @@ export const createCircle: Component<CircleOption> = (option: CircleOption): Str
   return parentNode;
 };
 
+/**
+ * 创建一个用于创建线段的策略函数, 该策略函数将会创建一个VNode
+ * @param option 线段配置
+ * @returns
+ */
 export const createLine: Component<LineOption> = (option: LineOption): Strategy => (parentNode: VNode) => {
   const { L = [], } = option;
   const actions = L.map<string>((item: Position) => {
@@ -194,6 +204,11 @@ export const createLine: Component<LineOption> = (option: LineOption): Strategy 
   return parentNode;
 };
 
+/**
+ * 创建一个用于穿件箭头的策略函数, 该策略函数将会创建一个VNode
+ * @param option 箭头配置
+ * @returns
+ */
 export const createArrow: Component<ArrowOption> = (option: ArrowOption): Strategy => (pardentNode: VNode) => {
   const { x, y, width, height, } = option;
 
@@ -211,6 +226,11 @@ export const createArrow: Component<ArrowOption> = (option: ArrowOption): Strate
   return pardentNode;
 };
 
+/**
+ *  创建一个用于创建矩形的策略函数, 该策略函数将会创建一个VNode
+ * @param option 矩形配置
+ * @returns
+ */
 export const createRect: Component<RectOption> = (option: RectOption): Strategy => (parentNode: VNode) => {
   const { className, strokeWidth, ...others } = option;
   const classObject = parseClassName(className);

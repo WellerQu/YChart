@@ -103,8 +103,6 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   const graphWidth = maximumX - minimumX;
   const graphHeight = maximumY - minimumY;
-  const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
-  const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
 
   if (children.length < MIN_NODE_COUNT) {
     // 若节点数非常少, 则仅仅居中而不缩放比例
@@ -120,6 +118,8 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
     return next(userState);
   }
 
+  const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
+  const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
   const acceptWidth = graphHeight * size.width / size.height;
   const acceptHeight = graphWidth * size.height / size.width;
 

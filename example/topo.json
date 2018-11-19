@@ -9,7 +9,7 @@
         "times": 0,
         "type": "SERVER",
         "smallType": null,
-        "instances": 0,
+        "instances": 1,
         "activeInstances": 0,
         "elapsedTime": 0,
         "rpm": 0,
@@ -17,7 +17,8 @@
         "health": null,
         "totalCount": 0,
         "errorTotalCount": 0,
-        "crossApp": true
+        "crossApp": true,
+        "tiersCount": 12
       }
     ],
     "links": []

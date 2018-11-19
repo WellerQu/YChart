@@ -184,6 +184,7 @@ declare interface Node {
   totalCount?: number;
   errorTotalCount?: number;
   crossApp?: boolean;
+  tiersCount?: number;
 }
 
 declare interface TierNode {

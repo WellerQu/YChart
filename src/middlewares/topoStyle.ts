@@ -12,9 +12,10 @@ g.group {
   letter-spacing: -.3996px;
   font-size: 12px;
   cursor: pointer;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 
+  -webkit-will-change: z-index, transform, opacity, d;
   will-change: z-index, transform, opacity, d;
 }
 
@@ -22,11 +23,13 @@ g.group.weak {
   opacity: .1;
 }
 
+/*
 g.group.node
 , g.group.line {
   -webkit-transition: opacity 0.4s ease-out 0.5s;
   transition: opacity 0.4s ease-out 0.5s;
 }
+*/
 
 g.group.node:active > circle.health
 , g.group.line:active > path.link-line {

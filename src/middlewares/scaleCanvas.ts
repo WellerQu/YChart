@@ -1,3 +1,5 @@
+/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+
 /**
  * @module middlewares
  */

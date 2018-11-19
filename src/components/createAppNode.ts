@@ -13,6 +13,7 @@ const createAppNode:Component<AppNodeOption> = (option: AppNodeOption): Strategy
   const createNode = compose<VNode>(
     createText({ content: option.title, x: 35 + 15, y: 90 + 24, className: 'title', }),
     createText({ content: 'Application', x: 35 + 15, y: 35 + 24, className: 'type', }),
+    createText({ content: 'Application', x: 35 + 15, y: 35 + 24, className: 'type', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 30, fill: '#CC99CC', className: 'response', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 32, fill: '#FFF', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 35, fill: '#CC99CC', className: 'response', }),

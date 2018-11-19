@@ -12,6 +12,7 @@ import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
 // limit range
 const widthClamp = clamp(320, 2420);
 const heightClamp = clamp(160, 1210);
+const MIN_NODE_COUNT = 3;
 
 const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   let svgElement = event.target as HTMLElement;
@@ -93,32 +94,45 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
       maximumY = position.y;
   });
 
-  const graphWidth = maximumX - minimumX + NODE_SIZE;
-  const graphHeight = maximumY - minimumY + NODE_SIZE;
-  const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
-  const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
-  const acceptWidth = graphHeight * size.width / size.height;
-  const acceptHeight = graphWidth * size.height / size.width;
+  maximumX += NODE_SIZE;
+  maximumY += NODE_SIZE;
 
   // Example:
   // stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: graphWidth * size.height / size.width, });
   // stage.viewbox({ x: offsetX, y: minimumY, width: graphHeight * size.width / size.height, height: graphHeight, });
 
+  const graphWidth = maximumX - minimumX;
+  const graphHeight = maximumY - minimumY;
+  const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
+  const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
+
+  if (children.length < MIN_NODE_COUNT) {
+    // 若节点数非常少, 则仅仅居中而不缩放比例
+    stage.viewbox(
+      {
+        x: (size.width - graphWidth) / -2 + minimumX,
+        y: (size.height - graphHeight) / -2 + minimumY,
+        width: size.width, 
+        height: size.height,
+      }
+    );
+
+    return next(userState);
+  }
+
+  const acceptWidth = graphHeight * size.width / size.height;
+  const acceptHeight = graphWidth * size.height / size.width;
+
   if (graphWidth > graphHeight && size.width <= size.height) {
     stage.viewbox({x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-    // stage.viewbox({x: 0, y: 0, width: graphWidth, height: acceptHeight, });
   } else if (graphWidth <= graphHeight && size.width > size.height) {
     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-    // stage.viewbox({ x: 0, y: 0, width: acceptWidth, height: graphHeight, });
   } else if (graphWidth <= graphHeight && size.width <= size.height) {
     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-    // stage.viewbox({ x: 0, y: 0, width: acceptWidth, height: graphHeight, });
   } else if (graphWidth > graphHeight && size.width > size.height) {
     stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-    // stage.viewbox({ x: 0, y: 0, width: graphWidth, height: acceptHeight, });
   } else if (graphWidth === graphHeight && size.width === size.height) {
     stage.viewbox({ x: minimumX, y: minimumY, width: graphWidth, height: graphWidth, });
-    // stage.viewbox({ x: 0, y: 0, width: graphWidth, height: graphWidth, });
   }
 
   next(userState);

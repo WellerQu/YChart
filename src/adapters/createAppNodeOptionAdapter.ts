@@ -6,6 +6,8 @@ function createAppNodeOption (node: Node): AppNodeOption {
     title: node.showName,
     type: 'App',
     className: `app ${NODE_TYPE.NODE}`,
+    tierCount: node.tiersCount || 0,
+    instances: node.instances,
     id: node.id,
   };
 };

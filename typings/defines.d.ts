@@ -108,6 +108,8 @@ declare interface AppNodeOption {
   id: string;
   title: string;
   type: string;
+  tierCount: number;
+  instances: number;
   className?: string;
 }
 

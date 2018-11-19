@@ -15,6 +15,41 @@ export const isNull = (value: any): boolean => {
   return false;
 };
 
+
+/**
+ * 将VNode集合按照类型分为Node集合, Line集合, 其他集合
+ * @param collection VNode集合
+ * @returns
+ */
+export function group (collection: VNode[]): [VNode[], VNode[], VNode[]] {
+  const lines: VNode[] = [];
+  const nodes: VNode[] = [];
+  const rests: VNode[] = [];
+
+  if (!collection || collection.length === 0)
+    return [lines, nodes, rests,];
+
+  for (let i = 0, len = collection.length; i < len; i++) {
+    const item = collection[i];
+
+    if (!item.data || !item.data.class)
+      continue;
+
+    if (item.data.class[NODE_TYPE.NODE]) {
+      nodes.push(item);
+      continue;
+    }
+    if (item.data.class[NODE_TYPE.LINE]) {
+      lines.push(item);
+      continue;
+    }
+
+    rests.push(item);
+  }
+
+  return [lines, nodes, rests,];
+}
+
 export const setupEventHandler = (handler: EventHandler) => (eventName: string) => (vnode: VNode): VNode => {
   // click事件需要特殊处理, 否则服无法区分是拖拽还是点击
   // 判定标注: 

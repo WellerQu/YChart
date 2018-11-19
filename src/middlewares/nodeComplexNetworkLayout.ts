@@ -7,6 +7,7 @@
 import { VNode, } from 'snabbdom/vnode';
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { NODE_TYPE, } from '../constants/constants';
+import { group, } from '../utils';
 
 interface LayoutItem {
   callerCount: number;
@@ -14,40 +15,6 @@ interface LayoutItem {
   node: VNode;
   children: Set<VNode>;
 };
-
-/**
- * 将VNode集合按照类型分为Node集合, Line集合, 其他集合
- * @param collection VNode集合
- * @returns
- */
-function group (collection: VNode[]): [VNode[], VNode[], VNode[]] {
-  const lines: VNode[] = [];
-  const nodes: VNode[] = [];
-  const rests: VNode[] = [];
-
-  if (!collection || collection.length === 0)
-    return [lines, nodes, rests,];
-
-  for (let i = 0, len = collection.length; i < len; i++) {
-    const item = collection[i];
-
-    if (!item.data || !item.data.class)
-      continue;
-
-    if (item.data.class[NODE_TYPE.NODE]) {
-      nodes.push(item);
-      continue;
-    }
-    if (item.data.class[NODE_TYPE.LINE]) {
-      lines.push(item);
-      continue;
-    }
-
-    rests.push(item);
-  }
-
-  return [lines, nodes, rests,];
-}
 
 export const nodeComplexNetworkLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();

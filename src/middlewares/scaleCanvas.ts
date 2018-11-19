@@ -5,7 +5,7 @@
  */
 
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, parseTranslate, } from '../utils';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, parseTranslate, group, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
 
@@ -101,10 +101,12 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
   // stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: graphWidth * size.height / size.width, });
   // stage.viewbox({ x: offsetX, y: minimumY, width: graphHeight * size.width / size.height, height: graphHeight, });
 
+  const [,nodes,] = group(children as VNode[]);
+
   const graphWidth = maximumX - minimumX;
   const graphHeight = maximumY - minimumY;
 
-  if (children.length < MIN_NODE_COUNT) {
+  if (nodes.length < MIN_NODE_COUNT) {
     // 若节点数非常少, 则仅仅居中而不缩放比例
     stage.viewbox(
       {

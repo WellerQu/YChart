@@ -125,15 +125,21 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
   const acceptWidth = graphHeight * size.width / size.height;
   const acceptHeight = graphWidth * size.height / size.width;
 
-  if (graphWidth > graphHeight && size.width <= size.height) {
-    stage.viewbox({x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-  } else if (graphWidth <= graphHeight && size.width > size.height) {
+  if (graphWidth > graphHeight && size.width >= size.height) {
+    if (graphHeight < size.height + 100)
+      stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+    else
+      stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+  } else if (graphWidth < graphHeight && size.width >= size.height) {
     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-  } else if (graphWidth <= graphHeight && size.width <= size.height) {
-    stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-  } else if (graphWidth > graphHeight && size.width > size.height) {
+  } else if (graphWidth >= graphHeight && size.width < size.height) {
     stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-  } else if (graphWidth === graphHeight && size.width === size.height) {
+  } else if (graphWidth <= graphHeight && size.width < size.height) {
+    if (graphWidth < size.width + 100)
+      stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
+    else
+      stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
+  } else if (graphWidth === graphWidth && size.width === size.height) {
     stage.viewbox({ x: minimumX, y: minimumY, width: graphWidth, height: graphWidth, });
   }
 

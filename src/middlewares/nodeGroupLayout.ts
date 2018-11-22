@@ -41,23 +41,6 @@ const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
   });
 };
 
-const linkLine = (nodePool: KeyInfo[]) => (lines: VNode[]): VNode[] => {
-  return lines.map((item: VNode) => {
-    const id = item.data.attrs['id'] as string;
-    if (!id.split) return item;
-
-    const [source, target,] = id.split(ID_COMBINER);
-
-    const start = nodePool.find(n => n.id === source);
-    const end = nodePool.find(n => n.id === target);
-
-    if (!start || !end)
-      return item;
-
-    return updateLinePosition(item, start.position, end.position);
-  });
-};
-
 const placeUserGroup = placeNode(0);
 const placeServerGroup = placeNode(1);
 const placeRemoteGroup = placeNode(2);
@@ -114,14 +97,9 @@ export const nodeGroupLayout = (stage: Stage) => (next: PatchBehavior) => (userS
   const placedServiceGroup = placeServerGroup(serverGroup);
   const placedRemoteGroup = placeRemoteGroup(remoteGroup);
 
-  // 摆放线段
-  const allElements = [...placedUserGroup, ...placedServiceGroup, ...placedRemoteGroup,];
-  const placeLineGroup = linkLine(allElements);
-  const placedLineGroup = placeLineGroup(lineGroup);
-
   root.children = [
     ...restGroup, 
-    ...placedLineGroup, 
+    ...lineGroup, 
     ...placedUserGroup.map(n => n.vnode), 
     ...placedServiceGroup.map(n => n.vnode), 
     ...placedRemoteGroup.map(n => n.vnode),

@@ -13,8 +13,8 @@ import {
   Line,
 } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
-import { toTranslate, updateLinePosition, } from '../utils';
-import { NODE_SIZE, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
+import { toTranslate, } from '../utils';
+import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
 
 interface SortInfo {
   node: VNode;
@@ -169,24 +169,9 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
       return item;
     });
 
-  const newLines = lineGroup.map((item: VNode) => {
-    const id = item.data.attrs['id'] as string;
-    if (!id.split) return item;
-
-    const [source, target,] = id.split(ID_COMBINER);
-    if (!positionMap.has(source)) return item;
-    if (!positionMap.has(target)) return item;
-
-    const start = positionMap.get(source);
-    const end = positionMap.get(target);
-
-    // 更新线的起始与结束坐标
-    return updateLinePosition(item, start, end);
-  });
-
   root.children = [
     ...restGroup,
-    ...newLines,
+    ...lineGroup,
     ...newUserNodes,
     ...newServiceNodes,
     ...newRemoteNodes,

@@ -7,10 +7,10 @@
 import { Stage, PatchBehavior, TopoData, Middleware, Position, Store, Size, Viewbox, } from '../../typings/defines';
 import { setupEventHandler, findGroup, parseTranslate, toTranslate, updateLinePosition, } from '../utils';
 
-import createStore from '../store';
 import { VNode, } from 'snabbdom/vnode';
+import createStore from '../store';
 import compose from '../compose';
-import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
+import { NODE_TYPE, } from '../constants/constants';
 
 const store = createStore('TEMP_POSITION');
 
@@ -63,21 +63,6 @@ const syncPosition = (nodes: VNode[], store: Store, viewbox: Viewbox, size: Size
       }
 
       positionMap.set(id, position);
-    });
-  }
-
-  if (lineGroup.length > 0) {
-    lineGroup.forEach((item: VNode) => {
-      const id = item.data.attrs.id as string;
-      const [source, target,] = id.split(ID_COMBINER);
-      if (!positionMap.has(source))
-        return;
-      if (!positionMap.has(target))
-        return;
-
-      const start = positionMap.get(source);
-      const end = positionMap.get(target);
-      updateLinePosition(item, start, end);
     });
   }
 

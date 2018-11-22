@@ -19,6 +19,7 @@ import clone from './clone';
 import { log, } from './middlewares/log';
 import { nodeGroupLayout, } from './middlewares/nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
+import { nodeForceDirectedLayout, } from './middlewares/nodeForceDirectedLayout';
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
@@ -26,6 +27,7 @@ import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';
+import { linkLine, } from './middlewares/linkLine';
 
 import createMergeAdapter, { mergeUsers, } from './adapters/createMergeNodeAdapter';
 import createAppNodeAdapter from './adapters/createAppNodeOptionAdapter';
@@ -99,7 +101,9 @@ export default (
     event(eventOption),
     nodeGroupLayout,
     nodeCircleLayout,
-    nodePositionMemory,
+    nodeForceDirectedLayout,
+    // nodePositionMemory,
+    linkLine,
     scaleCanvas,
     moveCanvas,
     moveNode,

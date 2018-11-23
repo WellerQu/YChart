@@ -5,7 +5,7 @@
  */
 
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, parseTranslate, group, } from '../utils';
+import { setupEventHandler, throttle, clamp, parseViewBoxValue, toViewBox, parseTranslate, group, findRoot, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
 
@@ -15,10 +15,7 @@ const heightClamp = clamp(160, 1210);
 const MIN_NODE_COUNT = 3;
 
 const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
-  let svgElement = event.target as HTMLElement;
-  while(svgElement.nodeName.toUpperCase() !== 'SVG') {
-    svgElement = svgElement.parentElement;
-  }
+  const svgElement = findRoot(event);
 
   const viewBox = svgElement.getAttribute('viewBox');
   const [x, y, width, height,] = parseViewBoxValue(viewBox);

@@ -7,8 +7,8 @@
 import { VNode, } from 'snabbdom/vnode';
 
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
-import { toTranslate, updateLinePosition, } from '../utils';
+import { NODE_SIZE, CELL_SIZE, NODE_TYPE, } from '../constants/constants';
+import { toTranslate, } from '../utils';
 
 // 布局用的关键信息
 interface KeyInfo {

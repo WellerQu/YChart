@@ -85,7 +85,12 @@ function createStage (container: HTMLElement): Stage {
       viewboxOption.width = width;
       viewboxOption.height = height;
 
-      root.data.attrs.viewBox = [viewboxOption.x, viewboxOption.y, viewboxOption.width, viewboxOption.height,].join(',');
+      root.data.attrs.viewBox = [
+        viewboxOption.x, 
+        viewboxOption.y, 
+        viewboxOption.width, 
+        viewboxOption.height,
+      ].join(',');
     }
 
     return viewboxOption;

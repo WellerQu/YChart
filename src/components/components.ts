@@ -75,12 +75,13 @@ export const createSvg = (option: SVGOption): VNode => {
  */
 export const createGroup = (option: GroupOption): VNode => {
   const classObject = parseClassName(option.className);
+  const { x = 0, y = 0, } = option;
 
   return h(
     'g',
     {
       class: { ...classObject, group: true, },
-      style: { transform: `translate(${option.x || 0}px, ${option.y || 0}px)`, },
+      style: { transform: `translate(${x}px, ${y}px)`, },
       ns: 'http://www.w3.org/2000/svg',
       key: option.id,
       attrs: {

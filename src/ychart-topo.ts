@@ -102,7 +102,7 @@ export default (
     nodeGroupLayout,
     nodeCircleLayout,
     nodeForceDirectedLayout,
-    // nodePositionMemory,
+    nodePositionMemory,
     linkLine,
     scaleCanvas,
     moveCanvas,

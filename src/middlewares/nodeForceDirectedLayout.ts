@@ -9,15 +9,13 @@ import { Stage, PatchBehavior, TopoData, Position, Line, } from '../../typings/d
 import { group, parseTranslate, clamp, toTranslate, } from '../utils';
 
 export const nodeForceDirectedLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  if (!userState)
-    return next(userState);
+  // 若节点数大于500 或者小于4, 则被认为不适合本布局
+  if (!userState) return next(userState);
+  if (userState.nodes.length === 0) return next(userState);
+  if (userState.nodes.length >=100 || userState.nodes.length < 10) return next(userState);
 
   const root = stage.stageNode();
   const [ lines, nodes, rests, ] = group(root.children as VNode[]);
-
-  // 若节点数大于500 或者小于4, 则被认为不适合本布局
-  if (nodes.length >= 100 || nodes.length < 4) 
-    return next(userState);
 
   const forceNodes = nodes.map<ForceNode>((node: VNode) => ({
     origin: node,
@@ -79,7 +77,7 @@ function run (nodes: ForceNode[]): ForceNode[] {
         p3.y = k * (p1.y - p2.y) + p2.y;
       } 
       // 两点过近
-      else if (dist < BALANCE_DIST) {
+      else if (dist < BALANCE_DIST && dist > 0) {
         force = (BALANCE_DIST - dist) / ATTENUATION; // 产生一个斥力
         force = forceClamp(force);
         force += nodes[j].lengthOfChild / ATTENUATION;

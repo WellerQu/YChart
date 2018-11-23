@@ -136,7 +136,8 @@ export const parseViewBoxValue = (value: string): number[] => value.split(',').m
 export const parseTranslate = (value: string): ( Position | never) => {
   const regExp = /^translate\((-?\d+(\.\d+)?)px,\s*(-?\d+(\.\d+)?)px\)$/igm;
   if (!regExp.test(value))
-    throw new Error(`can NOT convert to Position: ${value}`);
+    // throw new Error(`can NOT convert to Position: ${value}`);
+    return { x: 0, y: 0, };
   
   return {
     x: +RegExp.$1,

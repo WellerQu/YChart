@@ -27,7 +27,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
 ) => (userState?: TopoData) => {
   if (!userState) return next(userState);
   if (userState.nodes.length === 0) return next(userState);
-  if (userState.nodes.length <= 4) return next(userState);
+  if (userState.nodes.length >= 10 || userState.nodes.length < 5) return next(userState);
 
   const root = stage.stageNode();
   const nodes = root.children as VNode[];

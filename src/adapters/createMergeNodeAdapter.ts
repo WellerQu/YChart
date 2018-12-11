@@ -85,13 +85,13 @@ export const mergeHTTPOrRPC = (data: TopoData): TopoData => {
       relatedLines
         .filter((line: Line) => othersNodes.find((n: Node) => n.id === line.source))
         .map<TierNode>((line: Line) => {
-        const tier = othersNodes.find((n: Node) => n.id === line.source);
-        return {
-          tierName: tier.name,
-          name: node.name,
-          elapsedTime: line.elapsedTime,
-        };
-      })
+          const tier = othersNodes.find((n: Node) => n.id === line.source);
+          return {
+            tierName: tier.name,
+            name: node.name,
+            elapsedTime: line.elapsedTime,
+          };
+        })
     );
   });
 

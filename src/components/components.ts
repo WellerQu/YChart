@@ -41,10 +41,10 @@ const parseClassName = (classNames: string): ClassName => {
   return classNames
     .split(' ')
     .reduce<ClassName>((classObject: ClassName, key: string) => {
-    if (key && key.trim())
-      classObject[key] = true;
-    return classObject;
-  }, {});
+      if (key && key.trim())
+        classObject[key] = true;
+      return classObject;
+    }, {});
 };
 
 /**

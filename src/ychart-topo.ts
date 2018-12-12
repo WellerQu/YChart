@@ -99,8 +99,11 @@ export default (
     showLoading,
     showRelation,
     event(eventOption),
+    // 基本布局策略
     nodeGroupLayout,
+    // 环形布局策略
     nodeCircleLayout,
+    // 力导向布局策略
     nodeForceDirectedLayout,
     nodePositionMemory,
     linkLine,

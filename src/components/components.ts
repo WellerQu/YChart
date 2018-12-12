@@ -61,7 +61,6 @@ export const createSvg = (option: SVGOption): VNode => {
         width: size.width,
         height: size.height,
         viewBox: [viewbox.x, viewbox.y, viewbox.width, viewbox.height,].join(','),
-        // preserveAspectRatio: 'xMidYMid meet',
       },
     },
     []

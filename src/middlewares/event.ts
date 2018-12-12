@@ -41,6 +41,10 @@ const handlerHelper = (
   return event;
 };
 
+/**
+ * 添加事件处理能力, 使拓扑图的调用处能注入已定义的事件. 目前已定义的事件有: nodeClick,lineClick,nodeMouseOver,lineMouseOver,
+ * nodeMouseOut,lineMouseOut
+ */
 export const event = (options: EventOption ) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const root = stage.stageNode();
 
@@ -56,5 +60,6 @@ export const event = (options: EventOption ) => (stage: Stage) => (next: PatchBe
 
   setupEvent(root);
 
+  // 进入下一个中间件
   next(userState);
 };

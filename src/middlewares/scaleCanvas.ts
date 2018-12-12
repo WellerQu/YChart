@@ -12,18 +12,20 @@ import {
   parseViewBoxValue,
   toViewBox,
   parseTranslate,
-  group,
   findRoot,
 } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
+import compose from '../compose';
 
 // limit range
-const widthClamp = clamp(320, 2420);
-const heightClamp = clamp(160, 1210);
-const MIN_NODE_COUNT = 3;
+const scaleClamp = clamp(-0.9, 1);
 
-let offsetX = 0, offsetY = 0;
+let offsetX = 0, offsetY = 0, isDragging = false;
+const startPosition = { x: 0, y: 0, };
+
+// 缩放比例
+let scale = 0;
 
 const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   if (event.deltaY === 0)
@@ -31,34 +33,56 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
 
   const svgElement = findRoot(event);
 
-  const viewBox = svgElement.getAttribute('viewBox');
-  const [x, y, width, height,] = parseViewBoxValue(viewBox);
+  // changes to bigger if direct is -1, or changes to smaller
+  const direct = event.deltaY < 0 ? -1 : 1;
+  scale += direct / 100;
 
-  const diffWidth = 20;
-  const diffHeight = diffWidth * height / width;
+  scale = scaleClamp(scale);
 
-  let direct = 0;
+  const width = svgElement.clientWidth, height = svgElement.clientHeight;
+  const newWidth = width * (1 + scale), newHeight = height * (1 + scale);
 
-  if (event.deltaY < 0) {
-    // to bigger
-    direct = -1;
-  } else if (event.deltaY > 0) {
-    // to smaller
-    direct = 1;
-  }
+  console.log(newWidth, newHeight);
 
-  const newWidth = widthClamp(width + diffWidth * direct);
-  const newHeight = heightClamp(height + diffHeight * direct);
+  const newX = ((newWidth / width) - 1)* (width / -2) + offsetX;
+  const newY = ((newHeight / height) - 1)* (height / -2) + offsetY;
 
-  const newX = (newWidth - svgElement.clientWidth) / -2 + offsetX;
-  const newY = (newHeight - svgElement.clientHeight) / -2 + offsetY;
+  // 1205.3309064438224 1032.001467115687
 
+  // set up the new parameters of viewport
   svgElement.setAttribute('viewBox', toViewBox(newX, newY, newWidth, newHeight));
 
   return event;
 };
 
+const handleMouseDown = (event: MouseEvent): MouseEvent => {
+  isDragging = true;
+  startPosition.x = event.pageX;
+  startPosition.y = event.pageY;
+
+  return event;
+};
+
+const handleMouseUp = (event: MouseEvent): MouseEvent => {
+  if (!isDragging)
+    return event;
+
+  const diffX = event.pageX - startPosition.x;
+  const diffY = event.pageY - startPosition.y;
+
+  isDragging = false;
+  offsetX = offsetX - diffX;
+  offsetY = offsetY - diffY;
+
+  return event;
+};
+
 const setupMousewheel = setupEventHandler(throttle(handleMousewheel, 20))('mousewheel');
+const setupDragMoveHandler = compose<VNode>(
+  setupEventHandler(handleMouseDown)('mousedown'),
+  setupEventHandler(handleMouseUp)('mouseup'),
+  setupEventHandler(handleMouseUp)('mouseout'),
+);
 
 // Scale stage
 export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
@@ -75,11 +99,13 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   // 绑定滚轮事件实现缩放
   setupMousewheel(root);
+  // 但是拖拽画布之后要更新偏移
+  setupDragMoveHandler(root);
 
   if (children.length === 0)
     return next(userState);
 
-  // 初始化缩放比例
+  // 初始化偏移
   const [head, ...tail] = children.filter((item: (VNode | string)) => {
     const node = item as VNode;
     if (node.data && node.data.class && node.data.class[NODE_TYPE.NODE])
@@ -93,33 +119,22 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
 
   tail.forEach((node: VNode) => {
     const position = parseTranslate(node.data.style.transform);
-    if (minimumX > position.x) 
-      minimumX = position.x;
-    if (maximumX < position.x)
-      maximumX = position.x;
-    if (minimumY > position.y)
-      minimumY = position.y;
-    if (maximumY < position.y)
-      maximumY = position.y;
+    minimumX = Math.min(minimumX, position.x);
+    minimumY = Math.min(minimumY, position.y);
+    maximumX = Math.max(maximumX, position.x);
+    maximumY = Math.max(maximumY, position.y);
   });
 
   maximumX += NODE_SIZE;
   maximumY += NODE_SIZE;
 
-  // Example:
-  // stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: graphWidth * size.height / size.width, });
-  // stage.viewbox({ x: offsetX, y: minimumY, width: graphHeight * size.width / size.height, height: graphHeight, });
-
-
+  // 计算拓扑图整体所在最小矩形
   const graphWidth = maximumX - minimumX;
   const graphHeight = maximumY - minimumY;
 
   offsetX =  (size.width - graphWidth) / -2 + minimumX;
   offsetY = (size.height - graphHeight) / -2 + minimumY,
 
-  // const [,nodes,] = group(children as VNode[]);
-  // if (nodes.length < MIN_NODE_COUNT) {
-  // 若节点数非常少, 则仅仅居中而不缩放比例
   stage.viewbox(
     {
       x: offsetX,
@@ -130,30 +145,4 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
   );
 
   return next(userState);
-  // }
-
-  // const offsetY = (size.height * graphWidth / size.width - graphHeight) / -2 + minimumY;
-  // const offsetX = (size.width * graphHeight / size.height - graphWidth) / -2 + minimumX;
-  // const acceptWidth = graphHeight * size.width / size.height;
-  // const acceptHeight = graphWidth * size.height / size.width;
-
-  // if (graphWidth > graphHeight && size.width >= size.height) {
-  //   if (graphHeight < size.height + 100)
-  //     stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-  //   else
-  //     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-  // } else if (graphWidth < graphHeight && size.width >= size.height) {
-  //   stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-  // } else if (graphWidth >= graphHeight && size.width < size.height) {
-  //   stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-  // } else if (graphWidth <= graphHeight && size.width < size.height) {
-  //   if (graphWidth < size.width + 100)
-  //     stage.viewbox({ x: offsetX, y: minimumY, width: acceptWidth, height: graphHeight, });
-  //   else
-  //     stage.viewbox({ x: minimumX, y: offsetY, width: graphWidth, height: acceptHeight, });
-  // } else if (graphWidth === graphWidth && size.width === size.height) {
-  //   stage.viewbox({ x: minimumX, y: minimumY, width: graphWidth, height: graphWidth, });
-  // }
-
-  // next(userState);
 };

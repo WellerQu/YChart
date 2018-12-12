@@ -8,6 +8,9 @@ import { VNode, } from 'snabbdom/vnode';
 import { Stage, PatchBehavior, TopoData, Position, Line, } from '../../typings/defines';
 import { group, parseTranslate, clamp, toTranslate, } from '../utils';
 
+/**
+ * 拓扑图力导向布局策略
+ */
 export const nodeForceDirectedLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   // 若节点数大于500 或者小于4, 则被认为不适合本布局
   if (!userState) return next(userState);
@@ -51,6 +54,7 @@ const forceClamp = clamp(MIN_DIST, MAX_DIST);
 // 重复100次
 const repeatRun = repeat<ForceNode[]>(run, COUNT);
 
+// 运行力导向算法
 function run (nodes: ForceNode[]): ForceNode[] {
   for (let i = 0; i < nodes.length; i++) {
     const p1 = parseTranslate(nodes[i].origin.data.style['transform'] as string);
@@ -114,6 +118,7 @@ function repeat <T> (worker: (nodes: T) => T, preCount: number) {
   };
 }
 
+// 直接Math.pow不就完事儿了吗?
 function power (x: number, size = 2):number {
   if (size === 0)
     return 1;
@@ -127,6 +132,7 @@ function power2 (x:number): number {
   return power(x, 2);
 }
 
+// 求取两点之间线段的直线距离
 function distance (p1: Position, p2: Position) {
   return Math.sqrt(power2(p1.x - p2.x) + power2(p1.y - p2.y));
 }

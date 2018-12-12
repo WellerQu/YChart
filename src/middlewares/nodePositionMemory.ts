@@ -14,7 +14,9 @@ import { NODE_TYPE, } from '../constants/constants';
 
 const store = createStore('TEMP_POSITION');
 
-// 同步坐标
+/**
+ * 从本地存储中同步各个节点的坐标 
+ */
 const syncPosition = (nodes: VNode[], store: Store, viewbox: Viewbox, size: Size): ( VNode| string )[] => {
   const nodeGroup: VNode[] = [];
   const lineGroup: VNode[] = [];
@@ -73,6 +75,9 @@ const syncPosition = (nodes: VNode[], store: Store, viewbox: Viewbox, size: Size
   ];
 };
 
+/**
+ * 部署事件,记录每次拖拽节点后节点的本地坐标
+ */
 export const nodePositionMemory: Middleware = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   const size = stage.size();
   if (!size.width || !size.height)

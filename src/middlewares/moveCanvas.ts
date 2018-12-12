@@ -11,15 +11,6 @@ import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 
-const findSVGElement = (node: HTMLElement): boolean => {
-  if (node === null)
-    return false;
-  if (node.nodeName.toUpperCase() !== 'SVG')
-    return findSVGElement(node.parentElement);
-
-  return true;
-};
-
 /**
  * 添加拖拽移动画布功能
  * 注意此中间件务必添加在所有布局中间件之后
@@ -33,7 +24,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
   let isMouseDown: boolean = false;
   let sourcePosition: Position = { x: 0, y: 0, };
   let targetPosition: Position = { x: 0, y: 0, };
-  let startViewBox: string = '';
+  let startViewBox: number[] = [0, 0, 0, 0,];
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {
     const target = event.target as HTMLElement;
@@ -44,10 +35,9 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     sourcePosition.x = event.pageX;
     sourcePosition.y = event.pageY;
 
-    startViewBox = target.getAttribute('viewBox');
+    startViewBox = parseViewBoxValue(target.getAttribute('viewBox'));
 
     target.style.cursor = 'move';
-    // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'none');
 
     return event;
   };
@@ -57,9 +47,8 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
       return event;
 
     let target = event.target as HTMLElement;
-    if (target.nodeName.toUpperCase() !== 'SVG') {
+    if (target.nodeName.toUpperCase() !== 'SVG') 
       return event;
-    }
 
     targetPosition.x = event.pageX;
     targetPosition.y = event.pageY;
@@ -67,12 +56,7 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     const diffX = targetPosition.x - sourcePosition.x;
     const diffY = targetPosition.y - sourcePosition.y;
 
-    while(target.nodeName.toUpperCase() !== 'SVG') {
-      target = target.parentElement;
-    }
-
-    const [x1, y1,] = parseViewBoxValue(startViewBox);
-    const [,, width, height,] = parseViewBoxValue(target.getAttribute('viewBox'));
+    const [x1, y1, width, height,] = startViewBox;
     const containerWidth = target.parentElement.offsetWidth;
     const ratio = -(width / containerWidth);
 
@@ -89,21 +73,10 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
     if (target.nodeName.toUpperCase() === 'SVG') {
       isMouseDown = false;
       target.style.cursor = 'default';
-      // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
     }
 
     return event;
   };
-
-  // const handleMouseOut = (event: MouseEvent): MouseEvent => {
-  //   isMouseDown = false;
-
-  //   const target = event.target as HTMLElement;
-  //   target.style.cursor = 'default';
-  //   Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
-
-  //   return event;
-  // };
 
   const setupDragMoveHandler = compose<VNode>(
     setupEventHandler(handleMouseDown)('mousedown'),

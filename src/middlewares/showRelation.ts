@@ -12,6 +12,9 @@ import compose from '../compose';
 
 type Child =  string | VNode;
 
+/**
+ * 显示与鼠标当前悬停节点存在直接调用/被调用关系的其它节点
+ */
 export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);
@@ -19,8 +22,24 @@ export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userStat
     return next(userState);
 
   const map = new Map<string, HTMLElement>();
+  
+  // 是否正在进行拖拽操作
+  let isDragging = false;
 
-  const handleMouseEnter = (event: MouseEvent):MouseEvent => {
+  const handleMouseDown = (event: MouseEvent): MouseEvent => {
+    isDragging = true;
+    return handleMouseLeave(event);
+  };
+
+  const handleMouseUp = (event: MouseEvent): MouseEvent => {
+    isDragging = false;
+    return handleMouseEnter(event);
+  };
+
+  // 鼠标悬停事件处理程序
+  const handleMouseEnter = (event: MouseEvent): MouseEvent => {
+    if (isDragging) return event;
+
     const sender = findGroup(event);
     if (!sender) return event;
 
@@ -54,6 +73,7 @@ export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userStat
     return event;
   };
 
+  // 鼠标离开事件处理程序
   const handleMouseLeave = (event: MouseEvent): MouseEvent => {
     const root = findRoot(event);
     if (!root) return event;
@@ -69,22 +89,36 @@ export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userStat
     return event;
   };
 
-  const setupMouseEnterHandler = setupEventHandler(handleMouseEnter)('mouseenter');
-  const setupMouseLeaveHandler = setupEventHandler(handleMouseLeave)('mouseleave');
+  const setupRelationHandler = compose<VNode>(
+    setupEventHandler(handleMouseEnter)('mouseenter'), 
+    setupEventHandler(handleMouseLeave)('mouseleave'),
+  ); 
+
+  const setupDragMoveHandler = compose<VNode>(
+    setupEventHandler(handleMouseDown)('mousedown'),
+    setupEventHandler(handleMouseUp)('mouseup'),
+    // setupEventHandler(handleMouseUp)('mouseout'),
+  );
 
   const root = stage.stageNode();
   const children = root.children;
 
+  // 绑定开关处理事件事件
+  setupDragMoveHandler(root);
+
+  // 遍历每一个节点
   root.children = children.map((item: Child) => {
     const node = item as VNode;
     if (!node.data)
       return node;
-    
-    return compose<VNode>(
-      setupMouseEnterHandler,
-      setupMouseLeaveHandler,
-    )(node);
+    if (!node.data.class)
+      return node;
+    if (!node.data.class[NODE_TYPE.NODE])
+      return node;
+
+    return setupRelationHandler (node);
   });
 
+  // 下一个中间件
   next(userState);
 };

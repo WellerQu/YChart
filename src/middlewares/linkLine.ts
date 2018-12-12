@@ -9,6 +9,9 @@ import { group, parseTranslate, updateLinePosition, } from '../utils';
 import { Stage, PatchBehavior, TopoData, Position,} from '../../typings/defines';
 import { ID_COMBINER, } from '../constants/constants';
 
+/**
+ * 用线段连接每一个节点
+ */
 export const linkLine = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);

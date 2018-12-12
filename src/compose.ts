@@ -1,3 +1,6 @@
+/**
+ * 组合子
+ */
 export default function compose<T> (...funcs: any[]): (...args: any[]) => T {
   if (funcs.length === 0) { return (a: T) => a }
 

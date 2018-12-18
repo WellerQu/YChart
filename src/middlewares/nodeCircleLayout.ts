@@ -32,7 +32,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
 ) => (userState?: TopoData) => {
   if (!userState) return next(userState);
   if (userState.nodes.length === 0) return next(userState);
-  if (userState.nodes.length >= 10 || userState.nodes.length < 5) return next(userState);
+  if (userState.nodes.length >=100 || userState.nodes.length < 10) return next(userState);
 
   const root = stage.stageNode();
   const children = root.children as VNode[];
@@ -53,7 +53,7 @@ export const nodeCircleLayout: Middleware = (stage: Stage) => (
       continue;
     }
 
-    if (classNames[NODE_TYPE.SERVER]) {
+    if (classNames[NODE_TYPE.SERVER] || classNames[NODE_TYPE.APP]) {
       serverGroup.push(node);
       continue;
     }

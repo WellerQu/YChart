@@ -42,8 +42,6 @@ const handleMousewheel = (event: MouseWheelEvent): MouseEvent => {
   const width = svgElement.clientWidth, height = svgElement.clientHeight;
   const newWidth = width * (1 + scale), newHeight = height * (1 + scale);
 
-  console.log(newWidth, newHeight);
-
   const newX = ((newWidth / width) - 1)* (width / -2) + offsetX;
   const newY = ((newHeight / height) - 1)* (height / -2) + offsetY;
 

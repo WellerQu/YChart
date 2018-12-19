@@ -15,7 +15,7 @@ export const nodeForceDirectedLayout = (stage: Stage) => (next: PatchBehavior) =
   // 若节点数大于500 或者小于4, 则被认为不适合本布局
   if (!userState) return next(userState);
   if (userState.nodes.length === 0) return next(userState);
-  if (userState.nodes.length >=100 || userState.nodes.length < 10) return next(userState);
+  if (userState.nodes.length >=100 || userState.nodes.length < 7) return next(userState);
 
   const root = stage.stageNode();
   const [ lines, nodes, rests, ] = group(root.children as VNode[]);

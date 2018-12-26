@@ -26,9 +26,6 @@ function fixAdapter (data: TopoData): TopoData {
       if (node.smallType === DATABASE_TYPE.KAFKA_CONSUMER || node.smallType === DATABASE_TYPE.KAFKA_PRODUCER) {
         node.showIcon = 'kafka';
       }     
-      if (node.smallType === DATABASE_TYPE.MYSQL) {
-        node.showName = 'mysql';
-      }
     } 
 
     // 处理自连接连线

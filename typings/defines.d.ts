@@ -157,8 +157,8 @@ declare interface CallstackOption {
 // --- 以下为业务数据 ---
 
 declare interface Node {
-  id: string;
-  name: string;
+  readonly id: string;
+  readonly name: string;
   type: string;
   smallType: string | null;
   instances: number;
@@ -167,6 +167,10 @@ declare interface Node {
    * 调用这个节点的Tier的集合
    */
   tiers?: TierNode[];
+  /** 
+   * 被当前节点代表的其他可合并节点
+   */
+  mysqlDatabases?: MySqlDatabase[];
   /**
    * 展示用的名字
    */
@@ -193,6 +197,21 @@ declare interface TierNode {
   tierName: string;
   elapsedTime: number;
   name: string;
+}
+
+declare interface MySqlDatabase {
+  title: string;
+  origin: string;
+  protocol: string;
+  tierName: string[];
+  domain: string;
+  port: number;
+  url: string;
+  params?: Params<string>;
+}
+
+declare interface Params<T> {
+  [key: string]: T;
 }
 
 declare interface Line {

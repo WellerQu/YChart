@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { TopoData, Node, Line, TierNode,  } from '../../typings/defines';
+import { TopoData, Node, Line, TierNode, Params,  } from '../../typings/defines';
 import compose from '../compose';
 import { NODE_TYPE, DATABASE_TYPE, } from '../constants/constants';
 
@@ -109,18 +109,15 @@ export const mergeHTTPOrRPC = (data: TopoData): TopoData => {
 /**
  * 合并TopoData实例中的Node实例集合, 将其中所有type标记为DATABASE并用来表示mysql的Node实例合并成一个,
  * 此合并函数中存在一个合并策略, 请仔细阅读源代码
- * 
- * 此函数目标未确定, 暂停开发
  * @param data 
- * @pause
  * @returns 合并完后的TopoData实例
  */
 export const mergeDatabases = (data: TopoData): TopoData => {
   const othersNodes: Node[] = data.nodes.filter((item: Node) => 
-    item.type !== NODE_TYPE.DATABASE && item.smallType !== DATABASE_TYPE.MYSQL
+    item.smallType !== DATABASE_TYPE.MYSQL
   );
   const nodes: Node[] = data.nodes.filter((item: Node) => 
-    item.type === NODE_TYPE.DATABASE && item.smallType === DATABASE_TYPE.MYSQL
+    item.smallType === DATABASE_TYPE.MYSQL
   );
 
   const othersLines: Line[] = data.links.filter((item: Line) => nodes.every((node: Node) => node.id !== item.target));
@@ -129,11 +126,96 @@ export const mergeDatabases = (data: TopoData): TopoData => {
   const mergedNodeMap = new Map<string, Node[]>(); 
   const mergedLines: Line[] = [];
 
+  // step 0, look at the example
+  // jdbc:mysql://mysql.third_party_order.master.hualala.com:6330/db_third_party_order?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000
+  // 
+  // now, we split this string to much parts like this:
+  // 
+  // jdbc:mysql://(domain)
+  // port
+  // instance
+  // params(&?key=value)
+  // 
+  // so, our step 0 is that make a regexp(/^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/ig) for extracting value that
+  // include domain, port, url(instance), params
+  nodes.forEach((n: Node) => {
+    const regexpOfMain = /^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/ig;
+    if (!regexpOfMain.test(n.id)) {
+      return;
+    }
+
+    const relatedLines = lines.filter(l => l.target === n.id);
+    const title = 'mysql';
+    const protocol = 'jdbc:mysql://';
+    const domain = RegExp.$1;
+    const port = +RegExp.$2;
+    const url = RegExp.$3;
+    const tierName: string[] = othersNodes.filter(n => relatedLines.some(l => l.source === n.id)).map(n => n.name);
+
+    const paramString = RegExp.$4;
+    const params: Params<string> = {};
+    const regexOfParams = /&?(?:([^=]+)=([^&]*))/ig;
+    const maxLoop = 50; // to make sure that the next while loop is not DEAD LOOP absolutely
+    let result = null, counter = 0;
+
+    // parse paramString to paramObject
+    while (result = regexOfParams.exec(paramString)) {
+      if (counter++ > maxLoop)
+        break;
+
+      params[result[1]] = result[2];
+    }
+
+    // step 1
+    // begin to merge, we initialize a map with a key that includes domain and instanceName
+    // the point is that make domain and instance to be combined for be key
+    const key = `${domain}/${url}`;
+
+    if (!mergedNodeMap.has(key)) {
+      // there's not group, so initialize group
+      mergedNodeMap.set(key, []);
+      n.mysqlDatabases = [{ title, origin: n.id, protocol, tierName, domain, port, url, params, },];
+    } else {
+      // change the target property of line, assign this first node.id to the target property
+      relatedLines.forEach(l => l.target = mergedNodeMap.get(key)[0].id);
+      // to collect merged database information
+      mergedNodeMap.get(key)[0].mysqlDatabases.push({
+        title,
+        origin: n.id,
+        protocol,
+        tierName,
+        domain,
+        port,
+        url,
+        params,
+      });
+    }
+
+    // the lines will be drawn on the graph
+    mergedLines.splice(0, 0, ...relatedLines);
+
+    mergedNodeMap.get(key).push(n);
+  });
+
+  // step 2, transform map to array
+  const mergedNodes: Node[] = Array.from(mergedNodeMap.values()).map<Node>((nodes: Node[]) => {
+    if (nodes.length > 1)
+      nodes[0].showName = `mysql (${nodes.length})`;
+    else
+      nodes[0].showName = 'mysql';
+
+    return nodes[0];
+  });
+
+  // step 3, assign value to root
+  data.nodes = othersNodes.concat(mergedNodes);
+  data.links = othersLines.concat(mergedLines);
+
   return data;
 }; 
 
 export default compose<TopoData>(
   mergeUsers,
   mergeHTTPOrRPC,
-  // mergeDatabases, 开发中
+  mergeDatabases,
 );

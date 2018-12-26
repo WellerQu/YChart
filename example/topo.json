@@ -1,1 +1,2096 @@
-{"code":0,"message":"success","data":{"nodes":[{"id":"829071108361670656","name":"s_org_auth","times":24847,"type":"SERVER","smallType":null,"instances":3,"activeInstances":2,"elapsedTime":16.17,"rpm":763.23,"epm":0,"health":"HEALTHY","totalCount":22897,"errorTotalCount":0,"crossApp":false},{"id":"829071108361670656USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","name":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","times":0,"type":"DATABASE","smallType":"mysql","instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"redis.tiaofangzi.com:20001","name":"redis.tiaofangzi.com:20001","times":0,"type":"DATABASE","smallType":"redis","instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829070876936753152","name":"s_basic","times":5356,"type":"SERVER","smallType":null,"instances":12,"activeInstances":2,"elapsedTime":78.3,"rpm":171.63,"epm":0,"health":"NORMAL","totalCount":5149,"errorTotalCount":0,"crossApp":false},{"id":"829070876936753152USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.shopbase.hualala.com/192.168.21.250:32260","name":"service.shopbase.hualala.com/192.168.21.250:32260","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"settle.channel.service.hualala.com/192.168.21.250:32388","name":"settle.channel.service.hualala.com/192.168.21.250:32388","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.settle.hualala.com/192.168.21.250:33280","name":"service.settle.hualala.com/192.168.21.250:33280","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"mis.service.module.auth.tiaofangzi.com/192.168.21.250:32323","name":"mis.service.module.auth.tiaofangzi.com/192.168.21.250:32323","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.shopcenter.hualala.com/192.168.21.250:7071","name":"service.shopcenter.hualala.com/192.168.21.250:7071","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"message.sender.hualala.com/192.168.21.250:32405","name":"message.sender.hualala.com/192.168.21.250:32405","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"authorization.service.hualala.com/192.168.21.250:8112","name":"authorization.service.hualala.com/192.168.21.250:8112","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"sendcloud.sohu.com:80","name":"sendcloud.sohu.com:80","times":0,"type":"HTTP","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"www.native.shop.base.service.hualala.com/192.168.21.250:32297","name":"www.native.shop.base.service.hualala.com/192.168.21.250:32297","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"crm.import.service.hualala.com/192.168.21.250:32389","name":"crm.import.service.hualala.com/192.168.21.250:32389","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"jdbc:mysql://mysql.001.master.hualala.com:6300/db_sysbase?statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","name":"jdbc:mysql://mysql.001.master.hualala.com:6300/db_sysbase?statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","times":0,"type":"DATABASE","smallType":"mysql","instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829071241199472640","name":"s_sales","times":3674,"type":"SERVER","smallType":null,"instances":14,"activeInstances":2,"elapsedTime":92.77,"rpm":114.77,"epm":0,"health":"NORMAL","totalCount":3443,"errorTotalCount":0,"crossApp":false},{"id":"829071241199472640USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"supplychain.report.hualala.com/192.168.21.250:32373","name":"supplychain.report.hualala.com/192.168.21.250:32373","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.pay21.hualala.com/192.168.21.250:32332","name":"service.pay21.hualala.com/192.168.21.250:32332","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.tax.hualala.com/192.168.21.250:7082","name":"service.tax.hualala.com/192.168.21.250:7082","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"production.equity.core.service.hualala.com/192.168.21.250:32385","name":"production.equity.core.service.hualala.com/192.168.21.250:32385","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829070926752501760","name":"api_web","times":9815,"type":"SERVER","smallType":null,"instances":4,"activeInstances":2,"elapsedTime":227.05,"rpm":315.27,"epm":5.03,"health":"NORMAL","totalCount":9458,"errorTotalCount":151,"crossApp":false},{"id":"829070926752501760USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"831720112214437888","name":"哗啦啦学堂","times":0,"type":"SERVER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":true},{"id":"service.passport.inside.hualala.com/10.10.8.9:7076","name":"service.passport.inside.hualala.com/10.10.8.9:7076","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"mis.service.task.tiaofangzi.com/10.10.8.9:31818","name":"mis.service.task.tiaofangzi.com/10.10.8.9:31818","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"pay.channel.setting.hualala.com/192.168.21.250:32378","name":"pay.channel.setting.hualala.com/192.168.21.250:32378","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"http://hualala.service.gozap.com/gozap-service-portal-1.0.1/service/image","name":"http://hualala.service.gozap.com/gozap-service-portal-1.0.1/service/image","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.report.hualala.com/192.168.21.250:7073","name":"service.report.hualala.com/192.168.21.250:7073","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"cs.order.service.hualala.com/192.168.21.250:32310","name":"cs.order.service.hualala.com/192.168.21.250:32310","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.tax.hualala.com:7082","name":"service.tax.hualala.com:7082","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"service.passport.outside.hualala.com/192.168.2.9:7074","name":"service.passport.outside.hualala.com/192.168.2.9:7074","times":0,"type":"RPC","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829070798654263296","name":"mis_api","times":4403,"type":"SERVER","smallType":null,"instances":6,"activeInstances":2,"elapsedTime":255.32,"rpm":146.07,"epm":4.9,"health":"NORMAL","totalCount":4382,"errorTotalCount":147,"crossApp":false},{"id":"829070798654263296USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"api11.aliyun.venuscn.com:80","name":"api11.aliyun.venuscn.com:80","times":0,"type":"HTTP","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829071212019699712","name":"s_im","times":567,"type":"SERVER","smallType":null,"instances":2,"activeInstances":2,"elapsedTime":126.77,"rpm":17.9,"epm":0,"health":"NORMAL","totalCount":537,"errorTotalCount":0,"crossApp":false},{"id":"api.netease.im:443","name":"api.netease.im:443","times":0,"type":"HTTP","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"830220570677256192","name":"s_knowbase","times":398,"type":"SERVER","smallType":null,"instances":2,"activeInstances":2,"elapsedTime":32.71,"rpm":13.57,"epm":0.03,"health":"HEALTHY","totalCount":407,"errorTotalCount":1,"crossApp":false},{"id":"829070838642757632","name":"s_check","times":52,"type":"SERVER","smallType":null,"instances":2,"activeInstances":2,"elapsedTime":60.46,"rpm":3,"epm":0,"health":"NORMAL","totalCount":54,"errorTotalCount":0,"crossApp":false},{"id":"829070959279329280","name":"api_noauth","times":106,"type":"SERVER","smallType":null,"instances":2,"activeInstances":2,"elapsedTime":30.89,"rpm":7.57,"epm":0,"health":"HEALTHY","totalCount":106,"errorTotalCount":0,"crossApp":false},{"id":"829070959279329280USER","name":"用户","times":0,"type":"USER","smallType":null,"instances":0,"activeInstances":0,"elapsedTime":0,"rpm":0,"epm":0,"health":null,"totalCount":0,"errorTotalCount":0,"crossApp":false},{"id":"829071153966338048","name":"s_person","times":10,"type":"SERVER","smallType":null,"instances":1,"activeInstances":1,"elapsedTime":313.7,"rpm":1.67,"epm":0,"health":"INTOLERANCE","totalCount":10,"errorTotalCount":0,"crossApp":false}],"links":[{"source":"829071108361670656USER","target":"829071108361670656","elapsedTime":20.91,"rpm":0},{"source":"829071108361670656","target":"829071153966338048","elapsedTime":0.3,"rpm":0},{"source":"829071108361670656","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":1.66,"rpm":0},{"source":"829071108361670656","target":"redis.tiaofangzi.com:20001","elapsedTime":0.1,"rpm":0},{"source":"829070876936753152USER","target":"829070876936753152","elapsedTime":308.19,"rpm":0},{"source":"829070876936753152","target":"829071108361670656","elapsedTime":0.04,"rpm":0},{"source":"829070876936753152","target":"829071212019699712","elapsedTime":0.08,"rpm":0},{"source":"829070876936753152","target":"829071241199472640","elapsedTime":0.05,"rpm":0},{"source":"829070876936753152","target":"service.shopbase.hualala.com/192.168.21.250:32260","elapsedTime":0.05,"rpm":0},{"source":"829070876936753152","target":"settle.channel.service.hualala.com/192.168.21.250:32388","elapsedTime":0.09,"rpm":0},{"source":"829070876936753152","target":"service.settle.hualala.com/192.168.21.250:33280","elapsedTime":0.12,"rpm":0},{"source":"829070876936753152","target":"mis.service.module.auth.tiaofangzi.com/192.168.21.250:32323","elapsedTime":0.06,"rpm":0},{"source":"829070876936753152","target":"service.shopcenter.hualala.com/192.168.21.250:7071","elapsedTime":0.17,"rpm":0},{"source":"829070876936753152","target":"message.sender.hualala.com/192.168.21.250:32405","elapsedTime":0,"rpm":0},{"source":"829070876936753152","target":"authorization.service.hualala.com/192.168.21.250:8112","elapsedTime":0,"rpm":0},{"source":"829070876936753152","target":"sendcloud.sohu.com:80","elapsedTime":52.67,"rpm":0},{"source":"829070876936753152","target":"www.native.shop.base.service.hualala.com/192.168.21.250:32297","elapsedTime":0,"rpm":0},{"source":"829070876936753152","target":"crm.import.service.hualala.com/192.168.21.250:32389","elapsedTime":0,"rpm":0},{"source":"829070876936753152","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":13.62,"rpm":0},{"source":"829070876936753152","target":"jdbc:mysql://mysql.001.master.hualala.com:6300/db_sysbase?statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":378.9,"rpm":0},{"source":"829070876936753152","target":"redis.tiaofangzi.com:20001","elapsedTime":0,"rpm":0},{"source":"829071241199472640USER","target":"829071241199472640","elapsedTime":304.27,"rpm":0},{"source":"829071241199472640","target":"829071108361670656","elapsedTime":0.05,"rpm":0},{"source":"829071241199472640","target":"829071212019699712","elapsedTime":0.06,"rpm":0},{"source":"829071241199472640","target":"supplychain.report.hualala.com/192.168.21.250:32373","elapsedTime":0.03,"rpm":0},{"source":"829071241199472640","target":"service.pay21.hualala.com/192.168.21.250:32332","elapsedTime":0,"rpm":0},{"source":"829071241199472640","target":"service.tax.hualala.com/192.168.21.250:7082","elapsedTime":0,"rpm":0},{"source":"829071241199472640","target":"service.settle.hualala.com/192.168.21.250:33280","elapsedTime":0,"rpm":0},{"source":"829071241199472640","target":"message.sender.hualala.com/192.168.21.250:32405","elapsedTime":0,"rpm":0},{"source":"829071241199472640","target":"production.equity.core.service.hualala.com/192.168.21.250:32385","elapsedTime":1,"rpm":0},{"source":"829071241199472640","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":14.32,"rpm":0},{"source":"829070926752501760USER","target":"829070926752501760","elapsedTime":227.7,"rpm":0},{"source":"829070926752501760","target":"831720112214437888","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"829070876936753152","elapsedTime":0.04,"rpm":0},{"source":"829070926752501760","target":"829071241199472640","elapsedTime":0.04,"rpm":0},{"source":"829070926752501760","target":"829071108361670656","elapsedTime":0.04,"rpm":0},{"source":"829070926752501760","target":"829071212019699712","elapsedTime":0.05,"rpm":0},{"source":"829070926752501760","target":"830220570677256192","elapsedTime":0.03,"rpm":0},{"source":"829070926752501760","target":"service.passport.inside.hualala.com/10.10.8.9:7076","elapsedTime":0.06,"rpm":0},{"source":"829070926752501760","target":"mis.service.task.tiaofangzi.com/10.10.8.9:31818","elapsedTime":0.06,"rpm":0},{"source":"829070926752501760","target":"pay.channel.setting.hualala.com/192.168.21.250:32378","elapsedTime":0.05,"rpm":0},{"source":"829070926752501760","target":"service.settle.hualala.com/192.168.21.250:33280","elapsedTime":0.04,"rpm":0},{"source":"829070926752501760","target":"settle.channel.service.hualala.com/192.168.21.250:32388","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"http://hualala.service.gozap.com/gozap-service-portal-1.0.1/service/image","elapsedTime":131.88,"rpm":0},{"source":"829070926752501760","target":"service.report.hualala.com/192.168.21.250:7073","elapsedTime":0.14,"rpm":0},{"source":"829070926752501760","target":"cs.order.service.hualala.com/192.168.21.250:32310","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"service.tax.hualala.com:7082","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"service.passport.outside.hualala.com/192.168.2.9:7074","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"service.shopbase.hualala.com/192.168.21.250:32260","elapsedTime":0,"rpm":0},{"source":"829070926752501760","target":"redis.tiaofangzi.com:20001","elapsedTime":0.01,"rpm":0},{"source":"829070926752501760","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":1.28,"rpm":0},{"source":"829070798654263296USER","target":"829070798654263296","elapsedTime":256.46,"rpm":0},{"source":"829070798654263296","target":"829071241199472640","elapsedTime":0.05,"rpm":0},{"source":"829070798654263296","target":"829070876936753152","elapsedTime":0.04,"rpm":0},{"source":"829070798654263296","target":"829071108361670656","elapsedTime":0.03,"rpm":0},{"source":"829070798654263296","target":"830220570677256192","elapsedTime":0.04,"rpm":0},{"source":"829070798654263296","target":"829071212019699712","elapsedTime":0.08,"rpm":0},{"source":"829070798654263296","target":"829070838642757632","elapsedTime":0,"rpm":0},{"source":"829070798654263296","target":"service.passport.inside.hualala.com/10.10.8.9:7076","elapsedTime":0.06,"rpm":0},{"source":"829070798654263296","target":"settle.channel.service.hualala.com/192.168.21.250:32388","elapsedTime":0.03,"rpm":0},{"source":"829070798654263296","target":"service.settle.hualala.com/192.168.21.250:33280","elapsedTime":0.11,"rpm":0},{"source":"829070798654263296","target":"api11.aliyun.venuscn.com:80","elapsedTime":810.5,"rpm":0},{"source":"829070798654263296","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":1.17,"rpm":0},{"source":"829071212019699712","target":"api.netease.im:443","elapsedTime":176.25,"rpm":0},{"source":"829071212019699712","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":1.85,"rpm":0},{"source":"830220570677256192","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":22.81,"rpm":0},{"source":"830220570677256192","target":"redis.tiaofangzi.com:20001","elapsedTime":0.01,"rpm":0},{"source":"829070838642757632","target":"829071108361670656","elapsedTime":0.07,"rpm":0},{"source":"829070838642757632","target":"829071212019699712","elapsedTime":0.5,"rpm":0},{"source":"829070838642757632","target":"jdbc:mysql://mysql.mis.001.master.hualala.com:6490/db_mis?useUnicode=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&connectTimeout=60000&socketTimeout=60000","elapsedTime":40.69,"rpm":0},{"source":"829070838642757632","target":"redis.tiaofangzi.com:20001","elapsedTime":0.5,"rpm":0},{"source":"829070959279329280USER","target":"829070959279329280","elapsedTime":31,"rpm":0},{"source":"829070959279329280","target":"829070876936753152","elapsedTime":0.29,"rpm":0},{"source":"829070959279329280","target":"message.sender.hualala.com/192.168.21.250:32405","elapsedTime":0.07,"rpm":0},{"source":"829070959279329280","target":"redis.tiaofangzi.com:20001","elapsedTime":0,"rpm":0},{"source":"829071153966338048","target":"http://hualala.service.gozap.com/gozap-service-portal-1.0.1/service/image","elapsedTime":6.56,"rpm":0}]},"success":true,"msg":"成功"}
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "nodes": [
+      {
+        "id": "834868842870534144",
+        "name": "order_service_64",
+        "times": 143212.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 38,
+        "activeInstances": 6,
+        "elapsedTime": 10.136022121051308,
+        "rpm": 4476.13,
+        "epm": 0.0,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "834868842870534144USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "834864414570016768",
+        "name": "SaaS及云店服务",
+        "times": 0.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": true
+      },
+      {
+        "id": "834864538905964544",
+        "name": "支付",
+        "times": 0.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": true
+      },
+      {
+        "id": "172.21.52.9/172.21.52.9:6565",
+        "name": "172.21.52.9/172.21.52.9:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.7.41/172.21.7.41:6565",
+        "name": "172.21.7.41/172.21.7.41:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.10.15/172.21.10.15:6565",
+        "name": "172.21.10.15/172.21.10.15:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.10.23/172.21.10.23:6565",
+        "name": "172.21.10.23/172.21.10.23:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.50.9/172.21.50.9:6565",
+        "name": "172.21.50.9/172.21.50.9:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.135.24/172.21.135.24:6565",
+        "name": "172.21.135.24/172.21.135.24:6565",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "service.shopcenter.hualala.com/192.168.121.249:7071",
+        "name": "service.shopcenter.hualala.com/192.168.121.249:7071",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.46/172.21.25.46:6566",
+        "name": "172.21.25.46/172.21.25.46:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.6/172.21.60.6:6566",
+        "name": "172.21.60.6/172.21.60.6:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.22/172.21.119.22:6566",
+        "name": "172.21.119.22/172.21.119.22:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.34.7/172.21.34.7:6566",
+        "name": "172.21.34.7/172.21.34.7:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.7/172.21.119.7:6566",
+        "name": "172.21.119.7/172.21.119.7:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.48.22/172.21.48.22:6566",
+        "name": "172.21.48.22/172.21.48.22:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.23/172.21.119.23:6657",
+        "name": "172.21.119.23/172.21.119.23:6657",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.24/172.21.60.24:6657",
+        "name": "172.21.60.24/172.21.60.24:6657",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.77.23/172.21.77.23:6566",
+        "name": "172.21.77.23/172.21.77.23:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.17.10/172.21.17.10:6566",
+        "name": "172.21.17.10/172.21.17.10:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.44/172.21.25.44:6656",
+        "name": "172.21.25.44/172.21.25.44:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.25/172.21.119.25:6656",
+        "name": "172.21.119.25/172.21.119.25:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.18/172.21.119.18:6656",
+        "name": "172.21.119.18/172.21.119.18:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.18/172.21.60.18:6656",
+        "name": "172.21.60.18/172.21.60.18:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.31.21/172.21.31.21:6566",
+        "name": "172.21.31.21/172.21.31.21:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.79.26/172.21.79.26:6566",
+        "name": "172.21.79.26/172.21.79.26:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.123.22/172.21.123.22:6566",
+        "name": "172.21.123.22/172.21.123.22:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.8/172.21.25.8:6656",
+        "name": "172.21.25.8/172.21.25.8:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "neworder.codis.hualala.com:24000",
+        "name": "neworder.codis.hualala.com:24000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "redis",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842604779613200384",
+        "name": "api-transformer",
+        "times": 183991.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 4,
+        "activeInstances": 4,
+        "elapsedTime": 2.309234306462221,
+        "rpm": 5877.13,
+        "epm": 0.5,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842604779613200384USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "api-open-cater.meituan.com:443",
+        "name": "api-open-cater.meituan.com:443",
+        "times": 0.0,
+        "type": "HTTP",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.48.24/172.21.48.24:6566",
+        "name": "172.21.48.24/172.21.48.24:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.12/172.21.60.12:6566",
+        "name": "172.21.60.12/172.21.60.12:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.34.17/172.21.34.17:6566",
+        "name": "172.21.34.17/172.21.34.17:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.10/172.21.60.10:6566",
+        "name": "172.21.60.10/172.21.60.10:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.9/172.21.119.9:6566",
+        "name": "172.21.119.9/172.21.119.9:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.5/172.21.25.5:6566",
+        "name": "172.21.25.5/172.21.25.5:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.135.23/172.21.135.23:6568",
+        "name": "172.21.135.23/172.21.135.23:6568",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.7.32/172.21.7.32:6568",
+        "name": "172.21.7.32/172.21.7.32:6568",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.49.25/172.21.49.25:6564",
+        "name": "172.21.49.25/172.21.49.25:6564",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.23.10/172.21.23.10:6564",
+        "name": "172.21.23.10/172.21.23.10:6564",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.17.21/172.21.17.21:6567",
+        "name": "172.21.17.21/172.21.17.21:6567",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.77.18/172.21.77.18:6567",
+        "name": "172.21.77.18/172.21.77.18:6567",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.third_party_order.master.hualala.com:6330/db_third_party_order?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.third_party_order.master.hualala.com:6330/db_third_party_order?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "mdb_codis.sm.hualala.com:21379",
+        "name": "mdb_codis.sm.hualala.com:21379",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "redis",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842605215753707520",
+        "name": "order-service-2c",
+        "times": 71341.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 10,
+        "activeInstances": 4,
+        "elapsedTime": 17.711484515260324,
+        "rpm": 2339.23,
+        "epm": 1.5,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842605215753707520USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.26/172.21.25.26:8039",
+        "name": "172.21.25.26/172.21.25.26:8039",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.34.15/172.21.34.15:8039",
+        "name": "172.21.34.15/172.21.34.15:8039",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.48.12/172.21.48.12:8039",
+        "name": "172.21.48.12/172.21.48.12:8039",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.15/172.21.60.15:8039",
+        "name": "172.21.60.15/172.21.60.15:8039",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.60.37/172.21.60.37:8039",
+        "name": "172.21.60.37/172.21.60.37:8039",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.29/172.21.119.29:6656",
+        "name": "172.21.119.29/172.21.119.29:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.34.21/172.21.34.21:6656",
+        "name": "172.21.34.21/172.21.34.21:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.48.5/172.21.48.5:6656",
+        "name": "172.21.48.5/172.21.48.5:6656",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.77.25/172.21.77.25:6566",
+        "name": "172.21.77.25/172.21.77.25:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.17.25/172.21.17.25:6566",
+        "name": "172.21.17.25/172.21.17.25:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "kong.codis.sj.hualala.com:19000",
+        "name": "kong.codis.sj.hualala.com:19000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "redis",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842605450303381504",
+        "name": "shop-order-api",
+        "times": 47062.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 4,
+        "activeInstances": 4,
+        "elapsedTime": 2.7240448769708046,
+        "rpm": 1536.9,
+        "epm": 0.0,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842605450303381504USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "service.shopbase.hualala.com/192.168.121.249:32260",
+        "name": "service.shopbase.hualala.com/192.168.121.249:32260",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "sjhl.codis.hualala.com:21000",
+        "name": "sjhl.codis.hualala.com:21000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "redis",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842604942559035392",
+        "name": "inventory-amount-service",
+        "times": 25003.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 4,
+        "activeInstances": 2,
+        "elapsedTime": 9.60312,
+        "rpm": 821.13,
+        "epm": 0.1,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842604942559035392USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "sjhl.codis.hualala.com:19000",
+        "name": "sjhl.codis.hualala.com:19000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "redis",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.inventory.001.master.hualala.com:6350/db_inventory?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.inventory.001.master.hualala.com:6350/db_inventory?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.order-old.slave.hualala.com:6300/db_order?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.order-old.slave.hualala.com:6300/db_order?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842605414992855040",
+        "name": "order-store-service",
+        "times": 1037.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 2,
+        "activeInstances": 2,
+        "elapsedTime": 13.147540983606557,
+        "rpm": 28.13,
+        "epm": 0.0,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842605414992855040USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.119.14/172.21.119.14:6566",
+        "name": "172.21.119.14/172.21.119.14:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "172.21.25.45/172.21.25.45:6566",
+        "name": "172.21.25.45/172.21.25.45:6566",
+        "times": 0.0,
+        "type": "RPC",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "name": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842605159761068032",
+        "name": "drain-pipe-service",
+        "times": 2550.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 2,
+        "activeInstances": 2,
+        "elapsedTime": 0.5250980392156863,
+        "rpm": 80.33,
+        "epm": 0.0,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842605159761068032USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.pipe.master.hualala.com:3306/db_caidanmao?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.pipe.master.hualala.com:3306/db_caidanmao?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "842604988191744000",
+        "name": "meal-queue",
+        "times": 286.0,
+        "type": "SERVER",
+        "smallType": null,
+        "instances": 2,
+        "activeInstances": 2,
+        "elapsedTime": 3.6888111888111887,
+        "rpm": 8.33,
+        "epm": 0.0,
+        "health": "HEALTHY",
+        "crossApp": false
+      },
+      {
+        "id": "842604988191744000USER",
+        "name": "用户",
+        "times": 0.0,
+        "type": "USER",
+        "smallType": null,
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      },
+      {
+        "id": "jdbc:mysql://mysql.mendianbao.001.master.hualala.com:6330/db_meal_queue?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "name": "jdbc:mysql://mysql.mendianbao.001.master.hualala.com:6330/db_meal_queue?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "times": 0.0,
+        "type": "DATABASE",
+        "smallType": "mysql",
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "crossApp": false
+      }
+    ],
+    "links": [
+      {
+        "source": "834868842870534144USER",
+        "target": "834868842870534144",
+        "elapsedTime": 112.38530290757758,
+        "rpm": 0.0
+      },
+      {
+        "source": "834864414570016768",
+        "target": "834868842870534144",
+        "elapsedTime": 112.38530290757758,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "834864538905964544",
+        "elapsedTime": 0.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "842604779613200384",
+        "elapsedTime": 1.691326530612245,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.52.9/172.21.52.9:6565",
+        "elapsedTime": 5.145031143827859,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.7.41/172.21.7.41:6565",
+        "elapsedTime": 5.715013803355277,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.10.15/172.21.10.15:6565",
+        "elapsedTime": 4.978691774033697,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.10.23/172.21.10.23:6565",
+        "elapsedTime": 5.138114115814809,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.50.9/172.21.50.9:6565",
+        "elapsedTime": 4.9168200481381845,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.135.24/172.21.135.24:6565",
+        "elapsedTime": 4.919781931464175,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "service.shopcenter.hualala.com/192.168.121.249:7071",
+        "elapsedTime": 49.90786654423018,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.25.46/172.21.25.46:6566",
+        "elapsedTime": 18.249908122013967,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.60.6/172.21.60.6:6566",
+        "elapsedTime": 18.56670341786108,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.119.22/172.21.119.22:6566",
+        "elapsedTime": 19.046323529411765,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.34.7/172.21.34.7:6566",
+        "elapsedTime": 18.888970588235296,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.119.7/172.21.119.7:6566",
+        "elapsedTime": 18.816844428098566,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.48.22/172.21.48.22:6566",
+        "elapsedTime": 18.492460463405664,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.119.23/172.21.119.23:6657",
+        "elapsedTime": 99.34008097165992,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.60.24/172.21.60.24:6657",
+        "elapsedTime": 113.74089068825911,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.77.23/172.21.77.23:6566",
+        "elapsedTime": 4.388888888888889,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.17.10/172.21.17.10:6566",
+        "elapsedTime": 4.4375,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.25.44/172.21.25.44:6656",
+        "elapsedTime": 140.44444444444446,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.119.25/172.21.119.25:6656",
+        "elapsedTime": 137.71428571428572,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.119.18/172.21.119.18:6656",
+        "elapsedTime": 32.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.60.18/172.21.60.18:6656",
+        "elapsedTime": 31.666666666666668,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.31.21/172.21.31.21:6566",
+        "elapsedTime": 18.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.79.26/172.21.79.26:6566",
+        "elapsedTime": 21.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.123.22/172.21.123.22:6566",
+        "elapsedTime": 7.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "172.21.25.8/172.21.25.8:6656",
+        "elapsedTime": 62.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.8275831725725116,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.538806066516918,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.495919568953123,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.5115084502606808,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.6877587933689104,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "neworder.codis.hualala.com:24000",
+        "elapsedTime": 0.010172460253300998,
+        "rpm": 0.0
+      },
+      {
+        "source": "834868842870534144",
+        "target": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.3277777777777778,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384USER",
+        "target": "842604779613200384",
+        "elapsedTime": 23.555694461807725,
+        "rpm": 0.0
+      },
+      {
+        "source": "834864414570016768",
+        "target": "842604779613200384",
+        "elapsedTime": 23.555694461807725,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "834868842870534144",
+        "elapsedTime": 1.1469099750260972,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "api-open-cater.meituan.com:443",
+        "elapsedTime": 106.85760294455946,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.48.24/172.21.48.24:6566",
+        "elapsedTime": 60.109388458225666,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.60.12/172.21.60.12:6566",
+        "elapsedTime": 53.31792073520965,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.34.17/172.21.34.17:6566",
+        "elapsedTime": 58.23384085033037,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.60.10/172.21.60.10:6566",
+        "elapsedTime": 55.61677678827923,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.119.9/172.21.119.9:6566",
+        "elapsedTime": 61.34770114942529,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.25.5/172.21.25.5:6566",
+        "elapsedTime": 56.04683908045977,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.135.23/172.21.135.23:6568",
+        "elapsedTime": 11.494708994708995,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.7.32/172.21.7.32:6568",
+        "elapsedTime": 12.877564526803441,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.49.25/172.21.49.25:6564",
+        "elapsedTime": 4.451612903225806,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.23.10/172.21.23.10:6564",
+        "elapsedTime": 6.4471544715447155,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.48.22/172.21.48.22:6566",
+        "elapsedTime": 126.79629629629629,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.34.7/172.21.34.7:6566",
+        "elapsedTime": 39.113207547169814,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.60.6/172.21.60.6:6566",
+        "elapsedTime": 37.22641509433962,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.119.22/172.21.119.22:6566",
+        "elapsedTime": 20.442307692307693,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.119.7/172.21.119.7:6566",
+        "elapsedTime": 59.19230769230769,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.25.46/172.21.25.46:6566",
+        "elapsedTime": 38.67307692307692,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.17.21/172.21.17.21:6567",
+        "elapsedTime": 24.772727272727273,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "172.21.77.18/172.21.77.18:6567",
+        "elapsedTime": 35.63636363636363,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "jdbc:mysql://mysql.third_party_order.master.hualala.com:6330/db_third_party_order?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.946807638966864,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604779613200384",
+        "target": "mdb_codis.sm.hualala.com:21379",
+        "elapsedTime": 0.010438870280146163,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520USER",
+        "target": "842605215753707520",
+        "elapsedTime": 78.71935311938958,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "834864538905964544",
+        "elapsedTime": 0.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "842604942559035392",
+        "elapsedTime": 1.6578249336870026,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.34.7/172.21.34.7:6566",
+        "elapsedTime": 19.384672757784823,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.22/172.21.119.22:6566",
+        "elapsedTime": 19.508951883625514,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.7/172.21.119.7:6566",
+        "elapsedTime": 19.898918314061916,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.25.46/172.21.25.46:6566",
+        "elapsedTime": 19.247576435495898,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.48.22/172.21.48.22:6566",
+        "elapsedTime": 18.905223880597013,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.6/172.21.60.6:6566",
+        "elapsedTime": 19.116044776119402,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.25.5/172.21.25.5:6566",
+        "elapsedTime": 47.514479359211336,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.34.17/172.21.34.17:6566",
+        "elapsedTime": 50.693982337235575,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.48.24/172.21.48.24:6566",
+        "elapsedTime": 49.088929965085235,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.10/172.21.60.10:6566",
+        "elapsedTime": 48.936948038611625,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.12/172.21.60.12:6566",
+        "elapsedTime": 47.13965906757034,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.9/172.21.119.9:6566",
+        "elapsedTime": 49.68138866064092,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.17.10/172.21.17.10:6566",
+        "elapsedTime": 10.101530421799179,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.77.23/172.21.77.23:6566",
+        "elapsedTime": 11.12280701754386,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.25.26/172.21.25.26:8039",
+        "elapsedTime": 39.241188118811884,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.34.15/172.21.34.15:8039",
+        "elapsedTime": 39.80150554675119,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.48.12/172.21.48.12:8039",
+        "elapsedTime": 39.66719492868463,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.15/172.21.60.15:8039",
+        "elapsedTime": 39.896196513470684,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.37/172.21.60.37:8039",
+        "elapsedTime": 39.21909667194929,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.10.23/172.21.10.23:6565",
+        "elapsedTime": 7.013535684987695,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.135.24/172.21.135.24:6565",
+        "elapsedTime": 6.6283839212469235,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.10.15/172.21.10.15:6565",
+        "elapsedTime": 6.843596059113301,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.52.9/172.21.52.9:6565",
+        "elapsedTime": 6.914203612479475,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.7.41/172.21.7.41:6565",
+        "elapsedTime": 9.47783251231527,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.50.9/172.21.50.9:6565",
+        "elapsedTime": 6.502258726899384,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.29/172.21.119.29:6656",
+        "elapsedTime": 28.309927360774818,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.34.21/172.21.34.21:6656",
+        "elapsedTime": 27.401937046004843,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.48.5/172.21.48.5:6656",
+        "elapsedTime": 27.43946731234867,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.25.8/172.21.25.8:6656",
+        "elapsedTime": 28.88,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.25.44/172.21.25.44:6656",
+        "elapsedTime": 137.4198473282443,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.25/172.21.119.25:6656",
+        "elapsedTime": 140.8968253968254,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.77.25/172.21.77.25:6566",
+        "elapsedTime": 5.808988764044944,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.17.25/172.21.17.25:6566",
+        "elapsedTime": 5.275862068965517,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.119.23/172.21.119.23:6657",
+        "elapsedTime": 18.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "172.21.60.24/172.21.60.24:6657",
+        "elapsedTime": 26.2,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.7318059617017263,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.3811160972785177,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.526258438313932,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.4723946246424524,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "neworder.codis.hualala.com:24000",
+        "elapsedTime": 0.012271291057388493,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "kong.codis.sj.hualala.com:19000",
+        "elapsedTime": 0.009998765584495741,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605215753707520",
+        "target": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 1.3021137026239067,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605450303381504USER",
+        "target": "842605450303381504",
+        "elapsedTime": 221.79121159321747,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605450303381504",
+        "target": "834868842870534144",
+        "elapsedTime": 0.997725663526938,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605450303381504",
+        "target": "service.shopbase.hualala.com/192.168.121.249:32260",
+        "elapsedTime": 13.886274509803922,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605450303381504",
+        "target": "sjhl.codis.hualala.com:21000",
+        "elapsedTime": 0.01140125045972784,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605450303381504",
+        "target": "neworder.codis.hualala.com:24000",
+        "elapsedTime": 0.007723427730783376,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392USER",
+        "target": "842604942559035392",
+        "elapsedTime": 19.98056,
+        "rpm": 0.0
+      },
+      {
+        "source": "834864414570016768",
+        "target": "842604942559035392",
+        "elapsedTime": 19.98056,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392",
+        "target": "842605159761068032",
+        "elapsedTime": 2.527336860670194,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392",
+        "target": "sjhl.codis.hualala.com:19000",
+        "elapsedTime": 0.04277244494635799,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392",
+        "target": "jdbc:mysql://mysql.inventory.001.master.hualala.com:6350/db_inventory?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 69.22203902170926,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392",
+        "target": "jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.4529616724738676,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604942559035392",
+        "target": "jdbc:mysql://mysql.order-old.slave.hualala.com:6300/db_order?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.45384615384615384,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040USER",
+        "target": "842605414992855040",
+        "elapsedTime": 25.51976856316297,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "834864538905964544",
+        "elapsedTime": 0.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "172.21.119.14/172.21.119.14:6566",
+        "elapsedTime": 163.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "172.21.119.29/172.21.119.29:6656",
+        "elapsedTime": 30.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "172.21.25.45/172.21.25.45:6566",
+        "elapsedTime": 23.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "172.21.34.21/172.21.34.21:6656",
+        "elapsedTime": 54.0,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.neworder03.master.hualala.com:3308/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 1.7467629482071714,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.neworder01.master.hualala.com:3306/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 0.6039244186046512,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.neworder04.master.hualala.com:3309/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 1.1537102473498233,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.neworder02.master.hualala.com:3307/db_order_new?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 1.3105076741440378,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.001.master.hualala.com:6300/db_pay?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 0.3,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605414992855040",
+        "target": "jdbc:mysql://mysql.order-old.master.hualala.com:6300/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "elapsedTime": 0.36666666666666664,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605159761068032USER",
+        "target": "842605159761068032",
+        "elapsedTime": 0.5662745098039216,
+        "rpm": 0.0
+      },
+      {
+        "source": "842605159761068032",
+        "target": "jdbc:mysql://mysql.pipe.master.hualala.com:3306/db_caidanmao?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true&socketTimeout=60000",
+        "elapsedTime": 0.9375,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604988191744000USER",
+        "target": "842604988191744000",
+        "elapsedTime": 3.8531468531468533,
+        "rpm": 0.0
+      },
+      {
+        "source": "842604988191744000",
+        "target": "jdbc:mysql://mysql.mendianbao.001.master.hualala.com:6330/db_meal_queue?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000",
+        "elapsedTime": 0.3884297520661157,
+        "rpm": 0.0
+      }
+    ]
+  }
+}

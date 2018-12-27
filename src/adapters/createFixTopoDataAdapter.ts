@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { TopoData, Node, Line, } from '../../typings/defines';
+import { TopoData, Node, Line, Params, } from '../../typings/defines';
 import compose from '../compose';
 import { NODE_TYPE, DATABASE_TYPE, } from '../constants/constants';
 
@@ -48,6 +48,71 @@ function fixAdapter (data: TopoData): TopoData {
   return data;
 };
 
+/**
+ * 修复mysql数据库节点信息, 解析连接字符串, 并将解析结果放置在mysqldatabase字段中
+ * @param data TopoData实例
+ * @returns
+ */
+function fixDatabases (data: TopoData): TopoData {
+  const nodes: Node[] = data.nodes.filter(
+    (item: Node) => item.smallType === DATABASE_TYPE.MYSQL
+  );
+
+  // step 0, look at the example
+  // jdbc:mysql://mysql.third_party_order.master.hualala.com:6330/db_third_party_order?useUnicode=true
+  //
+  // now, we split this string to much parts like this:
+  //
+  // jdbc:mysql://(domain)
+  // port
+  // instance
+  // params(&?key=value)
+  //
+  // so, our step 0 is that make a regexp(/^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/ig) for extracting value that
+  // include domain, port, url(instance), params
+  nodes.forEach((n: Node) => {
+    const regexpOfMain = /^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/gi;
+    if (!regexpOfMain.test(n.id)) {
+      return;
+    }
+
+    const protocol = 'jdbc:mysql';
+    const domain = RegExp.$1;
+    const port = +RegExp.$2;
+    const url = RegExp.$3;
+
+    const paramString = RegExp.$4;
+    const params: Params[] = [];
+    const regexOfParams = /&?(?:([^=]+)=([^&]*))/gi;
+    const maxLoop = 50; // to make sure that the next while loop is not DEAD LOOP absolutely
+    let result = null,
+      counter = 0;
+
+    // parse paramString to paramObject
+    while ((result = regexOfParams.exec(paramString))) {
+      if (counter++ > maxLoop) break;
+
+      params.push({
+        name: result[1],
+        value: result[2],
+      });
+    }
+
+    n.mysqlDatabases = {
+      origin: n.id,
+      protocol,
+      domain,
+      port,
+      url,
+      params,
+    };
+    n.showName = 'mysql';
+  });
+
+  return data;
+}; 
+
 export default compose<TopoData>(
   fixAdapter,
+  fixDatabases,
 );

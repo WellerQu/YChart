@@ -170,7 +170,7 @@ declare interface Node {
   /** 
    * 被当前节点代表的其他可合并节点
    */
-  mysqlDatabases?: MySqlDatabase[];
+  mysqlDatabases?: MySqlDatabase;
   /**
    * 展示用的名字
    */
@@ -200,18 +200,17 @@ declare interface TierNode {
 }
 
 declare interface MySqlDatabase {
-  title: string;
-  origin: string;
+  origin: any;
   protocol: string;
-  tierName: string[];
   domain: string;
   port: number;
   url: string;
-  params?: Params<string>;
+  params?: Params[];
 }
 
-declare interface Params<T> {
-  [key: string]: T;
+declare interface Params {
+  name: string;
+  value: any;
 }
 
 declare interface Line {

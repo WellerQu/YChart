@@ -1,11 +1,14 @@
-import { Creator, Functor, Fn, ApplicativeFunctor, } from '../../typings/functors';
+import { Fn, ApplicativeFunctor, Monad, } from '../../typings/functors';
+import { ap, chain, } from './hof';
 
-const functor: Creator = (x: any) => ({
-  map: (f: Fn) => functor(f(x)),
+import compose from '../compose';
+
+const hof = compose<(x: any) => ApplicativeFunctor & Monad>(chain, ap,);
+
+const functor = hof((x: any) => ({
+  value: x,
+  map: (f: Fn) => hof(functor)(f(x)),
   join: () => x,
-  ap: (f: Functor) => f.map(x) as ApplicativeFunctor,
-  chain: (f: Fn) => functor(f(x)).join(),
-  id: x => x,
-});
+}));
 
 export default functor;

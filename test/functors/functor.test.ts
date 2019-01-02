@@ -22,7 +22,7 @@ describe('test functor', () => {
   });
 
   it('chain', () => {
-    chai.expect(functor(4).map(x => functor(x)).join<Functor>().join());
+    chai.expect(functor(4).map(x => functor(x)).join<Functor>().join()).to.eq(4);
     chai.expect(functor(4).chain(x => functor(x)).join()).to.eq(4);
   });
 });

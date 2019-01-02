@@ -1,7 +1,7 @@
 import chai from 'chai';
 
 import functor from '../../src/functors/functor';
-import { Functor, Monad, } from '../../typings/functors';
+import { Functor, } from '../../typings/functors';
 
 describe('test functor', () => {
   it('map:single', () => {
@@ -18,7 +18,7 @@ describe('test functor', () => {
   });
 
   it('chain', () => {
-    chai.expect(functor(4).map<Monad>(x => functor(x)).join<Monad>().join()).to.eq(4);
+    chai.expect(functor(4).map(x => functor(x)).join<Functor>().join()).to.eq(4);
     chai.expect(functor(4).chain(x => functor(x)).join()).to.eq(4);
   });
 });

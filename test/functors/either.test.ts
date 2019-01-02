@@ -3,7 +3,6 @@ import sinon from 'sinon';
 
 import functor from '../../src/functors/functor';
 import { left, right, } from '../../src/functors/either';
-import { EitherFunctor, } from '../../typings/functors';
 
 describe('test left of either', () => {
   it ('join', () => {
@@ -30,7 +29,7 @@ describe('test left of either', () => {
     const error = sinon.spy();
     const handle = sinon.spy();
 
-    left('an error').map<EitherFunctor>(x => `${x} occurred`).fold(error, handle);
+    left('an error').map(x => `${x} occurred`).fold(error, handle);
 
     chai.expect(error.calledOnce).to.be.true;
     chai.expect(handle.notCalled).to.be.true;
@@ -64,7 +63,7 @@ describe('test right of either', () => {
     const error = sinon.spy();
     const handle = sinon.spy();
 
-    right('a result').map<EitherFunctor>(x => `${x} has came`).fold(error, handle);
+    right('a result').map(x => `${x} has came`).fold(error, handle);
 
     chai.expect(error.notCalled).to.be.true;
     chai.expect(handle.calledOnce).to.be.true;
@@ -85,7 +84,7 @@ describe('test either', () => {
       .chain(responseIsNotNull)
       .chain(responseIsOK)
       .map(x => `Hello ${x}`)
-      .map<EitherFunctor>(x => `${x}, my friend`)
+      .map(x => `${x}, my friend`)
       .fold(error, handle);
 
     chai.expect(error.calledOnce).to.be.true;
@@ -102,7 +101,7 @@ describe('test either', () => {
       .chain(responseIsNotNull)
       .chain(responseIsOK)
       .map(x => `Hello ${x}`)
-      .map<EitherFunctor>(x => `${x}, my friend`)
+      .map(x => `${x}, my friend`)
       .fold(error, handle);
 
     chai.expect(error.notCalled).to.be.true;
@@ -119,7 +118,7 @@ describe('test either', () => {
       .chain(responseIsNotNull)
       .chain(responseIsOK)
       .map(x => `Hello ${x}`)
-      .map<EitherFunctor>(x => `${x}, my friend`)
+      .map(x => `${x}, my friend`)
       .fold(error, handle);
 
     chai.expect(error.calledOnce).to.be.true;

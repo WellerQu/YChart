@@ -18,7 +18,7 @@ describe('test functor', () => {
   });
 
   it('chain', () => {
-    chai.expect(functor(4).map(x => functor(x)).join<Functor>().join()).to.eq(4);
-    chai.expect(functor(4).chain(x => functor(x)).join()).to.eq(4);
+    chai.expect(functor(4).map(x => functor(x)).fold(x => x).fold((x: any) => x)).to.eq(4);
+    chai.expect(functor(4).chain(x => functor(x)).fold(x => x)).to.eq(4);
   });
 });

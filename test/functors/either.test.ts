@@ -5,10 +5,6 @@ import functor from '../../src/functors/functor';
 import { left, right, } from '../../src/functors/either';
 
 describe('test left of either', () => {
-  it ('join', () => {
-    chai.expect(left(123).join()).to.eq(123);
-  });
-
   it('map', () => {
     chai.expect(left(123).map(x => x + 1).value).to.eq(123);
   });
@@ -39,10 +35,6 @@ describe('test left of either', () => {
 });
 
 describe('test right of either', () => {
-  it('join', () => {
-    chai.expect(right(123).join()).to.eq(123);
-  });
-
   it('map', () => {
     chai.expect(right(123).map(x => x + 1).value).to.eq(124);
   });

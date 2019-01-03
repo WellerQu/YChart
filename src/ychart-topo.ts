@@ -60,8 +60,6 @@ const emptyPadding = (data: TopoData) => {
   return data;
 };
 
-
-
 const imageNode = compose<Strategy>(
   createImageNode,
   createImageNodeOption,

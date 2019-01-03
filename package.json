@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production --config ./build/webpack.production.config.js",
     "dev": "webpack-dev-server --mode development --config ./build/webpack.development.config.js",
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "test": "mocha -r ts-node/register test/**/*.test.ts --recursive",
+    "test:help": "mocha --help",
     "lint": "eslint ./src/**/*.ts ./test/**/*.ts --fix",
     "compile-es": "rm -rf es && tsc --outDir es --module es6 --moduleResolution node",
     "compile-commonjs": "rm -rf commonjs && tsc --outDir commonjs",

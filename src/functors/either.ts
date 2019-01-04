@@ -1,17 +1,19 @@
-import { Fn, Functor,} from '../../typings/functors';
+import { Creator, MapFunction, Functor, } from '../../typings/functors';
 
-export const left = (x: any): Functor => ({
+export const left = <Creator>((x: any) => ({
   value: x,
-  map: (f: Fn) => left(x),
-  chain: (f: Fn) => left(x),
+  map: (f: MapFunction) => left(x),
+  chain: (f: MapFunction) => left(x),
   ap: (f: Functor) => f.map(x),
-  fold: (f: Fn, g: Fn) => f(x),
-});
+}));
 
-export const right = (x: any): Functor => ({
+left.of = (x: any) => left(x);
+
+export const right = <Creator>((x: any) => ({
   value: x,
-  map: (f: Fn) => right(f(x)),
-  chain: (f: Fn) => f(x),
+  map: (f: MapFunction) => right(f(x)),
+  chain: (f: MapFunction) => f(x),
   ap: (f: Functor) => f.map(x),
-  fold: (f: Fn, g: Fn) => g(x),
-});
+}));
+
+right.of = (x: any) => right(x);

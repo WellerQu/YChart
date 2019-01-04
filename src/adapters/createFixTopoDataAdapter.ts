@@ -26,10 +26,6 @@ function fixAdapter (data: TopoData): TopoData {
       if (node.smallType === DATABASE_TYPE.KAFKA_CONSUMER || node.smallType === DATABASE_TYPE.KAFKA_PRODUCER) {
         node.showIcon = 'kafka';
       }     
-
-      if (node.smallType === DATABASE_TYPE.MYSQL) {
-        node.showName = 'mysql';
-      }
     } 
 
     // 处理自连接连线
@@ -75,7 +71,9 @@ function fixDatabases (data: TopoData): TopoData {
   // so, our step 0 is that make a regexp(/^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/ig) for extracting value that
   // include domain, port, url(instance), params
   nodes.forEach((n: Node) => {
-    const regexpOfMain = /^jdbc:mysql:\/\/([^:]+):(\d+)\/([^?]+)\??(.*)$/gi;
+    n.showName = 'mysql';
+
+    const regexpOfMain = /^jdbc:mysql:\/\/([^:]+):(\d+)(?:\/([^?]+))?\??(.*)$/gi;
     if (!regexpOfMain.test(n.id)) {
       return;
     }
@@ -110,7 +108,6 @@ function fixDatabases (data: TopoData): TopoData {
       url,
       params,
     };
-    n.showName = 'mysql';
   });
 
   return data;

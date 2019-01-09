@@ -2,6 +2,7 @@ import ychartTopo from '../src/ychart-topo';
 import ychartCallstack from '../src/ychart-callstack';
 import { TopoData, CallstackData, Line, Node, } from '../typings/defines';
 import json from './topo.json';
+import { TOPO_OPERATION_STATE, } from '../src/constants/constants';
 
 const eventOption = {
   nodeClick: (event: Event, data: Node | Line): void => {
@@ -17,10 +18,11 @@ const eventOption = {
 const updateTopo = ychartTopo(
   document.querySelector('#topo'),
   eventOption,
+  false,
+  () => TOPO_OPERATION_STATE.NONE,
   (userState?: any) => {
     console.log("updated successfully", userState); // eslint-disable-line
   },
-  false
 );
 
 const topoData: TopoData = json.data;

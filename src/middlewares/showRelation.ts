@@ -7,7 +7,7 @@
 import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { setupEventHandler, findGroup, findRoot, } from '../utils';
-import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
+import { ID_COMBINER, NODE_TYPE, TOPO_OPERATION_STATE, } from '../constants/constants';
 import compose from '../compose';
 
 type Child =  string | VNode;
@@ -15,7 +15,7 @@ type Child =  string | VNode;
 /**
  * 显示与鼠标当前悬停节点存在直接调用/被调用关系的其它节点
  */
-export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+export const showRelation = (getState: () => number) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);
   if (userState.nodes.length === 0)
@@ -39,6 +39,7 @@ export const showRelation = (stage: Stage) => (next: PatchBehavior) => (userStat
   // 鼠标悬停事件处理程序
   const handleMouseEnter = (event: MouseEvent): MouseEvent => {
     if (isDragging) return event;
+    if (getState() !== TOPO_OPERATION_STATE.CAN_SHOW_RELATIONSHIP) return event;
 
     const sender = findGroup(event);
     if (!sender) return event;

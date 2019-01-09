@@ -9,7 +9,7 @@ import { VNode, } from 'snabbdom/vnode';
 import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
 import compose from '../compose';
-import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, NODE_TYPE, } from '../constants/constants';
+import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, NODE_TYPE, TOPO_OPERATION_STATE, } from '../constants/constants';
 
 
 const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
@@ -24,7 +24,7 @@ const parsePathD = (value: string):([[number, number], [number, number]] | never
   ];
 };
 
-export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+export const moveNode =(getState: () => number) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);
 
@@ -36,6 +36,8 @@ export const moveNode = (stage: Stage) => (next: PatchBehavior) => (userState?: 
   let targetElement: HTMLElement = null;
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {
+    if (getState() !== TOPO_OPERATION_STATE.CAN_MOVE_NODE) return event;
+
     targetElement = findGroup(event);
     if (!targetElement)
       return event;

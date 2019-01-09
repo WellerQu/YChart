@@ -223,6 +223,7 @@ declare interface Line {
 declare interface TopoData {
   nodes: Node[];
   links: Line[];
+  scale?: 1;
 }
 
 declare interface CallstackData {

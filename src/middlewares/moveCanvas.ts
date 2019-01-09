@@ -10,12 +10,13 @@ import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines
 import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
+import { TOPO_OPERATION_STATE, } from '../constants/constants';
 
 /**
  * 添加拖拽移动画布功能
  * 注意此中间件务必添加在所有布局中间件之后
  */ 
-export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+export const moveCanvas = (getState: () => number) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
   if (!userState)
     return next(userState);
 
@@ -27,6 +28,8 @@ export const moveCanvas = (stage: Stage) => (next: PatchBehavior) => (userState?
   let startViewBox: number[] = [0, 0, 0, 0,];
 
   const handleMouseDown = (event: MouseEvent): MouseEvent => {
+    if (getState() !== TOPO_OPERATION_STATE.CAN_MOVE_CANVAS) return event;
+
     const target = event.target as HTMLElement;
     if (target.nodeName.toUpperCase() !== 'SVG') 
       return event;

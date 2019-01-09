@@ -121,3 +121,10 @@ export enum DATABASE_TYPE {
   REDIS = 'redis',
   MYSQL = 'mysql',
 }
+
+export enum TOPO_OPERATION_STATE {
+  NONE = 0,
+  CAN_MOVE_NODE = 1,
+  CAN_MOVE_CANVAS = 2,
+  CAN_SHOW_RELATIONSHIP = 3,
+}

@@ -88,16 +88,17 @@ export default (
   container: HTMLDivElement,
   // 事件配置
   eventOption?: EventOption, 
-  // 更新后回调
-  updated?: Subscriber,
   // 显示为应用程序
   showAsApp = false,
+  // 获取状态
+  getState?: () => number,
+  // 更新后回调
+  updated?: Subscriber,
 ): UpdateBehavior<TopoData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(
     log,
     showLoading,
-    showRelation,
     event(eventOption),
     // 基本布局策略
     nodeGroupLayout,
@@ -108,8 +109,9 @@ export default (
     nodePositionMemory,
     linkLine,
     scaleCanvas,
-    moveCanvas,
-    moveNode,
+    moveCanvas(getState),
+    moveNode(getState),
+    showRelation(getState),
     topoStyle,
   );
   const createStageAt = enhancer(createStage);

@@ -7,7 +7,7 @@
 import { CallstackOption, Component, Strategy, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
-import { createText, createGroup, createRect, } from './components';
+import { createText, createGroup, createRect, } from './__components';
 import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants/constants';
 
 /**

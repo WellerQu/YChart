@@ -3,7 +3,7 @@
  */
 
 import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
-import { createStyle, } from '../components/components';
+import { createStyle, } from '../components/__components';
 
 const fontSize = '8px';
 const styleSheet = `

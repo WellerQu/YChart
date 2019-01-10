@@ -5,7 +5,7 @@
 import { VNode, } from '../../node_modules/snabbdom/vnode';
 import { ServiceNodeOption, Component, Strategy, } from '../../typings/defines';
 import compose from '../compose';
-import { createText, createCircle, createGroup, } from './components';
+import { createText, createCircle, createGroup, } from './__components';
 
 const identity = (a: any) => a;
 const isNumber = (a: any) => typeof a === 'number';

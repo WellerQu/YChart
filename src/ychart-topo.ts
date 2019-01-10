@@ -16,7 +16,7 @@ import {
 import compose from './compose';
 import clone from './clone';
 
-import { log, } from './middlewares/log';
+import { log, } from './middlewares/__log';
 import { nodeGroupLayout, } from './middlewares/nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
 import { nodeForceDirectedLayout, } from './middlewares/nodeForceDirectedLayout';
@@ -36,7 +36,7 @@ import createFixAdapter from './adapters/createFixTopoDataAdapter';
 import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
 import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
 
-import applyMiddlewares from './cores/applyMiddlewares';
+import applyMiddlewares from './cores/__applyMiddlewares';
 import createStage from './cores/createStage';
 
 import createImageNode from './components/createImageNode';

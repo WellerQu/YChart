@@ -3,7 +3,7 @@
  */
 
 import { Stage, PatchBehavior, } from '../../typings/defines';
-import { createText, createStyle, } from '../components/components';
+import { createText, createStyle, } from '../components/__components';
 
 const styleSheet = `
 text.loading {

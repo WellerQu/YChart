@@ -1,90 +1,31 @@
-import ychartTopo from '../src/ychart-topo';
-import ychartCallstack from '../src/ychart-callstack';
-import { TopoData, CallstackData, Line, Node, } from '../typings/defines';
 import json from './topo.json';
-import { TOPO_OPERATION_STATE, } from '../src/constants/constants';
 
-const eventOption = {
-  nodeClick: (event: Event, data: Node | Line): void => {
-    console.log(event, data);
+import io from '../src/cores/io';
+import functor from '../src/cores/functor';
+import createInstance from '../src/cores/createInstance';
+import applyMiddlewares from '../src/cores/applyMiddlewares';
+import log from '../src/middlewares/log';
+
+const enhancer = applyMiddlewares(log);
+const topoInstance = enhancer(createInstance);
+
+const { update, patch, scale, } = topoInstance({
+  size: {
+    width: 800,
+    height: 600,
   },
-  // 'lineClick': (event: MouseEvent, data: Line): void => { console.log(event, data); },
-  // 'nodeMouseOver': (event: MouseEvent, data: Node): void => { console.log(event, data); },
-  // 'nodeMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
-  // 'lineMouseOver': (event: MouseEvent, data: Line): void => { console.log(event, data); },
-  // 'lineMouseOut': (event: MouseEvent, data: Node): void => { console.log(event, data); },
-};
-
-const updateTopo = ychartTopo(
-  document.querySelector('#topo'),
-  eventOption,
-  false,
-  () => TOPO_OPERATION_STATE.NONE,
-  (userState?: any) => {
-    console.log("updated successfully", userState); // eslint-disable-line
-  },
-);
-
-const topoData: TopoData = json.data;
-
-updateTopo(topoData);
-
-const btnUpdate = document.querySelector('button#updateTopoData');
-btnUpdate.addEventListener('click', () => {
-  topoData.nodes[0].instances = (Math.random() * 10) >> 0;
-  updateTopo(topoData, null, false);
+  viewbox: [0, 0, 800, 600,],
+  container: document.querySelector('#topo'),
 });
 
-const btnFullscreen = document.querySelector('button#fullTopoData');
-btnFullscreen.addEventListener('click', () => {
-  
-});
+import { createText, createGroup, createDoubleText, } from '../src/components/components';
 
-const callstackData: CallstackData = {
-  stackName: 'root stack service',
-  duration: 2260, // ms
-  offsetTime: 0,
-  children: [
-    {
-      stackName: 'serv 0',
-      duration: 300,
-      offsetTime: 100,
-      children: [
-        {
-          stackName: 'serv 01',
-          duration: 100,
-          offsetTime: 100,
-          children: [
-            {
-              stackName: 'serv 001',
-              duration: 10,
-              offsetTime: 100,
-            },
-          ],
-        },
-        {
-          stackName: 'serv 02',
-          duration: 3,
-          offsetTime: 100,
-        },
-      ],
-    },
-    {
-      stackName: 'serv 1',
-      duration: 700,
-      offsetTime: 100,
-    },
-  ],
-};
+update(createText({ content: '123', x: 0, y: 18,}));
+update(createGroup({ id: '123', x: 0, y: 0, }));
+update(createDoubleText([{ content: '123', x: 0, y: 36, }, { content: '123', x: 100, y: 36, },]));
 
-const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
+io(patch)
+  .map((x: any) => x)
+  .ap(functor(json));
 
-updateCallstack(callstackData);
-
-const btnUpdateCallstack = document.querySelector('button#updateCallstackData');
-btnUpdateCallstack.addEventListener('click', () => {
-  callstackData.duration = 900;
-  callstackData.children[0].duration = 500;
-
-  updateCallstack(callstackData);
-});
+scale(1 / 0.5);

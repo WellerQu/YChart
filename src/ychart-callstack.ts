@@ -6,7 +6,7 @@ import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from '.
 import createStage from './cores/createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
-import applyMiddlewares from './cores/applyMiddlewares';
+import applyMiddlewares from './cores/__applyMiddlewares';
 
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';

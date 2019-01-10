@@ -19,7 +19,7 @@ import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
 import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../../typings/defines';
-import { createSvg, } from '../components/components';
+import { createSvg, } from '../components/__components';
 import { isNull, } from '../utils';
 
 const vPatch = init([

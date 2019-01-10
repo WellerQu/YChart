@@ -18,8 +18,12 @@
   },
   "include": [
     "src/**/*",
+    "node_modules/snabbdom/snabbdom.d.ts",
+    "node_modules/snabbdom/vnode.d.ts",
+    "node_modules/snabbdom/tovnode.d.ts",
   ],
   "exclude": [
     "**/*.spec.ts",
+    "src/ychart-callstack.ts"
   ]
 }

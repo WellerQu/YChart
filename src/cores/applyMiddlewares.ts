@@ -1,30 +1,24 @@
-/**
- * @module cores
- */
-
+import { Middleware, InstanceCreator, PatchBehavior, InstanceAPI, } from './core';
 import compose from '../compose';
-import { Stage, Middleware, CreateStage, PatchBehavior, } from '../../typings/defines';
 
-const applyMiddlewares = (...middlewares: Middleware[]) => (
-  createStage: CreateStage
-) => (container: HTMLElement): Stage => {
-  const stage = createStage(container);
+export default (...middlewares: Middleware[]) => (
+  createInstance: InstanceCreator
+) => (option: any) => {
   let patch: PatchBehavior = (): never => {
-    throw new Error('Early to call');
+    throw new Error('Not implement');
   };
 
-  const middlewareAPI: Stage = {
-    ...stage,
+  const instance = createInstance(option);
+  const api: InstanceAPI = {
+    ...instance,
     patch: (userState?: any) => patch(userState),
   };
 
-  const chain = middlewares.map(fn => fn(middlewareAPI));
-  patch = compose<PatchBehavior>(...chain)(stage.patch);
+  const chain = middlewares.map(fn => fn(api));
+  patch = compose<PatchBehavior>(...chain)(instance.patch);
 
   return {
-    ...stage,
+    ...instance,
     patch,
   };
 };
-
-export default applyMiddlewares;

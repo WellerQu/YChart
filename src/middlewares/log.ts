@@ -1,12 +1,7 @@
-/**
- * @module middlewares
- */
+import { InstanceAPI, PatchBehavior, } from '../cores/core';
 
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
-
-// Example for middleware that show how to log patch behavior
-export const log = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  // console.log('patching user data', userState); // eslint-disable-line
-
-  next(userState);
+export default (instance: InstanceAPI) => (next: PatchBehavior) => (x: any) => {
+  console.log('before', x); // eslint-disable-line
+  next(x);
+  console.log('after', x); // eslint-disable-line
 };

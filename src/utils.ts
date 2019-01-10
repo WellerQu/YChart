@@ -3,8 +3,9 @@
 import { VNode, } from 'snabbdom/vnode';
 
 import compose from './compose';
-import { EventHandler, Position, } from '../typings/defines';
+import { EventHandler, } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, NODE_TYPE, } from './constants/constants';
+import { Size, Position, } from './cores/core';
 
 export const isNull = (value: any): boolean => {
   if (value === null)
@@ -248,4 +249,47 @@ export function updateLinePosition (item: VNode, start: Position, end: Position)
   }
 
   return item;
+}
+
+export function graph (stage: VNode): (Position & Size) {
+  const children = stage.children as ( VNode | string )[];
+
+
+  // 初始化偏移
+  const nodes = children.filter((item: (VNode | string)) => {
+    const node = item as VNode;
+    if (node.data && node.data.class && node.data.class[NODE_TYPE.NODE])
+      return true;
+
+    return false;
+  });
+
+  if (nodes.length < 2) return { x: 0, y: 0, width: 0, height: 0, };
+  const [head, ...tail] = nodes;
+
+  const first = parseTranslate((head as VNode).data.style.transform);
+  let minimumX = first.x, minimumY = first.y, maximumX = first.x, maximumY = first.y;
+
+  tail.forEach((node: VNode) => {
+    const position = parseTranslate(node.data.style.transform);
+
+    minimumX = Math.min(minimumX, position.x);
+    minimumY = Math.min(minimumY, position.y);
+    maximumX = Math.max(maximumX, position.x);
+    maximumY = Math.max(maximumY, position.y);
+  });
+
+  maximumX += NODE_SIZE;
+  maximumY += NODE_SIZE;
+
+  // 计算拓扑图整体所在最小矩形
+  const graphWidth = maximumX - minimumX;
+  const graphHeight = maximumY - minimumY;
+
+  return {
+    x: minimumX,
+    y: minimumY,
+    width: graphWidth,
+    height: graphHeight,
+  }; 
 }

@@ -5,7 +5,7 @@
 import { VNode, } from '../../node_modules/snabbdom/vnode';
 import { Component, Strategy, AppNodeOption, } from '../../typings/defines';
 import compose from '../compose';
-import { createText, createCircle, createGroup, } from './components';
+import { createText, createCircle, createGroup, } from './__components';
 import { isNull, } from '../utils';
 
 const identity = (a: any) => a;

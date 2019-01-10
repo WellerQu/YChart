@@ -6,7 +6,7 @@ import { Component, RuleOption, Strategy, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
 import compose from '../compose';
-import { createText, } from './components';
+import { createText, } from './__components';
 import { RULE_PADDING, } from '../constants/constants';
 
 export const createRule: Component<RuleOption> = (option: RuleOption):Strategy => (parentNode: VNode) => {

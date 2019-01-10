@@ -7,7 +7,7 @@
 import { Component, Strategy, LineOption, } from '../../typings/defines';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
-import { createGroup, createArrow, createLine, } from './components';
+import { createGroup, createArrow, createLine, } from './__components';
 
 /**
  * 复合组件 - 组合了箭头, 折线的组件, 创建一个用于创建调用关系连线的策略函数, 该函数将创建一个VNode

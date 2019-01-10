@@ -9,7 +9,7 @@ import { NODE_SIZE, } from '../constants/constants';
 import { ImageNodeOption, Component, Strategy, } from '../../typings/defines';
 
 import compose from '../compose';
-import { createText, createImage, createGroup, } from './components';
+import { createText, createImage, createGroup, } from './__components';
 
 const IMAGE_SIZE = 50; // both width and height
 

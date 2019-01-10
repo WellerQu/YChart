@@ -8,48 +8,13 @@
   <style>
     html, body {
       margin: 0;
-    }
-
-    .container, .control {
-      margin: 0 auto;
-      box-sizing: border-box;
-      border: solid 1px red;
-      margin: 10px;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
     }
   </style>
 </head>
 <body>
-  <div class="control">
-    <div id="flag" style="position: absolute; left: 0; top: 0; background: red; color: white;"></div>
-    <div id="follow" style="position: absolute; left: 0; top: 0; background: orange; color: white;"></div>
-    <button id="updateTopoData">Update Topo data</button>
-    <button id="fullTopoData">Fullscreen Topo data</button>
-  </div>
-  <div class="container" style="width: 800px; height: 400px;" id="topoContainer">
-    <div id="topo"></div>
-  </div>
-  <div class="control">
-    <button id="updateCallstackData">Update Callstack data</button>
-  </div>
-  <div class="container" style="height: 400px;">
-    <div id="callstack"></div>
-  </div>
-  <script>
-      /*
-      document.body.addEventListener('dblclick', function(event) {
-        document.querySelector('#flag').style.left = event.clientX + 'px';
-        document.querySelector('#flag').style.top = event.clientY + 'px';
-        document.querySelector('#flag').innerHTML = event.clientX + ',' + event.clientY;
-      });
-      document.body.addEventListener('mousemove', function(event) {
-        document.querySelector('#follow').style.left = event.clientX + 20 + 'px';
-        document.querySelector('#follow').style.top = event.clientY + 20 + 'px';
-        document.querySelector('#follow').innerHTML = event.clientX + ',' + event.clientY;
-      });
-      //*/
-      document.querySelector('#topoContainer').addEventListener('mousewheel', (event) => {
-        event.preventDefault();
-      });
-  </script>
+  <div id="topo"></div>
 </body>
 </html>

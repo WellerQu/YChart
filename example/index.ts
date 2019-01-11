@@ -1,15 +1,20 @@
 import json from './topo.json';
 
-import io from '../src/cores/io';
-import functor from '../src/cores/functor';
 import createInstance from '../src/cores/createInstance';
 import applyMiddlewares from '../src/cores/applyMiddlewares';
 import log from '../src/middlewares/log';
 
+import  fixData from '../src//adapters/createFixTopoDataAdapter';
+import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
+
+// parameters
+let should = true;
+let showAsApp = false;
+
 const enhancer = applyMiddlewares(log);
 const topoInstance = enhancer(createInstance);
 
-const { update, patch, scale, reset, } = topoInstance({
+const { update, patch, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -18,35 +23,45 @@ const { update, patch, scale, reset, } = topoInstance({
   container: document.querySelector('#topo'),
 });
 
-import application from '../src/components/application';
-import service from '../src/components/service';
-import id from '../src/cores/id';
-import { TopoData, } from '../src/cores/core.js';
+import application from '../src/components/applicationNode';
+import service from '../src/components/serviceNode';
+import user from '../src/components/userNode';
+import { TopoData, } from '../typings/defines.js';
+import { UpdateBehavior, Node, } from '../src/cores/core';
+import { NODE_TYPE, } from '../src/constants/constants';
 
-reset();
+import applicationAdapter from '../src/adapters/applicationAdapter';
+import serviceAdapter from '../src/adapters/serviceAdapter';
 
-const f = functor(json);
-// update(application({ id: '321', title: '三方外卖', instancesCount: 2, tierCount: void 0,}));
+import io from '../src/cores/io';
+import functor from '../src/cores/functor';
+import left from '../src/cores/left';
+import right from '../src/cores/right';
+import sideEffect from '../src/cores/sideEffect';
 
-f.map(( data: TopoData ) => {
+const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
+const paintToVirtualDOM = (paint: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
+  const paint$ = io(paint);
+
+  data.nodes.forEach(( item: Node ) => {
+    const item$ = functor(item);
+    if (showAsApp || item.crossApp) 
+      paint$.map(application).map(applicationAdapter).ap(item$);
+    else if (item.type === NODE_TYPE.SERVER) 
+      paint$.map(service).map(serviceAdapter).ap(item$);
+    else if (item.type === NODE_TYPE.USER)
+      paint$.map(user).ap(item$);
+    else 
+      console.log(item.type, item.smallType);
+  });
+
+  return data;
 });
-update(
-  service({
-    id: '321',
-    title: 'Website',
-    fill: '#CC0000',
-    activeInstanceCount: 2,
-    instanceCount: 13,
-    type: 'php',
-  })
-);
 
-const $root = io(patch)
-  .map((x: any) => x)
-  .map((x: any) => x)
-  .ap(f)
-  .fold(id);
-
-console.log($root); // eslint-disable-line
-
-scale(1 / 0.5);
+functor(json.data)
+  .map(fixData)
+  .map(mergeUsers)
+  .chain(shouldMergeHTTPOrRemote(should))
+  .map(mergeHTTPOrRPC)
+  .chain(paintToVirtualDOM(update))
+  .fold(patch);

@@ -30,6 +30,10 @@ interface PatchBehavior {
   (userState?: any): void; 
 }
 
+interface UpdateBehavior {
+  (strategy: StrategyID): VNode;
+}
+
 type Viewbox = [number, number, number, number];
 type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (userState?: any) => void;
 
@@ -39,14 +43,8 @@ interface ChartOption {
   container: HTMLElement;
 }
 
-
-
-interface CallstackData {
-
-}
-
 interface InstanceAPI {
-  update: (strategy: StrategyID) => VNode;
+  update: UpdateBehavior;
   patch: () => void;
   destroy: () => void;
   reset: () => void;
@@ -110,12 +108,17 @@ interface ServiceOption extends ComponentOption {
   epm?: number;
 }
 
+interface UserOption extends ComponentOption {
+  id: string;
+}
 
 
 
 
 
+interface CallstackData {
 
+}
 
 interface TopoData {
   nodes: Node[],

@@ -72,7 +72,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
           size.height * value,].join(',');
 
         if ($stage.elm) {
-          ($stage.elm as SVGElement).setAttribute('viewbox', $stage.data.attrs.viewbox);
+          ($stage.elm as SVGElement).setAttribute('viewBox', $stage.data.attrs.viewbox);
         }
       }
 

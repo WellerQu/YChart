@@ -15,7 +15,7 @@ export const svg = (option: SvgOption) => h('svg', vNodeData({
   attrs: {
     width: option.size.width,
     height: option.size.height,
-    viewbox: option.viewbox.join(','),
+    viewBox: option.viewbox.join(','),
   },
 }), []);
 

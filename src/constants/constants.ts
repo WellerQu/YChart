@@ -128,3 +128,5 @@ export enum TOPO_OPERATION_STATE {
   CAN_MOVE_CANVAS = 2,
   CAN_SHOW_RELATIONSHIP = 3,
 }
+
+export const IMAGE_ROOT = '/static/images/';

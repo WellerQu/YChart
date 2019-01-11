@@ -254,7 +254,6 @@ export function updateLinePosition (item: VNode, start: Position, end: Position)
 export function graph (stage: VNode): (Position & Size) {
   const children = stage.children as ( VNode | string )[];
 
-
   // 初始化偏移
   const nodes = children.filter((item: (VNode | string)) => {
     const node = item as VNode;
@@ -264,11 +263,15 @@ export function graph (stage: VNode): (Position & Size) {
     return false;
   });
 
-  if (nodes.length < 2) return { x: 0, y: 0, width: 0, height: 0, };
-  const [head, ...tail] = nodes;
+  if (nodes.length === 0) 
+    return { x: 0, y: 0, width: 0, height: 0, };
 
+  const [head, ...tail] = nodes;
   const first = parseTranslate((head as VNode).data.style.transform);
   let minimumX = first.x, minimumY = first.y, maximumX = first.x, maximumY = first.y;
+
+  if (nodes.length === 1) 
+    return { x: minimumX, y: minimumY, width: minimumX + NODE_SIZE, height: minimumY + NODE_SIZE,};
 
   tail.forEach((node: VNode) => {
     const position = parseTranslate(node.data.style.transform);

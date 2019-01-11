@@ -10,9 +10,10 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 import { svg, } from '../components/components';
-import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, } from './core';
+import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, SvgOption, } from './core';
 import { TOPO_OPERATION_STATE, } from '../constants/constants';
 import { graph, } from '../utils';
+import { VNode, } from 'snabbdom/vnode';
 
 const vPatch = init([
   classes,
@@ -22,13 +23,26 @@ const vPatch = init([
 ]);
 
 const instance: InstanceCreator = (option?: ChartOption) => {
+  const initSvg = (svg: (o: SvgOption) => VNode, option?: ChartOption) => {
+    const $svg = svg(option);
+
+    $svg.data.on = {
+      click: (...args: any[]) => events.get('click').forEach((fn: Function) => fn.call($svg, ...args)),
+    };
+
+    return $svg;
+  };
+
   let $vnode = toNode(option.container);
-  let $stage = svg(option);
+  let $stage = initSvg(svg, option);
 
   let scale = 1;
   let size = !option ? { width: 0, height: 0, } : option.size;
   let viewbox: Viewbox = !option ? [0, 0, size.width, size.height,] : option.viewbox;
-  let operations = TOPO_OPERATION_STATE.NONE;;
+  let operations = TOPO_OPERATION_STATE.NONE;
+
+  const events = new Map<string, Array<Function>>();
+  events .set('click', []);
 
   return {
     viewbox: (value?: Viewbox) => {
@@ -88,8 +102,15 @@ const instance: InstanceCreator = (option?: ChartOption) => {
     getStage: () => $stage,
     update: (strategy: StrategyID) => strategy($stage),
     patch: () => $vnode = vPatch($vnode, $stage),
-    reset: () => $stage = svg(option),
-    destroy: () => {},
+    reset: () => $stage = initSvg(svg, option),
+    addEventListener: (eventName: string, callback: Function) => {
+      events.get(eventName).push(callback);
+    },
+    removeEventListener: (eventName: string, callback?: Function) => {
+      events.set(eventName, events.get(eventName).filter(item => item !== callback));
+    },
+    destroy: () => {
+    },
   };
 };
 

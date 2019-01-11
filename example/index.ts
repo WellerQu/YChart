@@ -14,7 +14,7 @@ let showAsApp = false;
 const enhancer = applyMiddlewares(log);
 const topoInstance = enhancer(createInstance);
 
-const { update, patch, } = topoInstance({
+const { update, patch, addEventListener, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -38,6 +38,7 @@ import functor from '../src/cores/functor';
 import left from '../src/cores/left';
 import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
+import { VNode, } from 'snabbdom/vnode';
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
 const paintToVirtualDOM = (paint: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
@@ -65,3 +66,7 @@ functor(json.data)
   .map(mergeHTTPOrRPC)
   .chain(paintToVirtualDOM(update))
   .fold(patch);
+
+addEventListener('click', (event: Event, sender: VNode) => {
+  console.log(event, sender);
+});

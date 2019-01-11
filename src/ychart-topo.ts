@@ -37,7 +37,7 @@ import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
 import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
 
 import applyMiddlewares from './cores/__applyMiddlewares';
-import createStage from './cores/createStage';
+import createStage from './cores/__createStage';
 
 import createImageNode from './components/createImageNode';
 

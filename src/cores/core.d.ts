@@ -3,7 +3,7 @@ import { TOPO_OPERATION_STATE, } from '../constants/constants';
 
 interface Functor {
   map: (f: Function) => Functor;
-  fold: (f: Function) => any;
+  fold: (...f: Function[]) => any;
   ap: (f: Functor) => Functor;
   chain: (f: Function) => Functor,
 }
@@ -53,6 +53,8 @@ interface InstanceAPI {
   scale: (value?: number) => number;
   operation: (value?: TOPO_OPERATION_STATE) => TOPO_OPERATION_STATE,
   getStage: () => VNode;
+  addEventListener: (eventName: string, callback: Function) => void;
+  removeEventListener: (eventName: string, callback?: Function) => void;
 }
 
 interface Creator<S, T> {

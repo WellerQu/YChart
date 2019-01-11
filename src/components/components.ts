@@ -1,14 +1,11 @@
 import { VNodeData, VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
-import { Viewbox, TextOption, CreateComponent, StrategyID, SvgOption, GroupOption, } from '../cores/core';
-import functor from '../cores/functor';
+import { TextOption, StrategyID, SvgOption, GroupOption, ImageOption, CircleOption, } from '../cores/core';
 
 const vNodeData = (option: VNodeData) => ({
   ...option,
   ns: 'http://www.w3.org/2000/svg',
 });
-
-const id = (x: any) => x;
 
 export const appendTo = ($node: VNode): StrategyID => 
   ($parent: VNode) => 
@@ -30,49 +27,37 @@ export const text = (option: TextOption) => h('text', vNodeData({
   class: option.className,
 }), option.content);
 
+export const circle = (option: CircleOption) => h('circle', vNodeData({
+  attrs: {
+    cx: option.x,
+    cy: option.y,
+    r: option.radius,
+    fill: option.fill,
+  },
+  class: option.className,
+}));
+
 export const group = (option: GroupOption, children?: VNode[] ) => h(
   'g',
   vNodeData({
     attrs: {
       id: option.id,
     },
+    key: option.id,
     class: { ...option.className, group: true, },
     style: { transform: `translate(${option.x}px, ${option.y}px)`, },
   }),
   children || []
 );
 
-export const doubleText = (option: TextOption[]) => 
-  functor(option)
-    .map((options: TextOption[]) => options.map(text))
-    .map((nodes: VNode[]) => group({ id: '321', x: 0, y: 0, }, nodes))
-    .fold(id);
+export const image = (option: ImageOption) => h('image', vNodeData({
+  attrs: {
+    'xlink:href': option.URL,
+    width: option.width,
+    height: option.height,
+    x: option.x,
+    y: option.y,
+  },
+}));
 
-export const component = (create: CreateComponent) =>
-  (option: any) =>
-    (appendTo: (node: VNode) => StrategyID) =>
-      functor(option)
-        .map(create)
-        .map(appendTo)
-        .fold(id);
-
-export const createText = (option: TextOption) =>
-  functor(component)
-    .ap(functor(text))
-    .ap(functor(option))
-    .ap(functor(appendTo))
-    .fold(id);
-
-export const createGroup = (option: GroupOption) =>
-  functor(component)
-    .ap(functor(group))
-    .ap(functor(option))
-    .ap(functor(appendTo))
-    .fold(id);
-
-export const createDoubleText = (option: TextOption[]) =>
-  functor(component)
-    .ap(functor(doubleText))
-    .ap(functor(option))
-    .ap(functor(appendTo))
-    .fold(id);
+export const style = (stylesheet: string) => h('style', vNodeData({}), stylesheet);

@@ -5,6 +5,7 @@ interface Functor {
   map: (f: Function) => Functor;
   fold: (f: Function) => any;
   ap: (f: Functor) => Functor;
+  chain: (f: Function) => Functor,
 }
 
 interface Size {
@@ -21,11 +22,16 @@ interface ComponentOption {
   className?: Record<string, boolean>,
 }
 
+interface StrategyID {
+  (parent: VNode): VNode
+}
+
+interface PatchBehavior {
+  (userState?: any): void; 
+}
+
 type Viewbox = [number, number, number, number];
-type StrategyID = (parent: VNode) => VNode;
-type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (x: any) => void;
-type PatchBehavior = (userState?: any) => void;
-type CreateComponent = (option: any) => VNode;
+type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (userState?: any) => void;
 
 interface ChartOption {
   size: Size;
@@ -33,9 +39,7 @@ interface ChartOption {
   container: HTMLElement;
 }
 
-interface TopoData {
 
-}
 
 interface CallstackData {
 
@@ -65,11 +69,106 @@ interface TextOption extends Position, ComponentOption {
   content: string;
 }
 
+interface CircleOption extends Position, ComponentOption {
+  radius: number;
+  fill: string;
+}
+
 interface GroupOption extends Position, ComponentOption {
   id: string;
+}
+
+interface ImageOption extends Position {
+  URL: string;
+  width?: number;
+  height?: number;
 }
 
 interface SvgOption {
   viewbox: Viewbox; 
   size: Size;
+}
+
+interface ApplicationOption extends ComponentOption {
+  id: string;
+  title: string;
+  tierCount?: number;
+  instancesCount?: number;
+}
+
+interface ServiceOption extends ComponentOption {
+  id: string;
+  title: string;
+  fill: string;
+  type: string;
+  activeInstanceCount: number;
+  instanceCount: number;
+  callCount?: number;
+  errorCount?: number;
+  elapsedTime?: number;
+  rpm?: number;
+  epm?: number;
+}
+
+
+
+
+
+
+
+
+interface TopoData {
+  nodes: Node[],
+}
+
+interface Node {
+  readonly id: string;
+  readonly name: string;
+  type: string;
+  smallType: string | null;
+  instances: number;
+  activeInstances: number;
+  /**
+   * 调用这个节点的Tier的集合
+   */
+  tiers?: TierNode[];
+  /** 
+   * 被当前节点代表的其他可合并节点
+   */
+  mysqlDatabases?: MySqlDatabase;
+  /**
+   * 展示用的名字
+   */
+  showName?: string;
+  /**
+   * 展示用的图标
+   */
+  showIcon?: string;
+  apdex?: string;
+  health?: string;
+  callCount?: number;
+  error?: number;
+  elapsedTime?: number;
+  rpm?: number;
+  epm?: number;
+  times?: number;
+  totalCount?: number;
+  errorTotalCount?: number;
+  crossApp?: boolean;
+  tiersCount?: number;
+}
+
+interface MySqlDatabase {
+  origin: any;
+  protocol: string;
+  domain: string;
+  port: number;
+  url: string;
+  params?: { name: string; value: any; }[];
+}
+
+interface TierNode {
+  tierName: string;
+  elapsedTime: number;
+  name: string;
 }

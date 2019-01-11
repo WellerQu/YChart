@@ -2,6 +2,7 @@ import { Functor, } from './core';
 import id from './id';
 
 const left = (x: any): Functor => ({
+  __value__: `left( ${x})`,
   map: (_: Function) => left(x),
   fold: (f: Function, g: Function) => f(x),
   ap: (f: Functor) => f.map(x),

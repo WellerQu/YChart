@@ -44,6 +44,7 @@ const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? le
 const paintToVirtualDOM = (paint: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
   const paint$ = io(paint);
 
+  // side effect
   data.nodes.forEach(( item: Node ) => {
     const item$ = functor(item);
     if (showAsApp || item.crossApp) 

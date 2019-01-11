@@ -2,6 +2,7 @@ import { VNode, } from 'snabbdom/vnode';
 import { TOPO_OPERATION_STATE, } from '../constants/constants';
 
 interface Functor {
+  readonly __value__?: any;
   map: (f: Function) => Functor;
   fold: (...f: Function[]) => any;
   ap: (f: Functor) => Functor;

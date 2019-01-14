@@ -125,6 +125,7 @@ interface CallstackData {
 
 interface TopoData {
   nodes: Node[],
+  links: Line[],
 }
 
 interface Node {
@@ -137,7 +138,7 @@ interface Node {
   /**
    * 调用这个节点的Tier的集合
    */
-  tiers?: TierNode[];
+  tiers?: Tier[];
   /** 
    * 被当前节点代表的其他可合并节点
    */
@@ -164,6 +165,10 @@ interface Node {
   tiersCount?: number;
 }
 
+interface Line {
+
+}
+
 interface MySqlDatabase {
   origin: any;
   protocol: string;
@@ -173,7 +178,7 @@ interface MySqlDatabase {
   params?: { name: string; value: any; }[];
 }
 
-interface TierNode {
+interface Tier {
   tierName: string;
   elapsedTime: number;
   name: string;

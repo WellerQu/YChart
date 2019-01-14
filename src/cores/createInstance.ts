@@ -23,26 +23,25 @@ const vPatch = init([
 ]);
 
 const instance: InstanceCreator = (option?: ChartOption) => {
-  const initSvg = (svg: (o: SvgOption) => VNode, option?: ChartOption) => {
-    const $svg = svg(option);
+  const events = new Map<string, Array<Function>>();
+  events .set('click', []);
 
-    $svg.data.on = {
-      click: (...args: any[]) => events.get('click').forEach((fn: Function) => fn.call($svg, ...args)),
+  const initializeEvent = (events: Map<string, Array<Function>>) => ($vnode: VNode, option?: ChartOption) => {
+    $vnode.data.on = {
+      click: (...args: any[]) => events.get('click').forEach((fn: Function) => fn.call($vnode, ...args)),
     };
 
-    return $svg;
+    return $vnode;
   };
-
-  let $vnode = toNode(option.container);
-  let $stage = initSvg(svg, option);
+  const svgEvents = initializeEvent(events);
 
   let scale = 1;
   let size = !option ? { width: 0, height: 0, } : option.size;
   let viewbox: Viewbox = !option ? [0, 0, size.width, size.height,] : option.viewbox;
   let operations = TOPO_OPERATION_STATE.NONE;
 
-  const events = new Map<string, Array<Function>>();
-  events .set('click', []);
+  let $vnode = toNode(option.container);
+  let $stage = svgEvents(svg({ size, viewbox, }));
 
   return {
     viewbox: (value?: Viewbox) => {
@@ -102,7 +101,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
     getStage: () => $stage,
     update: (strategy: StrategyID) => strategy($stage),
     patch: () => $vnode = vPatch($vnode, $stage),
-    reset: () => $stage = initSvg(svg, option),
+    reset: () => $stage = svg({ size, viewbox,}),
     addEventListener: (eventName: string, callback: Function) => {
       events.get(eventName).push(callback);
     },

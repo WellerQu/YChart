@@ -43,7 +43,6 @@ const application = (option: ApplicationOption) =>
           id: option.id,
           x: 0, y: 0,
           className: {
-            [NODE_TYPE.NODE]: true,
             [NODE_TYPE.APP]: true,
           },
         },

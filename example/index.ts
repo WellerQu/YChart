@@ -38,23 +38,20 @@ import functor from '../src/cores/functor';
 import left from '../src/cores/left';
 import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
+
 import { VNode, } from 'snabbdom/vnode';
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
-const paintToVirtualDOM = (paint: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
-  const paint$ = io(paint);
-
+const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
   // side effect
-  data.nodes.forEach(( item: Node ) => {
-    const item$ = functor(item);
+  data.nodes.forEach((item: Node) => {
     if (showAsApp || item.crossApp) 
-      paint$.map(application).map(applicationAdapter).ap(item$);
-    else if (item.type === NODE_TYPE.SERVER) 
-      paint$.map(service).map(serviceAdapter).ap(item$);
+      io(update).map(application).map(applicationAdapter).ap(functor(item));
+    else if (item.type === NODE_TYPE.SERVER)
+      io(update).map(service).map(serviceAdapter).ap(functor(item));
     else if (item.type === NODE_TYPE.USER)
-      paint$.map(user).ap(item$);
-    else 
-      console.log(item.type, item.smallType);
+      io(update).map(user).ap(functor(item));
+    // TODO: handle other type
   });
 
   return data;

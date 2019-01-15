@@ -36,7 +36,7 @@ const application = (option: ApplicationOption) =>
         }),
       ])
     )
-    .chain(functor.of)
+    .chain(functor)
     .map((nodes: VNode[]) =>
       group(
         {

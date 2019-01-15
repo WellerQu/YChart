@@ -17,7 +17,7 @@ import compose from './compose';
 import clone from './clone';
 
 import { log, } from './middlewares/__log';
-import { nodeGroupLayout, } from './middlewares/nodeGroupLayout';
+import { nodeGroupLayout, } from './middlewares/__nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
 import { nodeForceDirectedLayout, } from './middlewares/nodeForceDirectedLayout';
 import { topoStyle, } from './middlewares/topoStyle';

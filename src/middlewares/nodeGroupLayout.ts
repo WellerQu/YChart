@@ -1,118 +1,85 @@
-/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
-
 /**
  * @module middlewares
  */
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { NODE_SIZE, CELL_SIZE, NODE_TYPE, } from '../constants/constants';
-import { toTranslate, group, } from '../utils';
+import { TopoData, PatchBehavior, InstanceAPI, Position, Size, } from '../cores/core';
+import {  NODE_SIZE, } from '../constants/constants';
+import id from '../cores/id';
+import { toTranslate, } from '../utils';
+import functor from '../cores/functor';
+import right from '../cores/right';
+import left from '../cores/left';
+import sideEffect from '../cores/sideEffect';
 
-/**
- * 布局用的关键信息
- */
-interface KeyInfo {
-  vnode: VNode;
-  position: Position;
-  id: number | string | boolean;
-}
+// 求容器的中心点
+const centerPositionOfSize = (size: Size) =>
+  ({ x: size.width / 2, y: size.height / 2,});
 
-/**
- * 摆放节点
- * @param columnIndex 列索引
- */
-const placeNode = (columnIndex: number) => (nodes: VNode[]): KeyInfo[] => {
-  const space = (CELL_SIZE - NODE_SIZE) / 2;
-
-  return nodes.map<KeyInfo>((item: VNode, rowIndex: number) => {
-    return {
-      vnode:
-      {
-        ...item,
-        data: {
-          ...item.data,
-          style: {
-            transform: toTranslate(CELL_SIZE * columnIndex + space, CELL_SIZE * rowIndex + space),
-          },
-        },
-      },
-      position: {
-        x: CELL_SIZE * columnIndex + space,
-        y: CELL_SIZE * rowIndex + space,
-      },
-      id: item.data.attrs.id,
-    };
-  });
-};
-
-/**
- * 将用户节点摆在列索引为0的那一列
- */
-const placeUserGroup = placeNode(0);
-/**
- * 将服务节点摆在列索引巍1的那一列
- */
-const placeServerGroup = placeNode(1);
-/**
- * 将远程调用/HTTP/DATABASE等等节点摆在列索引为2的那一列
- */
-const placeRemoteGroup = placeNode(2);
+// 求节点的中心点
+const centerPositionOfShape = (pos: Position) =>
+  ({ x: pos.x - NODE_SIZE / 2, y: pos.y - NODE_SIZE / 2,});
 
 /**
  * 拓扑图布局策略
  * 简单的按节点类型分组进行布局的策略
+ * 
+ * instance::InstanceAPI -> next::PatchBehavior -> state::TopoData -> void
  */
-export const nodeGroupLayout = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  // 没有数据, 部需要布局
-  if (!userState)
-    return next(userState);
-  if (userState.nodes.length === 0)
-    return next(userState);
+export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+  functor(instance)
+    .map((ins: InstanceAPI) => ins.getStage())
+    .map(($stage: VNode) => $stage.children)
+    .map((children: VNode[]) => children.filter(n => n.data.class))
+    .map((children: VNode[]) => children.filter(n => n.data.class['group']))
+    .chain((nodes: VNode[]) => sideEffect(() => {
+      if (nodes.length === 0)
+        return nodes;
 
-  // 按类型分组: 分成USER组, Server组, 其他(DATABASE/RPC/HTTP)组, Line组
-  const root = stage.stageNode();
-  const children = root.children as VNode[];
+      const LEN = 6, RADIUS = 200;
+      const [first, ...tails] = nodes;
 
-  const userGroup: VNode[] = [];
-  const serverGroup: VNode[] = [];
-  const remoteGroup: VNode[] = [];
+      /*
+      * Applicative:
+      * Identity: A.of(x => x).ap(v) === v
+      * Homomorphism: A.of(f).ap(A.of(x)) === A.of(f(x))
+      * Interchange: u.ap(A.of(y)) === A.of(f => f(y)).ap(u)
+      * 
+      * Applicative函子公式, 这里应用了交换律(Interchange)
+      */
+      const center$ = functor(instance)
+        .map((ins: InstanceAPI) => (f: Function) => f(ins.size()))
+        .ap(functor(centerPositionOfSize));
+      const itemPosition$ = functor((deg: number) => (radius: number) => (center: Position) => ({
+        // deg * Math.PI / 180 : 角度转弧度
+        x: Math.sin(deg * Math.PI / 180) * radius + center.x,
+        y: Math.cos(deg * Math.PI / 180) * radius + center.y,
+      }));
 
-  const [lineGroup, nodes, restGroup,] = group(children);
+      center$
+        .map(centerPositionOfShape)
+        .map(toTranslate)
+        .chain((str: string) => sideEffect(() => first.data.style.transform = str))
+        .fold(id);
 
-  // 分组
-  for (let i = 0, len = nodes.length; i < len; i++) {
-    const node: VNode = nodes[i] as VNode;
-    const classNames = node.data.class;
+      tails.reduce((deg: number, item: VNode, index: number) => {
+        itemPosition$
+          .ap(functor(deg))
+          .ap(functor(((index / LEN >> 0) + 1) * RADIUS))
+          .ap(center$)
+          .map(centerPositionOfShape)
+          .map(toTranslate)
+          .chain((str: string) => sideEffect(() => item.data.style.transform = str))
+          .fold(id);
 
-    if (classNames[NODE_TYPE.USER]) {
-      userGroup.push(node);
-      continue;
-    }
+        return deg + 360 / LEN;
+      }, 0);
 
-    if (classNames[NODE_TYPE.SERVER]) {
-      serverGroup.push(node);
-      continue;
-    }
+      return nodes;
+    }))
+    .fold(id);
 
-    remoteGroup.push(node);
-  }
-
-  // 摆放节点
-  const placedUserGroup = placeUserGroup(userGroup);
-  const placedServiceGroup = placeServerGroup(serverGroup);
-  const placedRemoteGroup = placeRemoteGroup(remoteGroup);
-
-  // 重构root的children, 这将影响界面上节点的顺序
-  root.children = [
-    ...restGroup, 
-    ...lineGroup, 
-    ...placedUserGroup.map(n => n.vnode), 
-    ...placedServiceGroup.map(n => n.vnode), 
-    ...placedRemoteGroup.map(n => n.vnode),
-  ];
-
-  // 调用下一个中间件
-  next(userState);
+  // call next middleware
+  return next(userState);
 };

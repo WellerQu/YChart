@@ -3,6 +3,7 @@ import json from './topo.json';
 import createInstance from '../src/cores/createInstance';
 import applyMiddlewares from '../src/cores/applyMiddlewares';
 import log from '../src/middlewares/log';
+import nodeGroupLayout from '../src/middlewares/nodeGroupLayout';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -11,7 +12,7 @@ import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdap
 let should = true;
 let showAsApp = false;
 
-const enhancer = applyMiddlewares(log);
+const enhancer = applyMiddlewares(log, nodeGroupLayout);
 const topoInstance = enhancer(createInstance);
 
 const { update, patch, addEventListener, } = topoInstance({
@@ -38,6 +39,7 @@ import functor from '../src/cores/functor';
 import left from '../src/cores/left';
 import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
+
 
 import { VNode, } from 'snabbdom/vnode';
 

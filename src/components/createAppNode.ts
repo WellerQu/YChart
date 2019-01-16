@@ -21,7 +21,7 @@ const createAppNode:Component<AppNodeOption> = (option: AppNodeOption): Strategy
     // createText({ content: 'instances', x: 35 + 15, y: 35 + 42, className: 'type', }),
     createText({ content: '业务域', x: 35 + 15, y: 35 + 24, className: 'type',}),
     !isNull(option.instances)
-      ? createText({ content: `${option.instances} instances`, x: 82 + 15, y: 48 + 24, className: 'epm', })
+      ? createText({ content: `${option.instances} 实例`, x: 82 + 15, y: 48 + 24, className: 'epm', })
       : identity,
     !isNull(option.tierCount)
       ? createText({ content: `${option.tierCount} 服务`, x: 82 + 15, y: 36 + 24, className: 'rpm', })

@@ -1,6 +1,5 @@
-import { Functor, } from './core';
-
 const sideEffect = (f: Function) => ({
+  __value__: f,
   map: (g: Function) => sideEffect(() => g(f())),
   fold: (g: Function) => g(f()),
 });

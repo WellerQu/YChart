@@ -9,8 +9,6 @@ import {  NODE_SIZE, } from '../constants/constants';
 import id from '../cores/id';
 import { toTranslate, } from '../utils';
 import functor from '../cores/functor';
-import right from '../cores/right';
-import left from '../cores/left';
 import sideEffect from '../cores/sideEffect';
 
 // 求容器的中心点

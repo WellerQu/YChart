@@ -3,7 +3,9 @@ import json from './topo.json';
 import createInstance from '../src/cores/createInstance';
 import applyMiddlewares from '../src/cores/applyMiddlewares';
 import log from '../src/middlewares/log';
-import nodeGroupLayout from '../src/middlewares/nodeGroupLayout';
+import nodeHoneycombLayout from '../src/middlewares/nodeHoneycombLayout';
+import nodeForceDirectedLayout from '../src/middlewares/nodeForceDirectedLayout';
+import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -12,7 +14,7 @@ import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdap
 let should = true;
 let showAsApp = false;
 
-const enhancer = applyMiddlewares(log, nodeGroupLayout);
+const enhancer = applyMiddlewares(log, nodeHoneycombLayout,  /*nodeCircleLayout,*/ nodeForceDirectedLayout,);
 const topoInstance = enhancer(createInstance);
 
 const { update, patch, addEventListener, } = topoInstance({

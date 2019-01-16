@@ -18,8 +18,8 @@ import clone from './clone';
 
 import { log, } from './middlewares/__log';
 import { nodeGroupLayout, } from './middlewares/__nodeGroupLayout';
-import { nodeCircleLayout,} from './middlewares/nodeCircleLayout';
-import { nodeForceDirectedLayout, } from './middlewares/nodeForceDirectedLayout';
+import { nodeCircleLayout,} from './middlewares/__nodeCircleLayout';
+import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayout';
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';

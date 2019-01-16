@@ -1,8 +1,3 @@
-/// <reference path="../../node_modules/snabbdom/modules/attributes.d.ts" />
-/// <reference path="../../node_modules/snabbdom/modules/style.d.ts" />
-/// <reference path="../../node_modules/snabbdom/modules/class.d.ts" />
-/// <reference path="../../node_modules/snabbdom/modules/eventlisteners.d.ts" />
-
 import toNode from 'snabbdom/tovnode';
 import { init, } from 'snabbdom/snabbdom';
 import attributes from 'snabbdom/modules/attributes';
@@ -10,7 +5,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 import { svg, } from '../components/components';
-import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, SvgOption, } from './core';
+import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, } from './core';
 import { TOPO_OPERATION_STATE, } from '../constants/constants';
 import { graph, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';

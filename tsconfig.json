@@ -21,6 +21,10 @@
     "node_modules/snabbdom/snabbdom.d.ts",
     "node_modules/snabbdom/vnode.d.ts",
     "node_modules/snabbdom/tovnode.d.ts",
+    "node_modules/snabbdom/modules/attributes.d.ts",
+    "node_modules/snabbdom/modules/style.d.ts",
+    "node_modules/snabbdom/modules/class.d.ts",
+    "node_modules/snabbdom/modules/eventlisteners.d.ts"
   ],
   "exclude": [
     "**/*.spec.ts",

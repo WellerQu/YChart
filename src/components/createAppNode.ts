@@ -19,7 +19,7 @@ const createAppNode:Component<AppNodeOption> = (option: AppNodeOption): Strategy
     // createText({ content: 'tiers', x: 35 + 15, y: 35 + 18, className: 'type', }),
     // createText({ content: `${option.instances}`, x: 35 + 15, y: 35 + 30, className: 'type', }),
     // createText({ content: 'instances', x: 35 + 15, y: 35 + 42, className: 'type', }),
-    createText({ content: 'Application', x: 35 + 15, y: 35 + 24, className: 'type',}),
+    createText({ content: '业务域', x: 35 + 15, y: 35 + 24, className: 'type',}),
     !isNull(option.instances)
       ? createText({ content: `${option.instances} instances`, x: 82 + 15, y: 48 + 24, className: 'epm', })
       : identity,

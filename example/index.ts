@@ -61,7 +61,8 @@ const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideE
   return data;
 });
 
-const render = (json: { data: any }) => functor(json.data)
+const render = (json: { data: any }) => functor(json)
+  .map((x: any) => x.data)
   .map(fixData)
   .map(mergeUsers)
   .chain(shouldMergeHTTPOrRemote(should))

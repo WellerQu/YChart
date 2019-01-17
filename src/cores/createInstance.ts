@@ -104,7 +104,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
     getStage: () => $stage,
     update: (strategy: StrategyID) => strategy($stage),
     patch: () => $vnode = vPatch($vnode, $stage),
-    reset: () => $stage = svg({ size, viewbox,}),
+    reset: () => $stage = svgEvents(svg({ size, viewbox, })),
     addEventListener: (eventName: string, callback: Function) => {
       events.get(eventName).push(callback);
     },

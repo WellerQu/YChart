@@ -129,4 +129,10 @@ export enum TOPO_OPERATION_STATE {
   CAN_SHOW_RELATIONSHIP = 3,
 }
 
+export enum TOPO_LAYOUT_STATE {
+  CIRCLE = 0,
+  HONEY_COMB = 1,
+  FORCE_DIRECTED = 2,
+}
+
 export const IMAGE_ROOT = '/static/images/';

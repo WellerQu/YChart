@@ -1,5 +1,5 @@
 import { VNode, } from 'snabbdom/vnode';
-import { TOPO_OPERATION_STATE, } from '../constants/constants';
+import { TOPO_OPERATION_STATE, TOPO_LAYOUT_STATE, } from '../constants/constants';
 
 interface Functor {
   readonly __value__?: any;
@@ -53,6 +53,7 @@ interface InstanceAPI {
   size: (value?: Size) => Size;
   scale: (value?: number) => number;
   operation: (value?: TOPO_OPERATION_STATE) => TOPO_OPERATION_STATE,
+  layout: (value?: TOPO_LAYOUT_STATE) => TOPO_LAYOUT_STATE,
   getStage: () => VNode;
   addEventListener: (eventName: string, callback: Function) => void;
   removeEventListener: (eventName: string, callback?: Function) => void;

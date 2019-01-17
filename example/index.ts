@@ -14,10 +14,10 @@ import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdap
 let should = true;
 let showAsApp = false;
 
-const enhancer = applyMiddlewares(log, nodeHoneycombLayout,  /*nodeCircleLayout,*/ nodeForceDirectedLayout,);
+const enhancer = applyMiddlewares(log, nodeHoneycombLayout, nodeCircleLayout, nodeForceDirectedLayout);
 const topoInstance = enhancer(createInstance);
 
-const { update, patch, addEventListener, } = topoInstance({
+const { update, layout, patch, reset, addEventListener, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -31,7 +31,7 @@ import service from '../src/components/serviceNode';
 import user from '../src/components/userNode';
 import { TopoData, } from '../typings/defines.js';
 import { UpdateBehavior, Node, } from '../src/cores/core';
-import { NODE_TYPE, } from '../src/constants/constants';
+import { NODE_TYPE, TOPO_LAYOUT_STATE, } from '../src/constants/constants';
 
 import applicationAdapter from '../src/adapters/applicationAdapter';
 import serviceAdapter from '../src/adapters/serviceAdapter';
@@ -61,7 +61,7 @@ const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideE
   return data;
 });
 
-functor(json.data)
+const render = (json: { data: any }) => functor(json.data)
   .map(fixData)
   .map(mergeUsers)
   .chain(shouldMergeHTTPOrRemote(should))
@@ -69,6 +69,30 @@ functor(json.data)
   .chain(paintToVirtualDOM(update))
   .fold(patch);
 
+render(json);
+
 addEventListener('click', (event: Event, sender: VNode) => {
   console.log(event, sender);
+});
+
+
+// 以下为测试代码
+const $ = (selector: string) => document.querySelector(selector);
+
+$('#layout-ci').addEventListener('click', () => {
+  reset();
+  layout(TOPO_LAYOUT_STATE.CIRCLE);
+  render(json);
+});
+
+$('#layout-fd').addEventListener('click', () => {
+  reset();
+  layout(TOPO_LAYOUT_STATE.FORCE_DIRECTED);
+  render(json);
+});
+
+$('#layout-hc').addEventListener('click', () => {
+  reset();
+  layout(TOPO_LAYOUT_STATE.HONEY_COMB);
+  render(json);
 });

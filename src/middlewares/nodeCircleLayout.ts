@@ -3,7 +3,7 @@ import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import sideEffect from '../cores/sideEffect';
 import id from '../cores/id';
-import { NODE_SIZE, } from '../constants/constants';
+import { NODE_SIZE, TOPO_LAYOUT_STATE, } from '../constants/constants';
 import { Func, } from 'mocha';
 import { toTranslate, } from '../utils';
 
@@ -29,6 +29,11 @@ const centerPositionOfShape = (pos: Position) =>
  * 拓扑图布局策略 - 环形布局
  */
 export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+  if (instance.layout() !== TOPO_LAYOUT_STATE.CIRCLE)
+    return next(userState);
+  
+  console.log('apply circle layout strategy'); // eslint-disable-line
+
   const size$ = functor(instance).map((ins: InstanceAPI) => ins.size());
   const center$ = size$.map(centerPositionOfContainer);
   const radius$ = size$.map(circleRadius);

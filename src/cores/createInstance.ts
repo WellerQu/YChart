@@ -6,8 +6,8 @@ import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 import { svg, } from '../components/components';
 import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, } from './core';
-import { TOPO_OPERATION_STATE, } from '../constants/constants';
-import { graph, } from '../utils';
+import { TOPO_OPERATION_STATE, TOPO_LAYOUT_STATE, } from '../constants/constants';
+import { graph, isNull, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
 
 const vPatch = init([
@@ -34,6 +34,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
   let size = !option ? { width: 0, height: 0, } : option.size;
   let viewbox: Viewbox = !option ? [0, 0, size.width, size.height,] : option.viewbox;
   let operations = TOPO_OPERATION_STATE.NONE;
+  let layout = TOPO_LAYOUT_STATE.CIRCLE;
 
   let $vnode = toNode(option.container);
   let $stage = svgEvents(svg({ size, viewbox, }));
@@ -87,11 +88,18 @@ const instance: InstanceCreator = (option?: ChartOption) => {
       return scale;
     },
     operation: (value?: TOPO_OPERATION_STATE) => {
-      if (value) {
+      if (!isNull(value)) {
         operations = value;
       }
 
       return operations;
+    },
+    layout: (value?: TOPO_LAYOUT_STATE) => {
+      if (!isNull(value)) {
+        layout = value;
+      }
+
+      return layout;
     },
     getStage: () => $stage,
     update: (strategy: StrategyID) => strategy($stage),

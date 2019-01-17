@@ -3,6 +3,7 @@ import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import sideEffect from '../cores/sideEffect';
 import id from '../cores/id';
+import { TOPO_LAYOUT_STATE, } from '../constants/constants';
 
 /**
  * @module middlewares
@@ -12,6 +13,11 @@ import id from '../cores/id';
  * 拓扑图布局策略 - 力导向布局
  */
 export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+  if (instance.layout() !== TOPO_LAYOUT_STATE.FORCE_DIRECTED)
+    return next(userState);
+
+  console.log('apply force directed layout strategy'); // eslint-disable-line
+
   functor(instance)
     .map((ins: InstanceAPI) => ins.getStage())
     .map(($stage: VNode) => $stage.children)

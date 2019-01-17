@@ -15,12 +15,12 @@ const createAppNode:Component<AppNodeOption> = (option: AppNodeOption): Strategy
 ) => {
   const createNode = compose<VNode>(
     createText({ content: option.title, x: 35 + 15, y: 90 + 24, className: 'title', }),
-    createText({ content: 'Application', x: 35 + 15, y: 35 + 24, className: 'type',}),
+    createText({ content: '业务域', x: 35 + 15, y: 35 + 24, className: 'type',}),
     !isNull(option.instances)
-      ? createText({ content: `${option.instances} instances`, x: 82 + 15, y: 48 + 24, className: 'epm', })
+      ? createText({ content: `${option.instances} 服务实例`, x: 82 + 15, y: 48 + 24, className: 'epm', })
       : identity,
     !isNull(option.tierCount)
-      ? createText({ content: `${option.tierCount} tiers`, x: 82 + 15, y: 36 + 24, className: 'rpm', })
+      ? createText({ content: `${option.tierCount} 服务`, x: 82 + 15, y: 36 + 24, className: 'rpm', })
       : identity,
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 30, fill: '#CC99CC', className: 'response', }),
     createCircle({ cx: 35 + 15, cy: 35 + 24, radius: 32, fill: '#FFF', }),

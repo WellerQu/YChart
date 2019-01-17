@@ -3,7 +3,7 @@
  */
 
 import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from '../typings/defines';
-import createStage from './cores/createStage';
+import createStage from './cores/__createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
 import applyMiddlewares from './cores/__applyMiddlewares';

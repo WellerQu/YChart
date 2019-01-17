@@ -19,7 +19,7 @@ const vPatch = init([
 
 const instance: InstanceCreator = (option?: ChartOption) => {
   const events = new Map<string, Array<Function>>();
-  events .set('click', []);
+  events .set('click', []); // Just support click behavior
 
   const initializeEvent = (events: Map<string, Array<Function>>) => ($vnode: VNode, option?: ChartOption) => {
     $vnode.data.on = {
@@ -38,6 +38,8 @@ const instance: InstanceCreator = (option?: ChartOption) => {
 
   let $vnode = toNode(option.container);
   let $stage = svgEvents(svg({ size, viewbox, }));
+
+  const reset = () => ($stage = svgEvents(svg({ size, viewbox, })));
 
   return {
     viewbox: (value?: Viewbox) => {
@@ -96,6 +98,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
     },
     layout: (value?: TOPO_LAYOUT_STATE) => {
       if (!isNull(value)) {
+        reset();
         layout = value;
       }
 
@@ -104,7 +107,7 @@ const instance: InstanceCreator = (option?: ChartOption) => {
     getStage: () => $stage,
     update: (strategy: StrategyID) => strategy($stage),
     patch: () => $vnode = vPatch($vnode, $stage),
-    reset: () => $stage = svgEvents(svg({ size, viewbox, })),
+    reset,
     addEventListener: (eventName: string, callback: Function) => {
       events.get(eventName).push(callback);
     },

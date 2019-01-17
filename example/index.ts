@@ -11,13 +11,14 @@ import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
 
 // parameters
-let should = true;
+let shouldMergeNode = true;
 let showAsApp = false;
+let layoutStrategy = 1;
 
 const enhancer = applyMiddlewares(log, nodeHoneycombLayout, nodeCircleLayout, nodeForceDirectedLayout);
 const topoInstance = enhancer(createInstance);
 
-const { update, layout, patch, reset, addEventListener, } = topoInstance({
+const { update, layout, patch, addEventListener, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -42,7 +43,6 @@ import left from '../src/cores/left';
 import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
 
-
 import { VNode, } from 'snabbdom/vnode';
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
@@ -65,11 +65,12 @@ const render = (json: { data: any }) => functor(json)
   .map((x: any) => x.data)
   .map(fixData)
   .map(mergeUsers)
-  .chain(shouldMergeHTTPOrRemote(should))
+  .chain(shouldMergeHTTPOrRemote(shouldMergeNode))
   .map(mergeHTTPOrRPC)
   .chain(paintToVirtualDOM(update))
   .fold(patch);
 
+layout(layoutStrategy);
 render(json);
 
 addEventListener('click', (event: Event, sender: VNode) => {
@@ -81,19 +82,16 @@ addEventListener('click', (event: Event, sender: VNode) => {
 const $ = (selector: string) => document.querySelector(selector);
 
 $('#layout-ci').addEventListener('click', () => {
-  reset();
   layout(TOPO_LAYOUT_STATE.CIRCLE);
   render(json);
 });
 
 $('#layout-fd').addEventListener('click', () => {
-  reset();
   layout(TOPO_LAYOUT_STATE.FORCE_DIRECTED);
   render(json);
 });
 
 $('#layout-hc').addEventListener('click', () => {
-  reset();
   layout(TOPO_LAYOUT_STATE.HONEY_COMB);
   render(json);
 });

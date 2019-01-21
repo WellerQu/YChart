@@ -13,7 +13,6 @@ import linkNode from '../src/middlewares/linkNode';
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
 
-
 import application from '../src/components/applicationNode';
 import service from '../src/components/serviceNode';
 import user from '../src/components/userNode';
@@ -31,6 +30,7 @@ import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
 
 import { VNode, } from 'snabbdom/vnode';
+import id from '../src/cores/id';
 
 // parameters
 let shouldMergeNode = true;
@@ -49,9 +49,9 @@ const enhancerWithInitStates = applyStates({});
 
 const topoInstance = io(enhancerWithMiddlewares)
   .map(enhancerWithInitStates)
-  .fold((applies: Function) => applies(createInstance)) as (option?: ChartOption) => InstanceState;
+  .ap(functor(createInstance)).fold(id) as (option?: ChartOption) => InstanceState;
 
-const { update, layout, patch, addEventListener, scale, } = topoInstance({
+const { update, layout, patch, addEventListener, removeEventListener, scale, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -88,11 +88,18 @@ const render = (json: { data: any }) => functor(json)
 layout(layoutStrategy);
 render(json);
 
-addEventListener('click', (event: Event, sender: VNode) => {
-  console.log(event, sender);
-});
-
 // 以下为测试代码
+const handle1 = (event: Event, sender: VNode) => {
+  console.log(event, sender);
+};
+const handle2 = (event: Event, sender: VNode) => {
+  console.log(event, sender);
+};
+
+addEventListener('click', handle1);
+addEventListener('click', handle2);
+removeEventListener('click', handle1);
+
 const $ = (selector: string) => document.querySelector(selector);
 
 $('#layout-ci').addEventListener('click', () => {

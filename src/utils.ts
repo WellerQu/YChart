@@ -296,3 +296,12 @@ export function graph (stage: VNode): (Position & Size) {
     height: graphHeight,
   }; 
 }
+
+// const Y = (logic: Function) => 
+//   ((h: Function) =>
+//     (f: Function) =>
+//       h((n: any) =>
+//         f(f)(n)))(logic)(((h: Function) => (f: Function) => h((n: any) => f(f)(n)))(logic));
+
+// const flatten = Y((g: Function) => (n: any[]) =>
+//   n.reduce((arr, item) => Array.isArray(item) ? arr.concat(g(item)) : (arr.push(item), arr), []));

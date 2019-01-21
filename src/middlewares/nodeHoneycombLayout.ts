@@ -4,7 +4,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { TopoData, PatchBehavior, InstanceAPI, Position, Size, } from '../cores/core';
+import { TopoData, PatchBehavior, InstanceAPI, Position, Size, InstanceState, } from '../cores/core';
 import {  NODE_SIZE, TOPO_LAYOUT_STATE, } from '../constants/constants';
 import id from '../cores/id';
 import { toTranslate, } from '../utils';
@@ -24,7 +24,7 @@ const centerPositionOfShape = (pos: Position) =>
 /**
  * 拓扑图布局策略 - 蜂巢布局
  */
-export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+export default (instance: InstanceState) => (next: PatchBehavior) => (userState: TopoData) => {
   if (instance.layout() !== TOPO_LAYOUT_STATE.HONEY_COMB) 
     return next(userState);
 

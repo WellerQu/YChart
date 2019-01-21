@@ -3,29 +3,15 @@ import json from './topo.json';
 import createInstance from '../src/cores/createInstance';
 import applyMiddlewares from '../src/cores/applyMiddlewares';
 import log from '../src/middlewares/log';
+import scaleCanvas from '../src/middlewares/scaleCanvas';
 import nodeHoneycombLayout from '../src/middlewares/nodeHoneycombLayout';
 import nodeForceDirectedLayout from '../src/middlewares/nodeForceDirectedLayout';
 import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
+import linkNode from '../src/middlewares/linkNode';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
 
-// parameters
-let shouldMergeNode = true;
-let showAsApp = false;
-let layoutStrategy = 1;
-
-const enhancer = applyMiddlewares(log, nodeHoneycombLayout, nodeCircleLayout, nodeForceDirectedLayout);
-const topoInstance = enhancer(createInstance);
-
-const { update, layout, patch, addEventListener, } = topoInstance({
-  size: {
-    width: 800,
-    height: 600,
-  },
-  viewbox: [0, 0, 800, 600,],
-  container: document.querySelector('#topo'),
-});
 
 import application from '../src/components/applicationNode';
 import service from '../src/components/serviceNode';
@@ -44,6 +30,23 @@ import right from '../src/cores/right';
 import sideEffect from '../src/cores/sideEffect';
 
 import { VNode, } from 'snabbdom/vnode';
+
+// parameters
+let shouldMergeNode = true;
+let showAsApp = false;
+let layoutStrategy = TOPO_LAYOUT_STATE.CIRCLE;
+
+const enhancer = applyMiddlewares(log, nodeHoneycombLayout, nodeCircleLayout, nodeForceDirectedLayout, linkNode, scaleCanvas);
+const topoInstance = enhancer(createInstance);
+
+const { update, layout, patch, addEventListener, scale, reset, } = topoInstance({
+  size: {
+    width: 800,
+    height: 600,
+  },
+  viewbox: [0, 0, 800, 600,],
+  container: document.querySelector('#topo'),
+});
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
 const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
@@ -77,7 +80,6 @@ addEventListener('click', (event: Event, sender: VNode) => {
   console.log(event, sender);
 });
 
-
 // 以下为测试代码
 const $ = (selector: string) => document.querySelector(selector);
 
@@ -93,5 +95,11 @@ $('#layout-fd').addEventListener('click', () => {
 
 $('#layout-hc').addEventListener('click', () => {
   layout(TOPO_LAYOUT_STATE.HONEY_COMB);
+  render(json);
+});
+
+$('#scale').addEventListener('change', (event: Event) => {
+  const value = (event.target as HTMLSelectElement).value;
+  scale(+value);
   render(json);
 });

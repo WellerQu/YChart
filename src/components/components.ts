@@ -1,6 +1,15 @@
 import { VNodeData, VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
-import { TextOption, StrategyID, SvgOption, GroupOption, ImageOption, CircleOption, } from '../cores/core';
+import { 
+  TextOption, 
+  StrategyID, 
+  SvgOption, 
+  GroupOption, 
+  ImageOption, 
+  CircleOption, 
+  LineOption, 
+  ArrowOption, 
+} from '../cores/core';
 
 const vNodeData = (option: VNodeData) => ({
   ...option,
@@ -48,6 +57,34 @@ export const group = (option: GroupOption, children?: VNode[] ) => h(
     style: { transform: `translate(${option.x}px, ${option.y}px)`, },
   }),
   children || []
+);
+
+export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)') => h(
+  'path',
+  vNodeData({
+    attrs: {
+      id: `arrow-${option.id}`,
+      d: `M${option.source.x},${option.source.y} L${option.middle.x},${option.middle.y} L${option.target.x},${option.target.y} z`,
+      stroke,
+      'stroke-width': 1,
+    },
+    key: `arrow-${option.id}`,
+    class: option.className,
+  })
+);
+
+export const line = (option: LineOption, stroke = 'hsl(214, 100%, 60%)') => h(
+  'path',
+  vNodeData({
+    attrs: {
+      id: `line-${option.id}`,
+      d: `M${option.source.x},${option.source.y} L${option.target.x},${option.target.y} z`,
+      stroke,
+      'stroke-width': 1,
+    },
+    key: `line-${option.id}`,
+    class: option.className,
+  })
 );
 
 export const image = (option: ImageOption) => h('image', vNodeData({

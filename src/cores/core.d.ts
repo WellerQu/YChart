@@ -36,7 +36,7 @@ interface UpdateBehavior {
 }
 
 type Viewbox = [number, number, number, number];
-type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (userState?: any) => void;
+type Middleware = (instance: InstanceState) => (next: PatchBehavior) => (userState?: any) => void;
 
 interface ChartOption {
   size: Size;
@@ -51,10 +51,13 @@ interface InstanceAPI {
   reset: () => void;
   viewbox: (value?: Viewbox) => Viewbox;
   size: (value?: Size) => Size;
+  getStage: () => VNode;
+}
+
+interface InstanceState extends InstanceAPI {
   scale: (value?: number) => number;
   operation: (value?: TOPO_OPERATION_STATE) => TOPO_OPERATION_STATE,
   layout: (value?: TOPO_LAYOUT_STATE) => TOPO_LAYOUT_STATE,
-  getStage: () => VNode;
   addEventListener: (eventName: string, callback: Function) => void;
   removeEventListener: (eventName: string, callback?: Function) => void;
 }
@@ -63,8 +66,8 @@ interface Creator<S, T> {
   of: (option?: S) => T;
 }
 
-interface InstanceCreator extends Creator<ChartOption, InstanceAPI> {
-  (option?: ChartOption): InstanceAPI;
+interface InstanceCreator extends Creator<ChartOption, InstanceState> {
+  (option?: ChartOption): InstanceState;
 }
 
 interface TextOption extends Position, ComponentOption {
@@ -116,9 +119,15 @@ interface UserOption extends ComponentOption {
   id: string;
 }
 
+interface LineOption extends ComponentOption {
+  id: string;
+  source: Position, 
+  target: Position,
+}
 
-
-
+interface ArrowOption extends LineOption {
+  middle: Position,
+}
 
 interface CallstackData {
 
@@ -167,7 +176,8 @@ interface Node {
 }
 
 interface Line {
-
+  source: string;
+  target: string;
 }
 
 interface MySqlDatabase {

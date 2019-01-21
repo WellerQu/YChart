@@ -1,4 +1,4 @@
-import { InstanceAPI, PatchBehavior, TopoData, Size, Position, } from '../cores/core';
+import { InstanceAPI, PatchBehavior, TopoData, Size, Position, InstanceState, } from '../cores/core';
 import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import sideEffect from '../cores/sideEffect';
@@ -28,7 +28,7 @@ const centerPositionOfShape = (pos: Position) =>
 /**
  * 拓扑图布局策略 - 环形布局
  */
-export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+export default (instance: InstanceState) => (next: PatchBehavior) => (userState: TopoData) => {
   if (instance.layout() !== TOPO_LAYOUT_STATE.CIRCLE)
     return next(userState);
   

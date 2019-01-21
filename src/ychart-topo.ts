@@ -21,13 +21,13 @@ import { nodeGroupLayout, } from './middlewares/__nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/__nodeCircleLayout';
 import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayout';
 import { topoStyle, } from './middlewares/topoStyle';
-import { scaleCanvas, } from './middlewares/scaleCanvas';
+import { scaleCanvas, } from './middlewares/__scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
 import { moveNode, } from './middlewares/moveNode';
 import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';
-import { linkLine, } from './middlewares/linkLine';
+import { linkLine, } from './middlewares/__linkLine';
 
 import createMergeAdapter, { mergeUsers, } from './adapters/createMergeNodeAdapter';
 import createAppNodeAdapter from './adapters/createAppNodeOptionAdapter';

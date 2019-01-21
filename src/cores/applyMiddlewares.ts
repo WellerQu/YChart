@@ -1,4 +1,4 @@
-import { Middleware, InstanceCreator, PatchBehavior, InstanceAPI, } from './core';
+import { Middleware, InstanceCreator, PatchBehavior, InstanceState, } from './core';
 import compose from '../compose';
 
 export default (...middlewares: Middleware[]) => (
@@ -9,7 +9,7 @@ export default (...middlewares: Middleware[]) => (
   };
 
   const instance = createInstance(option);
-  const api: InstanceAPI = {
+  const api: InstanceState = {
     ...instance,
     patch: (userState?: any) => patch(userState),
   };

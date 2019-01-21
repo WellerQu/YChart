@@ -1,4 +1,4 @@
-import { InstanceAPI, PatchBehavior, TopoData, } from '../cores/core';
+import { InstanceAPI, PatchBehavior, TopoData, InstanceState, } from '../cores/core';
 import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import sideEffect from '../cores/sideEffect';
@@ -12,7 +12,7 @@ import { TOPO_LAYOUT_STATE, } from '../constants/constants';
 /**
  * 拓扑图布局策略 - 力导向布局
  */
-export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+export default (instance: InstanceState) => (next: PatchBehavior) => (userState: TopoData) => {
   if (instance.layout() !== TOPO_LAYOUT_STATE.FORCE_DIRECTED)
     return next(userState);
 

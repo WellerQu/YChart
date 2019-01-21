@@ -1,6 +1,4 @@
 import { InstanceAPI, PatchBehavior, Size, Viewbox, InstanceState, } from '../cores/core';
-import functor from '../cores/functor';
-import { VNode, } from 'snabbdom/vnode';
 
 const scaleSize = (size: Size) => (scale: number) => ([ 
   (size.width * scale - size.width) / -2,
@@ -9,9 +7,10 @@ const scaleSize = (size: Size) => (scale: number) => ([
   size.height * scale,
 ]);
 
-export default (instance: InstanceState) => (next: PatchBehavior) => (x: any) => {
-  const size = instance.size();
-  const scale = instance.scale();
+export default (instance: InstanceAPI) => (next: PatchBehavior) => (x: any) => {
+  const state = instance as InstanceState;
+  const size = state.size();
+  const scale = state.scale();
 
   const viewbox = scaleSize(size)(scale);
 

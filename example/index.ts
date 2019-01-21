@@ -2,6 +2,7 @@ import json from './topo.json';
 
 import createInstance from '../src/cores/createInstance';
 import applyMiddlewares from '../src/cores/applyMiddlewares';
+import applyStates from '../src/cores/applyStates';
 import log from '../src/middlewares/log';
 import scaleCanvas from '../src/middlewares/scaleCanvas';
 import nodeHoneycombLayout from '../src/middlewares/nodeHoneycombLayout';
@@ -17,7 +18,7 @@ import application from '../src/components/applicationNode';
 import service from '../src/components/serviceNode';
 import user from '../src/components/userNode';
 import { TopoData, } from '../typings/defines.js';
-import { UpdateBehavior, Node, } from '../src/cores/core';
+import { UpdateBehavior, Node, InstanceState, ChartOption, } from '../src/cores/core';
 import { NODE_TYPE, TOPO_LAYOUT_STATE, } from '../src/constants/constants';
 
 import applicationAdapter from '../src/adapters/applicationAdapter';
@@ -36,17 +37,28 @@ let shouldMergeNode = true;
 let showAsApp = false;
 let layoutStrategy = TOPO_LAYOUT_STATE.CIRCLE;
 
-const enhancer = applyMiddlewares(log, nodeHoneycombLayout, nodeCircleLayout, nodeForceDirectedLayout, linkNode, scaleCanvas);
-const topoInstance = enhancer(createInstance);
+const enhancerWithMiddlewares = applyMiddlewares(
+  log, 
+  nodeHoneycombLayout, 
+  nodeCircleLayout, 
+  nodeForceDirectedLayout, 
+  linkNode, 
+  scaleCanvas
+);
+const enhancerWithInitStates = applyStates({});
 
-const { update, layout, patch, addEventListener, scale, reset, } = topoInstance({
+const topoInstance = io(enhancerWithMiddlewares)
+  .map(enhancerWithInitStates)
+  .fold((applies: Function) => applies(createInstance)) as (option?: ChartOption) => InstanceState;
+
+const { update, layout, patch, addEventListener, scale, } = topoInstance({
   size: {
     width: 800,
     height: 600,
   },
   viewbox: [0, 0, 800, 600,],
   container: document.querySelector('#topo'),
-});
+}) as InstanceState;
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
 const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {

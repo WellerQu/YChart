@@ -36,7 +36,7 @@ interface UpdateBehavior {
 }
 
 type Viewbox = [number, number, number, number];
-type Middleware = (instance: InstanceState) => (next: PatchBehavior) => (userState?: any) => void;
+type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (userState?: any) => void;
 
 interface ChartOption {
   size: Size;
@@ -66,7 +66,11 @@ interface Creator<S, T> {
   of: (option?: S) => T;
 }
 
-interface InstanceCreator extends Creator<ChartOption, InstanceState> {
+interface InstanceCreator {
+  (option?: ChartOption): InstanceAPI;
+}
+
+interface StateCreator {
   (option?: ChartOption): InstanceState;
 }
 

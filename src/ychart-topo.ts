@@ -11,7 +11,7 @@ import {
   Line, 
   EventOption, 
   Viewbox, 
-} from '../typings/defines';
+} from './@types';
 
 import compose from './compose';
 import clone from './clone';

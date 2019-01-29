@@ -5,7 +5,7 @@
  */
 
 import { VNode, } from 'snabbdom/vnode';
-import { ArrowLineOption, Component, Strategy, } from '../../typings/defines';
+import { ArrowLineOption, Component, Strategy, } from '../@types';
 import compose from '../compose';
 import { createText, createArrow, createLine, createGroup, } from './components';
 

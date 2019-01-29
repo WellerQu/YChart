@@ -30,7 +30,12 @@ export const ARROW_WIDTH = 6;
 /**
  * 调用栈图中的每个调用栈的高
  */
-export const CALLSTACK_HEIGHT = 12;
+export const CALLSTACK_HEIGHT = 16;
+
+/**
+ * 调用栈间隙高度
+ */
+export const STACK_SPACE = 5;
 
 /**
  * 调用栈图中标尺左右补白
@@ -45,7 +50,7 @@ export const RULE_HEIGHT = 45;
 /**
  * 标尺的步长
  */
-export const RULE_STEP = 500;
+export const MAX_RULE_STEP = 500;
 
 /**
  * 合成ID时的拼接符

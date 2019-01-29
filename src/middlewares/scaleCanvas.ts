@@ -4,7 +4,7 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../@types';
 import { parseTranslate, } from '../utils';
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';
@@ -54,7 +54,7 @@ export const scaleCanvas = (stage: Stage) => (next: PatchBehavior) => (userState
   const graphHeight = maximumY - minimumY;
 
   // 缩放比例
-  const scale = 1 / userState.scale;
+  const scale = 1 / (userState.scale || 1);
 
   stage.viewbox(
     {

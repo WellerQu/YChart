@@ -4,12 +4,11 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, CallstackData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, CallstackData, Position, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import { toTranslate, parseTranslate, toArrowD, } from '../utils';
-import { CALLSTACK_HEIGHT, RULE_HEIGHT, RULE_PADDING, } from '../constants/constants';
+import { CALLSTACK_HEIGHT, RULE_HEIGHT, RULE_PADDING, ID_COMBINER, STACK_SPACE, } from '../constants/constants';
 
-const STACK_SPACE = 5;
 const CALL_STACK_CLASS = 'callstack', CALL_LINE_CLASS = 'callline';
 const predicate = (className: string) => (item: VNode) => {
   if (!item.data.class)
@@ -29,9 +28,9 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
   const stackGroups = nodes.filter(predicate(CALL_STACK_CLASS));
   const lineGroups = nodes.filter(predicate(CALL_LINE_CLASS));
 
-  stackGroups.forEach((item: VNode) => {
+  stackGroups.forEach((item: VNode, index: number) => {
     const position = parseTranslate(item.data.style.transform);
-    const y = positionMap.size * (CALLSTACK_HEIGHT + STACK_SPACE) + RULE_HEIGHT;
+    const y = index * (CALLSTACK_HEIGHT + STACK_SPACE) + RULE_HEIGHT;
     item.data = {
       ...item.data,
       style: {
@@ -46,9 +45,9 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
     if (!ID.split)
       return;
 
-    const [stackName, parentStackName,] = ID.split('-');
-    const from = positionMap.get(parentStackName);
-    const to = positionMap.get(stackName);
+    const [id, parentId,] = ID.split(ID_COMBINER);
+    const from = positionMap.get(parentId);
+    const to = positionMap.get(id);
     const middle = { x: from.x, y: to.y, };
 
     const lineElement = item.children[0] as VNode;

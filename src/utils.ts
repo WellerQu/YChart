@@ -3,8 +3,8 @@
 import { VNode, } from 'snabbdom/vnode';
 
 import compose from './compose';
-import { EventHandler, Position, } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, NODE_TYPE, } from './constants/constants';
+import { EventHandler, Position, } from './@types';
 
 export const isNull = (value: any): boolean => {
   if (value === null)

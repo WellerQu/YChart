@@ -2,7 +2,7 @@
  * @module instances
  */
 
-import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from '../typings/defines';
+import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from './@types';
 import createStage from './cores/createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
@@ -18,8 +18,7 @@ import compose from './compose';
 import { max, } from './utils';
 import { createRule, } from './components/createRule';
 import clone from './clone';
-import { RULE_STEP, } from './constants/constants';
-
+import { ID_COMBINER, CALLSTACK_HEIGHT, RULE_HEIGHT, STACK_SPACE } from './constants/constants';
 
 function flatten (node: CallstackData): CallstackData[] {
   const stacks: CallstackData[] = [];
@@ -29,8 +28,8 @@ function flatten (node: CallstackData): CallstackData[] {
   if (!node.children || node.children.length === 0) return stacks;
 
   return node.children.reduce<CallstackData[]>((arr: CallstackData[], item: CallstackData) => {
-    item.parentStackName = node.stackName;
-    item.parentOffsetTime = node.offsetTime + node.parentOffsetTime || 0;
+    item.parentId = node.id;
+    // item.parentTimeOffset = node.timeOffset + node.parentTimeOffset || 0;
     return arr.concat(flatten(item));
   }, stacks);
 };
@@ -45,7 +44,6 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
   const elementID = container.id;
   const enhancer = applyMiddlewares(
     showLoading,
-    callstackColourful, 
     callstackLayout, 
     callstackStyle,
   );
@@ -63,14 +61,18 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     viewbox(option);
     size(option);
 
+    if (!data) return patch();
+
     const flattenData = flatten(data);
-    const maxDuration = max(...flattenData.map(n => n.duration));
+    const maxDuration = max(...flattenData.map(n => n.totalTimeSpend));
     const availableWidth = root.data.attrs.width as number;
 
     // 当最大长度与刻度步长无法取整时, 需要向下取一个最近的最小可取整值
     // 比如: 步长为50, 最大值为835 则需要改成 850
     // 比如: 步长为50, 最大值为860 则需要改成 900
     let maxWidth = maxDuration;
+    let RULE_STEP = Math.pow(10, (maxWidth.toString().length - 1));
+
     if (maxWidth % RULE_STEP !== 0) {
       const a = maxWidth / 100 >> 0;
       const b = maxWidth % 100;
@@ -89,12 +91,13 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     }));
 
     flattenData.forEach((item: CallstackData, index: number) => {
-      item.maxDuration = maxWidth;
+      item.maxTimeOffset = maxWidth;
       item.availableWidth = availableWidth;
+
       create(callstack(item)); 
       if (index > 0)
         create(createCallLine({
-          id: `${item.stackName}-${item.parentStackName || ''}`,
+          id: `${item.id}${ID_COMBINER}${item.parentId || ''}`,
           x1: 0,
           y1: 0,
           x2: 0,
@@ -105,6 +108,14 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
           className: 'callline',
         }));
     });
+
+    const height = flattenData.length * (CALLSTACK_HEIGHT + STACK_SPACE) + RULE_HEIGHT;
+    if (option) {
+      option.height = height;
+    }
+
+    size(option);
+    viewbox(option);
 
     patch(flattenData);
   };

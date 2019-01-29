@@ -1,4 +1,4 @@
-import { Node, AppNodeOption, } from '../../typings/defines';
+import { Node, AppNodeOption, } from '../@types';
 import { NODE_TYPE, } from '../constants/constants';
 
 function createAppNodeOption (node: Node): AppNodeOption {

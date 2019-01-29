@@ -4,10 +4,9 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
+import { Stage, PatchBehavior, CallstackData, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 
-const COLOURS = ['#99CCCC', '#FFCC99', '#FFCCCC', '#FF9999', '#996699', '#FFCCCC', '#CC9999', '#CCCC99', '#CCCCFF',];
 
 const predicate = (className: string) => (item: VNode) => {
   if (!item.data.class)
@@ -30,13 +29,7 @@ export const callstackColourful = (stage: Stage) => (next: PatchBehavior) => (us
 
   stackGroups.forEach((item: VNode, index: number) => {
     const ID = item.data.attrs.id as string;
-    if (!ID.split)
-      return;
-
     const rectNode = item.children[0] as VNode;
-    const colour = rectNode.data.attrs.stroke = rectNode.data.attrs.fill = COLOURS[index];
-
-    colourMap.set(ID, colour);
   });
 
   lineGroups.forEach((item: VNode) => {

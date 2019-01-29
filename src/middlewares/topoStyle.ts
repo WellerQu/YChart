@@ -2,7 +2,7 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../@types';
 import { createStyle, } from '../components/components';
 
 const styleSheet = `

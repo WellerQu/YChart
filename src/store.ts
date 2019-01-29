@@ -1,4 +1,4 @@
-import { Store, } from '../typings/defines';
+import { Store } from "./@types";
 
 interface StoreCell<T> {
   expire: number; // Timestamp

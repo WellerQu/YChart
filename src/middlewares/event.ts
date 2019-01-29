@@ -6,7 +6,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchBehavior, TopoData, EventOption, TopoEventHandler, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, EventOption, TopoEventHandler, } from '../@types';
 import { setupEventHandler, } from '../utils';
 import compose from '../compose';
 import { NODE_TYPE, } from '../constants/constants';

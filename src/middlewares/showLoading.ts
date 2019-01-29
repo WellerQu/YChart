@@ -2,7 +2,7 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, } from '../../typings/defines';
+import { Stage, PatchBehavior, } from '../@types';
 import { createText, createStyle, } from '../components/components';
 
 const styleSheet = `

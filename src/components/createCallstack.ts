@@ -4,7 +4,7 @@
  * @module components
  */
 
-import { CallstackOption, Component, Strategy, } from '../../typings/defines';
+import { CallstackOption, Component, Strategy, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createText, createGroup, createRect, } from './components';
@@ -22,7 +22,7 @@ const createCallstack: Component<CallstackOption> = (option: CallstackOption): S
     content: option.text || '',
     className: 'callstack-desc',
     x: RULE_PADDING + 10,
-    y: 8,
+    y: 12,
   };
   const createNode = compose<VNode>(
     createText(textOption), 

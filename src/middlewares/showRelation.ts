@@ -4,7 +4,7 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import { setupEventHandler, findGroup, findRoot, } from '../utils';
 import { ID_COMBINER, NODE_TYPE, TOPO_OPERATION_STATE, } from '../constants/constants';

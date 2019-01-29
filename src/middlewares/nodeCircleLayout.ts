@@ -11,7 +11,7 @@ import {
   Middleware,
   Position,
   Line,
-} from '../../typings/defines';
+} from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import { toTranslate, group, } from '../utils';
 import { NODE_SIZE, NODE_TYPE, } from '../constants/constants';

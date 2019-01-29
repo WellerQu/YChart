@@ -2,10 +2,10 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, CallstackData, } from '../../typings/defines';
+import { Stage, PatchBehavior, CallstackData, } from '../@types';
 import { createStyle, } from '../components/components';
 
-const fontSize = '8px';
+const fontSize = '12px';
 const styleSheet = `
 /* <![CDATA[ */
 g.group

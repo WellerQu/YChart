@@ -7,7 +7,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom/h';
-import { Position, SVGOption, } from '../../typings/defines';
+import { Position, SVGOption, } from '../@types';
 
 import {
   TextOption,
@@ -19,7 +19,7 @@ import {
   RectOption,
   Component,
   Strategy,
-} from '../../typings/defines';
+} from '../@types';
 import { toArrowD, } from '../utils';
 
 /**

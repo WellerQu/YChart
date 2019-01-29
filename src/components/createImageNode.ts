@@ -6,7 +6,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 import { NODE_SIZE, } from '../constants/constants';
-import { ImageNodeOption, Component, Strategy, } from '../../typings/defines';
+import { ImageNodeOption, Component, Strategy, } from '../@types';
 
 import compose from '../compose';
 import { createText, createImage, createGroup, } from './components';

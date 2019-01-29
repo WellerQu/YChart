@@ -4,7 +4,7 @@
  * @module components
  */
 
-import { Component, Strategy, LineOption, } from '../../typings/defines';
+import { Component, Strategy, LineOption, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createGroup, createArrow, createLine, } from './components';

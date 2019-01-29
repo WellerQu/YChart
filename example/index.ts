@@ -1,6 +1,6 @@
 import ychartTopo from '../src/ychart-topo';
 import ychartCallstack from '../src/ychart-callstack';
-import { TopoData, CallstackData, Line, Node, } from '../typings/defines';
+import { TopoData, CallstackData, Line, Node, } from '../src/@types';
 import json from './topo.json';
 import { TOPO_OPERATION_STATE, } from '../src/constants/constants';
 
@@ -41,41 +41,80 @@ btnFullscreen.addEventListener('click', () => {
 });
 
 const callstackData: CallstackData = {
-  stackName: 'root stack service',
-  duration: 2260, // ms
-  offsetTime: 0,
+  id: '0',
+  appName: 'cba',
+  name: 'root stack service',
+  totalTimeSpend: 6, // ms
+  timeOffset: 0,
+  fill: 'blue',
   children: [
     {
-      stackName: 'serv 0',
-      duration: 300,
-      offsetTime: 100,
+      id: '1',
+      appName: 'abc',
+      name: 'serv 0',
+      totalTimeSpend: 1,
+      timeOffset: 1,
       children: [
         {
-          stackName: 'serv 01',
-          duration: 100,
-          offsetTime: 100,
+          id: '11',
+          appName: 'abc',
+          name: 'serv 01',
+          totalTimeSpend: 1,
+          timeOffset: 2,
           children: [
             {
-              stackName: 'serv 001',
-              duration: 10,
-              offsetTime: 100,
+              id: '111',
+              appName: 'abc 1',
+              name: 'serv 001',
+              totalTimeSpend: 1,
+              timeOffset: 3,
             },
+            {
+              id: '112',
+              appName: 'abc 1',
+              name: 'serv 002',
+              totalTimeSpend: 1,
+              timeOffset: 3,
+            }
           ],
         },
         {
-          stackName: 'serv 02',
-          duration: 3,
-          offsetTime: 100,
+          id: '12',
+          appName: 'abc',
+          name: 'serv 02',
+          totalTimeSpend: 3,
+          timeOffset: 2,
         },
       ],
     },
     {
-      stackName: 'serv 1',
-      duration: 700,
-      offsetTime: 100,
+      id: '2',
+      appName: 'abc',
+      name: 'serv 1',
+      totalTimeSpend: 2,
+      timeOffset: 4,
     },
   ],
 };
+
+// import randomColor from 'randomcolor';
+
+// const flatten = (root: CallstackData): CallstackData[] => {
+//   const arr = [root];
+//   if (root.children) {
+//     return root.children.reduce((arr, item) => {
+//       return arr.concat(flatten(item));
+//     }, arr);
+//   }
+//   return arr;
+// };
+
+// const stacks = flatten(callstackData);
+// const colursMap = stacks.reduce((map, item) => {
+//   if (!map.has(item.appName))
+//     map.set(item.appName, randomColor({ hue: '#338cff' }));
+//   return map;
+// }, new Map<string, string>());
 
 const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
 
@@ -83,8 +122,8 @@ updateCallstack(callstackData);
 
 const btnUpdateCallstack = document.querySelector('button#updateCallstackData');
 btnUpdateCallstack.addEventListener('click', () => {
-  callstackData.duration = 900;
-  callstackData.children[0].duration = 500;
+  callstackData.totalTimeSpend = 900;
+  callstackData.children[0].totalTimeSpend = 500;
 
   updateCallstack(callstackData);
 });

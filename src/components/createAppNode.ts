@@ -3,7 +3,7 @@
  */
 
 import { VNode, } from '../../node_modules/snabbdom/vnode';
-import { Component, Strategy, AppNodeOption, } from '../../typings/defines';
+import { Component, Strategy, AppNodeOption, } from '../@types';
 import compose from '../compose';
 import { createText, createCircle, createGroup, } from './components';
 import { isNull, } from '../utils';

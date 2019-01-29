@@ -3,7 +3,7 @@
  */
 
 import compose from '../compose';
-import { Stage, Middleware, CreateStage, PatchBehavior, } from '../../typings/defines';
+import { Stage, Middleware, CreateStage, PatchBehavior, } from '../@types';
 
 const applyMiddlewares = (...middlewares: Middleware[]) => (
   createStage: CreateStage

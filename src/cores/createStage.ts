@@ -18,7 +18,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
-import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../../typings/defines';
+import { Stage, Subscriber, Strategy, Viewbox, Size, } from '../@types';
 import { createSvg, } from '../components/components';
 import { isNull, } from '../utils';
 

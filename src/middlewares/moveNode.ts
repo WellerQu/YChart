@@ -6,7 +6,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Position, } from '../@types';
 import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
 import compose from '../compose';
 import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, NODE_TYPE, TOPO_OPERATION_STATE, } from '../constants/constants';

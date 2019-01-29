@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { ServiceNodeOption, Node, } from '../../typings/defines';
+import { ServiceNodeOption, Node, } from '../@types';
 import { HEALTH, APDEX, NODE_TYPE, } from '../constants/constants';
 
 /**

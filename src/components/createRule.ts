@@ -2,7 +2,7 @@
  * @module components
  */
 
-import { Component, RuleOption, Strategy, } from '../../typings/defines';
+import { Component, RuleOption, Strategy, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
 import compose from '../compose';
@@ -18,7 +18,7 @@ export const createRule: Component<RuleOption> = (option: RuleOption):Strategy =
   let stepCount = 0;
 
   while (current <= availableWidth + RULE_PADDING) {
-    actions.push(`M${current},1 V5`);
+    actions.push(`M${current},10 V15`);
     texts.push(createText({
       content: `${(stepCount++) * option.step}`,
       x: current,
@@ -31,7 +31,7 @@ export const createRule: Component<RuleOption> = (option: RuleOption):Strategy =
   parentNode.children.push(
     h('path', {
       attrs: {
-        d: `M${RULE_PADDING},1 H${availableWidth + RULE_PADDING} ${actions.join(' ')}`,
+        d: `M${RULE_PADDING},10 H${availableWidth + RULE_PADDING} ${actions.join(' ')}`,
         fill: 'none',
         stroke: option.color || '#CCC',
         'stroke-width': 1,

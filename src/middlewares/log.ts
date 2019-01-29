@@ -2,7 +2,7 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, TopoData, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, } from '../@types';
 
 // Example for middleware that show how to log patch behavior
 export const log = (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {

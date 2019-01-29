@@ -6,11 +6,12 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
+// import { Stage, PatchBehavior, TopoData, Position, } from '../@types';
 import { setupEventHandler, parseViewBoxValue, } from '../utils';
 
 import compose from '../compose';
 import { TOPO_OPERATION_STATE, } from '../constants/constants';
+import { Stage, PatchBehavior, TopoData, Position, } from '../@types';
 
 /**
  * 添加拖拽移动画布功能

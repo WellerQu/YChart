@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { TopoData, Node, Line, Params, } from '../../typings/defines';
+import { TopoData, Node, Line, Params, } from '../@types';
 import compose from '../compose';
 import { NODE_TYPE, DATABASE_TYPE, } from '../constants/constants';
 

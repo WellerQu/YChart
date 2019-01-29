@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { ArrowLineOption, Line, } from '../../typings/defines';
+import { ArrowLineOption, Line, } from '../@types';
 import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
 import { isNull, } from '../utils';
 

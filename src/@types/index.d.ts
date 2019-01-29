@@ -227,12 +227,16 @@ declare interface TopoData {
 }
 
 declare interface CallstackData {
-  stackName: string;
-  offsetTime: number;
-  duration: number;
+  id: string;
+  appName: string;
+  name: string;
+  timeOffset: number;
+  totalTimeSpend: number;
+
+  fill?: string;
   children?: CallstackData[];
-  parentOffsetTime?: number;
-  parentStackName?: string;
-  maxDuration?: number;
+  parentTimeOffset?: number;
+  parentId?: string;
+  maxTimeOffset?: number;
   availableWidth?: number;
 }

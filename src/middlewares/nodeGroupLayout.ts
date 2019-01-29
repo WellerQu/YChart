@@ -6,7 +6,7 @@
 
 import { VNode, } from 'snabbdom/vnode';
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
+import { Stage, PatchBehavior, TopoData, Position, } from '../@types';
 import { NODE_SIZE, CELL_SIZE, NODE_TYPE, } from '../constants/constants';
 import { toTranslate, group, } from '../utils';
 

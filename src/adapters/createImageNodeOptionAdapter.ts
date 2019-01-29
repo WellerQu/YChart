@@ -2,7 +2,7 @@
  * @module adapters
  */
 
-import { ImageNodeOption, Node, } from '../../typings/defines';
+import { ImageNodeOption, Node, } from '../@types';
 import { imagePath, } from '../utils';
 import { NODE_TYPE, } from '../constants/constants';
 

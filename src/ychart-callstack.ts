@@ -10,7 +10,6 @@ import applyMiddlewares from './cores/applyMiddlewares';
 
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';
-import { callstackColourful,} from './middlewares/callstackColourful';
 import { showLoading, } from './middlewares/showLoading';
 
 import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
@@ -64,7 +63,7 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     if (!data) return patch();
 
     const flattenData = flatten(data);
-    const maxDuration = max(...flattenData.map(n => n.totalTimeSpend));
+    const maxDuration = max(...flattenData.map(n => n.totalTimeSpend + n.timeOffset));
     const availableWidth = root.data.attrs.width as number;
 
     // 当最大长度与刻度步长无法取整时, 需要向下取一个最近的最小可取整值
@@ -74,12 +73,12 @@ export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<Ca
     let RULE_STEP = Math.pow(10, (maxWidth.toString().length - 1));
 
     if (maxWidth % RULE_STEP !== 0) {
-      const a = maxWidth / 100 >> 0;
-      const b = maxWidth % 100;
+      const a = maxWidth / RULE_STEP >> 0;
+      const b = maxWidth % RULE_STEP;
       if (b > RULE_STEP) {
-        maxWidth = a * 100 + 2 * RULE_STEP;
+        maxWidth = a * RULE_STEP + 2 * RULE_STEP;
       } else {
-        maxWidth = a * 100 + RULE_STEP;
+        maxWidth = a * RULE_STEP + RULE_STEP;
       }
     }
 

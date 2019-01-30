@@ -91,7 +91,7 @@ const callstackData: CallstackData = {
       id: '2',
       appName: 'abc',
       name: 'serv 1',
-      totalTimeSpend: 2,
+      totalTimeSpend: 44,
       timeOffset: 4,
     },
   ],

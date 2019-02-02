@@ -16,7 +16,7 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
   if (instance.layout() !== TOPO_LAYOUT_STATE.FORCE_DIRECTED)
     return next(userState);
 
-  console.log('apply force directed layout strategy'); // eslint-disable-line
+  console.log('applied force directed layout strategy'); // eslint-disable-line
 
   functor(instance)
     .map((ins: InstanceAPI) => ins.getStage())

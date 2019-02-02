@@ -1,191 +1,173 @@
-/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+import { InstanceAPI, PatchBehavior, TopoData, InstanceState, Position, Functor, LineOption, } from "../cores/core";
+import { setupEventHandler, findGroup, parseTranslate, toTranslate, findRoot, parseLinePathD, toLinePathD, toArrowPoints, distance } from "../utils";
+import functor from "../cores/functor";
+import io from "../cores/io";
+import { TOPO_OPERATION_STATE, ID_COMBINER, NODE_SIZE, MIN_NODE_DISTANCE } from "../constants/constants";
+import id from "../cores/id";
+import sideEffect from "../cores/sideEffect";
 
-/**
- * @module middlewares
- */
+const clickPosition = (event: MouseEvent) => functor(event)
+  .map((event: MouseEvent) => ({x: event.pageX, y: event.pageY, }));
 
-import { VNode, } from 'snabbdom/vnode';
+const diffPosition = (p1: Position) => (p2: Position) => ({
+  x: p1.x - p2.x,
+  y: p1.y - p2.y,
+});
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { setupEventHandler, parseTranslate, toTranslate, parseViewBoxValue, toArrowD, findGroup, } from '../utils';
-import compose from '../compose';
-import { NODE_SIZE, ARROW_OFFSET, ID_COMBINER, NODE_TYPE, TOPO_OPERATION_STATE, } from '../constants/constants';
-
-
-const parsePathD = (value: string):([[number, number], [number, number]] | never) => {
-  const regExp: RegExp = /M(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)\s*L(-?\d+(?:.\d+)?),\s*(-?\d+(?:.\d+)?)/igm;
-  if (!regExp.test(value))
-    throw new Error(`can NOT convert to path d: ${value}`);
-
-  return [
-    [+RegExp.$1, +RegExp.$2,],
-    [+RegExp.$3, +RegExp.$4,],
-    // [+RegExp.$5, +RegExp.$6],
-  ];
+const getNewPosition = (sourcePosition: Position) => (diffPosition: Position) => (ratio: number) => {
+  return {
+    x: sourcePosition.x + diffPosition.x * ratio,
+    y: sourcePosition.y + diffPosition.y * ratio,
+  };
 };
 
-export const moveNode =(getState: () => number) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
+const findElement = (prefix: string) => (id: string) => (elements: HTMLElement[]) => 
+  elements
+    .filter(item => item.id.startsWith(prefix))
+    .filter(item => item.id
+      .replace(prefix, '')
+      .split(ID_COMBINER)
+      .find((n: string) => n === id) !== void 0);
+const findLines = findElement('line-');
+const findArrows = findElement('arrow-');
+
+const updatePathD = (id: string) => (newPosition: Position) => (element: HTMLElement): LineOption => {
+  const pathD = parseLinePathD(element.getAttribute('d'));
+  if (pathD === null) {
+    return null;
+  }
+
+  const [sourceID, targetID,] = element.id.replace('line-', '').split(ID_COMBINER);
+  if (id !== sourceID && id !== targetID) {
+    return null;
+  }
+
+  const [source, target, ] = pathD;
+  if (sourceID === id) {
+    return {
+      id: `${sourceID}${ID_COMBINER}${targetID}`,
+      source: {
+        x: newPosition.x + NODE_SIZE / 2,
+        y: newPosition.y + NODE_SIZE / 2,
+      },
+      target,
+    };
+  } else {
+    return {
+      id: `${sourceID}${ID_COMBINER}${targetID}`,
+      source,
+      target: {
+        x: newPosition.x + NODE_SIZE / 2,
+        y: newPosition.y + NODE_SIZE / 2,
+      },
+    };
+  }
+};
+
+export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
   if (!userState)
     return next(userState);
 
-  const root = stage.stageNode();
-
-  let isMouseDown: boolean = false;
-  let sourcePosition: Position = { x: 0, y: 0, };
-  let targetPosition: Position = { x: 0, y: 0, };
-  let targetElement: HTMLElement = null;
-
-  const handleMouseDown = (event: MouseEvent): MouseEvent => {
-    if (getState() !== TOPO_OPERATION_STATE.CAN_MOVE_NODE) return event;
-
-    targetElement = findGroup(event);
-    if (!targetElement)
-      return event;
- 
-    isMouseDown = true;
-    sourcePosition.x = event.pageX;
-    sourcePosition.y = event.pageY;
-
-    const position = parseTranslate(targetElement.style.transform);
-    targetPosition.x = position.x;
-    targetPosition.y = position.y;
-
-    // const svgElement = targetElement.parentElement;
-    // Array.from(svgElement.children)
-    //   .filter(n => n !== targetElement)
-    //   .forEach((node: HTMLElement) => (node.style.pointerEvents = 'none'));
-
-    return event;
-  };
-
-  const handleMouseMove = (event: MouseEvent): MouseEvent => {
-    if (!isMouseDown) 
-      return event;
-
-    let svgElement = event.target as HTMLElement;
-    while(svgElement.nodeName.toUpperCase() !== 'SVG') {
-      svgElement = svgElement.parentElement;
-    }
- 
-    if (targetElement) {
-      // re-compute the node position
-      const diffX = event.pageX - sourcePosition.x;
-      const diffY = event.pageY - sourcePosition.y;
-
-      const [,, width,] = parseViewBoxValue(svgElement.getAttribute('viewBox'));
-      const containerWidth = svgElement.parentElement.offsetWidth;
-      const ratio = (width / containerWidth);
-      const newX = targetPosition.x + diffX * ratio;
-      const newY = targetPosition.y + diffY * ratio;
-
-      targetElement.style.transform = toTranslate(newX, newY);
-
-      // re-draw those line-related
-      const currentElementID = targetElement.id;
-
-      Array.from(targetElement.parentElement.children)
-        .filter((item: SVGGElement) => {
-          if (!item.classList.contains(NODE_TYPE.LINE))
-            return false;
-
-          const [source, target,] = item.id.split(ID_COMBINER);
-
-          return source === currentElementID || target === currentElementID;
-        })
-        .forEach((item: SVGGElement) => {
-          const [source, target,] = item.id.split(ID_COMBINER);
-
-          const paths = item.querySelectorAll('path');
-          const line = paths[0];
-          const arrow = paths[1];
-          const text = item.querySelector('text.line-desc');
-
-          const [[x1, y1,], [x2, y2,],] = parsePathD(line.getAttribute('d'));
-          const x = NODE_SIZE  / 2 + newX;
-          const y = NODE_SIZE  / 2 + newY;
-
-          let startX: number, startY: number, endX: number, endY: number;
-          if (source === currentElementID) {
-            // update start position
-            startX = x;
-            startY = y;
-            endX = x2;
-            endY = y2;
-
-            line.setAttribute('d', `M${x},${y} L${x2},${y2}`);
-          } else if (target === currentElementID) {
-            // update end position
-            startX = x1;
-            startY = y1;
-            endX = x;
-            endY = y;
-
-            arrow.setAttribute('d', toArrowD(x1, y1));
-            line.setAttribute('d', `M${x1},${y1} L${x},${y}`);
-          }
-
-          if (startX && startY) {
-            // update arrow
-            const lA = endY - startY;
-            const lB = endX - startX;
-            const lC = Math.sqrt(Math.pow(lA, 2) + Math.pow(lB, 2));
-
-            const lc = ARROW_OFFSET;
-            const la = lc * lA / lC;
-            const lb = lc * lB / lC;
-
-            const arrowX = lb + startX;
-            const arrowY = la + startY;
-
-            arrow.setAttribute('d', toArrowD(arrowX, arrowY));
-
-            // atan2使用的坐标系0度在3点钟方向, rotate使用的坐标系0度在12点钟方向, 相差90度
-            const a = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI + 90; // 阿尔法a
-            arrow.setAttribute('transform', `rotate(${a}, ${arrowX} ${arrowY})`);
-
-            // update text
-            if (text) {
-              text.setAttribute('x', (endX - startX) / 2 + startX);
-              text.setAttribute('y', (endY - startY) / 2 + startY);
-            }
-          }
-        });
-    }
-
-    return event;
-  };
-
-  const handleMouseUp = (event: MouseEvent): MouseEvent => {
-    // let target = event.target as HTMLElement;
-    // if (target.nodeName.toUpperCase() === 'SVG') {
-    isMouseDown = false;
-    targetElement = null; 
-    // Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
+  // 是否已开始拖拽
+  let isReadyToMove = false;
+  // 正在被拖拽的元素
+  let $movingElement: HTMLElement = null;
+  // 元素原始位置函子
+  let sourcePosition$: Functor = null;
+  // 鼠标点击开始拖拽的坐标函子
+  let startPosition$: Functor = null;
+  // 比例函子
+  let ratio$: Functor = null;
+  
+  const handleMouseDown = (event: MouseEvent) => {
+    // const state = instance as InstanceState;
+    // if (state.operation() !== TOPO_OPERATION_STATE.CAN_MOVE_CANVAS) {
+    //   return;
     // }
 
-    return event;
+    $movingElement = findGroup(event);
+    if (!$movingElement) {
+      return;
+    }
+
+    isReadyToMove = true;
+    ratio$ = functor(instance)
+      .map((ins: InstanceAPI) => [ins.viewbox()[2], ins.size().width])
+      .map(([viewBoxWidth, sizeWidth]: [number, number]) => viewBoxWidth / sizeWidth);
+    startPosition$ = clickPosition(event);
+    sourcePosition$ = functor($movingElement)
+      .map(($elem: HTMLElement) => $elem.style.transform)
+      .map(parseTranslate);
   };
 
-  // const handleMouseOut = (event: MouseEvent): MouseEvent => {
-  //   let target = event.target as HTMLElement;
-  //   if (target.nodeName.toUpperCase() === 'SVG') {
-  //     isMouseDown = false;
-  //     targetElement = null; 
-  //     Array.from(target.children).forEach((node: HTMLElement) => node.style.pointerEvents = 'auto');
-  //   }
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isReadyToMove)
+      return;
 
-  //   return event;
-  // };
+    const diff$ = functor(diffPosition)
+      .ap(clickPosition(event))
+      .ap(startPosition$);
 
-  const setupDragMoveNodeHandler = compose<VNode>(
-    setupEventHandler(handleMouseDown)('mousedown'),
-    setupEventHandler(handleMouseMove)('mousemove'),
-    setupEventHandler(handleMouseUp)('mouseup'),
-    // setupEventHandler(handleMouseUp)('mouseout'),
-  );
+    const newPosition$ = functor(getNewPosition)
+      .ap(sourcePosition$)
+      .ap(diff$)
+      .ap(ratio$);
+    
+    const children$ = functor(event).map(findRoot)
+      .map(($elem: HTMLElement) => $elem.children)
+      .map(($children: HTMLCollection) => Array.from($children));
 
-  setupDragMoveNodeHandler(root);
+    const lines$ = children$.map(findLines($movingElement.id));
+    const arrows$ = children$.map(findArrows($movingElement.id));
 
-  next(userState);
+    // 更新节点坐标
+    $movingElement.style.transform = newPosition$.map(toTranslate).fold(id);
+    // 更新线段坐标 & 更新箭头坐标
+    const options = lines$
+      .map(($elements: HTMLElement[]) =>  
+        $elements.map((item: HTMLElement) => 
+          functor(updatePathD)
+            .ap(functor($movingElement.id))
+            .ap(newPosition$)
+            .ap(functor(item))
+            .map((option: LineOption) => (f: Function) => f(option))
+        ))
+      .fold(id);
+
+    lines$.fold(id).forEach(
+      (item: HTMLElement, index: number) => 
+        options[index]
+          .ap(functor(toLinePathD))
+          .chain((d: string) => sideEffect(() => item.setAttribute('d', d)))
+          .fold(id)
+    );
+
+    arrows$.fold(id).forEach((item: HTMLElement, index: number) => {
+      options[index]
+        .ap(functor(toArrowPoints))
+        .map(([p1, p2, p3,]: [Position, Position, Position]) => `M${p1.x},${p1.y} L${p2.x},${p2.y} L${p3.x},${p3.y} z`)
+        .chain((d: string) => sideEffect(() => item.setAttribute('d', d)))
+        .fold(id);
+
+      options[index]
+        .ap(functor((option: LineOption) => distance(option.source)(option.target) < MIN_NODE_DISTANCE))
+        .chain((really: boolean) => sideEffect(() => item.setAttribute('opacity', really ? 0 : 1)))
+        .fold(id);
+    });
+  };
+
+  const handleMouseUp = (_: MouseEvent) => {
+    isReadyToMove = false;
+  };
+
+  // 绑定拖拽相关的事件
+  io(
+    setupEventHandler(handleMouseDown)('mousedown')
+  ).map(
+    setupEventHandler(handleMouseMove)('mousemove')
+  ).map(
+    setupEventHandler(handleMouseUp)('mouseup')
+  ).ap(functor(instance.getStage()));
+
+  return next(userState);
 };
-

@@ -10,7 +10,10 @@ const user = (option: UserOption) => imageNode({
   URL: 'user.png',
   title: '用户',
 })
-  .map((nodes: VNode[]) => group({ id: option.id, x: 0, y: 0, className: { [NODE_TYPE.USER]: true, }, }, nodes))
+  .map((nodes: VNode[]) => group({ 
+    id: option.id, 
+    x: 0, y: 0, 
+    className: { [NODE_TYPE.USER]: true, [NODE_TYPE.NODE]: true, }, }, nodes))
   .map(appendTo)
   .fold(id);
 ;

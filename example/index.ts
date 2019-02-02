@@ -9,6 +9,7 @@ import nodeHoneycombLayout from '../src/middlewares/nodeHoneycombLayout';
 import nodeForceDirectedLayout from '../src/middlewares/nodeForceDirectedLayout';
 import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
 import linkNode from '../src/middlewares/linkNode';
+import moveNode from '../src/middlewares/moveNode';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -43,7 +44,8 @@ const enhancerWithMiddlewares = applyMiddlewares(
   nodeCircleLayout, 
   nodeForceDirectedLayout, 
   linkNode, 
-  scaleCanvas
+  scaleCanvas,
+  moveNode,
 );
 const enhancerWithInitStates = applyStates({});
 

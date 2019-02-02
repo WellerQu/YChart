@@ -23,7 +23,7 @@ import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayou
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/__scaleCanvas';
 import { moveCanvas, } from './middlewares/moveCanvas';
-import { moveNode, } from './middlewares/moveNode';
+import { moveNode, } from './middlewares/__moveNode';
 import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';

@@ -35,6 +35,10 @@ interface UpdateBehavior {
   (strategy: StrategyID): VNode;
 }
 
+interface EventHandler {
+  (event: Event): Event;
+}
+
 type Viewbox = [number, number, number, number];
 type Middleware = (instance: InstanceAPI) => (next: PatchBehavior) => (userState?: any) => void;
 

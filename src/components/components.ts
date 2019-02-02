@@ -10,6 +10,7 @@ import {
   LineOption, 
   ArrowOption, 
 } from '../cores/core';
+import { NODE_TYPE, } from '../constants/constants';
 
 const vNodeData = (option: VNodeData) => ({
   ...option,
@@ -53,13 +54,13 @@ export const group = (option: GroupOption, children?: VNode[] ) => h(
       id: option.id,
     },
     key: option.id,
-    class: { ...option.className, group: true, },
+    class: { ...option.className, [NODE_TYPE.NODE]: true, },
     style: { transform: `translate(${option.x}px, ${option.y}px)`, },
   }),
   children || []
 );
 
-export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)') => h(
+export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)', fill = 'hsl(214, 100%, 60%)') => h(
   'path',
   vNodeData({
     attrs: {
@@ -67,6 +68,7 @@ export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)') => h
       d: `M${option.source.x},${option.source.y} L${option.middle.x},${option.middle.y} L${option.target.x},${option.target.y} z`,
       stroke,
       'stroke-width': 1,
+      fill,
     },
     key: `arrow-${option.id}`,
     class: option.className,
@@ -78,7 +80,7 @@ export const line = (option: LineOption, stroke = 'hsl(214, 100%, 60%)') => h(
   vNodeData({
     attrs: {
       id: `line-${option.id}`,
-      d: `M${option.source.x},${option.source.y} L${option.target.x},${option.target.y} z`,
+      d: `M${option.source.x},${option.source.y} L${option.target.x},${option.target.y}`,
       stroke,
       'stroke-width': 1,
     },

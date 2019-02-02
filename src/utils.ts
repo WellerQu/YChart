@@ -5,7 +5,7 @@ import { VNode, } from 'snabbdom/vnode';
 import compose from './compose';
 import { EventHandler, } from '../typings/defines';
 import { ARROW_HEIGHT, ARROW_WIDTH, NODE_SIZE, ARROW_OFFSET, NODE_TYPE, } from './constants/constants';
-import { Size, Position, } from './cores/core';
+import { Size, Position, LineOption, } from './cores/core';
 
 export const isNull = (value: any): boolean => {
   if (value === null)
@@ -91,27 +91,18 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
     vnode.data.on = {};
   }
 
+  const func = (event: Event) => {
+    handler(event);
+    return event;
+  };
+
   if (vnode.data.on[eventName]) {
-    vnode.data.on[eventName] = compose<void>(vnode.data.on[eventName], handler);
+    vnode.data.on[eventName] = compose<void>(vnode.data.on[eventName], func);
   } else {
-    vnode.data.on[eventName] = handler;
+    vnode.data.on[eventName] = func;
   }
 
   return vnode;
-};
-
-export const throttle = (handler: EventHandler, gapTime: number) => {
-  let lastTime: number = 0;
-
-  return function (event: Event): Event {
-    let nowTime = +new Date;
-    if (nowTime - lastTime > gapTime) {
-      lastTime = nowTime;
-      return handler(event);
-    }
-
-    return event;
-  };
 };
 
 export function memory<T> (fn: (...args: any[]) => T, resolver?: (...args: any[]) => string)  {
@@ -305,3 +296,45 @@ export function graph (stage: VNode): (Position & Size) {
 
 // const flatten = Y((g: Function) => (n: any[]) =>
 //   n.reduce((arr, item) => Array.isArray(item) ? arr.concat(g(item)) : (arr.push(item), arr), []));
+
+export const toLinePathD = (option: LineOption): string => {
+  return `M${option.source.x},${option.source.y} L${option.target.x},${option.target.y} z`;
+};
+
+export const parseLinePathD = (d: string): [Position, Position] => {
+  const regex = /^M(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\s+L(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:\s+z)?$/igm;
+  if (!regex.test(d)) {
+    return null;
+  }
+
+  return [
+    { x: +RegExp.$1, y: +RegExp.$2, },
+    { x: +RegExp.$3, y: +RegExp.$4, },
+  ];
+};
+
+// 求两点间的直线距离
+export const distance = (a: Position) => (b: Position) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+// 求三角形箭头的三个顶点
+export const toArrowPoints = (line: LineOption): [Position, Position, Position] => {
+  // 求箭头三角形的顶点
+  const x1 = (line.target.x - line.source.x) * ARROW_OFFSET / distance(line.source)(line.target) + line.source.x;
+  const y1 = (line.target.y - line.source.y) * ARROW_OFFSET / distance(line.source)(line.target) + line.source.y;
+
+  // 求箭头三角形的底边中点
+  const centerX = (x1 - line.source.x) * (ARROW_OFFSET - ARROW_HEIGHT) / ARROW_OFFSET + line.source.x;
+  const centerY = (y1 - line.source.y) * (ARROW_OFFSET - ARROW_HEIGHT) / ARROW_OFFSET + line.source.y;
+
+  // 求三角形同底边等高逆向顶点
+  const x2 = (x1 - line.source.x) * (ARROW_OFFSET - 2 * ARROW_HEIGHT) / ARROW_OFFSET + line.source.x;
+  const y2 = (y1 - line.source.y) * (ARROW_OFFSET - 2 * ARROW_HEIGHT) / ARROW_OFFSET + line.source.y;
+
+  // 求三角形另外两个顶点
+  const px1 = centerX - 3 * (y2 - y1) / (2 * ARROW_HEIGHT);
+  const py1 = centerY + 3 * (x2 - x1) / (2 * ARROW_HEIGHT);
+
+  const px2 = centerX + 3 * (y2 - y1) / (2 * ARROW_HEIGHT);
+  const py2 = centerY - 3 * (x2 - x1) / (2 * ARROW_HEIGHT);
+
+  return [{ x: x1, y: y1, }, { x: px1, y: py1, }, { x: px2, y: py2, },];
+};

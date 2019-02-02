@@ -136,3 +136,5 @@ export enum TOPO_LAYOUT_STATE {
 }
 
 export const IMAGE_ROOT = '/static/images/';
+
+export const MIN_NODE_DISTANCE = 140;

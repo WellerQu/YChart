@@ -3,8 +3,7 @@ import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import sideEffect from '../cores/sideEffect';
 import id from '../cores/id';
-import { NODE_SIZE, TOPO_LAYOUT_STATE, } from '../constants/constants';
-import { Func, } from 'mocha';
+import { NODE_SIZE, TOPO_LAYOUT_STATE, NODE_TYPE, } from '../constants/constants';
 import { toTranslate, } from '../utils';
 
 /**
@@ -32,7 +31,7 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
   if (instance.layout() !== TOPO_LAYOUT_STATE.CIRCLE)
     return next(userState);
   
-  console.log('apply circle layout strategy'); // eslint-disable-line
+  console.log('applied circle layout strategy'); // eslint-disable-line
 
   const size$ = functor(instance).map((ins: InstanceAPI) => ins.size());
   const center$ = size$.map(centerPositionOfContainer);
@@ -48,7 +47,7 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
     .map((ins: InstanceAPI) => ins.getStage())
     .map(($stage: VNode) => $stage.children)
     .map((children: VNode[]) => children.filter(n => n.data.class))
-    .map((children: VNode[]) => children.filter(n => n.data.class['group']))
+    .map((children: VNode[]) => children.filter(n => n.data.class[NODE_TYPE.NODE]))
     .chain((nodes: VNode[]) => sideEffect(() => {
       if (nodes.length === 0)
         return nodes;

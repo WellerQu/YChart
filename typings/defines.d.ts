@@ -15,7 +15,7 @@ export type UpdateBehavior<T> = (data: T, option?: Viewbox, merged?: boolean) =>
  */
 export type ArrowLineOption = LineOption & ArrowOption;
 export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
-export type EventHandler = (event: Event) => Event;
+export type EventHandler = (event: Event) => void;
 export type Position = { x: number, y: number };
 export type Size = { width: number, height: number };
 export type Viewbox = Size & Position;

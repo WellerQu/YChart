@@ -11,7 +11,7 @@ import applyMiddlewares from './cores/__applyMiddlewares';
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';
 import { callstackColourful,} from './middlewares/callstackColourful';
-import { showLoading, } from './middlewares/showLoading';
+import { showLoading, } from './middlewares/__showLoading';
 
 import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
 import compose from './compose';

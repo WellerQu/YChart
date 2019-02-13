@@ -22,10 +22,10 @@ import { nodeCircleLayout,} from './middlewares/__nodeCircleLayout';
 import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayout';
 import { topoStyle, } from './middlewares/topoStyle';
 import { scaleCanvas, } from './middlewares/__scaleCanvas';
-import { moveCanvas, } from './middlewares/moveCanvas';
+import { moveCanvas, } from './middlewares/__moveCanvas';
 import { moveNode, } from './middlewares/__moveNode';
 import { event, } from './middlewares/event';
-import { showLoading, } from './middlewares/showLoading';
+import { showLoading, } from './middlewares/__showLoading';
 import { nodePositionMemory,} from './middlewares/nodePositionMemory';
 import { linkLine, } from './middlewares/__linkLine';
 

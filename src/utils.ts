@@ -92,7 +92,7 @@ export const setupEventHandler = (handler: EventHandler) => (eventName: string) 
   }
 
   const func = (event: Event) => {
-    handler(event);
+    handler && handler(event);
     return event;
   };
 

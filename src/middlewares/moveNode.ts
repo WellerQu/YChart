@@ -80,10 +80,10 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
   let ratio$: Functor = null;
   
   const handleMouseDown = (event: MouseEvent) => {
-    // const state = instance as InstanceState;
-    // if (state.operation() !== TOPO_OPERATION_STATE.CAN_MOVE_CANVAS) {
-    //   return;
-    // }
+    const state = instance as InstanceState;
+    if (state.operation() !== TOPO_OPERATION_STATE.CAN_MOVE_NODE) {
+      return;
+    }
 
     $movingElement = findGroup(event);
     if (!$movingElement) {

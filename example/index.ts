@@ -10,6 +10,7 @@ import nodeForceDirectedLayout from '../src/middlewares/nodeForceDirectedLayout'
 import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
 import linkNode from '../src/middlewares/linkNode';
 import moveNode from '../src/middlewares/moveNode';
+import moveCanvas from '../src/middlewares/moveCanvas';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -19,7 +20,7 @@ import service from '../src/components/serviceNode';
 import user from '../src/components/userNode';
 import { TopoData, } from '../typings/defines.js';
 import { UpdateBehavior, Node, InstanceState, ChartOption, } from '../src/cores/core';
-import { NODE_TYPE, TOPO_LAYOUT_STATE, } from '../src/constants/constants';
+import { NODE_TYPE, TOPO_LAYOUT_STATE, TOPO_OPERATION_STATE, } from '../src/constants/constants';
 
 import applicationAdapter from '../src/adapters/applicationAdapter';
 import serviceAdapter from '../src/adapters/serviceAdapter';
@@ -46,6 +47,7 @@ const enhancerWithMiddlewares = applyMiddlewares(
   linkNode, 
   scaleCanvas,
   moveNode,
+  moveCanvas,
 );
 const enhancerWithInitStates = applyStates({});
 
@@ -53,7 +55,7 @@ const topoInstance = io(enhancerWithMiddlewares)
   .map(enhancerWithInitStates)
   .ap(functor(createInstance)).fold(id) as (option?: ChartOption) => InstanceState;
 
-const { update, layout, patch, addEventListener, removeEventListener, scale, } = topoInstance({
+const { update, layout, patch, addEventListener, removeEventListener, scale, operation, } = topoInstance({
   size: {
     width: 800,
     height: 600,
@@ -89,6 +91,8 @@ const render = (json: { data: any }) => functor(json)
 
 layout(layoutStrategy);
 render(json);
+
+operation(TOPO_OPERATION_STATE.CAN_MOVE_CANVAS)
 
 // 以下为测试代码
 const handle1 = (event: Event, sender: VNode) => {

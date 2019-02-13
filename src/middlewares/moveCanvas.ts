@@ -1,94 +1,79 @@
-/// <reference path="../../node_modules/snabbdom/vnode.d.ts" />
+import { InstanceAPI, PatchBehavior, TopoData, Functor, Position, InstanceState, } from '../cores/core';
+import io from '../cores/io';
+import { setupEventHandler, } from '../utils';
+import functor from '../cores/functor';
+import { TOPO_OPERATION_STATE } from '../constants/constants';
+import id from '../cores/id';
 
-/**
- * @module middlewares
- */
+const clickPosition = (event: MouseEvent) => functor(event)
+  .map((event: MouseEvent) => ({x: event.pageX, y: event.pageY, }));
 
-import { VNode, } from 'snabbdom/vnode';
+const diffPosition = (p1: Position) => (p2: Position) => ({
+  x: p1.x - p2.x,
+  y: p1.y - p2.y,
+});
 
-import { Stage, PatchBehavior, TopoData, Position, } from '../../typings/defines';
-import { setupEventHandler, parseViewBoxValue, } from '../utils';
-
-import compose from '../compose';
-import { TOPO_OPERATION_STATE, } from '../constants/constants';
-
-/**
- * 添加拖拽移动画布功能
- * 注意此中间件务必添加在所有布局中间件之后
- */ 
-export const moveCanvas = (getState: () => number) => (stage: Stage) => (next: PatchBehavior) => (userState?: TopoData) => {
-  if (!userState)
-    return next(userState);
-
-  const root = stage.stageNode();
-
-  let isMouseDown: boolean = false;
-  let sourcePosition: Position = { x: 0, y: 0, };
-  let targetPosition: Position = { x: 0, y: 0, };
-  let startViewBox: number[] = [0, 0, 0, 0,];
-
-  const handleMouseDown = (event: MouseEvent): MouseEvent => {
-    if (getState() !== TOPO_OPERATION_STATE.CAN_MOVE_CANVAS) return event;
-
-    const target = event.target as HTMLElement;
-    if (target.nodeName.toUpperCase() !== 'SVG') 
-      return event;
-
-    isMouseDown = true;
-    sourcePosition.x = event.pageX;
-    sourcePosition.y = event.pageY;
-
-    startViewBox = parseViewBoxValue(target.getAttribute('viewBox'));
-
-    target.style.cursor = 'move';
-
-    return event;
+const getNewPosition = (startPosition: Position) => (diffPosition: Position) => (ratio: number): Position => {
+  return {
+    x: startPosition.x + diffPosition.x * ratio,
+    y: startPosition.y + diffPosition.y * ratio,
   };
+};
 
-  const handleMouseMove = (event: MouseEvent): MouseEvent => {
-    if (!isMouseDown)
-      return event;
+export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+  // 是否已开始拖拽
+  let isReadyToMove = false;
+  // 鼠标点击开始拖拽的坐标函子
+  let startPosition$: Functor = null;
+  // 鼠标点击时的viewbox
+  let sourcePosition$: Functor = null;
+  // 比例函子
+  let ratio$: Functor = null;
 
-    let target = event.target as HTMLElement;
-    if (target.nodeName.toUpperCase() !== 'SVG') 
-      return event;
-
-    targetPosition.x = event.pageX;
-    targetPosition.y = event.pageY;
-
-    const diffX = targetPosition.x - sourcePosition.x;
-    const diffY = targetPosition.y - sourcePosition.y;
-
-    const [x1, y1, width, height,] = startViewBox;
-    const containerWidth = target.parentElement.offsetWidth;
-    const ratio = -(width / containerWidth);
-
-    let newX = x1 + (diffX * ratio);
-    let newY = y1 + (diffY * ratio);
-
-    target.setAttribute('viewBox', `${newX}, ${newY}, ${width}, ${height}`);
-
-    return event;
-  };
-
-  const handleMouseUp = (event: MouseEvent): MouseEvent => {
-    let target = event.target as HTMLElement;
-    if (target.nodeName.toUpperCase() === 'SVG') {
-      isMouseDown = false;
-      target.style.cursor = 'default';
+  const handleMouseDown = (event: MouseEvent) => {
+    const state = instance as InstanceState;
+    if (state.operation() !== TOPO_OPERATION_STATE.CAN_MOVE_CANVAS) {
+      return;
     }
 
-    return event;
+    isReadyToMove = true;
+    ratio$ = functor(instance)
+      .map((ins: InstanceAPI) => [ins.viewbox()[2], ins.size().width,])
+      .map(([viewBoxWidth, sizeWidth,]: [number, number]) => viewBoxWidth / sizeWidth)
+      // 需要向相反方向移动
+      .map((ratio: number) => ratio * -1);
+    startPosition$ = clickPosition(event);
+    sourcePosition$ = functor(instance.viewbox()).map(([x, y,]: [number, number]) => ({ x, y }));
+  };
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isReadyToMove)
+      return;
+
+    const diff$ = functor(diffPosition)
+      .ap(clickPosition(event))
+      .ap(startPosition$);
+
+    const newPosition = functor(getNewPosition)
+      .ap(sourcePosition$)
+      .ap(diff$)
+      .ap(ratio$)
+      .fold(id);
+
+    const [x,y,width, height,] = instance.viewbox();
+    instance.viewbox([newPosition.x, newPosition.y, width, height,]);
+  };
+  const handleMouseUp = (_: MouseEvent) => {
+    isReadyToMove = false;
   };
 
-  const setupDragMoveHandler = compose<VNode>(
-    setupEventHandler(handleMouseDown)('mousedown'),
-    setupEventHandler(handleMouseMove)('mousemove'),
-    setupEventHandler(handleMouseUp)('mouseup'),
-    setupEventHandler(handleMouseUp)('mouseout'),
-  );
+  // 绑定拖拽相关的事件
+  io(
+    setupEventHandler(handleMouseDown)('mousedown')
+  ).map(
+    setupEventHandler(handleMouseMove)('mousemove')
+  ).map(
+    setupEventHandler(handleMouseUp)('mouseup')
+  ).ap(functor(instance.getStage()));
 
-  setupDragMoveHandler(root);
-
-  next(userState);
+  return next(userState);
 };

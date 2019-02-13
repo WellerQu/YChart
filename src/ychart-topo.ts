@@ -20,7 +20,7 @@ import { log, } from './middlewares/__log';
 import { nodeGroupLayout, } from './middlewares/__nodeGroupLayout';
 import { nodeCircleLayout,} from './middlewares/__nodeCircleLayout';
 import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayout';
-import { topoStyle, } from './middlewares/topoStyle';
+import { topoStyle, } from './middlewares/__topoStyle';
 import { scaleCanvas, } from './middlewares/__scaleCanvas';
 import { moveCanvas, } from './middlewares/__moveCanvas';
 import { moveNode, } from './middlewares/__moveNode';

@@ -11,6 +11,7 @@ import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
 import linkNode from '../src/middlewares/linkNode';
 import moveNode from '../src/middlewares/moveNode';
 import moveCanvas from '../src/middlewares/moveCanvas';
+import topoStyle from '../src/middlewares/topoStyle';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -48,6 +49,7 @@ const enhancerWithMiddlewares = applyMiddlewares(
   scaleCanvas,
   moveNode,
   moveCanvas,
+  topoStyle,
 );
 const enhancerWithInitStates = applyStates({});
 

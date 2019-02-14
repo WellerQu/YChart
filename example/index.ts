@@ -12,6 +12,7 @@ import linkNode from '../src/middlewares/linkNode';
 import moveNode from '../src/middlewares/moveNode';
 import moveCanvas from '../src/middlewares/moveCanvas';
 import topoStyle from '../src/middlewares/topoStyle';
+import relationship from '../src/middlewares/relationship';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -50,6 +51,7 @@ const enhancerWithMiddlewares = applyMiddlewares(
   moveNode,
   moveCanvas,
   topoStyle,
+  relationship,
 );
 const enhancerWithInitStates = applyStates({});
 

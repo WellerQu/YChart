@@ -50,7 +50,7 @@ interface ChartOption {
 
 interface InstanceAPI {
   update: UpdateBehavior;
-  patch: () => void;
+  patch: (userState?: any) => void;
   destroy: () => void;
   reset: () => void;
   viewbox: (value?: Viewbox) => Viewbox;
@@ -129,8 +129,9 @@ interface UserOption extends ComponentOption {
 
 interface LineOption extends ComponentOption {
   id: string;
-  source: Position, 
-  target: Position,
+  source: Position; 
+  target: Position;
+  text?: string;
 }
 
 interface ArrowOption extends LineOption {
@@ -186,6 +187,7 @@ interface Node {
 interface Line {
   source: string;
   target: string;
+  elapsedTime?: number;
 }
 
 interface MySqlDatabase {

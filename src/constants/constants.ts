@@ -99,10 +99,10 @@ export enum NODE_TYPE {
   // 内部定义
   LINE = 'line',
   NODE = 'node',
-  APP = 'app',
   CROSS_APP = 'cross-app',
 
   // 外部定义
+  APP = 'APP',
   USER = 'USER',
   SERVER = 'SERVER',
   DATABASE = 'DATABASE',

@@ -45,7 +45,7 @@ import createServiceNode from './components/createServiceNode';
 import createAppNode from './components/createAppNode';
 
 import createArrowLine from './components/createArrowLine';
-import { showRelation, } from './middlewares/showRelation';
+import { showRelation, } from './middlewares/__showRelation';
 import { NODE_TYPE, } from './constants/constants';
 
 const emptyPadding = (data: TopoData) => {

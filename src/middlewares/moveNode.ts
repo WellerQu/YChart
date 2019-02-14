@@ -31,7 +31,7 @@ const findElement = (prefix: string) => (id: string) => (elements: HTMLElement[]
 const findLines = findElement('line-');
 const findArrows = findElement('arrow-');
 
-const updatePathD = (id: string) => (newPosition: Position) => (element: HTMLElement): LineOption => {
+const toLineOption = (id: string) => (newPosition: Position) => (element: HTMLElement): LineOption => {
   const pathD = parseLinePathD(element.getAttribute('d'));
   if (pathD === null) {
     return null;
@@ -126,7 +126,7 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
     const options = lines$
       .map(($elements: HTMLElement[]) =>  
         $elements.map((item: HTMLElement) => 
-          functor(updatePathD)
+          functor(toLineOption)
             .ap(functor($movingElement.id))
             .ap(newPosition$)
             .ap(functor(item))

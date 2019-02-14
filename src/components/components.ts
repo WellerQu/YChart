@@ -72,7 +72,7 @@ export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)', fill
     },
     key: `arrow-${option.id}`,
     class: option.className,
-  })
+  }),
 );
 
 export const line = (option: LineOption, stroke = 'hsl(214, 100%, 60%)') => h(

@@ -2,8 +2,8 @@ import { InstanceAPI, PatchBehavior, TopoData, Line, Position, LineOption, } fro
 import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import id from '../cores/id';
-import { parseTranslate, toArrowPoints, } from '../utils';
-import { line, arrow, } from '../components/components';
+import { parseTranslate, toArrowPoints, isNotNull, } from '../utils';
+import { line, arrow, text, } from '../components/components';
 import { NODE_SIZE, NODE_TYPE, ID_COMBINER, } from '../constants/constants';
 
 // 求有效线段, 即线段两段的点都能找到对应节点
@@ -36,6 +36,20 @@ const mapToArrowElement = ($stage: VNode) => (lineOptions: LineOption[]) =>
         target: { x: p3.x, y: p3.y, },
       });
     })
+    // .reduce((arr: VNode[], item: [VNode, VNode]) => arr.concat(item), [])
+    .concat($stage.children as VNode[]);
+
+const mapToDescElement = ($stage: VNode) => (lineOptions: LineOption[]) =>
+  $stage.children = lineOptions
+    .filter((item: LineOption) => isNotNull(item.text))
+    .map((item: LineOption) => {
+      return text({
+        x: (item.target.x - item.source.x) / 2 + item.source.x,
+        y: (item.target.y - item.source.y) / 2 + item.source.y,
+        content: item.text,
+        className: { 'line-desc': true, },
+      });
+    })
     .concat($stage.children as VNode[]);
 
 // 求几何图形的中心点
@@ -50,6 +64,8 @@ const centerPositionOfShape = (node: VNode) =>
     .fold(id);
 
 export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: TopoData) => {
+  console.log('loaded link node middleware'); // eslint-disable-line
+
   const stage$ = functor(instance)
     .map((ins: InstanceAPI) => ins.getStage());
   const links$ = functor(userState)
@@ -72,8 +88,12 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
     .ap(functor(validLinesFilter))
     .ap(links$);
 
+  // 画箭头
   functor.of(mapToArrowElement).ap(stage$).ap(lineOptions$).fold(id);
+  // 画线段
   functor.of(mapToLineElement).ap(stage$).ap(lineOptions$).fold(id);
+  // 画文案
+  functor.of(mapToDescElement).ap(stage$).ap(lineOptions$).fold(id);
 
   return next(userState);
 };

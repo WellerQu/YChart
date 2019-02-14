@@ -16,6 +16,7 @@ export const isNull = (value: any): boolean => {
   return false;
 };
 
+export const isNotNull = (value: any): boolean => !isNull(value);
 
 /**
  * 将VNode集合按照类型分为Node集合, Line集合, 其他集合
@@ -316,18 +317,18 @@ export const parseLinePathD = (d: string): [Position, Position] => {
 // 求两点间的直线距离
 export const distance = (a: Position) => (b: Position) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 // 求三角形箭头的三个顶点
-export const toArrowPoints = (line: LineOption): [Position, Position, Position] => {
+export const toArrowPoints = (line: LineOption, offset = ARROW_OFFSET): [Position, Position, Position] => {
   // 求箭头三角形的顶点
-  const x1 = (line.target.x - line.source.x) * ARROW_OFFSET / distance(line.source)(line.target) + line.source.x;
-  const y1 = (line.target.y - line.source.y) * ARROW_OFFSET / distance(line.source)(line.target) + line.source.y;
+  const x1 = (line.target.x - line.source.x) * offset / distance(line.source)(line.target) + line.source.x;
+  const y1 = (line.target.y - line.source.y) * offset / distance(line.source)(line.target) + line.source.y;
 
   // 求箭头三角形的底边中点
-  const centerX = (x1 - line.source.x) * (ARROW_OFFSET - ARROW_HEIGHT) / ARROW_OFFSET + line.source.x;
-  const centerY = (y1 - line.source.y) * (ARROW_OFFSET - ARROW_HEIGHT) / ARROW_OFFSET + line.source.y;
+  const centerX = (x1 - line.source.x) * (offset - ARROW_HEIGHT) / offset + line.source.x;
+  const centerY = (y1 - line.source.y) * (offset - ARROW_HEIGHT) / offset + line.source.y;
 
   // 求三角形同底边等高逆向顶点
-  const x2 = (x1 - line.source.x) * (ARROW_OFFSET - 2 * ARROW_HEIGHT) / ARROW_OFFSET + line.source.x;
-  const y2 = (y1 - line.source.y) * (ARROW_OFFSET - 2 * ARROW_HEIGHT) / ARROW_OFFSET + line.source.y;
+  const x2 = (x1 - line.source.x) * (offset - 2 * ARROW_HEIGHT) / offset + line.source.x;
+  const y2 = (y1 - line.source.y) * (offset - 2 * ARROW_HEIGHT) / offset + line.source.y;
 
   // 求三角形另外两个顶点
   const px1 = centerX - 3 * (y2 - y1) / (2 * ARROW_HEIGHT);
@@ -337,4 +338,46 @@ export const toArrowPoints = (line: LineOption): [Position, Position, Position] 
   const py2 = centerY - 3 * (x2 - x1) / (2 * ARROW_HEIGHT);
 
   return [{ x: x1, y: y1, }, { x: px1, y: py1, }, { x: px2, y: py2, },];
+};
+export const toArrowPathString = (points: [Position,Position,Position]) => 
+  `M${points[0].x},${points[0].y} L${points[1].x},${points[1].y} L${points[2].x},${points[2].y} z`;
+
+
+export const motionRun = (
+  elem: HTMLElement,
+  frame: (elem: HTMLElement, step: number) => boolean,
+  stopFrame?: (elem: HTMLElement) => void,
+  loop = false,
+) => {
+  // 无条件停止标志位
+  let isOver = false;
+  // 每帧递增量
+  let step = 0;
+
+  // 有条件动画帧循环
+  const motionFrame = () => {
+    if (isOver) {
+      return 0;
+    }
+
+    if (frame(elem, step++)) {
+      return requestAnimationFrame(motionFrame);
+    }
+
+    if (loop) {
+      step = 0;
+      return requestAnimationFrame(motionFrame);
+    }
+
+    return 0;
+  };
+
+  // 立即执行过程
+  motionFrame();
+
+  return () => {
+    // 停止动画帧
+    isOver = true;
+    stopFrame && stopFrame(elem);
+  };
 };

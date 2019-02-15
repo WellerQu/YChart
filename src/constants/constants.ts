@@ -98,6 +98,7 @@ export enum APDEX {
 export enum NODE_TYPE {
   // 内部定义
   LINE = 'line',
+  ARROW = 'arrow',
   NODE = 'node',
   CROSS_APP = 'cross-app',
 

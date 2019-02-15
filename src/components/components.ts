@@ -71,7 +71,7 @@ export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)', fill
       fill,
     },
     key: `arrow-${option.id}`,
-    class: option.className,
+    class: {...option.className, [NODE_TYPE.ARROW]: true, },
   }),
 );
 
@@ -85,7 +85,7 @@ export const line = (option: LineOption, stroke = 'hsl(214, 100%, 60%)') => h(
       'stroke-width': 1,
     },
     key: `line-${option.id}`,
-    class: option.className,
+    class: {...option.className, [NODE_TYPE.LINE]: true, },
   })
 );
 

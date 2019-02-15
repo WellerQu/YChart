@@ -16,13 +16,24 @@ text.line-desc {
   will-change: z-index, transform, opacity, d; 
 }
 
+g.node.weak,
+path.line.weak,
+path.arrow.weak,
+text.line-desc.weak {
+  opacity: .2;
+}
+
+g.node text,
+text.line-desc {
+  pointer-events: none;
+}
+
 text.line-desc,
 g.node text.node-name,
 g.node text.type-name, 
 g.node text.instance-count {
   text-anchor: middle;  /* 文本水平居中 */
   dominant-baseline: middle; /* 文本垂直居中 */
-  pointer-events: none;
 }
 
 g.node text.type-name {

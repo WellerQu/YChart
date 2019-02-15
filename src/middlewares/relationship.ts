@@ -1,16 +1,19 @@
-import { InstanceAPI, PatchBehavior, TopoData, LineOption, } from '../cores/core';
+import { InstanceAPI, PatchBehavior, TopoData, LineOption, InstanceState, } from '../cores/core';
 import io from '../cores/io';
 import { setupEventHandler, findGroup, isNotNull, findRoot, parseLinePathD, toArrowPoints, toArrowPathString, distance, motionRun, } from '../utils';
 import functor from '../cores/functor';
 import maybe from '../cores/maybe';
 import { VNode, } from 'snabbdom/vnode';
-import { NODE_TYPE, ID_COMBINER, ARROW_HEIGHT, } from '../constants/constants';
+import { NODE_TYPE, ID_COMBINER, ARROW_HEIGHT, TOPO_OPERATION_STATE, } from '../constants/constants';
 import id from '../cores/id';
+
+
+const getIDProperty = (element: HTMLElement) => element.id;
 
 const getSenderID = (event: MouseEvent) => io(maybe(isNotNull))
   .map(findGroup)
   .fold((f: Function) => f(event))
-  .map((elem: HTMLElement) => elem.id)
+  .map(getIDProperty)
   .fold(null, id);
 
 const getRelatedLines = ($stage: VNode) => (senderID: string) => $stage.children.filter(
@@ -39,16 +42,6 @@ const getRelatedArrows = ($stage: VNode) => (senderID: string) => $stage.childre
   (item: VNode) => item.elm
 );
 
-const getRelatedNodes = ($stage: VNode) => (nodeIDs: string[]) => $stage.children.filter(
-  (item: VNode) => item.data.class
-).filter(
-  (item: VNode) => item.data.class[NODE_TYPE.NODE]
-).filter(
-  (item: VNode) => nodeIDs.includes(item.data.key as string)
-).map(
-  (item: VNode) => item.elm
-);
-
 const toLineOption = (element: HTMLElement): LineOption => {
   const pathD = parseLinePathD(element.getAttribute('d'));
 
@@ -66,6 +59,12 @@ const toLineOption = (element: HTMLElement): LineOption => {
   };
 };
 
+const unRelatedElements = (elements: HTMLElement[]) => (relatedIDs: string[]) => elements
+  .filter((item: HTMLElement) => item.id)
+  .filter(
+    (item: HTMLElement) => !relatedIDs.includes(item.id)
+  );
+
 const MIN_OFFSET = ARROW_HEIGHT;
 const ARROW_MOTION_STEP = 0.01;
 
@@ -75,13 +74,40 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
   const getLines = getRelatedLines(instance.getStage());
   const getArrows = getRelatedArrows(instance.getStage());
 
-  let destroyMotion: Function[] = [];
+  const destroyMotion: Function[] = [];
+  const weakElementSet: Set<HTMLElement> = new Set();
 
   const handleMouseEnter = (event: MouseEvent) => {
+    const state = instance as InstanceState;
+    if (state.operation() !== TOPO_OPERATION_STATE.CAN_SHOW_RELATIONSHIP) {
+      return;
+    }
+
     const senderID = getSenderID(event);
     const lines = getLines(senderID);
     const arrows = getArrows(senderID);
 
+    const lineIDs = lines.map(getIDProperty);
+    const arrowIDs = arrows.map(getIDProperty);
+    const nodeIDs = lines
+      .map(getIDProperty)
+      .map((id: string) => id.replace('line-', ''))
+      .map((id: string) => id.split(ID_COMBINER))
+      .reduce((arr: Array<string>, item: string[]) => arr.concat(item), []);
+
+    const relatedIDs = [senderID,].concat(lineIDs).concat(arrowIDs).concat(nodeIDs);
+
+    // 无关元素弱化视觉
+    functor(unRelatedElements)
+      .ap(functor(instance.getStage().children.map((item: VNode) => item.elm)))
+      .ap(functor(relatedIDs))
+      .fold(id)
+      .forEach((item: HTMLElement) => {
+        item.classList.add('weak');
+        weakElementSet.add(item);
+      });
+
+    // 开启箭头动画
     lines
       .map(toLineOption)
       .forEach((option: LineOption, index: number) => {
@@ -110,7 +136,16 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
       });
   };
   const handleMouseLeave = (event: MouseEvent) => {
+    // 停止箭头动画
     destroyMotion.forEach(stop => stop());
+
+    // 无关元还原视觉
+    Array
+      .from(weakElementSet)
+      .forEach((item: HTMLElement) => {
+        item.classList.remove('weak');
+      });
+    weakElementSet.clear();
   };
 
   const setup$ = io(

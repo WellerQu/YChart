@@ -12,11 +12,11 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (x: any) => {
   const size = state.size();
   const scale = state.scale();
 
+  console.log(`loaded scale canvas middleware, current scale is ${1 / scale * 100}%`); // eslint-disable-line
+
   const viewbox = scaleSize(size)(scale);
 
   instance.viewbox(viewbox as Viewbox);
-
-  console.log(`current scale is ${1 / scale * 100}%`);
 
   return next(x);
 };

@@ -41,17 +41,25 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
   const placeCenterNode = (nodes: VNode[]) => () => {
     if (nodes.length === 0) return nodes;
 
-    const [first, ...tails] = nodes;
-
-    center$
+    return center$
       .map(centerPositionOfShape)
       .map(toTranslate)
-      .chain((str: string) =>
-        sideEffect(() => (first.data.style.transform = str))
-      )
-      .fold(id);
+      .fold((str: string) => {
+        const index = nodes.findIndex((item: VNode) => {
+          if (!item.data.class)
+            return false;
 
-    return tails;
+          return item.data.class[NODE_TYPE.USER];
+        });
+
+        if (index === -1) {
+          nodes[0].data.style.transform = str;
+          return nodes.slice(1);
+        } else {
+          nodes[index].data.style.transform = str;
+          return nodes.filter((_: VNode, idx: number) => idx !== index);
+        }
+      });
   };
 
   const placeOtherNode = (nodes: VNode[]) => () => 

@@ -2,7 +2,7 @@ import { InstanceAPI, PatchBehavior, TopoData, InstanceState, Position, Functor,
 import { setupEventHandler, findGroup, parseTranslate, toTranslate, findRoot, parseLinePathD, toLinePathD, toArrowPoints, distance } from "../utils";
 import functor from "../cores/functor";
 import io from "../cores/io";
-import { TOPO_OPERATION_STATE, ID_COMBINER, NODE_SIZE, MIN_NODE_DISTANCE } from "../constants/constants";
+import { TOPO_OPERATION_STATE, ID_COMBINER, NODE_SIZE, ARROW_OFFSET } from "../constants/constants";
 import id from "../cores/id";
 import sideEffect from "../cores/sideEffect";
 
@@ -150,8 +150,8 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
         .fold(id);
 
       options[index]
-        .ap(functor((option: LineOption) => distance(option.source)(option.target) < MIN_NODE_DISTANCE))
-        .chain((really: boolean) => sideEffect(() => item.setAttribute('opacity', really ? 0 : 1)))
+        .ap(functor((option: LineOption) => distance(option.source)(option.target) < ARROW_OFFSET))
+        .chain((really: boolean) => sideEffect(() => item.style.display = really ? 'none' : 'block'))
         .fold(id);
     });
   };

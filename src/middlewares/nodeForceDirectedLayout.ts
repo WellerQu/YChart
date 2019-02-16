@@ -7,7 +7,7 @@ import { TOPO_LAYOUT_STATE, NODE_TYPE, NODE_SIZE, } from '../constants/constants
 import { parseTranslate, distance, toTranslate, clamp, } from '../utils';
 
 /**
- * @module middlewares
+ * @module middlewar1s
  */
 
 // 平移属性名
@@ -15,7 +15,7 @@ const TRANSFORM = 'transform';
 // 最小距离
 const MIN_DIST = 2 * NODE_SIZE;
 // 运行次数
-const RUN_COUNT = 200;
+// const RUN_COUNT = 100;
 // 力衰减
 const ATTENUATION = 80;
 
@@ -126,6 +126,8 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
           .ap(functor((360 / nodes.length) * index))
           .fold(id);
       });
+
+      const RUN_COUNT = nodes.length * 10;
 
       for (let i = 0; i < RUN_COUNT; i++) {
         applyForce(nodes)(relation(userState.links));

@@ -10,9 +10,9 @@ interface NodeOption {
 
 const imageNode = (option: NodeOption) => functor(option)
   .map(( option: NodeOption ) => [
-    circle({ x: 35 + 15, y: 35 + 24, radius: 35, fill: '#EFEFEF', }),
-    image({ URL: `${IMAGE_ROOT}/${option.URL}`, x: 10 + 15, y: 10 + 24, width: 50, height: 50, }),
-    text({ content: option.title, x: 35 + 15, y: 90 + 24, className: { 'node-name': true, }, }),
+    circle({ x: 70, y: 70, radius: 35, fill: '#EFEFEF', }),
+    image({ URL: `${IMAGE_ROOT}/${option.URL}`, x: 45, y: 45, width: 50, height: 50, }),
+    text({ content: option.title, x: 70, y: 120, className: { 'node-name': true, }, }),
   ]);
 
 export default imageNode;

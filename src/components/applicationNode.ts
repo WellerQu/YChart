@@ -23,17 +23,13 @@ const application = (option: ApplicationOption) =>
     .chain(hasTierCount(option))
     .map((nodes: VNode[]) =>
       nodes.concat([
-        text({ content: `${option.tierCount} 服务`, x: 82 + 15, y: 36 + 24, }),
+        text({ content: `${option.tierCount} 服务`, x: 110, y: 68, }),
       ])
     )
     .chain(hasInstanceCount(option))
     .map((nodes: VNode[]) =>
       nodes.concat([
-        text({
-          content: `${option.instancesCount} 服务实例`,
-          x: 82 + 15,
-          y: 48 + 24,
-        }),
+        text({ content: `${option.instancesCount} 服务实例`, x: 110, y: 84, }),
       ])
     )
     .chain(functor)

@@ -26,7 +26,7 @@ import { moveCanvas, } from './middlewares/__moveCanvas';
 import { moveNode, } from './middlewares/__moveNode';
 import { event, } from './middlewares/event';
 import { showLoading, } from './middlewares/__showLoading';
-import { nodePositionMemory,} from './middlewares/nodePositionMemory';
+import { nodePositionMemory,} from './middlewares/__nodePositionMemory';
 import { linkLine, } from './middlewares/__linkLine';
 
 import createMergeAdapter, { mergeUsers, } from './adapters/createMergeNodeAdapter';

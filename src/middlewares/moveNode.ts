@@ -78,6 +78,11 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
   let startPosition$: Functor = null;
   // 比例函子
   let ratio$: Functor = null;
+
+  // 相关线段函子
+  let lines$: Functor = null;
+  // 相关箭头函子
+  let arrows$: Functor = null;
   
   const handleMouseDown = (event: MouseEvent) => {
     const state = instance as InstanceState;
@@ -90,14 +95,24 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
       return;
     }
 
+    const $svgElement = findRoot(event);
+    $svgElement.classList.add('dragging');
+
     isReadyToMove = true;
     ratio$ = functor(instance)
-      .map((ins: InstanceAPI) => [ins.viewbox()[2], ins.size().width])
-      .map(([viewBoxWidth, sizeWidth]: [number, number]) => viewBoxWidth / sizeWidth);
+      .map((ins: InstanceAPI) => [ins.viewbox()[2], ins.size().width,])
+      .map(([viewBoxWidth, sizeWidth,]: [number, number]) => viewBoxWidth / sizeWidth);
     startPosition$ = clickPosition(event);
     sourcePosition$ = functor($movingElement)
       .map(($elem: HTMLElement) => $elem.style.transform)
       .map(parseTranslate);
+
+    const children$ = functor(event).map(findRoot)
+      .map(($elem: HTMLElement) => $elem.children)
+      .map(($children: HTMLCollection) => Array.from($children));
+
+    lines$ = children$.map(findLines($movingElement.id));
+    arrows$ = children$.map(findArrows($movingElement.id));
   };
 
   const handleMouseMove = (event: MouseEvent) => {
@@ -113,16 +128,6 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
       .ap(diff$)
       .ap(ratio$);
     
-    const children$ = functor(event).map(findRoot)
-      .map(($elem: HTMLElement) => $elem.children)
-      .map(($children: HTMLCollection) => Array.from($children));
-
-    const lines$ = children$.map(findLines($movingElement.id));
-    const arrows$ = children$.map(findArrows($movingElement.id));
-
-    // 更新节点坐标
-    $movingElement.style.transform = newPosition$.map(toTranslate).fold(id);
-    // 更新线段坐标 & 更新箭头坐标
     const options = lines$
       .map(($elements: HTMLElement[]) =>  
         $elements.map((item: HTMLElement) => 
@@ -134,6 +139,10 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
         ))
       .fold(id);
 
+    // 更新节点坐标
+    $movingElement.style.transform = newPosition$.map(toTranslate).fold(id);
+
+    // 更新线段坐标
     lines$.fold(id).forEach(
       (item: HTMLElement, index: number) => 
         options[index]
@@ -142,6 +151,7 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
           .fold(id)
     );
 
+    // 更新箭头坐标
     arrows$.fold(id).forEach((item: HTMLElement, index: number) => {
       options[index]
         .ap(functor(toArrowPoints))
@@ -158,6 +168,9 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
 
   const handleMouseUp = (_: MouseEvent) => {
     isReadyToMove = false;
+
+    const $svgElement = findRoot(event);
+    $svgElement.classList.remove('dragging');
   };
 
   // 绑定拖拽相关的事件

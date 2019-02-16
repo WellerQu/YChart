@@ -14,8 +14,8 @@ import { parseTranslate, distance, toTranslate, clamp, } from '../utils';
 const TRANSFORM = 'transform';
 // 最小距离
 const MIN_DIST = 2 * NODE_SIZE;
-// 运行次数
-// const RUN_COUNT = 100;
+// 每个节点的运行次数
+const RUN_COUNT = 10;
 // 力衰减
 const ATTENUATION = 80;
 
@@ -127,9 +127,9 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
           .fold(id);
       });
 
-      const RUN_COUNT = nodes.length * 10;
+      const MAX_COUNT = nodes.length * RUN_COUNT;
 
-      for (let i = 0; i < RUN_COUNT; i++) {
+      for (let i = 0; i < MAX_COUNT; i++) {
         applyForce(nodes)(relation(userState.links));
       }
 

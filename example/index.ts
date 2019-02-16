@@ -13,6 +13,7 @@ import moveNode from '../src/middlewares/moveNode';
 import moveCanvas from '../src/middlewares/moveCanvas';
 import topoStyle from '../src/middlewares/topoStyle';
 import relationship from '../src/middlewares/relationship';
+import positionCache from '../src/middlewares/positionCache';
 
 import  fixData from '../src//adapters/createFixTopoDataAdapter';
 import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdapter';
@@ -52,6 +53,7 @@ const enhancerWithMiddlewares = applyMiddlewares(
   moveCanvas,
   topoStyle,
   relationship,
+  positionCache,
 );
 const enhancerWithInitStates = applyStates({});
 
@@ -61,8 +63,8 @@ const topoInstance = io(enhancerWithMiddlewares)
 
 const { update, layout, patch, addEventListener, removeEventListener, scale, operation, } = topoInstance({
   size: {
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
   },
   viewbox: [0, 0, 800, 600,],
   container: document.querySelector('#topo'),

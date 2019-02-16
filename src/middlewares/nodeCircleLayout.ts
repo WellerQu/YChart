@@ -18,7 +18,7 @@ const centerPositionOfContainer = (size: Size) => ({
 
 // 求合适的半径
 const circleRadius = (size: Size) =>
-  Math.max(size.width, size.height) / 2 - 150;
+  Math.max(size.width, size.height) / 2 - NODE_SIZE * 2;
 
 // 求节点的中心点
 const centerPositionOfShape = (pos: Position) =>

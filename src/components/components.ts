@@ -69,6 +69,7 @@ export  const arrow = (option: ArrowOption, stroke = 'hsl(214, 100%, 60%)', fill
       stroke,
       'stroke-width': 1,
       fill,
+      opacity: option.opacity || 1,
     },
     key: `arrow-${option.id}`,
     class: {...option.className, [NODE_TYPE.ARROW]: true, },

@@ -316,8 +316,13 @@ export const parseLinePathD = (d: string): [Position, Position] => {
 
 // 求两点间的直线距离
 export const distance = (a: Position) => (b: Position) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+
 // 求三角形箭头的三个顶点
 export const toArrowPoints = (line: LineOption, offset = ARROW_OFFSET): [Position, Position, Position] => {
+  if (distance(line.source)(line.target) === 0) {
+    return [{ x: 0, y: 0 }, { x: 0, y: 0, }, { x: 0, y: 0 }];
+  }
+
   // 求箭头三角形的顶点
   const x1 = (line.target.x - line.source.x) * offset / distance(line.source)(line.target) + line.source.x;
   const y1 = (line.target.y - line.source.y) * offset / distance(line.source)(line.target) + line.source.y;
@@ -339,9 +344,9 @@ export const toArrowPoints = (line: LineOption, offset = ARROW_OFFSET): [Positio
 
   return [{ x: x1, y: y1, }, { x: px1, y: py1, }, { x: px2, y: py2, },];
 };
+
 export const toArrowPathString = (points: [Position,Position,Position]) => 
   `M${points[0].x},${points[0].y} L${points[1].x},${points[1].y} L${points[2].x},${points[2].y} z`;
-
 
 export const motionRun = (
   elem: HTMLElement,

@@ -2,9 +2,9 @@ import { InstanceAPI, PatchBehavior, TopoData, Line, Position, LineOption, } fro
 import functor from '../cores/functor';
 import { VNode, } from 'snabbdom/vnode';
 import id from '../cores/id';
-import { parseTranslate, toArrowPoints, isNotNull, } from '../utils';
+import { parseTranslate, toArrowPoints, isNotNull, distance, } from '../utils';
 import { line, arrow, text, } from '../components/components';
-import { NODE_SIZE, NODE_TYPE, ID_COMBINER, } from '../constants/constants';
+import { NODE_SIZE, NODE_TYPE, ID_COMBINER, MIN_NODE_DISTANCE, } from '../constants/constants';
 
 // 求有效线段, 即线段两段的点都能找到对应节点
 const validLinesFilter = (map: Map<string, Position>) => (lines: Line[]) =>
@@ -34,9 +34,9 @@ const mapToArrowElement = ($stage: VNode) => (lineOptions: LineOption[]) =>
         source: { x: p1.x, y: p1.y, },
         middle: { x: p2.x, y: p2.y, },
         target: { x: p3.x, y: p3.y, },
+        opacity: distance(item.source)(item.target) < MIN_NODE_DISTANCE ? 0 : 1,
       });
     })
-    // .reduce((arr: VNode[], item: [VNode, VNode]) => arr.concat(item), [])
     .concat($stage.children as VNode[]);
 
 const mapToDescElement = ($stage: VNode) => (lineOptions: LineOption[]) =>

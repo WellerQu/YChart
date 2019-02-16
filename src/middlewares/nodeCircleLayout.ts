@@ -36,7 +36,7 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
   const size$ = functor(instance).map((ins: InstanceAPI) => ins.size());
   const center$ = size$.map(centerPositionOfContainer);
   const radius$ = size$.map(circleRadius);
-  const itemPosition$ = functor((center: Position) => (radius: number) => (deg: number) => ({
+  const circlePosition$ = functor((center: Position) => (radius: number) => (deg: number) => ({
     x: Math.sin(deg * Math.PI / 180) * radius + center.x,
     y: Math.cos(deg * Math.PI / 180) * radius + center.y,
   }))
@@ -53,7 +53,7 @@ export default (instance: InstanceState) => (next: PatchBehavior) => (userState:
         return nodes;
 
       nodes.forEach((item: VNode, index: number) => {
-        itemPosition$
+        circlePosition$
           .ap(functor(360 / nodes.length * index))
           .map(centerPositionOfShape)
           .map(toTranslate)

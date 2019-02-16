@@ -96,7 +96,9 @@ const render = (json: { data: any }) => functor(json)
 layout(layoutStrategy);
 render(json);
 
-operation(TOPO_OPERATION_STATE.CAN_MOVE_CANVAS)
+operation(TOPO_OPERATION_STATE.CAN_MOVE_NODE);
+// operation(TOPO_OPERATION_STATE.CAN_MOVE_CANVAS);
+// operation(TOPO_OPERATION_STATE.CAN_SHOW_RELATIONSHIP);
 
 // 以下为测试代码
 const handle1 = (event: Event, sender: VNode) => {

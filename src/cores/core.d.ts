@@ -135,7 +135,8 @@ interface LineOption extends ComponentOption {
 }
 
 interface ArrowOption extends LineOption {
-  middle: Position,
+  middle: Position;
+  opacity?: number;
 }
 
 interface CallstackData {

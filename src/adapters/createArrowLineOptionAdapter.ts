@@ -11,6 +11,18 @@ import { isNull, } from '../utils';
  */
 const lineColor = '#2693ff';
 
+const text = (line: Line) => {
+  const parts: string[] = [];
+  if (!isNull(line.elapsedTime)) {
+    parts.push(`${line.elapsedTime}ms`);
+  }
+  if (!isNull(line.counts)) {
+    parts.push(`${line.counts}次`);
+  }
+
+  return parts.join(',');
+};
+
 /**
  * 将 Line 实例对象转换为 ArrowLineOption 实例
  * @memberof adapters
@@ -32,7 +44,7 @@ function createArrowLineOption (line: Line): ArrowLineOption {
     strokeWidth: 1,
     id,
     className: NODE_TYPE.LINE,
-    text: isNull(line.elapsedTime) ? void 0 : `${line.elapsedTime} ms`,
+    text: text(line),
   };
 }
 

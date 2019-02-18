@@ -1,4 +1,4 @@
-import { text, group, appendTo, } from './components';
+import { text, group, appendTo, rect, } from './components';
 import functor from '../cores/functor';
 import { ApplicationOption, Node, } from '../cores/core';
 import id from '../cores/id';
@@ -20,16 +20,28 @@ const application = (option: ApplicationOption) =>
     ...option,
     URL: `${option.icon}.png`,
   })
+    .map((nodes: VNode[]) => nodes.concat([
+      rect({
+        x: 110,
+        y: 52,
+        width: 80,
+        height: 36,
+        stroke: '#338BFF',
+        fill: '#FFFFFF',
+        rx: 5,
+        ry: 5,
+      }),
+    ]))
     .chain(hasTierCount(option))
     .map((nodes: VNode[]) =>
       nodes.concat([
-        text({ content: `${option.tierCount} 服务`, x: 110, y: 68, }),
+        text({ content: `${option.tierCount} 服务`, x: 115, y: 66, }),
       ])
     )
     .chain(hasInstanceCount(option))
     .map((nodes: VNode[]) =>
       nodes.concat([
-        text({ content: `${option.instancesCount} 服务实例`, x: 110, y: 84, }),
+        text({ content: `${option.instancesCount} 服务实例`, x: 115, y: 84, }),
       ])
     )
     .chain(functor)

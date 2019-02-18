@@ -85,7 +85,17 @@ interface TextOption extends Position, ComponentOption {
 
 interface CircleOption extends Position, ComponentOption {
   radius: number;
-  fill: string;
+  fill?: string;
+  stroke?: string;
+}
+
+interface RectOption extends Position, ComponentOption {
+  width: number;
+  height: number;
+  rx?: number;
+  ry?: number;
+  fill?: string;
+  stroke?: string;
 }
 
 interface GroupOption extends Position, ComponentOption {
@@ -96,6 +106,7 @@ interface ImageOption extends Position {
   URL: string;
   width?: number;
   height?: number;
+  opacity?: number;
 }
 
 interface SvgOption {

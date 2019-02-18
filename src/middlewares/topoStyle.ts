@@ -59,6 +59,11 @@ g.node text.instance-count {
   dominant-baseline: middle;
 }
 
+g.node text.instance-count {
+  font-size: 16px;
+  fill: black;
+}
+
 g.node text.type-name {
   font-size: 7px;
   fill: #FFFFFF;

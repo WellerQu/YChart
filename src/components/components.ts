@@ -8,9 +8,11 @@ import {
   ImageOption, 
   CircleOption, 
   LineOption, 
-  ArrowOption, 
+  ArrowOption,
+  RectOption, 
 } from '../cores/core';
 import { NODE_TYPE, } from '../constants/constants';
+import { isNull } from '../utils';
 
 const vNodeData = (option: VNodeData) => ({
   ...option,
@@ -44,9 +46,23 @@ export const circle = (option: CircleOption) => h('circle', vNodeData({
     cx: option.x,
     cy: option.y,
     r: option.radius,
-    fill: option.fill,
+    fill: option.fill || 'transparent',
+    stroke: option.stroke || 'transparent',
   },
   class: option.className,
+}));
+
+export const rect = (option: RectOption) => h('rect', vNodeData({
+  attrs: {
+    x: option.x,
+    y: option.y,
+    width: option.width,
+    height: option.height,
+    rx: option.rx || 0,
+    ry: option.ry || 0,
+    fill: option.fill || 'transparent',
+    stroke: option.stroke || 'transparent',
+  },
 }));
 
 export const group = (option: GroupOption, children?: VNode[] ) => h(
@@ -99,6 +115,7 @@ export const image = (option: ImageOption) => h('image', vNodeData({
     height: option.height,
     x: option.x,
     y: option.y,
+    opacity: isNull(option.opacity) ? 1 : option.opacity,
   },
 }));
 

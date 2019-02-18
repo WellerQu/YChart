@@ -80,6 +80,7 @@ interface StateCreator {
 
 interface TextOption extends Position, ComponentOption {
   content: string;
+  id?: string;
 }
 
 interface CircleOption extends Position, ComponentOption {
@@ -188,7 +189,9 @@ interface Node {
 interface Line {
   source: string;
   target: string;
+
   elapsedTime?: number;
+  counts?: number;
 }
 
 interface MySqlDatabase {

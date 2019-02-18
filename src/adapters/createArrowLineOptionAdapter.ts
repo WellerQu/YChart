@@ -4,12 +4,29 @@
 
 import { ArrowLineOption, Line, } from '../../typings/defines';
 import { ID_COMBINER, NODE_TYPE, } from '../constants/constants';
-import { isNull, } from '../utils';
+import { isNull, isNotNull, } from '../utils';
 
 /**
  * @ignore
  */
 const lineColor = '#2693ff';
+
+/**
+ * 
+ * @ignore
+ */
+const text = (line: Line) => {
+  const parts: string[] = [];
+
+  if (isNotNull(line.elapsedTime)) {
+    parts.push(`${line.elapsedTime}ms`);
+  }
+  if (isNotNull(line.counts)) {
+    parts.push(`${line.counts}次`);
+  }
+
+  return parts.join(',');
+}
 
 /**
  * 将 Line 实例对象转换为 ArrowLineOption 实例
@@ -32,7 +49,7 @@ function createArrowLineOption (line: Line): ArrowLineOption {
     strokeWidth: 1,
     id,
     className: NODE_TYPE.LINE,
-    text: isNull(line.elapsedTime) ? void 0 : `${line.elapsedTime} ms`,
+    text: text(line),
   };
 }
 

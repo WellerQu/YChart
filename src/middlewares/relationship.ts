@@ -42,6 +42,19 @@ const getRelatedArrows = ($stage: VNode) => (senderID: string) => $stage.childre
   (item: VNode) => item.elm
 );
 
+const getRelatedDescs = ($stage: VNode) => (senderID: string) => $stage.children.filter(
+  (item: VNode) => item.data.key && item.sel === 'text'
+).filter(
+  (item: VNode) => (item.data.key as string).startsWith('desc-')
+).filter(
+  (item: VNode) => (item.data.key as string)
+    .replace('desc-', '')
+    .split(ID_COMBINER)
+    .find((id: string) => id === senderID) !== void 0
+).map(
+  (item: VNode) => item.elm
+);
+
 const toLineOption = (element: HTMLElement): LineOption => {
   const pathD = parseLinePathD(element.getAttribute('d'));
 
@@ -73,6 +86,7 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
 
   const getLines = getRelatedLines(instance.getStage());
   const getArrows = getRelatedArrows(instance.getStage());
+  const getDescs = getRelatedDescs(instance.getStage());
 
   const destroyMotion: Function[] = [];
   const weakElementSet: Set<HTMLElement> = new Set();
@@ -86,16 +100,18 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
     const senderID = getSenderID(event);
     const lines = getLines(senderID);
     const arrows = getArrows(senderID);
+    const descs = getDescs(senderID);
 
     const lineIDs = lines.map(getIDProperty);
     const arrowIDs = arrows.map(getIDProperty);
+    const descIDs = descs.map(getIDProperty);
     const nodeIDs = lines
       .map(getIDProperty)
       .map((id: string) => id.replace('line-', ''))
       .map((id: string) => id.split(ID_COMBINER))
       .reduce((arr: Array<string>, item: string[]) => arr.concat(item), []);
 
-    const relatedIDs = [senderID,].concat(lineIDs).concat(arrowIDs).concat(nodeIDs);
+    const relatedIDs = [senderID,].concat(lineIDs).concat(arrowIDs).concat(nodeIDs).concat(descIDs);
 
     // 无关元素弱化视觉
     functor(unRelatedElements)

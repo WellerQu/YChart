@@ -6,6 +6,23 @@ import { parseTranslate, toArrowPoints, isNotNull, distance, } from '../utils';
 import { line, arrow, text, } from '../components/components';
 import { NODE_SIZE, NODE_TYPE, ID_COMBINER, ARROW_OFFSET, } from '../constants/constants';
 
+/**
+ * 
+ * @ignore
+ */
+const lineDesc = (line: Line) => {
+  const parts: string[] = [];
+
+  if (isNotNull(line.elapsedTime)) {
+    parts.push(`${line.elapsedTime}ms`);
+  }
+  if (isNotNull(line.counts)) {
+    parts.push(`${line.counts}次`);
+  }
+
+  return parts.join(',');
+};
+
 // 求有效线段, 即线段两段的点都能找到对应节点
 const validLinesFilter = (map: Map<string, Position>) => (lines: Line[]) =>
   lines
@@ -16,6 +33,7 @@ const validLinesFilter = (map: Map<string, Position>) => (lines: Line[]) =>
         id: `${item.source}${ID_COMBINER}${item.target}`,
         source: map.get(item.source),
         target: map.get(item.target),
+        text: lineDesc(item),
       })
     );
 
@@ -44,6 +62,7 @@ const mapToDescElement = ($stage: VNode) => (lineOptions: LineOption[]) =>
     .filter((item: LineOption) => isNotNull(item.text))
     .map((item: LineOption) => {
       return text({
+        id: `desc-${item.id}`,
         x: (item.target.x - item.source.x) / 2 + item.source.x,
         y: (item.target.y - item.source.y) / 2 + item.source.y,
         content: item.text,

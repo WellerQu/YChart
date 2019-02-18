@@ -218,6 +218,7 @@ declare interface Line {
   target: string;
   elapsedTime: number;
   rpm?: number;
+  counts?: number;
 }
 
 declare interface TopoData {

@@ -33,7 +33,9 @@ export const text = (option: TextOption) => h('text', vNodeData({
   attrs: {
     x: option.x,
     y: option.y,
+    id: option.id,
   },
+  key: option.id,
   class: option.className,
 }), option.content);
 

@@ -11,7 +11,7 @@ import { toTranslate, } from '../utils';
 import functor from '../cores/functor';
 import sideEffect from '../cores/sideEffect';
 
-const EDGE = 6, RADIUS = 200;
+const EDGE = 6, RADIUS = NODE_SIZE;
 
 // 求容器的中心点
 const centerPositionOfContainer = (size: Size) =>

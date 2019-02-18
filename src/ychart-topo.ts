@@ -24,7 +24,7 @@ import { topoStyle, } from './middlewares/__topoStyle';
 import { scaleCanvas, } from './middlewares/__scaleCanvas';
 import { moveCanvas, } from './middlewares/__moveCanvas';
 import { moveNode, } from './middlewares/__moveNode';
-import { event, } from './middlewares/event';
+import { event, } from './middlewares/__event';
 import { showLoading, } from './middlewares/__showLoading';
 import { nodePositionMemory,} from './middlewares/__nodePositionMemory';
 import { linkLine, } from './middlewares/__linkLine';

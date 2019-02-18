@@ -6,7 +6,9 @@ const TRANSITION_TIME = '0.6s';
 
 const sheet = `
 g.node,
-text.line-desc {
+text.line-desc,
+path.line,
+path.arrow {
   font-family: Verdana,arial,x-locale-body,sans-serif;
   letter-spacing: -.3996px;
   font-size: 12px;
@@ -18,19 +20,22 @@ text.line-desc {
 }
 
 /*
-g.node {
-  transition: transform ${TRANSITION_TIME} linear;
-}
-
+g.node,
+text.line-desc,
 path.line,
 path.arrow {
-  transition: d ${TRANSITION_TIME} linear;
+  transition: none;
 }
 
-svg.dragging g.node,
-svg.dragging path.line,
-svg.dragging path.arrow {
-  transition: none;
+svg.initializing g.node {
+  transition: transform ${TRANSITION_TIME} linear;
+}
+svg.initializing path.line,
+svg.initializing path.arrow {
+  transition: d ${TRANSITION_TIME} linear;
+}
+svg.initializing text.line-desc {
+  transition: x,y ${TRANSITION_TIME} linear;
 }
 */
 

@@ -5,19 +5,20 @@ import { appendTo, group, } from './components';
 import id from '../cores/id';
 import { NODE_TYPE, } from '../constants/constants';
 
-const user = (option: UserOption) => imageNode({
+const terminalNode = (option: Node) => imageNode({
   ...option,
-  URL: `${(option as Node).showIcon.toLowerCase()}.png`,
-  title: `${(option as Node).showName}`,
+  URL: `${option.showIcon.toLowerCase()}.png`,
+  title: `${option.showName}`,
 })
   .map((nodes: VNode[]) => group({ 
     id: option.id, 
     x: 0, y: 0, 
-    className: { [NODE_TYPE.USER]: true, [NODE_TYPE.NODE]: true, }, }, nodes))
+    className: { [option.smallType || option.type]: true, [NODE_TYPE.NODE]: true, },
+  }, nodes))
   .map(appendTo)
   .fold(id);
 ;
 
-user.of = (option: UserOption) => user(option);
+terminalNode.of = (option: Node) => terminalNode(option);
 
-export default user;
+export default terminalNode;

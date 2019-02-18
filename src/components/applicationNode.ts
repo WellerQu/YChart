@@ -1,6 +1,6 @@
 import { text, group, appendTo, } from './components';
 import functor from '../cores/functor';
-import { ApplicationOption, } from '../cores/core';
+import { ApplicationOption, Node, } from '../cores/core';
 import id from '../cores/id';
 import { VNode, } from 'snabbdom/vnode';
 
@@ -18,7 +18,7 @@ const hasInstanceCount = (option: ApplicationOption) => (nodes: VNode[]) =>
 const application = (option: ApplicationOption) =>
   imageNode({
     ...option,
-    URL: 'application.png',
+    URL: `${option.icon}.png`,
   })
     .chain(hasTierCount(option))
     .map((nodes: VNode[]) =>

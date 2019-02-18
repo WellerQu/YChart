@@ -21,6 +21,7 @@ import { mergeUsers, mergeHTTPOrRPC, } from '../src/adapters/createMergeNodeAdap
 import application from '../src/components/applicationNode';
 import service from '../src/components/serviceNode';
 import user from '../src/components/userNode';
+import terminalNode from '../src/components/terminalNode';
 import { TopoData, } from '../typings/defines.js';
 import { UpdateBehavior, Node, InstanceState, ChartOption, } from '../src/cores/core';
 import { NODE_TYPE, TOPO_LAYOUT_STATE, TOPO_OPERATION_STATE, } from '../src/constants/constants';
@@ -72,15 +73,20 @@ const { update, layout, patch, addEventListener, removeEventListener, scale, ope
 
 const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
 const paintToVirtualDOM = (update: UpdateBehavior) => (data: TopoData) =>  sideEffect(() => {
+  const update$ = io(update);
   // side effect
   data.nodes.forEach((item: Node) => {
+    console.log(`${item.type} - ${item.smallType} - ${item.showName} - ${item.showIcon}`);
     if (showAsApp || item.crossApp) 
-      io(update).map(application).map(applicationAdapter).ap(functor(item));
+      update$.map(application).map(applicationAdapter).ap(functor(item));
     else if (item.type === NODE_TYPE.SERVER)
-      io(update).map(service).map(serviceAdapter).ap(functor(item));
+      update$.map(service).map(serviceAdapter).ap(functor(item));
     else if (item.type === NODE_TYPE.USER)
-      io(update).map(user).ap(functor(item));
-    // TODO: handle other type
+      update$.map(user).ap(functor(item));
+    else {
+      // TODO: handle other type
+      update$.map(terminalNode).ap(functor(item));
+    }
   });
 
   return data;
@@ -98,8 +104,8 @@ const render = (json: { data: any }) => functor(json)
 layout(layoutStrategy);
 render(json);
 
-operation(TOPO_OPERATION_STATE.CAN_MOVE_NODE);
-// operation(TOPO_OPERATION_STATE.CAN_MOVE_CANVAS);
+// operation(TOPO_OPERATION_STATE.CAN_MOVE_NODE);
+operation(TOPO_OPERATION_STATE.CAN_MOVE_CANVAS);
 // operation(TOPO_OPERATION_STATE.CAN_SHOW_RELATIONSHIP);
 
 // 以下为测试代码

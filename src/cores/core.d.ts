@@ -106,6 +106,7 @@ interface SvgOption {
 interface ApplicationOption extends ComponentOption {
   id: string;
   title: string;
+  icon: string;
   tierCount?: number;
   instancesCount?: number;
 }

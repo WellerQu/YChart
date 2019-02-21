@@ -106,6 +106,7 @@ export enum NODE_TYPE {
   NODE = 'node',
   APP = 'app',
   CROSS_APP = 'cross-app',
+  CALL_STACK = 'callstack',
 
   // 外部定义
   USER = 'USER',

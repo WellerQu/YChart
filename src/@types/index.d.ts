@@ -14,7 +14,7 @@ export type UpdateBehavior<T> = (data: T, option?: Viewbox, merged?: boolean) =>
  * 带有三角箭头的线段配置项, 实际上就是LineOption和ArrowOption的交叉类型
  */
 export type ArrowLineOption = LineOption & ArrowOption;
-export type TopoEventHandler = (event: Event, data: (Node | Line)) => void;
+export type DataEventHandler = (event: Event, data: any) => void;
 export type EventHandler = (event: Event) => Event;
 export type Position = { x: number, y: number };
 export type Size = { width: number, height: number };
@@ -31,7 +31,7 @@ declare interface SVGOption {
 }
 
 declare interface EventOption {
-  [T: string]: TopoEventHandler;
+  [T: string]: DataEventHandler;
 }
 
 declare interface Store {

@@ -2,7 +2,7 @@
  * @module instances
  */
 
-import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, } from './@types';
+import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, EventOption, } from './@types';
 import createStage from './cores/createStage';
 import createCallstack from './components/createCallstack';
 import createCallLine from './components/createCallLine';
@@ -11,6 +11,7 @@ import applyMiddlewares from './cores/applyMiddlewares';
 import { callstackLayout, } from './middlewares/callstackLayout';
 import { callstackStyle, } from './middlewares/callstackStyle';
 import { showLoading, } from './middlewares/showLoading';
+import { event, } from './middlewares/event';
 
 import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
 import compose from './compose';
@@ -39,12 +40,13 @@ const callstack = compose<Strategy>(
   clone
 );
 
-export default (container: HTMLElement, updated?: Subscriber): UpdateBehavior<CallstackData> => {
+export default (container: HTMLElement, eventOption?: EventOption, updated?: Subscriber): UpdateBehavior<CallstackData> => {
   const elementID = container.id;
   const enhancer = applyMiddlewares(
     showLoading,
     callstackLayout, 
     callstackStyle,
+    event(eventOption),
   );
   const createStageAt = enhancer(createStage);
   const { create, patch, subscribe, viewbox, size, stageNode, } = createStageAt(container);

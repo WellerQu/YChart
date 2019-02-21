@@ -116,7 +116,11 @@ const callstackData: CallstackData = {
 //   return map;
 // }, new Map<string, string>());
 
-const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
+const updateCallstack = ychartCallstack(document.querySelector('#callstack'), {
+  stackClick: (event: Event, data: any): void => {
+    console.log(event, data);
+  }, 
+});
 
 updateCallstack(callstackData);
 

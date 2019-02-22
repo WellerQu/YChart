@@ -191,6 +191,11 @@ declare interface Node {
   errorTotalCount?: number;
   crossApp?: boolean;
   tiersCount?: number;
+
+  tierId?: string;
+  tierName?: string;
+  appId?: string;
+  appName?: string;
 }
 
 declare interface TierNode {

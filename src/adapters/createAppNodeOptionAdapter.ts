@@ -3,27 +3,26 @@ import { NODE_TYPE, } from '../constants/constants';
 
 const title = (node: Node) => {
   const parts: string[] = [];
+  parts.push(node.showName);
 
   if (node.crossApp) {
+    // if (node.tierId) {
+    //   parts.push(node.tierName);
+    // }
+
     if (node.appId) {
       parts.push(node.appName);
     }
-
-    if (node.tierId) {
-      parts.push(node.tierName);
-    }
   }
 
-  parts.push(node.showName);
-
-  return parts.join(' - ');
+  return parts.join(' @ ');
 };
 
 function createAppNodeOption (node: Node): AppNodeOption {
   return {
     title: title(node),
-    type: 'App',
-    className: `app ${NODE_TYPE.NODE}`,
+    type: (node.tierId && node.appId) ? NODE_TYPE.INSTANCE : NODE_TYPE.APP,
+    className: `${NODE_TYPE.APP} ${NODE_TYPE.NODE}`,
     tierCount: node.tiersCount,
     instances: node.instances,
     id: node.id,

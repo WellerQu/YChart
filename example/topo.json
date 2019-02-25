@@ -4,21 +4,25 @@
   "data": {
     "nodes": [
       {
-        "id": "845490021005475840",
-        "name": "message-template-sender",
-        "times": 8439.0,
+        "id": "834868594521600000",
+        "name": "device_manage",
+        "times": 200464.0,
         "type": "SERVER",
         "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 13.801279772484891,
-        "rpm": 269.6,
-        "epm": 0.0,
+        "instances": 17,
+        "activeInstances": 4,
+        "elapsedTime": 2.9198346198456187,
+        "rpm": 46.41,
+        "epm": 0.1,
         "health": "HEALTHY",
+        "tierId": null,
+        "tierName": null,
+        "appId": null,
+        "appName": null,
         "crossApp": false
       },
       {
-        "id": "845490021005475840USER",
+        "id": "834868594521600000USER",
         "name": "用户",
         "times": 0.0,
         "type": "USER",
@@ -29,207 +33,15 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
+        "tierId": null,
+        "tierName": null,
+        "appId": null,
+        "appName": null,
         "crossApp": false
       },
       {
-        "id": "172.21.19.19/172.21.19.19:6488",
-        "name": "172.21.19.19/172.21.19.19:6488",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "172.21.75.19/172.21.75.19:6488",
-        "name": "172.21.75.19/172.21.75.19:6488",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "172.21.1.13/172.21.1.13:6565",
-        "name": "172.21.1.13/172.21.1.13:6565",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "pay.sm.codis.hualala.com:26000",
-        "name": "pay.sm.codis.hualala.com:26000",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "redis",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490526268112896",
-        "name": "equity2-account",
-        "times": 9150.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 7.303169398907104,
-        "rpm": 293.3,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490526268112896USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "weixin.redpack.service.hualala.com/192.168.121.249:32411",
-        "name": "weixin.redpack.service.hualala.com/192.168.121.249:32411",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_3?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_3?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490134329589760",
-        "name": "message-channel-service",
-        "times": 11748.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 4.1277664283282265,
-        "rpm": 375.73,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490134329589760USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "834864414570016768",
-        "name": "SaaS及云店服务",
+        "id": "865863208432377856",
+        "name": "meal-queue-7f69cf948d-r67nk-7",
         "times": 0.0,
         "type": "SERVER",
         "smallType": null,
@@ -239,237 +51,71 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
+        "tierId": "842604988191744000",
+        "tierName": "meal-queue",
+        "appId": "834864455997648896",
+        "appName": "三方外卖及订单",
         "crossApp": true
       },
       {
-        "id": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306/db_message_config?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306/db_message_config?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
+        "id": "865863935680114688",
+        "name": "meal-queue-7f69cf948d-mzjnh-8",
         "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490265636470784",
-        "name": "equity-core-service",
-        "times": 5762.0,
         "type": "SERVER",
         "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 1.3923984727525165,
-        "rpm": 184.57,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490265636470784USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
         "instances": 0,
         "activeInstances": 0,
         "elapsedTime": 0.0,
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "842604988191744000",
+        "tierName": "meal-queue",
+        "appId": "834864455997648896",
+        "appName": "三方外卖及订单",
+        "crossApp": true
       },
       {
-        "id": "172.21.31.18/172.21.31.18:6566",
-        "name": "172.21.31.18/172.21.31.18:6566",
+        "id": "865867449364250624",
+        "name": "shop-base-service-7dd98cf7b5-4hgbj-8",
         "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "172.21.24.27/172.21.24.27:6566",
-        "name": "172.21.24.27/172.21.24.27:6566",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "name": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490143063916544",
-        "name": "message-sender-task",
-        "times": 9831.0,
         "type": "SERVER",
         "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": -13.188993998575933,
-        "rpm": 311.97,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490143063916544USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
         "instances": 0,
         "activeInstances": 0,
         "elapsedTime": 0.0,
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "smssh1.253.com:80",
-        "name": "smssh1.253.com:80",
+        "id": "865864729957892096",
+        "name": "shop-base-service-7dd98cf7b5-dxnzd-7",
         "times": 0.0,
-        "type": "HTTP",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "sdk.entinfo.cn:8061",
-        "name": "sdk.entinfo.cn:8061",
-        "times": 0.0,
-        "type": "HTTP",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "www.dh3t.com:80",
-        "name": "www.dh3t.com:80",
-        "times": 0.0,
-        "type": "HTTP",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "172.21.19.17/172.21.19.17:6567",
-        "name": "172.21.19.17/172.21.19.17:6567",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "172.21.24.8/172.21.24.8:6567",
-        "name": "172.21.24.8/172.21.24.8:6567",
-        "times": 0.0,
-        "type": "RPC",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845489736098988032",
-        "name": "tax-invoice-service",
-        "times": 1495.0,
         "type": "SERVER",
         "smallType": null,
-        "instances": 4,
-        "activeInstances": 2,
-        "elapsedTime": 10.87778528021607,
-        "rpm": 47.23,
-        "epm": 0.43,
-        "health": "HEALTHY",
-        "crossApp": false
+        "instances": 0,
+        "activeInstances": 0,
+        "elapsedTime": 0.0,
+        "rpm": 0.0,
+        "epm": 0.0,
+        "health": null,
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "845489736098988032USER",
-        "name": "用户",
+        "id": "865865324886360064",
+        "name": "shop-base-service-7dd98cf7b5-742gs-7",
         "times": 0.0,
-        "type": "USER",
+        "type": "SERVER",
         "smallType": null,
         "instances": 0,
         "activeInstances": 0,
@@ -477,13 +123,17 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "saas.fapiaoxx.com:80",
-        "name": "saas.fapiaoxx.com:80",
+        "id": "865867450162933760",
+        "name": "shop-base-service-7dd98cf7b5-jsrlx-7",
         "times": 0.0,
-        "type": "HTTP",
+        "type": "SERVER",
         "smallType": null,
         "instances": 0,
         "activeInstances": 0,
@@ -491,13 +141,17 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "fp.easyunion.net:9083",
-        "name": "fp.easyunion.net:9083",
+        "id": "865865807592030208",
+        "name": "shop-base-service-7dd98cf7b5-pqhnh-7",
         "times": 0.0,
-        "type": "HTTP",
+        "type": "SERVER",
         "smallType": null,
         "instances": 0,
         "activeInstances": 0,
@@ -505,13 +159,17 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "172.21.19.15/172.21.19.15:6565",
-        "name": "172.21.19.15/172.21.19.15:6565",
+        "id": "865866853134589952",
+        "name": "shop-base-service-7dd98cf7b5-kwgqx-7",
         "times": 0.0,
-        "type": "RPC",
+        "type": "SERVER",
         "smallType": null,
         "instances": 0,
         "activeInstances": 0,
@@ -519,11 +177,15 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
+        "tierId": "845491156546174976",
+        "tierName": "shop-base-service",
+        "appId": "845491047351664640",
+        "appName": "基本档",
+        "crossApp": true
       },
       {
-        "id": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_invoice?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
-        "name": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_invoice?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
+        "id": "jdbc:mysql://mysql.passport.001.master.hualala.com:6330/db_passport?useUnicode=true&characterEncoding=utf8",
+        "name": "jdbc:mysql://mysql.passport.001.master.hualala.com:6330/db_passport?useUnicode=true&characterEncoding=utf8",
         "times": 0.0,
         "type": "DATABASE",
         "smallType": "mysql",
@@ -533,11 +195,15 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
+        "tierId": null,
+        "tierName": null,
+        "appId": null,
+        "appName": null,
         "crossApp": false
       },
       {
-        "id": "sjhl.codis.hualala.com:19000",
-        "name": "sjhl.codis.hualala.com:19000",
+        "id": "mdb_codis.sm.hualala.com:21379",
+        "name": "mdb_codis.sm.hualala.com:21379",
         "times": 0.0,
         "type": "DATABASE",
         "smallType": "redis",
@@ -547,536 +213,90 @@
         "rpm": 0.0,
         "epm": 0.0,
         "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845489853915201536",
-        "name": "tax-invoice-user-service",
-        "times": 478.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 4.0625,
-        "rpm": 14.6,
-        "epm": 0.5,
-        "health": "NORMAL",
-        "crossApp": false
-      },
-      {
-        "id": "845489853915201536USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_user?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
-        "name": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_user?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
-        "times": 0.0,
-        "type": "DATABASE",
-        "smallType": "mysql",
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845489727205277696",
-        "name": "tax-provider-invoice",
-        "times": 534.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 45.91760299625468,
-        "rpm": 15.77,
-        "epm": 0.0,
-        "health": "NORMAL",
-        "crossApp": false
-      },
-      {
-        "id": "845489727205277696USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "fapiao.yonyoucloud.com:443",
-        "name": "fapiao.yonyoucloud.com:443",
-        "times": 0.0,
-        "type": "HTTP",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845489915781185536",
-        "name": "tax-invoice-api",
-        "times": 222.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 1.1081081081081081,
-        "rpm": 6.4,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845489915781185536USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490351059451904",
-        "name": "tax-invoice-portal",
-        "times": 222.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 2.4414414414414414,
-        "rpm": 6.67,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490351059451904USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490525947559936",
-        "name": "message-api",
-        "times": 222.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 2,
-        "activeInstances": 2,
-        "elapsedTime": 2.4774774774774775,
-        "rpm": 6.73,
-        "epm": 0.0,
-        "health": "HEALTHY",
-        "crossApp": false
-      },
-      {
-        "id": "845490525947559936USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
-        "crossApp": false
-      },
-      {
-        "id": "845490013869178880",
-        "name": "data-statistical-query",
-        "times": 7.0,
-        "type": "SERVER",
-        "smallType": null,
-        "instances": 1,
-        "activeInstances": 1,
-        "elapsedTime": 595.0,
-        "rpm": 3.0,
-        "epm": 0.0,
-        "health": "INTOLERANCE",
-        "crossApp": false
-      },
-      {
-        "id": "845490013869178880USER",
-        "name": "用户",
-        "times": 0.0,
-        "type": "USER",
-        "smallType": null,
-        "instances": 0,
-        "activeInstances": 0,
-        "elapsedTime": 0.0,
-        "rpm": 0.0,
-        "epm": 0.0,
-        "health": null,
+        "tierId": null,
+        "tierName": null,
+        "appId": null,
+        "appName": null,
         "crossApp": false
       }
     ],
     "links": [
       {
-        "source": "845490021005475840USER",
-        "target": "845490021005475840",
-        "elapsedTime": 40.446735395189,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "845490134329589760",
-        "elapsedTime": 1.1714655917074575,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "845490265636470784",
-        "elapsedTime": 1.3910550458715596,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "172.21.19.19/172.21.19.19:6488",
-        "elapsedTime": 8.5,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "172.21.75.19/172.21.75.19:6488",
-        "elapsedTime": 6.0,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "172.21.1.13/172.21.1.13:6565",
-        "elapsedTime": 24.0,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.2651051025047084,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490021005475840",
-        "target": "pay.sm.codis.hualala.com:26000",
-        "elapsedTime": 0.004366812227074236,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896USER",
-        "target": "845490526268112896",
-        "elapsedTime": 13.158032786885245,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896",
-        "target": "weixin.redpack.service.hualala.com/192.168.121.249:32411",
-        "elapsedTime": 803.9230769230769,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.2180503731343284,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.3922319474835887,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_3?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.470061940812113,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490526268112896",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_account_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=10000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.4814229249011859,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490134329589760USER",
-        "target": "845490134329589760",
-        "elapsedTime": 7.270514130064692,
-        "rpm": 0.0
-      },
-      {
-        "source": "834864414570016768",
-        "target": "845490134329589760",
-        "elapsedTime": 7.270514130064692,
+        "source": "834868594521600000USER",
+        "target": "834868594521600000",
+        "elapsedTime": 4.276876774787025,
         "rpm": 0.0,
-        "counts": 1
+        "counts": null
       },
       {
-        "source": "845490134329589760",
-        "target": "845490265636470784",
-        "elapsedTime": 1.327398615232443,
-        "rpm": 0.0
+        "source": "865863208432377856",
+        "target": "834868594521600000",
+        "elapsedTime": 21.589156626506025,
+        "rpm": 0.0,
+        "counts": 830
       },
       {
-        "source": "845490134329589760",
-        "target": "jdbc:mysql://mysql.newmessage.master.hualala.com:3306/db_message_config?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&connectTimeout=5000&socketTimeout=5000&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.315218715730474,
-        "rpm": 0.0
+        "source": "865863935680114688",
+        "target": "834868594521600000",
+        "elapsedTime": 22.050970873786408,
+        "rpm": 0.0,
+        "counts": 824
       },
       {
-        "source": "845490265636470784USER",
-        "target": "845490265636470784",
-        "elapsedTime": 19.894828184658106,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865867449364250624",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "845490526268112896",
-        "elapsedTime": 0.8604778605874617,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865864729957892096",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "172.21.31.18/172.21.31.18:6566",
-        "elapsedTime": 12.166666666666666,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865865324886360064",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "172.21.24.27/172.21.24.27:6566",
-        "elapsedTime": 10.5,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865867450162933760",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_0?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 0.9775280898876404,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865865807592030208",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_2?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 1.1666666666666667,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "865866853134589952",
+        "elapsedTime": null,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490265636470784",
-        "target": "jdbc:mysql://pay_equity.mysql.master.hualala.com:3310/db_equity_1?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true&statementInterceptors=brave.mysql.TracingStatementInterceptor",
-        "elapsedTime": 2.0,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "jdbc:mysql://mysql.passport.001.master.hualala.com:6330/db_passport?useUnicode=true&characterEncoding=utf8",
+        "elapsedTime": 0.7249499587895915,
+        "rpm": 0.0,
+        "counts": null
       },
       {
-        "source": "845490143063916544USER",
-        "target": "845490143063916544",
-        "elapsedTime": 11.760451632590785,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "845490021005475840",
-        "elapsedTime": 1.2263993316624895,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "845490134329589760",
-        "elapsedTime": 1.0787764508694742,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "smssh1.253.com:80",
-        "elapsedTime": 44.36344755970924,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "sdk.entinfo.cn:8061",
-        "elapsedTime": 6.723098012337218,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "www.dh3t.com:80",
-        "elapsedTime": 24.856033874382497,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "172.21.75.19/172.21.75.19:6488",
-        "elapsedTime": 5.266666666666667,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "172.21.19.19/172.21.19.19:6488",
-        "elapsedTime": 4.785714285714286,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "172.21.19.17/172.21.19.17:6567",
-        "elapsedTime": 17.636363636363637,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490143063916544",
-        "target": "172.21.24.8/172.21.24.8:6567",
-        "elapsedTime": 18.125,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032USER",
-        "target": "845489736098988032",
-        "elapsedTime": 65.68602295746118,
-        "rpm": 0.0
-      },
-      {
-        "source": "834864414570016768",
-        "target": "845489736098988032",
-        "elapsedTime": 65.68602295746118,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "845489727205277696",
-        "elapsedTime": 1.6285714285714286,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "845490265636470784",
-        "elapsedTime": 2.0,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "saas.fapiaoxx.com:80",
-        "elapsedTime": 1220.7254901960785,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "fp.easyunion.net:9083",
-        "elapsedTime": 100.2,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "172.21.19.15/172.21.19.15:6565",
-        "elapsedTime": 235.0,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_invoice?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
-        "elapsedTime": 0.9654343252179141,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489736098988032",
-        "target": "sjhl.codis.hualala.com:19000",
-        "elapsedTime": 0.015241320914479255,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489853915201536USER",
-        "target": "845489853915201536",
-        "elapsedTime": 216.43534482758622,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489853915201536",
-        "target": "845489736098988032",
-        "elapsedTime": -268.95238095238096,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489853915201536",
-        "target": "jdbc:mysql://mysql.tax.001.master.hualala.com:6330/db_tax_user?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true",
-        "elapsedTime": 21.11686746987952,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489853915201536",
-        "target": "sjhl.codis.hualala.com:19000",
-        "elapsedTime": 0.017241379310344827,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489727205277696USER",
-        "target": "845489727205277696",
-        "elapsedTime": 105.5505617977528,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489727205277696",
-        "target": "fapiao.yonyoucloud.com:443",
-        "elapsedTime": 60.40796963946869,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489727205277696",
-        "target": "sjhl.codis.hualala.com:19000",
-        "elapsedTime": 0.01939655172413793,
-        "rpm": 0.0
-      },
-      {
-        "source": "845489915781185536USER",
-        "target": "845489915781185536",
-        "elapsedTime": 1.1081081081081081,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490351059451904USER",
-        "target": "845490351059451904",
-        "elapsedTime": 2.4414414414414414,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490525947559936USER",
-        "target": "845490525947559936",
-        "elapsedTime": 2.4774774774774775,
-        "rpm": 0.0
-      },
-      {
-        "source": "845490013869178880USER",
-        "target": "845490013869178880",
-        "elapsedTime": 595.0,
-        "rpm": 0.0
+        "source": "834868594521600000",
+        "target": "mdb_codis.sm.hualala.com:21379",
+        "elapsedTime": 0.08,
+        "rpm": 0.0,
+        "counts": null
       }
     ]
   }

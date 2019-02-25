@@ -105,6 +105,7 @@ export enum NODE_TYPE {
   LINE = 'line',
   NODE = 'node',
   APP = 'app',
+  INSTANCE = 'instance',
   CROSS_APP = 'cross-app',
   CALL_STACK = 'callstack',
 

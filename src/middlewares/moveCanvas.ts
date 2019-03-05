@@ -2,7 +2,7 @@ import { InstanceAPI, PatchBehavior, TopoData, Functor, Position, InstanceState,
 import io from '../cores/io';
 import { setupEventHandler, } from '../utils';
 import functor from '../cores/functor';
-import { TOPO_OPERATION_STATE } from '../constants/constants';
+import { TOPO_OPERATION_STATE, } from '../constants/constants';
 import id from '../cores/id';
 
 const clickPosition = (event: MouseEvent) => functor(event)
@@ -43,7 +43,7 @@ export default (instance: InstanceAPI) => (next: PatchBehavior) => (userState: T
       // 需要向相反方向移动
       .map((ratio: number) => ratio * -1);
     startPosition$ = clickPosition(event);
-    sourcePosition$ = functor(instance.viewbox()).map(([x, y,]: [number, number]) => ({ x, y }));
+    sourcePosition$ = functor(instance.viewbox()).map(([x, y,]: [number, number]) => ({ x, y, }));
   };
   const handleMouseMove = (event: MouseEvent) => {
     if (!isReadyToMove)

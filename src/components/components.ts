@@ -2,7 +2,7 @@ import { VNodeData, VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
 import { 
   TextOption, 
-  StrategyID, 
+  Strategy, 
   SvgOption, 
   GroupOption, 
   ImageOption, 
@@ -12,14 +12,14 @@ import {
   RectOption, 
 } from '../cores/core';
 import { NODE_TYPE, } from '../constants/constants';
-import { isNull } from '../utils';
+import { isNull, } from '../utils';
 
 const vNodeData = (option: VNodeData) => ({
   ...option,
   ns: 'http://www.w3.org/2000/svg',
 });
 
-export const appendTo = ($node: VNode): StrategyID => 
+export const appendTo = ($node: VNode): Strategy => 
   ($parent: VNode) => 
     ($parent.children.push($node), $parent);
 

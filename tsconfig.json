@@ -29,6 +29,6 @@
   ],
   "exclude": [
     "**/*.spec.ts",
-    "src/ychart-callstack.ts"
+    "src/__ychart-callstack.ts"
   ]
 }

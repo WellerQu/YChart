@@ -1,14 +1,11 @@
-import { Middleware, PatchBehavior, InstanceAPI, StateCreator, InstanceCreator, } from './core';
+import { Middleware, PatchBehavior, InstanceAPI, } from './core';
 import compose from '../compose';
 
-export default (...middlewares: Middleware[]) => (
-  createInstance: InstanceCreator
-): InstanceCreator => (option: any) => {
+export default (...middlewares: Middleware[]) => (instance: InstanceAPI) => {
   let patch: PatchBehavior = (): never => {
     throw new Error('Not implement');
   };
 
-  const instance = createInstance(option);
   const api: InstanceAPI = {
     ...instance,
     patch: (userState?: any) => patch(userState),

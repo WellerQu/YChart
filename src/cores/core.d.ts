@@ -23,7 +23,7 @@ interface ComponentOption {
   className?: Record<string, boolean>,
 }
 
-interface StrategyID {
+interface Strategy {
   (parent: VNode): VNode
 }
 
@@ -32,7 +32,7 @@ interface PatchBehavior {
 }
 
 interface UpdateBehavior {
-  (strategy: StrategyID): VNode;
+  (strategy: Strategy): VNode;
 }
 
 interface EventHandler {
@@ -49,7 +49,7 @@ interface ChartOption {
 }
 
 interface InstanceAPI {
-  update: UpdateBehavior;
+  add: UpdateBehavior;
   patch: (userState?: any) => void;
   destroy: () => void;
   reset: () => void;
@@ -71,7 +71,7 @@ interface Creator<S, T> {
 }
 
 interface InstanceCreator {
-  (option?: ChartOption): InstanceAPI;
+  (option: ChartOption): InstanceAPI;
 }
 
 interface StateCreator {

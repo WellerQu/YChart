@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
     example: path.resolve(__dirname, '../example/index.ts'),
-    'ychart-topo': path.resolve(__dirname, '../src/ychart-topo.ts'),
+    // 'ychart-topo': path.resolve(__dirname, '../src/ychart-topo.ts'),
   },
   module: {
     rules: [

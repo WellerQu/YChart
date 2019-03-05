@@ -6,7 +6,7 @@ import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 
 import { svg, } from '../components/components';
-import { InstanceCreator, ChartOption, Viewbox, Size, StrategyID, } from './core';
+import { InstanceCreator, ChartOption, Viewbox, Size, Strategy, } from './core';
 
 const vPatch = init([
   classes,
@@ -15,16 +15,12 @@ const vPatch = init([
   eventlistener,
 ]);
 
-const instance: InstanceCreator = (option?: ChartOption) => {
-  let size: Size = !option ? { width: 800, height: 600, } : option.size;
-  let viewbox: Viewbox = !option ? [0, 0, size.width, size.height,] : option.viewbox;
+const instance: InstanceCreator = (option: ChartOption) => {
+  let size: Size = !option || !option.size ? { width: 800, height: 600, } : option.size;
+  let viewbox: Viewbox = !option || !option.viewbox ? [0, 0, size.width, size.height,] : option.viewbox;
 
   let $vnode = toNode(option.container);
   let $stage = svg({ size, viewbox, });
-
-  const reset = () => {
-    $stage.children = [];
-  };
 
   return ({
     viewbox: (value?: Viewbox) => {
@@ -56,11 +52,10 @@ const instance: InstanceCreator = (option?: ChartOption) => {
       return size;
     },
     getStage: () => $stage,
-    update: (strategy: StrategyID) => strategy($stage),
+    add: (strategy: Strategy) => strategy($stage),
     patch: () => $vnode = vPatch($vnode, {...$stage,}), 
-    reset,
-    destroy: () => {
-    },
+    reset: () => $stage.children = [],
+    destroy: () => {},
   });
 };
 

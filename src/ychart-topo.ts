@@ -2,156 +2,113 @@
  * @module instances
  */
 
-import { 
-  Strategy, 
-  Subscriber, 
-  UpdateBehavior, 
-  TopoData, 
-  Node, 
-  Line, 
-  EventOption, 
-  Viewbox, 
-} from '../typings/defines';
+import createInstance from '../src/cores/createInstance';
+import applyMiddlewares from '../src/cores/applyMiddlewares';
+import log from '../src/middlewares/log';
+import scaleCanvas from '../src/middlewares/scaleCanvas';
+import nodeHoneycombLayout from '../src/middlewares/nodeHoneycombLayout';
+import nodeForceDirectedLayout from '../src/middlewares/nodeForceDirectedLayout';
+import nodeCircleLayout from '../src/middlewares/nodeCircleLayout';
+import linkNode from '../src/middlewares/linkNode';
+import moveNode from '../src/middlewares/moveNode';
+import moveCanvas from '../src/middlewares/moveCanvas';
+import topoStyle from '../src/middlewares/topoStyle';
+import relationship from '../src/middlewares/relationship';
+import positionCache from '../src/middlewares/positionCache';
 
-import compose from './compose';
-import clone from './clone';
+import  fixData from './adapters/fixTopoDataAdapter';
+import { mergeUsers, mergeHTTPOrRPC, } from './adapters/mergeNodeAdapter';
 
-import { log, } from './middlewares/__log';
-import { nodeGroupLayout, } from './middlewares/__nodeGroupLayout';
-import { nodeCircleLayout,} from './middlewares/__nodeCircleLayout';
-import { nodeForceDirectedLayout, } from './middlewares/__nodeForceDirectedLayout';
-import { topoStyle, } from './middlewares/__topoStyle';
-import { scaleCanvas, } from './middlewares/__scaleCanvas';
-import { moveCanvas, } from './middlewares/__moveCanvas';
-import { moveNode, } from './middlewares/__moveNode';
-import { event, } from './middlewares/__event';
-import { showLoading, } from './middlewares/__showLoading';
-import { nodePositionMemory,} from './middlewares/__nodePositionMemory';
-import { linkLine, } from './middlewares/__linkLine';
+import application from '../src/components/applicationNode';
+import service from '../src/components/serviceNode';
+import user from '../src/components/userNode';
+import terminalNode from '../src/components/terminalNode';
+import { TopoData, } from '../typings/defines.js';
+import { UpdateBehavior as AddBehavior, Node, InstanceState, } from '../src/cores/core';
+import { NODE_TYPE, TOPO_OPERATION_STATE, TOPO_LAYOUT_STATE, } from './constants/constants';
 
-import createMergeAdapter, { mergeUsers, } from './adapters/createMergeNodeAdapter';
-import createAppNodeAdapter from './adapters/createAppNodeOptionAdapter';
-import createServiceNodeAdapter from './adapters/createServiceNodeOptionAdapter';
-import createFixAdapter from './adapters/createFixTopoDataAdapter';
-import createArrowLineOption from './adapters/createArrowLineOptionAdapter';
-import createImageNodeOption from './adapters/createImageNodeOptionAdapter';
+import applicationAdapter from '../src/adapters/applicationAdapter';
+import serviceAdapter from '../src/adapters/serviceAdapter';
 
-import applyMiddlewares from './cores/__applyMiddlewares';
-import createStage from './cores/__createStage';
+import io from '../src/cores/io';
+import functor from '../src/cores/functor';
+import left from '../src/cores/left';
+import right from '../src/cores/right';
+import sideEffect from '../src/cores/sideEffect';
+import applyStates from './cores/applyStates';
+import id from './cores/id';
 
-import createImageNode from './components/createImageNode';
+// parameters
+let shouldMergeNode = true;
+let showAsApp = false;
 
-import createServiceNode from './components/createServiceNode';
-import createAppNode from './components/createAppNode';
+const withMiddlewares = applyMiddlewares(
+  log, 
+  nodeHoneycombLayout, 
+  nodeCircleLayout, 
+  nodeForceDirectedLayout, 
+  linkNode, 
+  scaleCanvas,
+  moveNode,
+  moveCanvas,
+  topoStyle,
+  relationship,
+  positionCache,
+);
+const withInitStates = applyStates({
+  allowOperations: TOPO_OPERATION_STATE.CAN_MOVE_CANVAS,
+  layoutStrategy: TOPO_LAYOUT_STATE.CIRCLE,
+  scale: 1,
+});
 
-import createArrowLine from './components/createArrowLine';
-import { showRelation, } from './middlewares/__showRelation';
-import { NODE_TYPE, } from './constants/constants';
+const instance = functor({
+  size: {
+    width: 1200,
+    height: 800,
+  },
+  viewbox: [0, 0, 800, 600,],
+  container: document.querySelector('#topo'),
+})
+  .map(createInstance)
+  .map(withInitStates)
+  .map(withMiddlewares)
+  .fold(id);
 
-const emptyPadding = (data: TopoData) => {
-  if (!data)
-    return data = { nodes: [], links: [],};
+const { add, layout, patch, addEventListener, removeEventListener, scale, operation, } = instance as InstanceState;
 
-  if (!data.nodes)
-    data.nodes = [];
-  if (!data.links)
-    data.links = [];
-    
+const shouldMergeHTTPOrRemote = (should: boolean) => (data: any) => !should ? left(data) : right(data);
+const paintToVirtualDOM = (add: AddBehavior) => (data: TopoData) =>  sideEffect(() => {
+  const add$ = io(add);
+  // side effect
+  data.nodes.forEach((item: Node) => {
+    if (showAsApp || item.crossApp) 
+      add$.map(application).map(applicationAdapter).ap(functor(item));
+    else if (item.type === NODE_TYPE.SERVER)
+      add$.map(service).map(serviceAdapter).ap(functor(item));
+    else if (item.type === NODE_TYPE.USER)
+      add$.map(user).ap(functor(item));
+    else {
+      add$.map(terminalNode).ap(functor(item));
+    }
+  });
+
   return data;
-};
+});
 
+const render = (json: { data: any }) => functor(json)
+  .map((x: any) => x.data)
+  .map(fixData)
+  .map(mergeUsers)
+  .chain(shouldMergeHTTPOrRemote(shouldMergeNode))
+  .map(mergeHTTPOrRPC)
+  .chain(paintToVirtualDOM(add))
+  .fold(patch);
 
-
-const imageNode = compose<Strategy>(
-  createImageNode,
-  createImageNodeOption,
-);
-
-const serviceNode = compose<Strategy>(
-  createServiceNode,
-  createServiceNodeAdapter,
-);
-
-const appNode = compose<Strategy>(
-  createAppNode,
-  createAppNodeAdapter,
-);
-
-const arrowLine = compose<Strategy>(
-  createArrowLine,
-  createArrowLineOption,
-);
-
-// Entrance, start from here
-export default (
-  // 容器
-  container: HTMLDivElement,
-  // 事件配置
-  eventOption?: EventOption, 
-  // 显示为应用程序
-  showAsApp = false,
-  // 获取状态
-  getState?: () => number,
-  // 更新后回调
-  updated?: Subscriber,
-): UpdateBehavior<TopoData> => {
-  const elementID = container.id;
-  const enhancer = applyMiddlewares(
-    log,
-    showLoading,
-    event(eventOption),
-    // 基本布局策略
-    nodeGroupLayout,
-    // 环形布局策略
-    nodeCircleLayout,
-    // 力导向布局策略
-    nodeForceDirectedLayout,
-    nodePositionMemory,
-    linkLine,
-    scaleCanvas,
-    moveCanvas(getState),
-    moveNode(getState),
-    showRelation(getState),
-    topoStyle,
-  );
-  const createStageAt = enhancer(createStage);
-  const { create, subscribe, patch, viewbox, size, stageNode, } = createStageAt(container);
-
-  updated && subscribe(updated);
-
-  patch();
-
-  // Expose update method
-  return (data: TopoData, option?: Viewbox, merged = true): void => {
-    const root = stageNode();
-    root.data.attrs.id = elementID;
-
-    viewbox(option);
-    size(option);
-
-    const formatDataAdapter = compose<TopoData>(
-      createFixAdapter,
-      merged ? createMergeAdapter : mergeUsers,
-      emptyPadding,
-      clone,
-    );
-
-    const formattedData: TopoData = formatDataAdapter(data);
-    // map every line to strategy function which return a VNode
-    formattedData.links.forEach((item: Line) => {
-      create(arrowLine(item));
-    });
-
-    // map every node to strategy function which return a VNode
-    formattedData.nodes.forEach((item: Node) => {
-      if (showAsApp || item.crossApp) 
-        create(appNode(item));
-      else if (item.type === NODE_TYPE.SERVER) 
-        create(serviceNode(item));
-      else 
-        create(imageNode(item));
-    });
-
-    patch(formattedData);
-  };
+export {
+  layout,
+  operation,
+  addEventListener, 
+  removeEventListener, 
+  scale,
+  render
 };

@@ -18,7 +18,7 @@ import compose from './compose';
 import { max, } from './utils';
 import { createRule, } from './components/createRule';
 import clone from './clone';
-import { ID_COMBINER, CALLSTACK_HEIGHT, RULE_HEIGHT, STACK_SPACE } from './constants/constants';
+import { ID_COMBINER, CALLSTACK_HEIGHT, RULE_HEIGHT, STACK_SPACE, } from './constants/constants';
 
 function flatten (node: CallstackData): CallstackData[] {
   const stacks: CallstackData[] = [];
@@ -28,7 +28,8 @@ function flatten (node: CallstackData): CallstackData[] {
   if (!node.children || node.children.length === 0) return stacks;
 
   return node.children.reduce<CallstackData[]>((arr: CallstackData[], item: CallstackData) => {
-    item.parentId = node.id;
+    item.parentId = node.spanId;
+    // item.timeOffset = 100;
     // item.parentTimeOffset = node.timeOffset + node.parentTimeOffset || 0;
     return arr.concat(flatten(item));
   }, stacks);
@@ -65,7 +66,7 @@ export default (container: HTMLElement, eventOption?: EventOption, updated?: Sub
     if (!data) return patch();
 
     const flattenData = flatten(data);
-    const maxDuration = max(...flattenData.map(n => n.totalTimeSpend + n.timeOffset));
+    const maxDuration = max(...flattenData.map(n => n.elapsedTime + (n.timeOffset || 0)));
     const availableWidth = root.data.attrs.width as number;
 
     // 当最大长度与刻度步长无法取整时, 需要向下取一个最近的最小可取整值
@@ -77,10 +78,11 @@ export default (container: HTMLElement, eventOption?: EventOption, updated?: Sub
     if (maxWidth % RULE_STEP !== 0) {
       const a = maxWidth / RULE_STEP >> 0;
       const b = maxWidth % RULE_STEP;
+
       if (b > RULE_STEP) {
-        maxWidth = a * RULE_STEP + 2 * RULE_STEP;
+        maxWidth = a * RULE_STEP + 3 * RULE_STEP;
       } else {
-        maxWidth = a * RULE_STEP + RULE_STEP;
+        maxWidth = a * RULE_STEP + 2 * RULE_STEP;
       }
     }
 
@@ -98,7 +100,7 @@ export default (container: HTMLElement, eventOption?: EventOption, updated?: Sub
       create(callstack(item)); 
       if (index > 0)
         create(createCallLine({
-          id: `${item.id}${ID_COMBINER}${item.parentId || ''}`,
+          id: `${item.spanId}${ID_COMBINER}${item.parentId || ''}`,
           x1: 0,
           y1: 0,
           x2: 0,

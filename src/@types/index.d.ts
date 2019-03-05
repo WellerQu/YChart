@@ -233,11 +233,11 @@ declare interface TopoData {
 }
 
 declare interface CallstackData {
-  id: string;
+  spanId: string;
   appName: string;
-  name: string;
+  transactionName: string;
+  elapsedTime: number;
   timeOffset: number;
-  totalTimeSpend: number;
 
   fill?: string;
   children?: CallstackData[];

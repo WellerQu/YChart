@@ -41,58 +41,58 @@ btnFullscreen.addEventListener('click', () => {
 });
 
 const callstackData: CallstackData = {
-  id: '0',
+  spanId: '0',
   appName: 'cba',
-  name: 'root stack service',
-  totalTimeSpend: 6, // ms
+  transactionName: 'root stack service',
+  elapsedTime: 6, // ms
   timeOffset: 0,
   fill: 'blue',
   children: [
     {
-      id: '1',
+      spanId: '1',
       appName: 'abc',
-      name: 'serv 0',
-      totalTimeSpend: 1,
-      timeOffset: 1,
+      transactionName: 'serv 0',
+      elapsedTime: 1,
+      timeOffset: 0,
       children: [
         {
-          id: '11',
+          spanId: '11',
           appName: 'abc',
-          name: 'serv 01',
-          totalTimeSpend: 1,
-          timeOffset: 2,
+          transactionName: 'serv 01',
+          elapsedTime: 1,
+          timeOffset: 0,
           children: [
             {
-              id: '111',
+              spanId: '111',
               appName: 'abc 1',
-              name: 'serv 001',
-              totalTimeSpend: 1,
-              timeOffset: 3,
+              transactionName: 'serv 001',
+              elapsedTime: 1,
+              timeOffset: 0,
             },
             {
-              id: '112',
+              spanId: '112',
               appName: 'abc 1',
-              name: 'serv 002',
-              totalTimeSpend: 1,
-              timeOffset: 3,
-            }
+              transactionName: 'serv 002',
+              elapsedTime: 1,
+              timeOffset: 0,
+            },
           ],
         },
         {
-          id: '12',
+          spanId: '12',
           appName: 'abc',
-          name: 'serv 02',
-          totalTimeSpend: 3,
-          timeOffset: 2,
+          transactionName: 'serv 02',
+          elapsedTime: 3,
+          timeOffset: 0,
         },
       ],
     },
     {
-      id: '2',
+      spanId: '2',
       appName: 'abc',
-      name: 'serv 1',
-      totalTimeSpend: 44,
-      timeOffset: 4,
+      transactionName: 'serv 1',
+      elapsedTime: 44,
+      timeOffset: 0,
     },
   ],
 };
@@ -126,8 +126,8 @@ updateCallstack(callstackData);
 
 const btnUpdateCallstack = document.querySelector('button#updateCallstackData');
 btnUpdateCallstack.addEventListener('click', () => {
-  callstackData.totalTimeSpend = 900;
-  callstackData.children[0].totalTimeSpend = 500;
+  callstackData.elapsedTime = 900;
+  callstackData.children[0].elapsedTime = 500;
 
   updateCallstack(callstackData);
 });

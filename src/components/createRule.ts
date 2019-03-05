@@ -20,7 +20,7 @@ export const createRule: Component<RuleOption> = (option: RuleOption):Strategy =
   while (current <= availableWidth + RULE_PADDING) {
     actions.push(`M${current},10 V15`);
     texts.push(createText({
-      content: `${(stepCount++) * option.step}`,
+      content: `${(stepCount++) * option.step} ms`,
       x: current,
       y: 25,
       className: 'calibration',

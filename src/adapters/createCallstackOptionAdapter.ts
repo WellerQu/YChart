@@ -9,7 +9,7 @@ import { CallstackData, CallstackOption, } from '../@types';
 /**
  * @ignore
  */
-const widthClamp = clamp(1, Infinity);
+const widthClamp = clamp(5, Infinity);
 
 /**
  * 将 CallstackData 实例转换为 CallstackOption 实例
@@ -22,11 +22,11 @@ const createCallstackOptionAdapter = (stack: CallstackData): CallstackOption => 
   const maxTime = stack.maxTimeOffset;
 
   return {
-    id: stack.id,
-    text: `${stack.name} (${stack.totalTimeSpend}ms)`,
+    id: stack.spanId,
+    text: `${stack.transactionName} (${stack.elapsedTime}ms)`,
     // paddingLeft: (stack.timeOffset + (stack.parentTimeOffset || 0)) * availableWidth / maxTime,
     paddingLeft: (stack.timeOffset || 0) * availableWidth / maxTime,
-    width: widthClamp(stack.totalTimeSpend * availableWidth / maxTime),
+    width: widthClamp(stack.elapsedTime * availableWidth / maxTime),
     color: stack.fill || 'red',
     className: 'callstack',
   };

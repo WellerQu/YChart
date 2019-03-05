@@ -22,7 +22,7 @@ const createCallstack: Component<CallstackOption> = (option: CallstackOption): S
     content: option.text || '',
     className: 'callstack-desc',
     x: RULE_PADDING + 10,
-    y: 12,
+    y: 16,
   };
   const createNode = compose<VNode>(
     createText(textOption), 

@@ -40,7 +40,7 @@ const handlerHelper = (
   } else if (element.classList.contains(NODE_TYPE.CALL_STACK)) {
     const stack = data
       ? (data as CallstackData[]).find(
-        n => n.id === element.id
+        n => n.spanId === element.id
       )
       : null;
 

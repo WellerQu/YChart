@@ -7,7 +7,7 @@ import { Component, Strategy, AppNodeOption, } from '../@types';
 import compose from '../compose';
 import { createText, createCircle, createGroup, } from './components';
 import { isNull, } from '../utils';
-import { NODE_TYPE } from '../constants/constants';
+import { NODE_TYPE, } from '../constants/constants';
 
 const identity = (a: any) => a;
 

@@ -8,7 +8,7 @@ import { CallstackOption, Component, Strategy, } from '../@types';
 import { VNode, } from 'snabbdom/vnode';
 import compose from '../compose';
 import { createText, createGroup, createRect, } from './components';
-import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants/constants';
+import { CALLSTACK_HEIGHT, RULE_PADDING, TEXT_AREA_WIDTH, } from '../constants/constants';
 
 /**
  * 复合组件 - 组合了文本, 矩形的组件, 创建一个用于创建调用栈的策略函数, 该函数将创建一个VNode
@@ -18,16 +18,12 @@ import { CALLSTACK_HEIGHT, RULE_PADDING, } from '../constants/constants';
 const createCallstack: Component<CallstackOption> = (option: CallstackOption): Strategy => (
   parentNode: VNode
 ) => {
-  const textOption = {
-    content: option.text || '',
-    className: 'callstack-desc',
-    x: RULE_PADDING + 10,
-    y: 16,
-  };
+
+
   const createNode = compose<VNode>(
-    createText(textOption), 
-    createText(textOption), 
     createRect({
+      rx: 5,
+      ry: 5,
       x: RULE_PADDING,
       height: CALLSTACK_HEIGHT,
       width: option.width,

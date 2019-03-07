@@ -17,19 +17,21 @@ const widthClamp = clamp(5, Infinity);
  * @param stack CallstackData 实例
  * @returns
  */
-const createCallstackOptionAdapter = (stack: CallstackData): CallstackOption => {
-  const availableWidth = stack.availableWidth - 2 * RULE_PADDING;
-  const maxTime = stack.maxTimeOffset;
+// const createCallstackOptionAdapter = (stack: CallstackData): CallstackOption => {
+//   // const availableWidth = stack.availableWidth - 2 * RULE_PADDING;
+//   const maxTime = stack.maxTimeOffset;
 
-  return {
-    id: stack.spanId,
-    text: `${stack.transactionName} (${stack.elapsedTime}ms)`,
-    // paddingLeft: (stack.timeOffset + (stack.parentTimeOffset || 0)) * availableWidth / maxTime,
-    paddingLeft: (stack.timeOffset || 0) * availableWidth / maxTime,
-    width: widthClamp(stack.elapsedTime * availableWidth / maxTime),
-    color: stack.fill || 'red',
-    className: 'callstack',
-  };
-};
+//   return {
+//     id: stack.spanId,
+//     text: `${stack.transactionName} (${stack.elapsedTime}ms)`,
+//     // paddingLeft: (stack.timeOffset + (stack.parentTimeOffset || 0)) * availableWidth / maxTime,
+//     paddingLeft: (stack.timeOffset || 0) * availableWidth / maxTime,
+//     width: widthClamp(stack.elapsedTime * availableWidth / maxTime),
+//     color: stack.fill || 'red',
+//     className: 'callstack',
+//   };
+// };
 
-export default createCallstackOptionAdapter;
+// export default createCallstackOptionAdapter;
+
+export default (a: any) => a;

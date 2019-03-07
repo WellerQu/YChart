@@ -140,7 +140,7 @@ export const createText: Component<TextOption> = (option: TextOption): Strategy 
     h(
       'text',
       {
-        attrs: { x: option.x, y: option.y, },
+        attrs: { x: option.x, y: option.y, fill: option.fill, },
         class: { ...classObject, },
         ns: 'http://www.w3.org/2000/svg',
       },

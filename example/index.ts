@@ -1,7 +1,8 @@
 import ychartTopo from '../src/ychart-topo';
 import ychartCallstack from '../src/ychart-callstack';
 import { TopoData, CallstackData, Line, Node, } from '../src/@types';
-import json from './topo.json';
+import topoJson from './topo.json';
+import stackJson from './stack.json';
 import { TOPO_OPERATION_STATE, } from '../src/constants/constants';
 
 const eventOption = {
@@ -25,7 +26,7 @@ const updateTopo = ychartTopo(
   },
 );
 
-const topoData: TopoData = json.data;
+const topoData: TopoData = topoJson.data;
 
 updateTopo(topoData);
 
@@ -40,94 +41,12 @@ btnFullscreen.addEventListener('click', () => {
   
 });
 
-const callstackData: CallstackData = {
-  spanId: '0',
-  appName: 'cba',
-  transactionName: 'root stack service',
-  elapsedTime: 6, // ms
-  timeOffset: 0,
-  fill: 'blue',
-  children: [
-    {
-      spanId: '1',
-      appName: 'abc',
-      transactionName: 'serv 0',
-      elapsedTime: 1,
-      timeOffset: 0,
-      children: [
-        {
-          spanId: '11',
-          appName: 'abc',
-          transactionName: 'serv 01',
-          elapsedTime: 1,
-          timeOffset: 0,
-          children: [
-            {
-              spanId: '111',
-              appName: 'abc 1',
-              transactionName: 'serv 001',
-              elapsedTime: 1,
-              timeOffset: 0,
-            },
-            {
-              spanId: '112',
-              appName: 'abc 1',
-              transactionName: 'serv 002',
-              elapsedTime: 1,
-              timeOffset: 0,
-            },
-          ],
-        },
-        {
-          spanId: '12',
-          appName: 'abc',
-          transactionName: 'serv 02',
-          elapsedTime: 3,
-          timeOffset: 0,
-        },
-      ],
-    },
-    {
-      spanId: '2',
-      appName: 'abc',
-      transactionName: 'serv 1',
-      elapsedTime: 44,
-      timeOffset: 0,
-    },
-  ],
-};
-
-// import randomColor from 'randomcolor';
-
-// const flatten = (root: CallstackData): CallstackData[] => {
-//   const arr = [root];
-//   if (root.children) {
-//     return root.children.reduce((arr, item) => {
-//       return arr.concat(flatten(item));
-//     }, arr);
-//   }
-//   return arr;
-// };
-
-// const stacks = flatten(callstackData);
-// const colursMap = stacks.reduce((map, item) => {
-//   if (!map.has(item.appName))
-//     map.set(item.appName, randomColor({ hue: '#338cff' }));
-//   return map;
-// }, new Map<string, string>());
-
 const updateCallstack = ychartCallstack(document.querySelector('#callstack'), {
   stackClick: (event: Event, data: any): void => {
     console.log(event, data);
   }, 
 });
 
-updateCallstack(callstackData);
+console.log(stackJson.data.spans);
 
-const btnUpdateCallstack = document.querySelector('button#updateCallstackData');
-btnUpdateCallstack.addEventListener('click', () => {
-  callstackData.elapsedTime = 900;
-  callstackData.children[0].elapsedTime = 500;
-
-  updateCallstack(callstackData);
-});
+updateCallstack(stackJson.data.spans);

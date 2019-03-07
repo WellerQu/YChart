@@ -56,6 +56,7 @@ declare interface PositionOption {
 
 declare interface TextOption extends PositionOption {
   content: string;
+  fill?: string;
 }
 
 declare interface ImageOption extends PositionOption {
@@ -72,6 +73,8 @@ declare interface CircleOption extends PositionOption {
 }
 
 declare interface RectOption extends PositionOption {
+  rx?: number;
+  ry?: number;
   height: number;
   width: number;
   stroke?: string;
@@ -238,11 +241,12 @@ declare interface CallstackData {
   transactionName: string;
   elapsedTime: number;
   timeOffset: number;
+  combinedCount: number;
 
+  showName?: string;
+  indent?: number;
   fill?: string;
   children?: CallstackData[];
   parentTimeOffset?: number;
   parentId?: string;
-  maxTimeOffset?: number;
-  availableWidth?: number;
 }

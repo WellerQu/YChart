@@ -5,39 +5,34 @@
 import { Stage, PatchBehavior, CallstackData, } from '../@types';
 import { createStyle, } from '../components/components';
 
+//Consolas,"Courier New",Courier,FreeMono,monospace
+
 const fontSize = '12px';
 const styleSheet = `
 /* <![CDATA[ */
-g.group
-, text.calibration {
-  font-family: Verdana,arial,x-locale-body,sans-serif;
+text.trace-name {
+  font-family: Consolas,"Courier New",Courier,FreeMono,monospace;
   letter-spacing: -.3996px;
   cursor: pointer;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 
-  will-change: z-index, transform, opacity;
+  fill: #00b3b3;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-g.group.callstack:hover > rect {
-  opacity: 0.6;
-}
-
-g.group.callstack > text:nth-child(2) {
-  stroke: hsl(0, 0%, 100%);
-  stroke-width: 2px;
-}
-
-g.group.callstack > text.callstack-desc {
-  font-size: ${fontSize};
-}
-
-text.calibration {
+text.center {
   text-anchor: middle;  /* 文本水平居中 */
   dominant-baseline: middle; /* 文本垂直居中 */
-  font-size: ${fontSize};
+}
+
+text.calibration, text.elapsed-time {
+  font-family: Verdana,arial,x-locale-body,sans-serif;
+  letter-spacing: -.3996px;
+  -webkit-user-select: none;
   user-select: none;
-  pointer-event: none;
+  font-size: 12px;
 }
 /* ]]> */
 `;

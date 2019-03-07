@@ -30,17 +30,19 @@ export const ARROW_WIDTH = 6;
 /**
  * 调用栈图中的每个调用栈的高
  */
-export const CALLSTACK_HEIGHT = 26;
+export const CALLSTACK_HEIGHT = 6;
 
 /**
  * 调用栈间隙高度
  */
-export const STACK_SPACE = 15;
+export const STACK_SPACE = 30;
 
 /**
  * 调用栈图中标尺左右补白
  */
 export const RULE_PADDING = 20; // 标尺左右补白
+
+export const TEXT_AREA_WIDTH = 400;
 
 /**
  * 标尺的高

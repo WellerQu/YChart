@@ -38,15 +38,14 @@ btnUpdate.addEventListener('click', () => {
 
 const btnFullscreen = document.querySelector('button#fullTopoData');
 btnFullscreen.addEventListener('click', () => {
-  
 });
 
-const updateCallstack = ychartCallstack(document.querySelector('#callstack'), {
-  stackClick: (event: Event, data: any): void => {
-    console.log(event, data);
-  }, 
-});
+const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
 
 console.log(stackJson.data.spans);
 
 updateCallstack(stackJson.data.spans);
+
+document.querySelector('svg#callstack').addEventListener('stackclick', (event) => {
+  console.log(event);
+});

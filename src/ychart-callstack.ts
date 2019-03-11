@@ -48,10 +48,9 @@ export default (container: HTMLElement, eventOption?: EventOption, updated?: Sub
     showLoading,
     callstackLayout, 
     callstackStyle,
-    event(eventOption),
   );
   const createStageAt = enhancer(createStage);
-  const { create, patch, subscribe, viewbox, size, stageNode, } = createStageAt(container);
+  const { patch, subscribe, viewbox, size, stageNode, } = createStageAt(container);
 
   updated && subscribe(updated);
 

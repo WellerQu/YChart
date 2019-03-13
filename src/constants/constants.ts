@@ -38,6 +38,11 @@ export const CALLSTACK_HEIGHT = 6;
 export const STACK_SPACE = 30;
 
 /**
+ * 调用栈缩进
+ */
+export const INDENT = 40;
+
+/**
  * 调用栈图中标尺左右补白
  */
 export const RULE_PADDING = 20; // 标尺左右补白

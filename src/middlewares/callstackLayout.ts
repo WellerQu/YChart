@@ -4,10 +4,10 @@
  * @module middlewares
  */
 
-import { Stage, PatchBehavior, CallstackData, EventOption, } from '../@types';
+import { Stage, PatchBehavior, CallstackData, } from '../@types';
 import { CALLSTACK_HEIGHT, RULE_HEIGHT, STACK_SPACE, TEXT_AREA_WIDTH, } from '../constants/constants';
 import { h, } from 'snabbdom';
-import { setupEventHandler, } from '../utils';
+import { setupEventHandler, findRoot, } from '../utils';
 
 const INDENT = 20;
 const OFFSET_X = 10;
@@ -15,6 +15,7 @@ const WORD_WIDTH = 8;
 const ELLIPSIS_WIDTH = 3 * WORD_WIDTH;
 const PADDING_RIGHT = 90;
 const PADDING_LEFT = 50;
+const FOLD_BUTTON_SIZE = 10;
 
 type Action = (prevNode:CallstackData, node: CallstackData) => void;
 
@@ -30,7 +31,9 @@ const flatten = (node: CallstackData): CallstackData[] => {
 const walkTree = (prevNode:CallstackData, node: CallstackData, action: Action) => {
   if (!node) return;
 
+  node.transactionName = node.transactionName || '';
   node.indent = node.indent || 0;
+  node.isFold = false;
   action(prevNode, node);
 
   if (!node.children) return;
@@ -59,7 +62,7 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
   if (!userState)
     return next(userState);
 
-  const handler = (data: CallstackData) => (event: MouseEvent) => {
+  const clickHandler = (data: CallstackData) => (event: MouseEvent) => {
     const stackClickEvent = new CustomEvent('stackclick', {
       detail: data,
     });
@@ -108,7 +111,6 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
     const currentLineY = RULE_HEIGHT + STACK_SPACE * lineLevel;
     const nameWidth = node.transactionName.length * WORD_WIDTH;
     const combinedWidth = node.combinedCount ? OFFSET_X * 2 + node.combinedCount.toString().length * 7.4 : 0;
-    // const combinedWidth = 0;
     const nameMaxWidth = (TEXT_AREA_WIDTH - (OFFSET_X * 2) - node.indent - ELLIPSIS_WIDTH - OFFSET_X - combinedWidth);
 
     node.transactionName = node.transactionName
@@ -120,6 +122,59 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
       node.showName = node.transactionName.slice(0, nameMaxWidth / WORD_WIDTH - 3) + '...';
     } else {
       node.showName = node.transactionName;
+    }
+
+    const lastChildrenLength = flatten(prevNode).length;
+    const linePathD = lineLevel > 1 ? `\
+M${node.indent + PADDING_LEFT - INDENT - OFFSET_X},${currentLineY - STACK_SPACE * (1 + lastChildrenLength) + FOLD_BUTTON_SIZE / 2}\
+v${STACK_SPACE * (1 + lastChildrenLength) - FOLD_BUTTON_SIZE / 2}\
+h${INDENT}` : '';
+
+    // 绘制选择强化提示
+    root.children.push(h('rect', {
+      attrs: {
+        id: `selection-bar-${node.spanId}`,
+        x: OFFSET_X,
+        y: currentLineY - 8,
+        width: availableWidth - 2 * OFFSET_X,
+        height: STACK_SPACE,
+        fill: 'hsl(0, 0%, 97%)',
+        opacity: 0,
+      },
+      class: { 'selection-bar': true, },
+      ns: 'http://www.w3.org/2000/svg',
+    }));
+
+    // 绘制连线
+    root.children.push(h('path', {
+      attrs: {
+        id: `line-${node.spanId}`,
+        style: 'font-size: 12px;',
+        fill: 'none',
+        stroke: '#d4d8db',
+        strokeWidth: 1,
+        d: `\
+${linePathD}\
+M${PADDING_LEFT + node.indent + Math.min(nameWidth, nameMaxWidth) + OFFSET_X + combinedWidth},${currentLineY}\
+h${availableWidth - PADDING_LEFT - node.indent - Math.min(nameWidth, nameMaxWidth) - OFFSET_X - combinedWidth - PADDING_RIGHT}`,
+      },
+      ns: 'http://www.w3.org/2000/svg',
+    }));
+
+    // 绘制折叠操作按钮
+    if (node.children.length > 0) {
+      const folder = h('rect', {
+        attrs: { 
+          id: `folder-${node.spanId}`,
+          x: node.indent + PADDING_LEFT - OFFSET_X - FOLD_BUTTON_SIZE / 2, 
+          y: currentLineY - FOLD_BUTTON_SIZE / 2,
+          width: FOLD_BUTTON_SIZE,
+          height: FOLD_BUTTON_SIZE,
+          fill: 'hsl(180, 100%, 35%)',
+        },
+        ns: 'http://www.w3.org/2000/svg',
+      });
+      root.children.push(folder);
     }
 
     // 绘制trace名称
@@ -136,28 +191,8 @@ export const callstackLayout = (stage: Stage) => (next: PatchBehavior) => (userS
       }, node.showName),
     ]);
     // 绑定trace名称点击事件
-    setupEventHandler(handler(node))('click')(vnodeTransactionName);
+    setupEventHandler(clickHandler(node))('click')(vnodeTransactionName);
     root.children.push(vnodeTransactionName);
-
-    // 绘制连线
-    const lastChildrenLength = flatten(prevNode).length;
-    const linePathD = lineLevel > 1 ? `\
-M${node.indent + PADDING_LEFT - INDENT - OFFSET_X},${currentLineY - STACK_SPACE * (1 + lastChildrenLength)}\
-v${STACK_SPACE * (1 + lastChildrenLength)}\
-h${INDENT}` : '';
-    root.children.push(h('path', {
-      attrs: {
-        style: 'font-size: 12px;',
-        fill: 'none',
-        stroke: '#d4d8db',
-        strokeWidth: 1,
-        d: `\
-${linePathD}\
-M${PADDING_LEFT + node.indent + Math.min(nameWidth, nameMaxWidth) + OFFSET_X + combinedWidth},${currentLineY}\
-h${availableWidth - PADDING_LEFT - node.indent - Math.min(nameWidth, nameMaxWidth) - OFFSET_X - combinedWidth - PADDING_RIGHT}`,
-      },
-      ns: 'http://www.w3.org/2000/svg',
-    }));
 
     // 绘制耗时度量条
     const barX = TEXT_AREA_WIDTH + node.timeOffset * ruleMaxWidth / maxTime;
@@ -181,7 +216,7 @@ h${availableWidth - PADDING_LEFT - node.indent - Math.min(nameWidth, nameMaxWidt
       }, node.transactionName),
     ]);
     // 绑定trace耗时度量条点击事件
-    setupEventHandler(handler(node))('click')(vnodeElapsedTime);
+    setupEventHandler(clickHandler(node))('click')(vnodeElapsedTime);
     root.children.push(vnodeElapsedTime);
 
     // 投影
@@ -190,7 +225,7 @@ h${availableWidth - PADDING_LEFT - node.indent - Math.min(nameWidth, nameMaxWidt
         ...barOption,
         y: RULE_HEIGHT + STACK_SPACE + CALLSTACK_HEIGHT,
         height: CALLSTACK_HEIGHT / 2,
-        opacity: 0.2,
+        opacity: 0.4,
       },
       ns: 'http://www.w3.org/2000/svg',
     }));
@@ -227,7 +262,7 @@ h${availableWidth - PADDING_LEFT - node.indent - Math.min(nameWidth, nameMaxWidt
 
 
   // 自动适应内容高度
-  const height = stacks.length * STACK_SPACE + RULE_HEIGHT + 20;
+  const height = stacks.filter(item => item.isFold === false).length * STACK_SPACE + RULE_HEIGHT + 20;
   const size = stage.size();
   const viewbox = stage.viewbox();
   stage.size({ ...size, height, });

@@ -42,10 +42,13 @@ btnFullscreen.addEventListener('click', () => {
 
 const updateCallstack = ychartCallstack(document.querySelector('#callstack'));
 
-console.log(stackJson.data.spans);
-
 updateCallstack(stackJson.data.spans);
 
-document.querySelector('svg#callstack').addEventListener('stackclick', (event) => {
-  console.log(event);
-});
+// document.querySelector('svg#callstack').addEventListener('stackclick', (event) => {
+//   console.log(event);
+// });
+
+// document.querySelector('svg#callstack').addEventListener('redraw', () => {
+//   console.log(stackJson.data.spans);
+//   updateCallstack(stackJson.data.spans);
+// });

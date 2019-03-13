@@ -1,138 +1,163 @@
-/**
- * @module instances
- */
+import { CallstackData, } from './@types';
+import toNode from 'snabbdom/tovnode';
+import { VNode, } from 'snabbdom/vnode';
+import { init, h, } from 'snabbdom/snabbdom';
+import attributes from 'snabbdom/modules/attributes';
+import style from 'snabbdom/modules/style';
+import classes from 'snabbdom/modules/class';
+import eventlistener from 'snabbdom/modules/eventlisteners';
+import Stack from './cores/Stack';
+import { INDENT, TEXT_AREA_WIDTH, } from './constants/constants';
 
-import { UpdateBehavior, CallstackData, Subscriber, Strategy, Viewbox, EventOption, } from './@types';
-import createStage from './cores/createStage';
-import createCallstack from './components/createCallstack';
-import createCallLine from './components/createCallLine';
-import applyMiddlewares from './cores/applyMiddlewares';
+const vPatch = init([
+  classes,
+  style,
+  attributes,
+  eventlistener,
+]);
 
-import { callstackLayout, } from './middlewares/callstackLayout';
-import { callstackStyle, } from './middlewares/callstackStyle';
-import { showLoading, } from './middlewares/showLoading';
-import { event, } from './middlewares/event';
+const flatten = (node: CallstackData): CallstackData[] => {
+  if (!node) return [];
+  if (!node.children) return [node,];
 
-// import createCallstackOptionAdapter from './adapters/createCallstackOptionAdapter';
-import compose from './compose';
-import { max, } from './utils';
-import { createRule, } from './components/createRule';
-import clone from './clone';
-import { ID_COMBINER, CALLSTACK_HEIGHT, RULE_HEIGHT, STACK_SPACE, RULE_PADDING, TEXT_AREA_WIDTH, } from './constants/constants';
-import { createCircle, createText, } from './components/components';
+  return node.children.reduce<CallstackData[]>((arr: CallstackData[], item: CallstackData) => {
+    return arr.concat(flatten(item));
+  }, [node,]);
+};
 
-// function flatten (node: CallstackData): CallstackData[] {
-//   const stacks: CallstackData[] = [];
+const PRIMARY_COLOR = 'hsl(180, 100%, 35%)';
 
-//   stacks.push(node);
+const stylesheet = `
+.callstack {
+  padding: 0 50px 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+  font-weight: 400;
+  font-size: .875rem;
+  line-height: 1.15;
+}
+.callstack .rule {
+  height: 25px;
+  background: white;
+  position: relative;
+  z-index: 2;
+}
+.callstack ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.callstack .tree, .callstack .node {
+  position: relative;
+}
+.callstack .node .folder {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 2px;
+  background: ${PRIMARY_COLOR};
+  z-index: 2;
+  border-radius: 3px;
+}
+.callstack .node .folder + input {
+  display: none;
+}
+.callstack .node .folder + input:checked + ul {
+  display: none;
+}
+.callstack .tree:before {
+  content: '';
+  position: absolute;
+  top: -35px;
+  bottom: 0;
+  left: 0;
+  display: block;
+  border-left: solid 1px hsl(206, 9%, 85%);
+}
+.callstack .root.tree:before {
+  top: 9px;
+}
+.callstack .node:last-child:before {
+  content: '';
+  display: block;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 0;
+  width: 1px;
+}
+.callstack .data-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 0 0 1px;
+}
+.callstack .info-bar {
+  box-sizing: border-box;
+  padding: 0 16px;
+  font-size: 80%;
+  margin: 0 0 20px 0;
+}
+.callstack .data-bar .elapsed-time {
+  position: relative;
+}
+.callstack .data-bar .elapsed-time:after {
+  content: attr(data-elapsed-time);
+  font-size: 10px;
+  font-weight: bold;
+  display: block;
+  position: absolute;
+  max-width: 60px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.callstack .data-bar .line {
+  position: absolute;
+  right: 0;
+  border-top: solid 1px hsl(206, 9%, 85%);
+  z-index: -1;
+  transform: scaleY(0.5);
+}
+.callstack .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: white;
+  box-sizing: border-box;
+  padding: 0 16px;
+  display: inline-block;
+  vertical-align: middle;
+  color: hsl(180, 100%, 35%);
+}
+`;
 
-//   if (!node.children || node.children.length === 0) return stacks;
+export default (container: HTMLElement) => {
+  let oldNode = toNode(container);
+  
+  return (data: CallstackData) => {
+    const stackList = flatten(data);
+    const maxDuration = Math.max(...stackList.map(n => n.elapsedTime + (n.timeOffset || 0)));
 
-//   return node.children.reduce<CallstackData[]>((arr: CallstackData[], item: CallstackData) => {
-//     item.parentId = node.spanId;
-//     // item.timeOffset = 100;
-//     // item.parentTimeOffset = node.timeOffset + node.parentTimeOffset || 0;
-//     return arr.concat(flatten(item));
-//   }, stacks);
-// };
+    const stack = new Stack(data, 0, maxDuration);
+    const newNode = h('div', {
+      class: { callstack: true, },
+    }, [
+      // 添加公共样式
+      h('style', {}, stylesheet),
+      // 添加标尺
+      h('div', {
+        class: { rule: true, },
+      }),
+      // 添加树形组件
+      h('ul', {
+        class: { tree: true, root: true, },
+      }, stack.render()),
+    ]);
 
-// const callstack = compose<Strategy>(
-//   createCallstack,
-//   createCallstackOptionAdapter,
-//   clone
-// );
-
-export default (container: HTMLElement, eventOption?: EventOption, updated?: Subscriber): UpdateBehavior<CallstackData> => {
-  const elementID = container.id;
-  const enhancer = applyMiddlewares(
-    showLoading,
-    callstackLayout, 
-    callstackStyle,
-  );
-  const createStageAt = enhancer(createStage);
-  const { patch, subscribe, viewbox, size, stageNode, } = createStageAt(container);
-
-  updated && subscribe(updated);
-
-  patch();
-
-  return (data: CallstackData, option?: Viewbox) => {
-    const root = stageNode();
-    root.data.attrs.id = elementID;
-
-    viewbox(option);
-    size(option);
-
-    if (!data) return patch();
-
-    // const flattenData = flatten(data);
-    // const maxDuration = max(...flattenData.map(n => n.elapsedTime + (n.timeOffset || 0)));
-    // const availableWidth = root.data.attrs.width as number;
-
-    // // 当最大长度与刻度步长无法取整时, 需要向下取一个最近的最小可取整值
-    // // 比如: 步长为50, 最大值为835 则需要改成 850
-    // // 比如: 步长为50, 最大值为860 则需要改成 900
-    // let maxWidth = maxDuration;
-    // let RULE_STEP = Math.pow(10, (maxWidth.toString().length - 1));
-
-    // if (maxWidth % RULE_STEP !== 0) {
-    //   const a = maxWidth / RULE_STEP >> 0;
-    //   const b = maxWidth % RULE_STEP;
-
-    //   if (b > RULE_STEP) {
-    //     maxWidth = a * RULE_STEP + 3 * RULE_STEP;
-    //   } else {
-    //     maxWidth = a * RULE_STEP + 2 * RULE_STEP;
-    //   }
-    // }
-
-    // create(createRule({
-    //   min: 0,
-    //   max: maxWidth,
-    //   step: RULE_STEP,
-    //   availableWidth,
-    // }));
-
-    // for (let i = 0, item; item = flattenData[i]; i++) {
-    //   item.maxTimeOffset = maxWidth;
-    //   item.availableWidth = availableWidth;
-
-    // createText({        
-    //   content: item.transactionName,
-    //   className: 'callstack-desc',
-    //   x: RULE_PADDING + 20 - TEXT_AREA_WIDTH,
-    //   y: 6,
-    //   fill: '#2879ff',
-    // }); 
-    // create(createCircle({
-    //   fill: '#d4d8db',
-    //   cx: RULE_PADDING,
-    //   cy: RULE_HEIGHT + 3,
-    //   radius: 6,
-    // }));
-    // create(callstack(item)); 
-    // create(createCallLine({
-    //   id: `${item.spanId}${ID_COMBINER}${item.parentId || ''}`,
-    //   x1: 0,
-    //   y1: 0,
-    //   x2: 0,
-    //   y2: 0,
-    //   L: [{ x: 0, y: 0,},],
-    //   // strokeColor: '#d4d8db',
-    //   strokeColor: '#000',
-    //   strokeWidth: 0.5,
-    //   className: 'callline',
-    // }));
-    // }
-
-    // const height = flattenData.length * (CALLSTACK_HEIGHT + STACK_SPACE) + RULE_HEIGHT;
-    // if (option) {
-    //   option.height = height;
-    // }
-
-    // size(option);
-    // viewbox(option);
-
-    patch(data);
+    oldNode = vPatch(oldNode, newNode);
   };
 };

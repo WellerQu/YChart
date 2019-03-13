@@ -244,6 +244,7 @@ declare interface CallstackData {
   combinedCount: number;
 
   showName?: string;
+  isFold?: boolean;
   combined?: CallstackData[],
   indent?: number;
   fill?: string;

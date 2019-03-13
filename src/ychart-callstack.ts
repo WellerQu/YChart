@@ -26,6 +26,7 @@ const flatten = (node: CallstackData): CallstackData[] => {
 };
 
 const PRIMARY_COLOR = 'hsl(180, 100%, 35%)';
+const BORDER_COLOR = 'hsl(206, 9%, 85%)';
 
 const stylesheet = `
 .callstack {
@@ -39,7 +40,31 @@ const stylesheet = `
   height: 25px;
   background: white;
   position: relative;
+  bottom: -6px;
   z-index: 2;
+  box-sizing: border-box;
+  margin: 0 0 0 ${TEXT_AREA_WIDTH + 1}px;
+  display: flex;
+  align-items: flex-end;
+}
+.callstack .rule .calibration:not(:first-child) {
+  flex: 1;
+}
+.callstack .rule .calibration {
+  box-sizing: border-box;
+  width: 1px;
+  height: 8px;
+  border-right: solid 1px ${BORDER_COLOR};
+  position: relative;
+}
+.callstack .rule .calibration:before {
+  content: attr(data-calibration);
+  font-size: 10px;
+  position: absolute;
+  right: 0;
+  top: -10px;
+  transform: translateX(50%);
+  white-space: nowrap;
 }
 .callstack ul {
   list-style: none;
@@ -71,7 +96,7 @@ const stylesheet = `
   bottom: 0;
   left: 0;
   display: block;
-  border-left: solid 1px hsl(206, 9%, 85%);
+  border-left: solid 1px ${BORDER_COLOR};
 }
 .callstack .root.tree:before {
   top: 9px;
@@ -100,10 +125,14 @@ const stylesheet = `
 }
 .callstack .data-bar .elapsed-time {
   position: relative;
+  cursor: pointer;
+}
+.callstack .data-bar .elapsed-time:hover {
+  opacity: 0.7;
 }
 .callstack .data-bar .elapsed-time:after {
   content: attr(data-elapsed-time);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   display: block;
   position: absolute;
@@ -118,7 +147,7 @@ const stylesheet = `
 .callstack .data-bar .line {
   position: absolute;
   right: 0;
-  border-top: solid 1px hsl(206, 9%, 85%);
+  border-top: solid 1px ${BORDER_COLOR};
   z-index: -1;
   transform: scaleY(0.5);
 }
@@ -131,7 +160,23 @@ const stylesheet = `
   padding: 0 16px;
   display: inline-block;
   vertical-align: middle;
-  color: hsl(180, 100%, 35%);
+  color: ${PRIMARY_COLOR};
+  cursor: pointer;
+  opacity: 0.8;
+}
+.callstack .title:hover {
+  opacity: 1;
+}
+.callstack .combined {
+  flex: 0 0 18px;
+  height: 18px;
+  margin: 0 16px 0 0;
+  line-height: 18px;
+  text-align: center;
+  background: ${BORDER_COLOR};
+  border-radius: 3px;
+  color: white;
+  font-size: 12px;
 }
 `;
 
@@ -142,7 +187,7 @@ export default (container: HTMLElement) => {
     const stackList = flatten(data);
     const maxDuration = Math.max(...stackList.map(n => n.elapsedTime + (n.timeOffset || 0)));
 
-    const stack = new Stack(data, 0, maxDuration);
+    const stack = new Stack(data, maxDuration);
     const newNode = h('div', {
       class: { callstack: true, },
     }, [
@@ -151,7 +196,14 @@ export default (container: HTMLElement) => {
       // 添加标尺
       h('div', {
         class: { rule: true, },
-      }),
+      }, Array(6).fill(0).map((_: any, index: number) => 
+        h('div', {
+          attrs: {
+            'data-calibration': `${(index * maxDuration / 5) >> 0} ms`,
+          },
+          class: { calibration: true, },
+        })
+      )),
       // 添加树形组件
       h('ul', {
         class: { tree: true, root: true, },

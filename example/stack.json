@@ -247,7 +247,7 @@
           "component": "mysql",
           "asyncCalled": false,
           "httpMethod": "",
-          "combinedCount": 0
+          "combinedCount": 3
         }, {
           "tierName": "school_service_evaluate",
           "nodeName": "school-service-evaluate-4229910274-v711v-7",

@@ -11,71 +11,73 @@ const PADDING_LEFT = 50;
 const FOLD_BUTTON_SIZE = 10;
 
 export default class Stack {
-  constructor (data: CallstackData, availableWidth: number, maxDuration: number) {
-    this._children = data.children.map(item => {
-      const stack = new Stack(item, availableWidth, maxDuration); 
-      stack.parentStack = this;
-
-      return stack;
-    });
+  constructor (data: CallstackData, maxDuration: number) {
     this._elapsedTime = data.elapsedTime;
     this._fill = data.fill || 'hsl(40, 100%, 63%)';
-    this._isFold = false;
     this._timeOffset = data.timeOffset;
     this._title = data.transactionName;
-    this._visible = true;
-    this._availableWidth = availableWidth;
     this._maxDuration = maxDuration;
     this._id = data.spanId;
+    this._combinedCount = data.combinedCount;
+    this._children = [];
+
+    // 合并操作
+    for (let i = 0, item = data.children[i]; item; item = data.children[++i]) {
+      const subStack = new Stack(item, maxDuration);
+      subStack.parentStack = this;
+
+      if (item.combinedCount > 0) {
+        subStack._combinedElapsedTime = 
+          data.children
+            .slice(i, i + item.combinedCount)
+            .reduce((sum, item) => sum += item.elapsedTime, 0);
+
+        i += item.combinedCount - 1;
+      }
+
+      this._children.push(subStack);
+    }
   }
 
   private _id: string;
   private _title: string;
-  private _isFold: boolean;
   private _timeOffset: number;
   private _elapsedTime: number;
   private _fill: string;
   private _children: Stack[];
-  private _visible: boolean;
-  private _availableWidth: number;
   private _maxDuration: number;
-
-  public parentStack: Stack;
+  private _combinedCount: number;
+  private _combinedElapsedTime: number;
+  private parentStack: Stack;
 
   public get elapsedTime () : string {
     if (this._elapsedTime < 1)
       return '< 1 ms';
 
-    return this._elapsedTime + ' ms';
+    return (this._combinedElapsedTime || this._elapsedTime) + ' ms';
   }
 
   public get elapsedTimeWidth () : string {
     if (this._elapsedTime < 1)
       return '8px';
 
-    return `${(this._elapsedTime / this._maxDuration * 100) >> 0}%`;
+    return `${((this._combinedElapsedTime || this._elapsedTime) / this._maxDuration * 100) >> 0}%`;
   }
   
   public get fill () : string {
     if (this._elapsedTime < 1)
-      return 'gray';
+      return 'hsl(206, 9%, 85%)';
 
     return this._fill;
   }
 
-  
-  public get timeOffset () : string {
+  public get timeOffsetWidth () : string {
     if (this._timeOffset < 0)
       return '0px';
 
     return `${(this._timeOffset / this._maxDuration * 100) >> 0}%`;
   }
   
-
-  public set visible (v : boolean) {
-    this._visible = v;
-  }
-
   public render (): VNode {
     let indentLevel = 0;
     let parent: Stack = this.parentStack;
@@ -97,15 +99,23 @@ export default class Stack {
         // 显示名称
         h('div', {
           attrs: {
-            style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px;`,
+            style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex;`,
           },
         }, [
           h('div', {
             attrs: {
               style: 'max-width: 100%;',
+              title: this._title,
             },
             class: { title: true, },
           }, this._title),
+          this._combinedElapsedTime ?
+            h('div', {
+              attrs: {
+                title: 'These calls were combined in a batch',
+              },
+              class: { combined: true, },
+            }, this._combinedCount): null,
         ]),
         h('div', {
           attrs: {
@@ -116,7 +126,7 @@ export default class Stack {
           h('div', {
             attrs: {
               'data-elapsed-time': this.elapsedTime,
-              style: `height: ${CALLSTACK_HEIGHT}px; width: ${this.elapsedTimeWidth}; background: ${this.fill}; left: ${this.timeOffset};`,
+              style: `height: ${CALLSTACK_HEIGHT}px; width: ${this.elapsedTimeWidth}; background: ${this.fill}; left: ${this.timeOffsetWidth};`,
             },
             class: { 'elapsed-time': true, },
           }),

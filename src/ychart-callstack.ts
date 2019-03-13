@@ -40,7 +40,6 @@ const stylesheet = `
 }
 .callstack .rule {
   height: 25px;
-  background: white;
   position: relative;
   bottom: -6px;
   z-index: 2;
@@ -71,7 +70,7 @@ const stylesheet = `
 .callstack .shadow {
   height: ${CALLSTACK_HEIGHT / 2}px;
   position: relative;
-  bottom: -43px;
+  bottom: -50px;
   z-index: 2;
   box-sizing: border-box;
   margin: 0 0 0 ${TEXT_AREA_WIDTH + 1}px;
@@ -94,7 +93,7 @@ const stylesheet = `
   position: absolute;
   width: 15px;
   height: 15px;
-  top: 2px;
+  top: 10px;
   background: ${PRIMARY_COLOR};
   z-index: 2;
   border-radius: 3px;
@@ -123,7 +122,7 @@ const stylesheet = `
   background: white;
   position: absolute;
   left: 0;
-  top: 9px;
+  top: 17px;
   bottom: 0;
   width: 1px;
 }
@@ -137,7 +136,15 @@ const stylesheet = `
   box-sizing: border-box;
   padding: 0 16px;
   font-size: 80%;
-  margin: 0 0 20px 0;
+}
+.callstack .selectable {
+  padding: 8px 0 20px 0;
+}
+.callstack .selectable.highlight {
+  background: hsl(0, 0%, 96%);
+}
+.callstack .selectable.highlight .title {
+  background: transparent;
 }
 .callstack .data-bar .elapsed-time {
   position: relative;

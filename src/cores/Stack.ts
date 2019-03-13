@@ -5,6 +5,7 @@ import { CallstackData, } from '../@types';
 
 export default class Stack {
   constructor (data: CallstackData, maxDuration: number) {
+    this._originData = data;
     this._elapsedTime = data.elapsedTime;
     this._fill = data.fill || 'hsl(40, 100%, 63%)';
     this._timeOffset = data.timeOffset;
@@ -34,6 +35,7 @@ export default class Stack {
     }
   }
 
+  private _originData: CallstackData;
   private _hasError: boolean;
   private _isAsyncCalled: boolean;
   private _id: string;
@@ -82,6 +84,32 @@ export default class Stack {
   public get title () : string {
     return this._title;
   }
+
+  private handleSelectItemChange = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    let parentElement = target.parentElement;
+
+    while (parentElement && parentElement.classList) {
+      if (parentElement.classList.contains('root')) {
+        break;
+      }
+
+      parentElement = parentElement.parentElement;
+    }
+
+    if (!parentElement) {
+      return;
+    }
+
+    const selectables = Array.from(parentElement.querySelectorAll('.selectable'));
+    selectables.forEach((item: HTMLElement) => {
+      if (item.id === this._id) {
+        item.classList.add('highlight');
+      } else {
+        item.classList.remove('highlight');
+      }
+    });
+  }
   
   public render (): VNode {
     let indentLevel = 0;
@@ -98,73 +126,87 @@ export default class Stack {
       },
       class: { node: true, },
     }, [
+      // 背景高亮作为选中反馈
       h('div', {
-        class: { 'data-bar': true, },
+        attrs: {
+          id: this._id,
+        },
+        class: { selectable: true, },
       }, [
+        h('div', {
+          class: { 'data-bar': true, },
+        }, [
         // 显示名称
-        h('div', {
-          attrs: {
-            style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex;`,
-          },
-        }, [
           h('div', {
             attrs: {
-              style: 'max-width: 100%;',
-              title: this.title,
+              style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex;`,
             },
-            class: { title: true, },
-          }, this.title),
-          this._combinedElapsedTime ?
+          }, [
             h('div', {
               attrs: {
-                title: 'These calls were combined in a batch',
+                style: 'max-width: 100%;',
+                title: this.title,
               },
-              class: { combined: true, tag: true, },
-            }, this._combinedCount): null,
-          this._isAsyncCalled ? 
-            h('div', {
-              attrs: {
-                title: 'This is an asynchronous call',
+              class: { title: true, },
+              on: {
+                click: this.handleSelectItemChange,
               },
-              class: { async: true, tag: true, },
-            }, 'A'): null,
-          this._hasError ?
-            h('div', {
-              attrs: {
-                title: 'An error occurred on the call',
-              },
-              class: { error: true, tag: true, },
-            }, 'E'): null,
-        ]),
-        h('div', {
-          attrs: {
-            style: 'position: relative; flex: 1; box-sizing: border-box;',
-          },
-        }, [
-        // 数据度量条
+            }, this.title),
+            this._combinedElapsedTime ?
+              h('div', {
+                attrs: {
+                  title: 'These calls were combined in a batch',
+                },
+                class: { combined: true, tag: true, },
+              }, this._combinedCount): null,
+            this._isAsyncCalled ? 
+              h('div', {
+                attrs: {
+                  title: 'This is an asynchronous call',
+                },
+                class: { async: true, tag: true, },
+              }, 'A'): null,
+            this._hasError ?
+              h('div', {
+                attrs: {
+                  title: 'An error occurred on the call',
+                },
+                class: { error: true, tag: true, },
+              }, 'E'): null,
+          ]),
           h('div', {
             attrs: {
-              'data-elapsed-time': this.elapsedTime,
-              style: `height: ${CALLSTACK_HEIGHT}px; width: ${this.elapsedTimeWidth}; background: ${this.fill}; left: ${this.timeOffsetWidth};`,
+              style: 'position: relative; flex: 1; box-sizing: border-box;',
             },
-            class: { 'elapsed-time': true, },
+          }, [
+            // 数据度量条
+            h('div', {
+              attrs: {
+                'data-elapsed-time': this.elapsedTime,
+                style: `height: ${CALLSTACK_HEIGHT}px; width: ${this.elapsedTimeWidth}; background: ${this.fill}; left: ${this.timeOffsetWidth};`,
+              },
+              class: { 'elapsed-time': true, },
+              on: {
+                click: this.handleSelectItemChange,
+              },
+            }),
+          ]),
+          // 水平线
+          h('div', {
+            attrs: {
+              style: `left: ${indentLevel === 0 ? 0 : -INDENT}px;`,
+            },
+            class: { line: true, },
           }),
         ]),
-        // 水平线
         h('div', {
-          attrs: {
-            style: `left: ${indentLevel === 0 ? 0 : -INDENT}px;`,
-          },
-          class: { line: true, },
-        }),
+          class: { 'info-bar': true, },
+        }, 'on api-server1'),
       ]),
-      h('div', {
-        class: { 'info-bar': true, },
-      }, 'on api-server1'),
       this._children.length > 0 ?
         h('label', {
           attrs: {
-            for: this._id,
+            for: `folder-${this._id}`,
             style: `left: ${indentLevel * INDENT - 7}px`,
           },
           class: { folder: true, },
@@ -172,7 +214,7 @@ export default class Stack {
       this._children.length > 0 ?
         h('input', {
           attrs: {
-            id: this._id,
+            id: `folder-${this._id}`,
             type: 'checkbox',
           },
         }): null,

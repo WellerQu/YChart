@@ -242,10 +242,10 @@
           "tierId": "831721001062952960",
           "instanceId": "868296424552267776",
           "appName": "哗啦啦学堂",
-          "error": false,
+          "error": true,
           "timeOffset": -108,
           "component": "mysql",
-          "asyncCalled": false,
+          "asyncCalled": true,
           "httpMethod": "",
           "combinedCount": 3
         }, {
@@ -311,7 +311,7 @@
         "tierId": "831721001062952960",
         "instanceId": "868296424552267776",
         "appName": "哗啦啦学堂",
-        "error": false,
+        "error": true,
         "timeOffset": -113,
         "component": "grpcService",
         "asyncCalled": true,

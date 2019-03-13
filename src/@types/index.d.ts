@@ -242,6 +242,8 @@ declare interface CallstackData {
   elapsedTime: number;
   timeOffset: number;
   combinedCount: number;
+  error: boolean;
+  asyncCalled: boolean;
 
   showName?: string;
   isFold?: boolean;

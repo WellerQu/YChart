@@ -1,14 +1,7 @@
 import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
-import { INDENT, CALLSTACK_HEIGHT, TEXT_AREA_WIDTH, STACK_SPACE, } from '../constants/constants';
+import { INDENT, CALLSTACK_HEIGHT, TEXT_AREA_WIDTH, } from '../constants/constants';
 import { CallstackData, } from '../@types';
-
-const OFFSET_X = 10;
-const WORD_WIDTH = 8;
-const ELLIPSIS_WIDTH = 3 * WORD_WIDTH;
-const PADDING_RIGHT = 90;
-const PADDING_LEFT = 50;
-const FOLD_BUTTON_SIZE = 10;
 
 export default class Stack {
   constructor (data: CallstackData, maxDuration: number) {
@@ -19,12 +12,14 @@ export default class Stack {
     this._maxDuration = maxDuration;
     this._id = data.spanId;
     this._combinedCount = data.combinedCount;
+    this._hasError = data.error;
+    this._isAsyncCalled = data.asyncCalled;
     this._children = [];
 
     // 合并操作
     for (let i = 0, item = data.children[i]; item; item = data.children[++i]) {
       const subStack = new Stack(item, maxDuration);
-      subStack.parentStack = this;
+      subStack._parentStack = this;
 
       if (item.combinedCount > 0) {
         subStack._combinedElapsedTime = 
@@ -39,6 +34,8 @@ export default class Stack {
     }
   }
 
+  private _hasError: boolean;
+  private _isAsyncCalled: boolean;
   private _id: string;
   private _title: string;
   private _timeOffset: number;
@@ -48,7 +45,11 @@ export default class Stack {
   private _maxDuration: number;
   private _combinedCount: number;
   private _combinedElapsedTime: number;
-  private parentStack: Stack;
+  private _parentStack: Stack;
+
+  public get children () : Stack[] {
+    return this._children || [];
+  }
 
   public get elapsedTime () : string {
     if (this._elapsedTime < 1)
@@ -66,7 +67,7 @@ export default class Stack {
   
   public get fill () : string {
     if (this._elapsedTime < 1)
-      return 'hsl(206, 9%, 85%)';
+      return 'hsl(206, 9%, 85%)'; // 浅灰色
 
     return this._fill;
   }
@@ -78,13 +79,17 @@ export default class Stack {
     return `${(this._timeOffset / this._maxDuration * 100) >> 0}%`;
   }
   
+  public get title () : string {
+    return this._title;
+  }
+  
   public render (): VNode {
     let indentLevel = 0;
-    let parent: Stack = this.parentStack;
+    let parent: Stack = this._parentStack;
 
     while (parent) {
       indentLevel ++;
-      parent = parent.parentStack;
+      parent = parent._parentStack;
     }
 
     return h('li', {
@@ -105,17 +110,31 @@ export default class Stack {
           h('div', {
             attrs: {
               style: 'max-width: 100%;',
-              title: this._title,
+              title: this.title,
             },
             class: { title: true, },
-          }, this._title),
+          }, this.title),
           this._combinedElapsedTime ?
             h('div', {
               attrs: {
                 title: 'These calls were combined in a batch',
               },
-              class: { combined: true, },
+              class: { combined: true, tag: true, },
             }, this._combinedCount): null,
+          this._isAsyncCalled ? 
+            h('div', {
+              attrs: {
+                title: 'This is an asynchronous call',
+              },
+              class: { async: true, tag: true, },
+            }, 'A'): null,
+          this._hasError ?
+            h('div', {
+              attrs: {
+                title: 'An error occurred on the call',
+              },
+              class: { error: true, tag: true, },
+            }, 'E'): null,
         ]),
         h('div', {
           attrs: {

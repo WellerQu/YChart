@@ -7,7 +7,7 @@ import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 import Stack from './cores/Stack';
-import { INDENT, TEXT_AREA_WIDTH, } from './constants/constants';
+import { INDENT, TEXT_AREA_WIDTH, CALLSTACK_HEIGHT, } from './constants/constants';
 
 const vPatch = init([
   classes,
@@ -16,13 +16,15 @@ const vPatch = init([
   eventlistener,
 ]);
 
-const flatten = (node: CallstackData): CallstackData[] => {
+type Flattenable<T> = { children?: Flattenable<T>[] };
+
+const flatten = <T>(node: Flattenable<T>): Flattenable<T>[] => {
   if (!node) return [];
   if (!node.children) return [node,];
 
-  return node.children.reduce<CallstackData[]>((arr: CallstackData[], item: CallstackData) => {
-    return arr.concat(flatten(item));
-  }, [node,]);
+  return node.children.reduce<Flattenable<T>[]>((arr: Flattenable<T>[], item: Flattenable<T>) => 
+    arr.concat(flatten(item))
+  , [node,]);
 };
 
 const PRIMARY_COLOR = 'hsl(180, 100%, 35%)';
@@ -65,6 +67,20 @@ const stylesheet = `
   top: -10px;
   transform: translateX(50%);
   white-space: nowrap;
+}
+.callstack .shadow {
+  height: ${CALLSTACK_HEIGHT / 2}px;
+  position: relative;
+  bottom: -43px;
+  z-index: 2;
+  box-sizing: border-box;
+  margin: 0 0 0 ${TEXT_AREA_WIDTH + 1}px;
+}
+.callstack .shadow-item {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  opacity: 0.7;
 }
 .callstack ul {
   list-style: none;
@@ -167,16 +183,24 @@ const stylesheet = `
 .callstack .title:hover {
   opacity: 1;
 }
-.callstack .combined {
+.callstack .tag {
   flex: 0 0 18px;
   height: 18px;
-  margin: 0 16px 0 0;
+  margin: 0 8px 0 0;
   line-height: 18px;
   text-align: center;
-  background: ${BORDER_COLOR};
   border-radius: 3px;
   color: white;
   font-size: 12px;
+}
+.callstack .tag.combined {
+  background: hsl(0, 0%, 77%);
+}
+.callstack .tag.async {
+  background: hsl(253, 100%, 73%);
+}
+.callstack .tag.error {
+  background: hsl(0, 93%, 74%);
 }
 `;
 
@@ -184,15 +208,29 @@ export default (container: HTMLElement) => {
   let oldNode = toNode(container);
   
   return (data: CallstackData) => {
-    const stackList = flatten(data);
-    const maxDuration = Math.max(...stackList.map(n => n.elapsedTime + (n.timeOffset || 0)));
+    const stackList = flatten<CallstackData>(data);
+    const maxDuration = Math.max(...stackList.map((n: CallstackData) => n.elapsedTime + (n.timeOffset || 0)));
 
     const stack = new Stack(data, maxDuration);
+    const shadowItems = flatten<Stack>(stack);
     const newNode = h('div', {
       class: { callstack: true, },
     }, [
       // 添加公共样式
-      h('style', {}, stylesheet),
+      h('style', {
+        attrs: {
+          type: 'text/css',
+        },
+      }, stylesheet),
+      // 添加投影
+      h('div', {
+        class: { shadow: true, },
+      }, shadowItems.map((item: Stack) => h('div', {
+        attrs: {
+          style: `width: ${item.elapsedTimeWidth}; background: ${item.fill}; left: ${item.timeOffsetWidth}px;`,
+        },
+        class: { 'shadow-item': true, },
+      }))),
       // 添加标尺
       h('div', {
         class: { rule: true, },

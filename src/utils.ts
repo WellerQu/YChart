@@ -193,13 +193,23 @@ export const findRoot = (event: Event): HTMLElement => {
 };
 
 export const findElement = (tagName: string) => (element: HTMLElement): HTMLElement => {
+  const findElem = find((elem) => tagName === elem.nodeName.toUpperCase());
+  return findElem(element);
+};
+
+export const findByClassName = (className: string) => ( element: HTMLElement ): HTMLElement => {
+  const findElem = find((elem) => elem.classList && elem.classList.contains(className));
+  return findElem(element);
+};
+
+export const find = (predicate: (elem: HTMLElement) => boolean) => (element: HTMLElement): HTMLElement => {
   if (!element)
     return null;
 
-  if (tagName === element.nodeName.toUpperCase())
+  if (predicate(element))
     return element;
 
-  return findElement(tagName)(element.parentElement);
+  return find(predicate)(element.parentElement); 
 };
 
 export function updateLinePosition (item: VNode, start: Position, end: Position): VNode;

@@ -2,6 +2,7 @@ import { VNode, } from 'snabbdom/vnode';
 import { h, } from 'snabbdom';
 import { INDENT, CALLSTACK_HEIGHT, TEXT_AREA_WIDTH, } from '../constants/constants';
 import { CallstackData, } from '../@types';
+import { findByClassName, } from '../utils';
 
 export default class Stack {
   constructor (data: CallstackData, maxDuration: number) {
@@ -63,9 +64,6 @@ export default class Stack {
   }
 
   public get elapsedTimeWidth () : string {
-    if (this._elapsedTime < 1)
-      return '8px';
-
     return `${((this._combinedElapsedTime || this._elapsedTime) / this._maxDuration * 100) >> 0}%`;
   }
   
@@ -89,15 +87,7 @@ export default class Stack {
 
   private handleSelectItemChange = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
-    let parentElement = target.parentElement;
-
-    while (parentElement && parentElement.classList) {
-      if (parentElement.classList.contains('callstack')) {
-        break;
-      }
-
-      parentElement = parentElement.parentElement;
-    }
+    const parentElement = findByClassName('ychart-callstack')(target) as HTMLElement;
 
     if (!parentElement) {
       return;
@@ -108,18 +98,31 @@ export default class Stack {
     const selectables = Array.from(parentElement.querySelectorAll('.selectable'));
 
     selectables.forEach((item: HTMLElement) => {
-      if (item.id === this._id && !item.classList.contains(HIGH_LIGHT_CLASS_NAME)) {
+      if (item.id === this._id) {
         item.classList.add(HIGH_LIGHT_CLASS_NAME);
         parentElement.dispatchEvent(new CustomEvent(EVENT_NAME, {
+          bubbles: true,
           detail: this._originData,
         }));
-      } else if (item.classList.contains(HIGH_LIGHT_CLASS_NAME)) {
+      } else {
         item.classList.remove(HIGH_LIGHT_CLASS_NAME);
-        parentElement.dispatchEvent(new CustomEvent(EVENT_NAME, {
-          detail: null,
-        }));
       }
     });
+  }
+
+  private handleSelectAppChange = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const parentElement = findByClassName('ychart-callstack')(target) as HTMLElement;
+    const EVENT_NAME = 'appchange';
+
+    if (!parentElement) {
+      return;
+    }
+
+    parentElement.dispatchEvent(new CustomEvent(EVENT_NAME, {
+      bubbles: true,
+      detail: this._originData,
+    }));
   }
   
   public render (): VNode {
@@ -147,9 +150,16 @@ export default class Stack {
         h('div', {
           class: { 'data-bar': true, },
         }, [
+          // 水平线
           h('div', {
             attrs: {
-              style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex;`,
+              style: `left: ${indentLevel === 0 ? 0 : -INDENT}px;`,
+            },
+            class: { line: true, },
+          }),
+          h('div', {
+            attrs: {
+              style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex; position: relative;`,
             },
           }, [
             // 显示名称
@@ -205,13 +215,6 @@ export default class Stack {
               },
             }),
           ]),
-          // 水平线
-          h('div', {
-            attrs: {
-              style: `left: ${indentLevel === 0 ? 0 : -INDENT}px;`,
-            },
-            class: { line: true, },
-          }),
         ]),
         h('div', {
           class: { 'info-bar': true, },
@@ -222,6 +225,9 @@ export default class Stack {
               title: this._tierName,
               href: 'javascript: void(0)',
             },
+            on: {
+              click: this.handleSelectAppChange, 
+            },
           }, this._tierName),
         ]),
       ]),
@@ -231,7 +237,7 @@ export default class Stack {
           attrs: {
             title: '点击展开/折叠',
             for: `folder-${this._id}`,
-            style: `left: ${indentLevel * INDENT - 7}px`,
+            style: `left: ${indentLevel === 0 ? -7 : INDENT - 7}px`,
           },
           class: { folder: true, },
         }): null,
@@ -250,13 +256,13 @@ export default class Stack {
         }, this._children.map(item => item.render())): null ,
       h('i', {
         attrs: {
-          style: `left: ${indentLevel * INDENT - 6}px`,
+          style: `left: ${indentLevel === 0 ? -6 : INDENT - 6}px`,
         },
         class: { plus: true, },
       }),
       h('i', {
         attrs: {
-          style: `left: ${indentLevel * INDENT - 6}px`,
+          style: `left: ${indentLevel === 0 ? -6 : INDENT - 6}px`,
         },
         class: { reduce: true, },
       }),

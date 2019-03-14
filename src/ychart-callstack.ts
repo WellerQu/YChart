@@ -32,16 +32,19 @@ const BORDER_COLOR = 'hsl(206, 9%, 85%)';
 
 const stylesheet = `
 .callstack {
-  padding: 0 50px 0 20px;
+  padding: 0 90px 0 20px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
   font-weight: 400;
   font-size: .875rem;
   line-height: 1.15;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 .callstack .rule {
   height: 25px;
   position: relative;
-  bottom: -6px;
+  bottom: -14px;
   z-index: 2;
   box-sizing: border-box;
   margin: 0 0 0 ${TEXT_AREA_WIDTH + 1}px;
@@ -79,7 +82,7 @@ const stylesheet = `
   position: absolute;
   height: 100%;
   top: 0;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 .callstack ul {
   list-style: none;
@@ -91,17 +94,43 @@ const stylesheet = `
 }
 .callstack .node .folder {
   position: absolute;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   top: 10px;
   background: ${PRIMARY_COLOR};
   z-index: 2;
   border-radius: 3px;
+  cursor: pointer;
 }
 .callstack .node .folder + input {
   display: none;
 }
 .callstack .node .folder + input:checked + ul {
+  display: none;
+}
+.callstack .node .folder + input ~ .plus {
+  position: absolute;
+  top: 11px;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: ${PRIMARY_COLOR} url('/static/images/plus@callstack.png') no-repeat center center;
+  background-size: cover;
+  pointer-events: none;
+  z-index: 2;
+}
+.callstack .node .folder + input ~ .reduce {
+  position: absolute;
+  top: 11px;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: ${PRIMARY_COLOR} url('/static/images/reduce@callstack.png') no-repeat center center;
+  background-size: cover;
+  pointer-events: none;
+  z-index: 2;
+}
+.callstack .node .folder + input:checked ~ .reduce {
   display: none;
 }
 .callstack .tree:before {
@@ -133,18 +162,25 @@ const stylesheet = `
   margin: 0 0 0 1px;
 }
 .callstack .info-bar {
+  color: hsl(0, 0%, 77%);
   box-sizing: border-box;
-  padding: 0 16px;
+  padding: 2px 16px 0;
   font-size: 80%;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .callstack .selectable {
   padding: 8px 0 20px 0;
+  transition: background 0.2s;
 }
 .callstack .selectable.highlight {
   background: hsl(0, 0%, 96%);
 }
 .callstack .selectable.highlight .title {
-  background: transparent;
+  background: hsl(0, 0%, 96%);
 }
 .callstack .data-bar .elapsed-time {
   position: relative;
@@ -159,7 +195,7 @@ const stylesheet = `
   font-weight: bold;
   display: block;
   position: absolute;
-  max-width: 60px;
+  max-width: 80px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -189,6 +225,7 @@ const stylesheet = `
 }
 .callstack .title:hover {
   opacity: 1;
+  text-decoration: underline;
 }
 .callstack .tag {
   flex: 0 0 18px;
@@ -208,6 +245,13 @@ const stylesheet = `
 }
 .callstack .tag.error {
   background: hsl(0, 93%, 74%);
+}
+.callstack a {
+  color: hsl(217, 100%, 58%);
+  text-decoration: none;
+}
+.callstack a:hover {
+  text-decoration: underline;
 }
 `;
 
@@ -232,9 +276,9 @@ export default (container: HTMLElement) => {
       // 添加投影
       h('div', {
         class: { shadow: true, },
-      }, shadowItems.map((item: Stack) => h('div', {
+      }, shadowItems.slice(1).map((item: Stack) => h('div', {
         attrs: {
-          style: `width: ${item.elapsedTimeWidth}; background: ${item.fill}; left: ${item.timeOffsetWidth}px;`,
+          style: `width: ${item.elapsedTimeWidth}; background: ${item.fill}; left: ${item.timeOffsetWidth};`,
         },
         class: { 'shadow-item': true, },
       }))),

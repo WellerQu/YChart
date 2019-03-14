@@ -33,31 +33,14 @@ export const ARROW_WIDTH = 6;
 export const CALLSTACK_HEIGHT = 6;
 
 /**
- * 调用栈间隙高度
- */
-export const STACK_SPACE = 30;
-
-/**
  * 调用栈缩进
  */
 export const INDENT = 40;
 
 /**
- * 调用栈图中标尺左右补白
+ * 调用链路图文字区域宽度
  */
-export const RULE_PADDING = 20; // 标尺左右补白
-
 export const TEXT_AREA_WIDTH = 400;
-
-/**
- * 标尺的高
- */
-export const RULE_HEIGHT = 45;
-
-/**
- * 标尺的步长
- */
-export const MAX_RULE_STEP = 500;
 
 /**
  * 合成ID时的拼接符

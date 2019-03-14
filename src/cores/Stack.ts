@@ -15,6 +15,7 @@ export default class Stack {
     this._combinedCount = data.combinedCount;
     this._hasError = data.error;
     this._isAsyncCalled = data.asyncCalled;
+    this._tierName = data.tierName;
     this._children = [];
 
     // 合并操作
@@ -38,6 +39,7 @@ export default class Stack {
   private _originData: CallstackData;
   private _hasError: boolean;
   private _isAsyncCalled: boolean;
+  private _tierName: string;
   private _id: string;
   private _title: string;
   private _timeOffset: number;
@@ -90,7 +92,7 @@ export default class Stack {
     let parentElement = target.parentElement;
 
     while (parentElement && parentElement.classList) {
-      if (parentElement.classList.contains('root')) {
+      if (parentElement.classList.contains('callstack')) {
         break;
       }
 
@@ -101,12 +103,21 @@ export default class Stack {
       return;
     }
 
+    const HIGH_LIGHT_CLASS_NAME = 'highlight';
+    const EVENT_NAME = 'stackclick';
     const selectables = Array.from(parentElement.querySelectorAll('.selectable'));
+
     selectables.forEach((item: HTMLElement) => {
-      if (item.id === this._id) {
-        item.classList.add('highlight');
-      } else {
-        item.classList.remove('highlight');
+      if (item.id === this._id && !item.classList.contains(HIGH_LIGHT_CLASS_NAME)) {
+        item.classList.add(HIGH_LIGHT_CLASS_NAME);
+        parentElement.dispatchEvent(new CustomEvent(EVENT_NAME, {
+          detail: this._originData,
+        }));
+      } else if (item.classList.contains(HIGH_LIGHT_CLASS_NAME)) {
+        item.classList.remove(HIGH_LIGHT_CLASS_NAME);
+        parentElement.dispatchEvent(new CustomEvent(EVENT_NAME, {
+          detail: null,
+        }));
       }
     });
   }
@@ -136,12 +147,12 @@ export default class Stack {
         h('div', {
           class: { 'data-bar': true, },
         }, [
-        // 显示名称
           h('div', {
             attrs: {
               style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex;`,
             },
           }, [
+            // 显示名称
             h('div', {
               attrs: {
                 style: 'max-width: 100%;',
@@ -152,24 +163,27 @@ export default class Stack {
                 click: this.handleSelectItemChange,
               },
             }, this.title),
+            // 合并批处理
             this._combinedElapsedTime ?
               h('div', {
                 attrs: {
-                  title: 'These calls were combined in a batch',
+                  title: 'batch calls',
                 },
                 class: { combined: true, tag: true, },
               }, this._combinedCount): null,
+            // 标记为异步调用
             this._isAsyncCalled ? 
               h('div', {
                 attrs: {
-                  title: 'This is an asynchronous call',
+                  title: 'asynchronous call',
                 },
                 class: { async: true, tag: true, },
               }, 'A'): null,
+            // 标记为有错误调用
             this._hasError ?
               h('div', {
                 attrs: {
-                  title: 'An error occurred on the call',
+                  title: 'error call',
                 },
                 class: { error: true, tag: true, },
               }, 'E'): null,
@@ -201,16 +215,27 @@ export default class Stack {
         ]),
         h('div', {
           class: { 'info-bar': true, },
-        }, 'on api-server1'),
+        }, [
+          h('span', {}, 'on '),
+          h('a', {
+            attrs: {
+              title: this._tierName,
+              href: 'javascript: void(0)',
+            },
+          }, this._tierName),
+        ]),
       ]),
+      // 可折叠按钮
       this._children.length > 0 ?
         h('label', {
           attrs: {
+            title: '点击展开/折叠',
             for: `folder-${this._id}`,
             style: `left: ${indentLevel * INDENT - 7}px`,
           },
           class: { folder: true, },
         }): null,
+      // 控制折叠/展开状态的关键
       this._children.length > 0 ?
         h('input', {
           attrs: {
@@ -223,6 +248,18 @@ export default class Stack {
         h('ul', {
           class: { tree: true, },
         }, this._children.map(item => item.render())): null ,
+      h('i', {
+        attrs: {
+          style: `left: ${indentLevel * INDENT - 6}px`,
+        },
+        class: { plus: true, },
+      }),
+      h('i', {
+        attrs: {
+          style: `left: ${indentLevel * INDENT - 6}px`,
+        },
+        class: { reduce: true, },
+      }),
     ]);
   }
 }

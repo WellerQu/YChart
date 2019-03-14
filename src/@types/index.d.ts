@@ -244,6 +244,8 @@ declare interface CallstackData {
   combinedCount: number;
   error: boolean;
   asyncCalled: boolean;
+  tierId: string;
+  tierName: string;
 
   showName?: string;
   isFold?: boolean;

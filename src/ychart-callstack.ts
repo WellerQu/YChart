@@ -84,6 +84,7 @@ const stylesheet = `
   height: 100%;
   top: 0;
   opacity: 0.5;
+  min-width: 8px;
 }
 .ychart-callstack ul {
   list-style: none;

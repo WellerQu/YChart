@@ -57,10 +57,12 @@ export default class Stack {
   }
 
   public get elapsedTime () : string {
-    if (this._elapsedTime < 1)
+    const time = this._combinedElapsedTime || this._elapsedTime || 0;
+
+    if (time < 1)
       return '< 1 ms';
 
-    return (this._combinedElapsedTime || this._elapsedTime) + ' ms';
+    return time + ' ms';
   }
 
   public get elapsedTimeWidth () : string {
@@ -84,6 +86,15 @@ export default class Stack {
   public get title () : string {
     return this._title;
   }
+
+  
+  public get combinedCount () : string {
+    if (this._combinedCount > 99)
+      return '99+';
+    
+    return this._combinedCount.toString();
+  }
+  
 
   private handleSelectItemChange = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
@@ -180,7 +191,7 @@ export default class Stack {
                   title: 'batch calls',
                 },
                 class: { combined: true, tag: true, },
-              }, this._combinedCount): null,
+              }, this.combinedCount): null,
             // 标记为异步调用
             this._isAsyncCalled ? 
               h('div', {

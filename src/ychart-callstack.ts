@@ -229,7 +229,8 @@ const stylesheet = `
   text-decoration: underline;
 }
 .ychart-callstack .tag {
-  flex: 0 0 18px;
+  flex: 0;
+  padding: 0 8px;
   height: 18px;
   margin: 0 8px 0 0;
   line-height: 18px;

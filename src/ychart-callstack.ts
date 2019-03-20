@@ -296,7 +296,7 @@ export default (container: HTMLElement) => {
       }, Array(6).fill(0).map((_: any, index: number) => 
         h('div', {
           attrs: {
-            'data-calibration': `${(index * maxCalibration / 5).toFixed(2)} ms`,
+            'data-calibration': `${(index * maxCalibration / 5).toFixed(2)} ${maxDuration > SECOND ? 's': 'ms'}`,
           },
           class: { calibration: true, },
         })

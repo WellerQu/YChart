@@ -1,13 +1,12 @@
 import { CallstackData, } from './@types';
 import toNode from 'snabbdom/tovnode';
-import { VNode, } from 'snabbdom/vnode';
 import { init, h, } from 'snabbdom/snabbdom';
 import attributes from 'snabbdom/modules/attributes';
 import style from 'snabbdom/modules/style';
 import classes from 'snabbdom/modules/class';
 import eventlistener from 'snabbdom/modules/eventlisteners';
 import Stack from './cores/Stack';
-import { INDENT, TEXT_AREA_WIDTH, CALLSTACK_HEIGHT, } from './constants/constants';
+import { TEXT_AREA_WIDTH, CALLSTACK_HEIGHT, } from './constants/constants';
 
 const vPatch = init([
   classes,
@@ -33,7 +32,7 @@ const SECOND = 1000; // 一秒
 
 const stylesheet = `
 .ychart-callstack {
-  padding: 0 90px 0 20px;
+  padding: 0 90px 0 16px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
   font-weight: 400;
   font-size: .875rem;

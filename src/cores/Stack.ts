@@ -185,7 +185,7 @@ export default class Stack {
               },
             }, this.title),
             // 合并批处理
-            this._combinedElapsedTime ?
+            this._combinedCount ?
               h('div', {
                 attrs: {
                   title: 'batch calls',

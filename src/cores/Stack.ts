@@ -170,7 +170,7 @@ export default class Stack {
           }),
           h('div', {
             attrs: {
-              style: `width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex; position: relative;`,
+              style: `width: 60px; width: ${TEXT_AREA_WIDTH - indentLevel * INDENT}px; display: flex; position: relative;`,
             },
           }, [
             // 显示名称
